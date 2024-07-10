@@ -6,7 +6,7 @@ function App() {
 
   return (
     <>
-       <h1>Filog</h1> 
+       <h1>Filog in React with appwrite</h1> 
     </>
   )
 }
