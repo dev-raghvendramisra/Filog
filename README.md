@@ -1,4 +1,5 @@
 # Filog-a blogging app
 
-Front-end: React
+Front-end: React 
+<br></br>
 Back-end: Appwrite 
