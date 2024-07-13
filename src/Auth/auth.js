@@ -42,6 +42,24 @@ export class auth{
         return result;
     }
 
+    async getLoggedInUser(){
+        try {
+            const res = await this.account.get()
+
+             if(res.name){
+                return res;
+            }
+            else{
+                throw {err:"auth service error :: failed to retreive loggedIn user: ",res}
+            }
+        } catch (error) {
+            console.log("auth service error :: failed to retreive loggedIn user: ",error)
+            return error
+        }
+       
+
+    }
+
 }
 
  const authService = new auth();
