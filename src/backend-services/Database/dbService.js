@@ -1,5 +1,6 @@
-import { Client, ID, Databases, Storage } from "appwrite";
+import { Client, ID, Databases, Storage, Query } from "appwrite";
 import conf from "../../Conf/conf";
+import { authServices } from "../Auth/auth";
 
 export class DatabaseService {
     client = new Client()
@@ -38,14 +39,76 @@ export class DatabaseService {
                 blogAttr
             );
 
-            if (res.ok) {
+            if (res.databaseID) {
                 return res;
             } else
                 throw { err: "dbService error :: failed to create document", res: res };
         } catch (error) {
             console.log("dbService error :: failed to create document", error);
-            return error;
+            return error
         }
+    }
+
+    async updateBlog(blogId,updatedBlogAttr){
+       try {
+        const updatedBlog =  await this.database.updateDocument(
+             conf.dbId,
+             conf.collectionId,
+             blogId,
+             updatedBlogAttr
+ 
+         )
+         if(updatedBlog.title){
+            return updatedBlog;
+         }
+         else{
+            throw {err:"dbService error :: failed to update document : " ,updatedBlog:updatedBlog}
+         }
+       } catch (error) {
+           console.log("dbService error :: failed to update document : ",error )
+           return error
+       }
+    }
+
+    async deleteBlog(blogId){
+         try {
+            const res = await this.database.deleteDocument(
+               conf.dbId,
+               conf.collectionId,
+               blogId
+            )
+            if(res.documentID){
+                return res;
+            }
+            else{
+                throw {err:"dbService error :: failed to delete document : ", res:res}
+            }
+     
+         } catch (error) {
+            console.log("dbService error :: failed to delete document : ", error)
+            return error
+         }
+    }
+
+    async getBlogs(query = [Query.equal("status", [true])]){
+       try {
+        const res = await this.database.listDocuments(
+             conf.dbId,
+             conf.collectionId,
+             query
+         );
+
+         if(res.documents){
+            return res
+         }
+         else{
+            throw{err:"dbService error :: failed to retreive documents :" ,res:res}
+         }
+       } catch (error) {
+            console.log("dbService error :: failed to retreive documents :", error)
+            return error
+
+       }
     }
 
     async uploadImage(coverImage, subImages = []) {
@@ -76,6 +139,8 @@ export class DatabaseService {
             return { err: "error in dbService :: imageUpload error: ", error };
         }
     }
+
+
 }
 
 function createdAt() {

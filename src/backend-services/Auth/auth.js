@@ -20,18 +20,23 @@ export class Auth{
                 return await this.login(email,password);
             }
             else{
-                throw "failed to create account: ", createdAccount
+                throw {err:"failed to create account: ", createdAccount:createdAccount}
             }
 
          } catch (error) {
              console.log("auth service error :: account creation error: " ,error)
+             return error.createAccount
+
          }
     }
 
     async login(email,password){
         try {
             
-           return await this.account.createEmailPasswordSession(email,password);
+           const res =  await this.account.createEmailPasswordSession(email,password);
+           if(res.ok){
+            return res;
+           }
 
         } catch (error) {
             console.log("auth service error :: account login error:", error)
@@ -62,8 +67,8 @@ export class Auth{
 
 }
 
- const authService = new Auth();
- export default authService;
+ const authServices = new Auth();
+ export default authServices;
 
 
  ///----test-----
