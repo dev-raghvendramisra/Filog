@@ -69,8 +69,8 @@ export class DatabaseService {
                     })
                 );
                 imageIds.subImagesId = subImagesId;
-                return imageIds;
             }
+            return imageIds;
         } catch (error) {
             console.log("error in dbService :: imageUpload error: ", error);
             return { err: "error in dbService :: imageUpload error: ", error };
