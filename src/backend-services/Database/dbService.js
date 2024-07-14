@@ -21,18 +21,21 @@ export class DatabaseService {
         userId,
         status = true,
     }) {
+        const blogAttr = {
+            title:title,
+            content:content,
+            coverImageId:coverImageId,
+            subImagesId:subImagesId,
+            userId:userId,
+            createdAt:createdAt(),
+            status:status
+        }
         try {
             const res = await this.database.createDocument(
                 conf.dbId,
                 conf.collectionId,
                 ID.unique(),
-                title,
-                content,
-                coverImageId,
-                subImagesId,
-                userId,
-                createdAt(),
-                status
+                blogAttr
             );
 
             if (res.ok) {
