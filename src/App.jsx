@@ -1,50 +1,58 @@
-import React, { useEffect } from 'react'
-import { useDispatch, useSelector } from 'react-redux'
-import './App.css'
-import { login, logout } from './store/authSlice'
-import {authServices} from './backend-services'
+import React from "react";
+import {  useSelector , useDispatch} from "react-redux";
+import "./App.css";
+import { authServices } from "./backend-services";
+import useUserData from "./hooks/useUserData";
+import { iniateLoginSequence } from "./store/authSlice";
 
 function App() {
-  const [loading, setLoading] = React.useState(true)
+
+  const userData = useSelector((state) => {
+    return state.auth;
+  });
+
+  const {loading} = useUserData();
   const dispatch = useDispatch()
-  const userData = useSelector((state)=>{
-     return state.auth
-  })
-  const fetchdata = async ()=>{
-    const res =  await authServices.createAccount({email:"itsraghav12@gmail.com",password:"raghav12", name:"Raghvendra Misra"})
-    console.log("res:",res)
+
+  const setAccount = async () => {
+    const res = await authServices.createAccount({
+      email: "itsraghav12@gmail.com",
+      password: "raghav12",
+      name: "Raghvendra Misra",
+    });
+    console.log("res:", res);
+    dispatch(iniateLoginSequence())
     return res;
-   
+  };
+
+  const logoutUser = async()=>{
+    const res = await authServices.logout();
+    console.log(res)
+    dispatch(iniateLoginSequence())
   }
 
-  useEffect(async ()=>{
-   
-    const res = await fetchdata();
-    if(res!==undefined){
-      const aRes = await authServices.getLoggedInUser()
-      console.log(aRes)
-      dispatch(login(aRes))
-     
-    }
-    else{
-      dispatch(logout())
-    }
-    setLoading(false)
- },[])
-     
-     
-  if(loading) return <h1>Loading....</h1>
-  else if(userData.isUserLoggedIn){ return (<h1>UserloggeDIn:{
-    `${ String(userData.isUserLoggedIn)}\n userName: ${userData.userData.name}\n email: ${userData.userData.email}`
-  }</h1>)}
+///--------jsx to test backend-services (temp)-----
 
-  else{
-    return(
-      <h1>isUserLoggedIn: {String(userData.isUserLoggedIn)}</h1>
+  if (loading) return <h1>Loading....</h1>;
+  else if (userData.isUserLoggedIn) {
+    return (
+     <div className="h-screen w-screen flex justify-center items-center bg-blue-900">
+         <div className=" rounded-xl bg-white drop-shadow-xl flex flex-col p-2">
+               <div className="p-3 mt-2 border-md border-gray-500 rounded-xl flex justify-center items-center gap-2"><span>Have user logged in</span><span className="p-3 bg-blue-600 rounded-xl text-white">Yes</span></div>
+               <div className="p-3 mt-2 border-md border-gray-500 rounded-xl flex justify-center items-center gap-2"><span>Username</span><span className="p-3 bg-blue-600 rounded-xl text-white">{userData.userData.name}</span></div>
+               <div className="p-3 mt-2 border-md border-gray-500 rounded-xl flex justify-center items-center gap-2"><span>Email address</span><span className="p-3 bg-blue-600 rounded-xl text-white">{userData.userData.email}</span></div>
+         <button className="text-center p-2 bg-blue-600 text-white rounded-full" onClick={logoutUser}>Logout</button>
+         </div>
+     </div>
+    );
+  } else {
+    return (
+      <div>
+        <h1>isUserLoggedIn: {String(userData.isUserLoggedIn)}</h1>
+        <button onClick={setAccount}>Login</button>
+      </div>
     )
   }
-  
-
 }
 
-export default App
+export default App;

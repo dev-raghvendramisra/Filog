@@ -1,5 +1,7 @@
 import { Client,ID,Account } from "appwrite";
 import conf from "../../Conf/conf";
+import { useDispatch } from "react-redux";
+import { login, logout } from "../../store/authSlice";
 
 export class Auth{
       
@@ -26,7 +28,7 @@ export class Auth{
 
          } catch (error) {
              console.log("auth service error :: account creation error: " ,error)
-             return error.createAccount
+             return error
 
          }
     }
@@ -44,7 +46,7 @@ export class Auth{
 
         } catch (error) {
             console.log("auth service error :: account login error:", error)
-            return error.res
+            return error
         }
     }
     async logout(){
@@ -60,7 +62,7 @@ export class Auth{
                 return res;
             }
             else{
-                throw {err:"auth service error :: failed to retreive loggedIn user: ",res}
+                throw {err:"auth service error :: failed to retreive loggedIn user: ",res:res}
             }
         } catch (error) {
             console.log("auth service error :: failed to retreive loggedIn user: ",error)
