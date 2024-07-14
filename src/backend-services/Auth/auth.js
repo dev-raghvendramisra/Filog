@@ -17,7 +17,8 @@ export class Auth{
             
             const createdAccount =  await this.account.create(ID.unique(),email,password,name)
             if(createdAccount){
-                return await this.login(email,password);
+                const res = await this.login(email,password);
+                return res;
             }
             else{
                 throw {err:"failed to create account: ", createdAccount:createdAccount}
@@ -34,12 +35,16 @@ export class Auth{
         try {
             
            const res =  await this.account.createEmailPasswordSession(email,password);
-           if(res.ok){
+           if(res.$id){
             return res;
+           }
+           else {
+            throw {err:"auth service error :: failed to  logIn user: ",res:res}
            }
 
         } catch (error) {
             console.log("auth service error :: account login error:", error)
+            return error.res
         }
     }
     async logout(){
@@ -74,12 +79,12 @@ export class Auth{
  ///----test-----
 
 // (
-//     async ()=>{
-//       console.log(authService.account)
-//       const res =  await authService.createAccount({email:"itsraghav12@gmail.com",password:"raghav12", name:"name"})
-//       console.log("res:",res)
-//       console.log("after login",authService.account)
+    // const fetchdata = async ()=>{
+    //   console.log(authServices.account)
+    //   const res =  await authServices.createAccount({email:"itsraghav12@gmail.com",password:"raghav12", name:"name"})
+    //   console.log("res:",res)
+    //   console.log("after login",authServices.account)
      
-//     }
+    // }
 // )();
 
