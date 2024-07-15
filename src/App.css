@@ -1,3 +1,36 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@layer utilities{
+    .brandP-Color{
+        background-color: #194FE6;
+    }
+    .brandS-Color{
+        background-color: #ffffff;
+    }
+    .maskLogo{
+        /* position: absolute;
+        height: 100%;
+        width: 100%;
+        left:0;
+        top:0;
+        bottom: 0; */
+        mask-image: url('/logoMuted.png');
+        mask-size: contain; /* Adjust mask size to fit the element */
+        mask-repeat: no-repeat; /* Prevent the mask from repeating */
+        mask-position: center; /* Center the mask image within the element */
+        -webkit-mask-image: url('/logoMuted.png'); /* For Safari support */
+        -webkit-mask-size: contain;
+        -webkit-mask-repeat: no-repeat;
+        -webkit-mask-position: center;
+    }
+    .linkActiveLight{
+        color:white;
+        background-color:#194FE6; ;
+    }
+    .linkActiveDark{
+        color:#194FE6;
+        background-color:#ffffff ;
+    }
+}
