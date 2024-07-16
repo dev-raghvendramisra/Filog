@@ -4,6 +4,8 @@ import { NavLink } from 'react-router-dom';
 import { Logo, SearchBar, ProfilePic } from './index'; 
 import LoginBtn from './LoginBtn';
 
+
+
 function Navbar() {
   const { isUserLoggedIn } = useSelector((state) => state.auth);
 
@@ -13,75 +15,99 @@ function Navbar() {
       status: true, 
       path: '/pd',
       activeStyling:true,
-      hoverAnim:true
+      hoverAnim:true,
+      defaultStyling:true
     },
     {
       name: "Write",
       status: true, // 
       path: '/pw',
       activeStyling:true,
-      hoverAnim:true
+      hoverAnim:true,
+      defaultStyling:true,
+      icon:<i style={{marginRight:"0.3vw"}} class="fa-regular fa-pen-to-square"></i>
     },
     {
       name: "About",
       status: true, //
       path: '/about',
       activeStyling:true,
-      hoverAnim:true
+      hoverAnim:true,
+      defaultStyling:true
     },
     {
       name: "Github",
       status: true, 
       path: 'https://github.com/dev-raghvendramisra',
       activeStyling:true,
-      hoverAnim:true
+      hoverAnim:true,
+      defaultStyling:true
     },
     {
-      component:<LoginBtn className='p-2 text-md'>Login</LoginBtn>,
+      component:<LoginBtn >Login</LoginBtn>,
       name: "Login",
       status: !isUserLoggedIn, 
       path: '/login',
       activeStyling:true,
       border:true,
-      hoverAnim:true
+      hoverAnim:true,
+      defaultStyling:true,
     },
     {
       component: <ProfilePic />,
       status: isUserLoggedIn, // 
       path: 'pd/dashboard/user-profile',
       name: "profile-pic",
-      activeStyling:false
+      activeStyling:false,
+      defaultStyling:false,
     },
   ];
 
   return (
-    <nav className='flex justify-between items-center gap-28 bg-white bg-opacity-50 border-2 border-gray-200 rounded-full p-1 pl-8 pr-8 backdrop-blur-xl'>
-      <div className='flex gap-10 items-center justify-center'>
-      <NavLink to="/">
-         <Logo />
-      </NavLink>
-      <SearchBar className='pl-5 pr-5 '/>
-      </div>
-      <div className='flex gap-3'>
-      {links.map((link) => (
-        link.status ? (
-          <div key={link.name} className={`flex items-center overflow-hidden rounded-full ${link.border?"border-primary border-opacity-35 border-2 rounded-full":""} ${link.hoverAnim?" hover:hoverAnim overflow-hidden":""}`}>
-            <NavLink className={({isActive})=>{
-            if(link.activeStyling) return` transition-all pr-2 pl-2 rounded-full flex items-center justify-center dark:text-white ${isActive?"dark:linkActiveDark linkActiveLight": ""
-            }`}
-          }  to={link.path}>
-            {link.component ? link.component : <span className='text-md p-2'>{link.name}</span>}
-          </NavLink>
-          </div>
-        ) : null
-      ))}
-      </div>
-    </nav>
+    <nav style={{padding:"0.7vw 0"}} className='flex justify-between items-center w-80vw p-0.5vw  bg-white outline outline-1 outline-gray-300 rounded-full backdrop-blur-lg cShadow  ' id="mainNav">
+            
+           
+            <div id="wrapper_logo_searchbar " className='rounded-full pl-1vw w-40p h-100p flex justify-between items-center'>
+              <NavLink  className="block w-24p h-100p">
+               <Logo />
+              </NavLink>
+              <SearchBar id="search-bar" className='text-1vw pl-1vw pr-1vw w-100p' />
+            </div>
+
+            <div id="wrapper_links_profile" className='flex w-50p gap-4 justify-end pr-1vw items-center'>
+
+                  {links.map((link)=>{
+                    return (
+                     <NavLink to={link.path} key={link.name} id={`link_to_"${link.name}"`} 
+                     className={({isActive})=>{
+                      return(
+                        `transition-all ${link.defaultStyling?"flex justify-center items-center text-1vw overflow-hidden rounded-full p-0.4vw pl-1vw pr-1vw":""} ${link.activeStyling?isActive?"linkActiveLight dark:linkActiveDark relative after:h-100p after:w-100p after:top-0 after:left-0 after:inset-0 after:bg-primary after:-z-10 after:absolute":"":""} ${link.hoverAnim?"hover:hoverAnim":""} ${link.border?" border-2 border-opacity-25 border-primary":""}`
+                      )
+                     }}>
+                      { link.status?(
+                          link.component?(
+                          <div className=' justify-center items-center gap-1'>
+                          {link.icon}
+                          {link.component}
+                          </div>)
+                          :(
+                          <div className=' justify-center items-center gap-1'>
+                          {link.icon}
+                          <span>{link.name}</span>
+                          </div>))
+                          :(null)
+                      }
+                     </NavLink>
+                    )
+                  })}
+
+            </div>
+
+         </nav>
   );
 }
 
 export default Navbar;
 
 
-//exxclude active stylings from logo and search 
 
