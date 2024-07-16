@@ -5,7 +5,7 @@ import { Outlet } from 'react-router-dom'
 
 function App() {
   return (
-    <div className='flex justify-center items-center h-screen w-screen'><Navbar />
+    <div className='flex flex-col justify-start pt-3 items-center h-screen w-screen '><Navbar />
     <Outlet />
     </div>
   )

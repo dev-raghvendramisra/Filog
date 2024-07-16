@@ -1,9 +1,9 @@
 import React from 'react'
 
-function Logo({height='h-12' ,width='w-16'}) {
+function Logo({className='h-16 w-20'}) {
   return (
-   <div className={`relative ${height} ${width} `}>
-         <div className='brandP-Color h-full w-full maskLogo'>
+   <div className={`relative ${className} `}>
+         <div className='brandP-Color dark:brandS-Color h-full w-full maskLogo'>
          </div>
    </div>
   )

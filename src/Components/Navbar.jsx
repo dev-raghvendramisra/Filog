@@ -1,77 +1,81 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
 import { NavLink } from 'react-router-dom';
-import { Logo, Search, ProfilePic } from './index'; // Assuming these are correctly exported from './index'
+import { Logo, SearchBar, ProfilePic } from './index'; 
+import LoginBtn from './LoginBtn';
 
 function Navbar() {
   const { isUserLoggedIn } = useSelector((state) => state.auth);
 
   const links = [
     {
-      component: <Logo />,
-      status: true,
-      path: '/',
-      name: "logo",
-      activeStyling:false
-    },
-    {
-      component: <Search />,
-      status: isUserLoggedIn, 
-      path: 'pd/dashboard/search',
-      name: "search",
-      activeStyling:false
-    },
-    {
       name: "Dashboard",
       status: true, 
       path: '/pd',
-      activeStyling:true
+      activeStyling:true,
+      hoverAnim:true
     },
     {
       name: "Write",
-      status: isUserLoggedIn, // 
+      status: true, // 
       path: '/pw',
-      activeStyling:true
+      activeStyling:true,
+      hoverAnim:true
     },
     {
       name: "About",
       status: true, //
       path: '/about',
-      activeStyling:true
+      activeStyling:true,
+      hoverAnim:true
     },
     {
+      name: "Github",
+      status: true, 
+      path: 'https://github.com/dev-raghvendramisra',
+      activeStyling:true,
+      hoverAnim:true
+    },
+    {
+      component:<LoginBtn className='p-2 text-md'>Login</LoginBtn>,
       name: "Login",
       status: !isUserLoggedIn, 
       path: '/login',
-      activeStyling:true
-    },
-    {
-      name: "SignUp",
-      status: !isUserLoggedIn, //
-      path: '/signup',
-      activeStyling:true
+      activeStyling:true,
+      border:true,
+      hoverAnim:true
     },
     {
       component: <ProfilePic />,
       status: isUserLoggedIn, // 
       path: 'pd/dashboard/user-profile',
       name: "profile-pic",
-      activeStyling:true
+      activeStyling:false
     },
   ];
 
   return (
-    <nav className='flex justify-center items-center'>
+    <nav className='flex justify-between items-center gap-28 bg-white bg-opacity-50 border-2 border-gray-200 rounded-full p-1 pl-8 pr-8 backdrop-blur-xl'>
+      <div className='flex gap-10 items-center justify-center'>
+      <NavLink to="/">
+         <Logo />
+      </NavLink>
+      <SearchBar className='pl-5 pr-5 '/>
+      </div>
+      <div className='flex gap-3'>
       {links.map((link) => (
         link.status ? (
-          <NavLink className={({isActive})=>{
-            if(link.activeStyling) return`${isActive?"dark:linkActiveDark linkActiveLight": ""
+          <div key={link.name} className={`flex items-center overflow-hidden rounded-full ${link.border?"border-primary border-opacity-35 border-2 rounded-full":""} ${link.hoverAnim?" hover:hoverAnim overflow-hidden":""}`}>
+            <NavLink className={({isActive})=>{
+            if(link.activeStyling) return` transition-all pr-2 pl-2 rounded-full flex items-center justify-center dark:text-white ${isActive?"dark:linkActiveDark linkActiveLight": ""
             }`}
-          } key={link.name} to={link.path}>
-            {link.component ? link.component : <span className='text-lg p-2'>{link.name}</span>}
+          }  to={link.path}>
+            {link.component ? link.component : <span className='text-md p-2'>{link.name}</span>}
           </NavLink>
+          </div>
         ) : null
       ))}
+      </div>
     </nav>
   );
 }

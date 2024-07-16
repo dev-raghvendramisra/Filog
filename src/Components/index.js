@@ -1,6 +1,6 @@
 import Navbar from "./Navbar";
 import Logo from "./Logo";
-import Search from "./Search";
+import SearchBar from "./SearchBar";
 import ProfilePic from "./ProfilePic";  
 import Dashboard from "./Dashboard";
 import Login from "./Login";
@@ -11,4 +11,5 @@ import UserProfile from "./UserProfile";
 import Home from "./Home";
 import Write from "./Write";
 import About from "./About";
-export {Navbar,Logo, Search, ProfilePic, Dashboard, Login, ProtectedRouteForDashboard, ProtectedRouteForWrite, SignUp, UserProfile, Home, Write, About} 
+import SearchResult from "./SearchResult";
+export {Navbar,Logo, SearchBar, SearchResult, ProfilePic, Dashboard, Login, ProtectedRouteForDashboard, ProtectedRouteForWrite, SignUp, UserProfile, Home, Write, About} 

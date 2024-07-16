@@ -1,7 +1,14 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap');
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
+@layer base {
+  body {
+    @apply font-sans;
+  }
+}
 @layer utilities{
     .brandP-Color{
         background-color: #194FE6;
@@ -27,10 +34,38 @@
     }
     .linkActiveLight{
         color:white;
-        background-color:#194FE6; ;
+        background-color:#194FE6; 
     }
     .linkActiveDark{
-        color:#194FE6;
-        background-color:#ffffff ;
+        /* color:#194FE6;
+        background-color:#ffffff ; */
+        color:white;
+        background-color:#194FE6 ;
     }
+    .cWidth{
+        width:75rem;
+    }
+    .hoverAnim{
+        color: white;
+        position: relative;
+    }
+    .hoverAnim::before{
+        content: '';
+        position: absolute;
+        height:100%;
+        width: 100%;
+        top:0;
+        left:0;
+        z-index: -1;
+        background-color: #c3d3ff;
+        transform: translateY(100%);
+        animation: slide 0.1s ease-in   1 forwards ;
+        animation-fill-mode: forwards;
+
+    }
+    @keyframes slide {
+        0%{ transform: translateY(100%);}
+        100%{ transform: translateY(0%);}
+    }
+    
 }

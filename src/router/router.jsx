@@ -1,13 +1,13 @@
 import {   Route, createBrowserRouter, createRoutesFromElements } from "react-router-dom";
 import App from "../App";
-import {Write,About, Search, Dashboard, Login, ProtectedRouteForDashboard, ProtectedRouteForWrite, SignUp, UserProfile, Home}  from "../Components";
+import {Write,About, SearchResult, Dashboard, Login, ProtectedRouteForDashboard, ProtectedRouteForWrite, SignUp, UserProfile, Home}  from "../Components";
 
 const router = createBrowserRouter(createRoutesFromElements(
     <Route path="/" element={<App />}>
         <Route path="" element={<Home />}></Route>
         <Route path="/pd" element={<ProtectedRouteForDashboard />}>
            <Route path="dashboard" element={< Dashboard />}>
-             <Route path="search" element={<Search />}></Route>
+             <Route path="search/:query" element={<SearchResult />}></Route>
              <Route path="user-profile" element={<UserProfile />}></Route>
            </Route>
         </Route>
