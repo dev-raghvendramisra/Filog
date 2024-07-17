@@ -106,12 +106,13 @@ function Navbar({className='',style={},...props}) {
                     )
                   })}
 
+          <ToggleBtn>
+          <i style={{fontSize:"0.5vw"}} class=" fa-solid fa-moon"></i>
+          </ToggleBtn>
             </div>
 
          </nav>
-         <div className='h-100p bg-blue-400 p-1vw'>
-          <ToggleBtn />
-         </div>
+
          </div>
          
   );
