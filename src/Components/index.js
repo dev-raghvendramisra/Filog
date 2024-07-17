@@ -12,4 +12,5 @@ import Home from "../pages/Home";
 import Write from "../pages/Write";
 import About from "../pages/About";
 import SearchResult from "../pages/SearchResult";
-export {Navbar,Logo, SearchBar, SearchResult, ProfilePic, Dashboard, Login, ProtectedRouteForDashboard, ProtectedRouteForWrite, SignUp, UserProfile, Home, Write, About} 
+import ToggleBtn from './ToggleBtn'
+export {Navbar,Logo, SearchBar,ToggleBtn, SearchResult, ProfilePic, Dashboard, Login, ProtectedRouteForDashboard, ProtectedRouteForWrite, SignUp, UserProfile, Home, Write, About} 

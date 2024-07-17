@@ -47,6 +47,11 @@
         box-shadow: -9px 11px 86px -26px rgba(0, 0, 0, 0.5);
     
     }
+    .toggleBtnShadow{
+       -webkit-box-shadow: inset 3px 3px 50px -19px rgba(0,0,0,0.31);
+-moz-box-shadow: inset 3px 3px 50px -19px rgba(0,0,0,0.31);
+box-shadow: inset 3px 3px 50px -19px rgba(0,0,0,0.31);
+    }
     .hoverAnim{
         color: white;
         position: relative;

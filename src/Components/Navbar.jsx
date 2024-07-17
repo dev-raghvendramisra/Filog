@@ -1,12 +1,12 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
 import { NavLink } from 'react-router-dom';
-import { Logo, SearchBar, ProfilePic } from './index'; 
+import { Logo, SearchBar, ProfilePic, ToggleBtn } from './index'; 
 import LoginBtn from './LoginBtn';
 
 
 
-function Navbar() {
+function Navbar({className='',style={},...props}) {
   const { isUserLoggedIn } = useSelector((state) => state.auth);
 
   const links = [
@@ -64,6 +64,7 @@ function Navbar() {
   ];
 
   return (
+   <div className={`flex w-screen justify-center items-center fixed${className}`} style={{top:"2vh",...style}}{...props}>
     <nav style={{padding:"0.7vw 0"}} className='flex justify-between items-center w-80vw p-0.5vw  bg-white outline outline-1 outline-gray-300 rounded-full backdrop-blur-lg cShadow  ' id="mainNav">
             
            
@@ -81,7 +82,11 @@ function Navbar() {
                      <NavLink to={link.path} key={link.name} id={`link_to_"${link.name}"`} 
                      className={({isActive})=>{
                       return(
-                        `transition-all ${link.defaultStyling?"flex justify-center items-center text-1vw overflow-hidden rounded-full p-0.4vw pl-1vw pr-1vw":""} ${link.activeStyling?isActive?"linkActiveLight dark:linkActiveDark relative after:h-100p after:w-100p after:top-0 after:left-0 after:inset-0 after:bg-primary after:-z-10 after:absolute":"":""} ${link.hoverAnim?"hover:hoverAnim":""} ${link.border?" border-2 border-opacity-25 border-primary":""}`
+                        `transition-all 
+                        ${link.defaultStyling?"flex justify-center items-center text-1vw overflow-hidden rounded-full p-0.4vw pl-1vw pr-1vw":""} 
+                        ${link.activeStyling?isActive?"linkActiveLight dark:linkActiveDark relative after:h-100p after:w-100p after:top-0 after:left-0 after:inset-0 after:bg-primary after:-z-10 after:absolute":"":""} 
+                        ${link.hoverAnim?"hover:hoverAnim":""} 
+                        ${link.border?" border-2 border-opacity-25 border-primary":""}`
                       )
                      }}>
                       { link.status?(
@@ -104,6 +109,11 @@ function Navbar() {
             </div>
 
          </nav>
+         <div className='h-100p bg-blue-400 p-1vw'>
+          <ToggleBtn />
+         </div>
+         </div>
+         
   );
 }
 
