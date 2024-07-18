@@ -665,7 +665,13 @@ export default {
       },
 
       colors: {
-        primary: "#194FE6"
+        primary: "#194FE6",
+        darkPrimary_grays:"#242535",
+        darkPrimary:"#181A2A",
+        darkPrimary_grays_darker:"#141624",
+        lightPrimary_grays:"#E8E8EA",
+        lightPrimary_grays_darker:"#F6F6F7",
+        blackColor:"#3B3C4A"
       }
     }
   },

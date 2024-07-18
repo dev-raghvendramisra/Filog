@@ -25,7 +25,7 @@ function Navbar({className='',style={},...props}) {
       activeStyling:true,
       hoverAnim:true,
       defaultStyling:true,
-      icon:<i style={{marginRight:"0.3vw"}} class="fa-regular fa-pen-to-square"></i>
+      icon:<i style={{marginRight:"0.3vw"}} class=" fa-regular fa-pen-to-square"></i>
     },
     {
       name: "About",
@@ -44,7 +44,7 @@ function Navbar({className='',style={},...props}) {
       defaultStyling:true
     },
     {
-      component:<LoginBtn >Login</LoginBtn>,
+      component:<LoginBtn  >Login</LoginBtn>,
       name: "Login",
       status: !isUserLoggedIn, 
       path: '/login',
@@ -83,7 +83,7 @@ function Navbar({className='',style={},...props}) {
                      className={({isActive})=>{
                       return(
                         `transition-all 
-                        ${link.defaultStyling?"flex justify-center items-center text-1vw overflow-hidden rounded-full p-0.4vw pl-1vw pr-1vw":""} 
+                        ${link.defaultStyling?"flex justify-center items-center text-1vw overflow-hidden rounded-full text-blackColor p-0.4vw pl-1vw pr-1vw":""} 
                         ${link.activeStyling?isActive?"linkActiveLight dark:linkActiveDark relative after:h-100p after:w-100p after:top-0 after:left-0 after:inset-0 after:bg-primary after:-z-10 after:absolute":"":""} 
                         ${link.hoverAnim?"hover:hoverAnim":""} 
                         ${link.border?" border-2 border-opacity-25 border-primary":""}`
