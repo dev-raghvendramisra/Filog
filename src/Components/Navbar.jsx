@@ -79,17 +79,18 @@ function Navbar({className='',style={},...props}) {
 
                   {links.map((link)=>{
                     return (
-                     <NavLink to={link.path} key={link.name} id={`link_to_"${link.name}"`} 
-                     className={({isActive})=>{
-                      return(
-                        `transition-all 
-                        ${link.defaultStyling?"flex justify-center items-center text-1vw overflow-hidden rounded-full text-blackColor p-0.4vw pl-1vw pr-1vw":""} 
-                        ${link.activeStyling?isActive?"linkActiveLight dark:linkActiveDark relative after:h-100p after:w-100p after:top-0 after:left-0 after:inset-0 after:bg-primary after:-z-10 after:absolute":"":""} 
-                        ${link.hoverAnim?"hover:hoverAnim":""} 
-                        ${link.border?" border-2 border-opacity-25 border-primary":""}`
-                      )
-                     }}>
-                      { link.status?(
+                      link.status?
+                       <NavLink to={link.path} key={link.name} id={`link_to_"${link.name}"`} 
+                       className={({isActive})=>{
+                         return(
+                          `transition-all 
+                          ${link.defaultStyling?"flex justify-center items-center text-1vw overflow-hidden rounded-full text-blackColor p-0.4vw pl-1vw pr-1vw":""} 
+                          ${link.activeStyling?isActive?"linkActiveLight dark:linkActiveDark relative after:h-100p after:w-100p after:top-0 after:left-0 after:inset-0 after:bg-primary after:-z-10 after:absolute":"":""} 
+                          ${link.hoverAnim?"hover:hoverAnim":""} 
+                          ${link.border?" border-2 border-opacity-100 border-lightPrimary_grays":""}`
+                        )
+                       }}>
+                       { 
                           link.component?(
                           <div className=' justify-center items-center gap-1'>
                           {link.icon}
@@ -99,14 +100,15 @@ function Navbar({className='',style={},...props}) {
                           <div className=' justify-center items-center gap-1'>
                           {link.icon}
                           <span>{link.name}</span>
-                          </div>))
-                          :(null)
+                          </div>)
+                          
                       }
-                     </NavLink>
+                       </NavLink>
+                      :null
                     )
                   })}
 
-          <ToggleBtn>
+          <ToggleBtn className='ml-1vw'>
           <i style={{fontSize:"0.5vw"}} class=" fa-solid fa-moon"></i>
           </ToggleBtn>
             </div>
