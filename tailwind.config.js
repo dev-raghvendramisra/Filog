@@ -1,7 +1,7 @@
 /** @type {import('tailwindcss').Config} */
 export default {
-  content: ["./src/**/**/**.{jsx,js}"],
-  darkMode: "class",
+  content: ["./src/**/**/**.{jsx,js}","./.html"],
+  darkMode:"class",
   theme: {
     extend: {
       fontFamily: {
@@ -839,6 +839,7 @@ export default {
         blackColor:"#3B3C4A"
       }
     }
+    
   },
   plugins: []
 }

@@ -2,7 +2,9 @@ import React from 'react'
 
 function ToggleBtn({className='',handleClick,children,...props}) {
 
-  const[isDark, setIsDark] = React.useState(false)
+  const[isDark, setIsDark] = React.useState(()=>(localStorage.getItem("isDark")?(
+    JSON.parse(localStorage.getItem("isDark"))
+  ):false))
 
   if(!handleClick){
     handleClick=()=>{
@@ -11,12 +13,14 @@ function ToggleBtn({className='',handleClick,children,...props}) {
   }
 
   React.useEffect(()=>{
+       
        if(isDark){
           document.querySelector("html").classList.add("dark")
+          localStorage.setItem("isDark",true)
        }
        else if(!isDark){
         document.querySelector("html").classList.remove("dark")
-
+        localStorage.setItem("isDark",false)
        }
   },[isDark])
   return (

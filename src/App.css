@@ -43,9 +43,13 @@
         color:white;
         background-color:#194FE6 ;
     }
-    .cShadow{
+    .nav_light_Shadow{
         box-shadow: -9px 11px 86px -26px rgba(0, 0, 0, 0.5);
     
+    }
+    .nav_dark_Shadow{
+        box-shadow: -9px 11px 86px -26px rgba(41, 32, 82, 0.5);
+        
     }
     .toggleBtnShadow{
        -webkit-box-shadow: inset 3px 3px 50px -19px rgba(0,0,0,0.31);
@@ -56,6 +60,9 @@ box-shadow: inset 3px 3px 50px -19px rgba(0,0,0,0.31);
         color: white;
         position: relative;
         z-index: 1;
+        color: rgb(94 94 131);
+        border-color: #c3d3ff;
+        @apply dark:text-darkPrimary_grays ;
         animation: shake 0.1s cubic-bezier(1, 0.02, 0, 1) 4 alternate forwards;
     }
     .hoverAnim::before{
@@ -83,6 +90,10 @@ box-shadow: inset 3px 3px 50px -19px rgba(0,0,0,0.31);
         100%{
             transform: translateX(3%);
         }
+    }
+
+    .min-h-100vh{
+        min-height: 100vh;
     }
     
 }
