@@ -1,8 +1,8 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
 import { NavLink } from 'react-router-dom';
-import { Logo, SearchBar, ProfilePic, ToggleBtn } from './index'; 
-import LoginBtn from './LoginBtn';
+import { Logo, SearchBar, ProfilePic, ToggleBtn } from '../index'; 
+import LoginBtn from '../Button/LoginBtn';
 
 
 
@@ -64,8 +64,8 @@ function Navbar({className='',style={},...props}) {
   ];
 
   return (
-   <div className={`flex w-screen justify-center items-center fixed${className}`} style={{top:"2vh",...style}}{...props}>
-    <nav style={{padding:"0.7vw 0"}} className='flex justify-between items-center w-80vw p-0.5vw  bg-white outline outline-1 outline-gray-300 rounded-full backdrop-blur-lg nav_light_Shadow dark:nav_dark_Shadow bg-opacity-50 dark:bg-darkPrimary_grays dark:outline-darkPrimary dark:outline-4' id="mainNav">
+   <div className={`flex justify-center items-center sticky top-0${className}`} style={{top:"2vh",...style}}{...props}>
+    <nav style={{padding:"0.7vw 0"}} className='transition-all flex justify-between items-center w-80vw p-0.5vw  bg-white outline outline-1 outline-gray-300 rounded-full backdrop-blur-lg nav_light_Shadow dark:nav_dark_Shadow bg-opacity-50 dark:bg-darkPrimary_grays dark:outline-darkPrimary dark:outline-4' id="mainNav">
             
            
             <div id="wrapper_logo_searchbar " className='rounded-full pl-1vw w-40p h-100p flex justify-between items-center'>

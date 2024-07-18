@@ -6,18 +6,22 @@
 @tailwind utilities;
 
 @layer base {
-  body {
-    @apply font-sans;
-  }
+    body {
+        @apply font-sans;
+        @apply dark:text-white
+    }
 }
-@layer utilities{
-    .brandP-Color{
+
+@layer utilities {
+    .brandP-Color {
         background-color: #194FE6;
     }
-    .brandS-Color{
+
+    .brandS-Color {
         background-color: #ffffff;
     }
-    .maskLogo{
+
+    .maskLogo {
         /* position: absolute;
         height: 100%;
         width: 100%;
@@ -25,75 +29,96 @@
         top:0;
         bottom: 0; */
         mask-image: url('/logoMuted.png');
-        mask-size: contain; /* Adjust mask size to fit the element */
-        mask-repeat: no-repeat; /* Prevent the mask from repeating */
-        mask-position: center; /* Center the mask image within the element */
-        -webkit-mask-image: url('/logoMuted.png'); /* For Safari support */
+        mask-size: contain;
+        /* Adjust mask size to fit the element */
+        mask-repeat: no-repeat;
+        /* Prevent the mask from repeating */
+        mask-position: center;
+        /* Center the mask image within the element */
+        -webkit-mask-image: url('/logoMuted.png');
+        /* For Safari support */
         -webkit-mask-size: contain;
         -webkit-mask-repeat: no-repeat;
         -webkit-mask-position: center;
     }
-    .linkActiveLight{
-        color:white;
-        background-color:#194FE6; 
+
+    .linkActiveLight {
+        color: white;
+        background-color: #194FE6;
     }
-    .linkActiveDark{
+
+    .linkActiveDark {
         /* color:#194FE6;
         background-color:#ffffff ; */
-        color:white;
-        background-color:#194FE6 ;
+        color: white;
+        background-color: #194FE6;
     }
-    .nav_light_Shadow{
+
+    .nav_light_Shadow {
         box-shadow: -9px 11px 86px -26px rgba(0, 0, 0, 0.5);
-    
+
     }
-    .nav_dark_Shadow{
+
+    .nav_dark_Shadow {
         box-shadow: -9px 11px 86px -26px rgba(41, 32, 82, 0.5);
-        
+
     }
-    .toggleBtnShadow{
-       -webkit-box-shadow: inset 3px 3px 50px -19px rgba(0,0,0,0.31);
--moz-box-shadow: inset 3px 3px 50px -19px rgba(0,0,0,0.31);
-box-shadow: inset 3px 3px 50px -19px rgba(0,0,0,0.31);
+
+    .toggleBtnShadow {
+        -webkit-box-shadow: inset 3px 3px 50px -19px rgba(0, 0, 0, 0.31);
+        -moz-box-shadow: inset 3px 3px 50px -19px rgba(0, 0, 0, 0.31);
+        box-shadow: inset 3px 3px 50px -19px rgba(0, 0, 0, 0.31);
     }
-    .hoverAnim{
+
+    .hoverAnim {
         color: white;
         position: relative;
         z-index: 1;
         color: rgb(94 94 131);
         border-color: #c3d3ff;
-        @apply dark:text-darkPrimary_grays ;
+        @apply dark:text-darkPrimary_grays;
         animation: shake 0.1s cubic-bezier(1, 0.02, 0, 1) 4 alternate forwards;
     }
-    .hoverAnim::before{
+
+    .hoverAnim::before {
         content: '';
         position: absolute;
-        height:100%;
+        height: 100%;
         width: 100%;
-        top:0;
-        left:0;
+        top: 0;
+        left: 0;
         z-index: -11;
         background-color: #c3d3ff;
         transform: translateY(100%);
-        animation: slide 0.1s ease-in   1 forwards ;
+        animation: slide 0.1s ease-in 1 forwards;
         animation-fill-mode: forwards;
 
     }
+
     @keyframes slide {
-        0%{ transform: translateY(100%);}
-        100%{ transform: translateY(0%);}
+        0% {
+            transform: translateY(100%);
+        }
+
+        100% {
+            transform: translateY(0%);
+        }
     }
+
     @keyframes shake {
-        0%{
+        0% {
             transform: translateX(0%);
         }
-        100%{
+
+        100% {
             transform: translateX(3%);
         }
     }
 
-    .min-h-100vh{
+    .min-h-100vh {
         min-height: 100vh;
     }
-    
+
+
+
 }

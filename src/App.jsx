@@ -1,5 +1,5 @@
 import React from 'react'
-import {Navbar} from './Components'
+import {Footer, Navbar} from './Components'
 import './App.css'
 import '@fortawesome/fontawesome-free/css/all.min.css';
 
@@ -9,7 +9,10 @@ function App() {
   return (
     <>
    <Navbar />
+   <div className='min-h-10vw'>
     <Outlet />
+   </div>
+    <Footer />
     </>
     
   )
