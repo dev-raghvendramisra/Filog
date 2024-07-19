@@ -1,67 +1,16 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
 import { NavLink } from 'react-router-dom';
-import { Logo, SearchBar, ProfilePic, ToggleBtn } from '../index'; 
-import LoginBtn from '../Button/LoginBtn';
+import { Logo, SearchBar, ToggleBtn } from '../index'; 
+import useLinks from '../../hooks/useLinks';
+
 
 
 
 function Navbar({className='',style={},...props}) {
-  const { isUserLoggedIn } = useSelector((state) => state.auth);
+  
 
-  const links = [
-    {
-      name: "Dashboard",
-      status: true, 
-      path: '/pd',
-      activeStyling:true,
-      hoverAnim:true,
-      defaultStyling:true
-    },
-    {
-      name: "Write",
-      status: true, // 
-      path: '/pw',
-      activeStyling:true,
-      hoverAnim:true,
-      defaultStyling:true,
-      icon:<i style={{marginRight:"0.3vw"}} class=" fa-regular fa-pen-to-square"></i>
-    },
-    {
-      name: "About",
-      status: true, //
-      path: '/about',
-      activeStyling:true,
-      hoverAnim:true,
-      defaultStyling:true
-    },
-    {
-      name: "Github",
-      status: true, 
-      path: 'https://github.com/dev-raghvendramisra',
-      activeStyling:true,
-      hoverAnim:true,
-      defaultStyling:true
-    },
-    {
-      component:<LoginBtn  >Login</LoginBtn>,
-      name: "Login",
-      status: !isUserLoggedIn, 
-      path: '/login',
-      activeStyling:true,
-      border:true,
-      hoverAnim:true,
-      defaultStyling:true,
-    },
-    {
-      component: <ProfilePic />,
-      status: isUserLoggedIn, // 
-      path: 'pd/dashboard/user-profile',
-      name: "profile-pic",
-      activeStyling:false,
-      defaultStyling:false,
-    },
-  ];
+  const links = useLinks()
 
   return (
    <div className={`flex justify-center items-center sticky top-0${className}`} style={{top:"2vh",...style}}{...props}>
@@ -109,7 +58,7 @@ function Navbar({className='',style={},...props}) {
                   })}
 
           <ToggleBtn className='ml-1vw'>
-          <i style={{fontSize:"0.5vw"}} class=" fa-solid fa-moon"></i>
+          <i style={{fontSize:"0.5vw"}} className=" fa-solid fa-moon text-black"></i>
           </ToggleBtn>
             </div>
 
