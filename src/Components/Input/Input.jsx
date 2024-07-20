@@ -1,5 +1,5 @@
 import React, { useId, useRef } from 'react'
-import {BlinkingCursor} from '../../Components'
+import {BlinkingCursor, Error} from '../../Components'
 function Input({ 
    value="",
    onChange = () => { },
@@ -7,9 +7,13 @@ function Input({
    placeholder="set your placeholder !",
    className_container = '',
    className_icon = '',
-   className_icon_input_wrapper = '',
+   className_input_prot_el_wrapper = '',
    className_input = '',
+   className_pass_prot_el='',
+   className_pass_icon='',
+   className_pass_icon_replacement='',
    errMsg="",
+   fill=false
      }) {
 
      
@@ -32,38 +36,74 @@ function Input({
       };
 
       React.useEffect(() => {
+      console.log(value!="")
+       value==""?ref.current.blur():null
         if (type === "password") {
             setCrypticPass(value ? "●".repeat(value.length) : "");
         }
     }, [value, type]);
 
     return (
-        <div id="input-container" className={` ${className_container}`}>
-         <label className="text-blackColor" htmlFor={id}>{type=="email"?"Email Adress":(type=="password"?"Password":"Name")}</label>
-         <div id="input_icon-wrapper" className={`flex justify-center items-center overflow-hidden ${className_icon_input_wrapper}`}>
-
-            <span className={`bg-gray-100 text-gray-400 text-1.3vw p-0.6vw rounded-xl rounded-br-none rounded-tr-none border-gray-200 border-r-4 
-             ${getIconClass()}
-            ${className_icon}`}></span>
-            
-            <div id="pass-prot" className='relative'>
-              <label htmlFor={id} className={`absolute inset-0 overflow-hidden flex justify-start text-0.1vw tracking-widest items-center bg-gray-100 rounded-xl p-0.5vw rounded-bl-none pr-1vw rounded-tl-none ${visibility?"inline":"hidden"}`} >
-                {crypticPass}
-                <BlinkingCursor input={ref} />
-              </label>
-              <input type="text" id={id} ref={ref} value={value} onChange={onChange} placeholder={placeholder} className={`w-16vw bg-gray-100 text-1vw transition-all p-0.5vw pr-0.7vw outline-none rounded-xl rounded-bl-none  rounded-tl-none rounded-tr-none rounded-br-none ${className_input}`} />
-            </div>
-            
-           {type=="password"? <div className='overflow-hidden w-2.5vw h-2.5vw flex justify-center items-center rounded-tr-xl rounded-br-xl bg-gray-100  '>
-            <span className={`${type=="password"?visibility?"fa-regular fa-eye":"fa-regular fa-eye-slash":null} cursor-pointer text-gray-400 text-1.3vw select-none`} onClick={()=>{
-                ref.current.focus()
-                setVisibility(!visibility)
-            }}  >
-            </span>
-           </div> :<div className='bg-gray-100 h-2.5vw w-2.5vw rounded-tr-xl rounded-br-xl'> </div>  }
+       <div id="input-errMsg-wrapper">
+        
+        <div id="input-container" 
+        className={` w-26vw rounded-2xl  flex relative
+        ${fill?"h-3vw bg-gray-100 dark:bg-darkPrimary_grays":"h-3.5vw bg-transparent border-1"}
+        ${errMsg?"border-red-500 border-2 dark:border-1":"border-blackColor dark:border-white"}
+        ${className_container}`}>
+        
+         <label id="label-as-placeholder-for-outlined-input" htmlFor={id} 
+         className={`transition-all absolute z-30  bg-white pl-0.5vw pr-0.5vw dark:bg-darkPrimary_grays_darker 
+          ${fill?"hidden":""}
+          ${value!=""?("left-10p -top-20p text-0.8vw"):(ref.current!=document.activeElement?("left-12p text-1vw top-28p"):("left-10p -top-20p text-0.8vw"))}`}  >
+          {type.substring(0,1).toLocaleUpperCase()+type.substring(1)}
+          </label>
+         
+         <div  id="icon-cont" className={` w-10p h-100p  text-1.5vw flex justify-center items-center 
+          ${fill?("text-darkPrimary_grays_darker text-opacity-70 dark:text-opacity-100 dark:text-footer_text"):("text-darkPrimary_grays_darker text-opacity-70 dark:text-opacity-80 dark:text-white")}`}>
+           <span id="input-icon" 
+          className={`inline ${getIconClass()} ${className_icon}`}>
+          </span>
          </div>
-         <span id="errMsg">{errMsg?errMsg:""}</span>
+
+          <div id="pass-protection-wrapper" 
+          className={`h-100p w-80p relative overflow-hidden ${className_input_prot_el_wrapper}`}>
+
+            <input id={id} ref={ref} type="text" value={value} onChange={onChange} placeholder={fill?placeholder:""}
+            className={`bg-transparent h-100p w-100p outline-none ${className_input}`} />
+            
+            <label id="pass-protection-el" htmlFor={id} 
+            className={`absolute inset-0 flex items-center
+             ${type=="password"?visibility?"hidden":"block":"hidden"}
+             ${fill?"bg-gray-100 dark:bg-darkPrimary_grays":"bg-white dark:bg-darkPrimary_grays_darker"}
+             ${className_pass_prot_el}`}>
+              {crypticPass}
+              <BlinkingCursor input={ref}/>
+            </label>
+          </div>
+
+          {/* {conditional rendering between replacement and icon of pass} */}
+          {type=="password"?
+          <div id="passIcon-cont" className='flex text-1.5vw  h-100p w-10p justify-center items-center '>
+            <span id="passIcon" 
+            onClick={()=>{setVisibility(!visibility);ref.current.focus()}}
+            className={` transition-all
+              ${fill?("text-darkPrimary_grays_darker text-opacity-70 dark:text-opacity-100 dark:text-footer_text"):("text-darkPrimary_grays_darker text-opacity-70 dark:text-opacity-80 dark:text-white")}
+            ${visibility?"fa-regular fa-eye":"fa-regular fa-eye-slash"}
+            ${className_pass_icon}`}>
+            </span>
+          </div>
+
+
+          :<div id="passIconReplacement" 
+          className={` h-100p w-10p ${className_pass_icon_replacement}`}></div>
+        }
+          
+
         </div>
+        <Error errMsg={errMsg} />
+      </div>
+
     )
 }
 

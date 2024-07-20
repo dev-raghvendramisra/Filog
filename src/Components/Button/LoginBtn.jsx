@@ -2,7 +2,7 @@ import React from 'react'
 
 function LoginBtn({className="",type="",children}) {
   return (
-    <button type={type} className={`border-black border-1 ${className}`} >
+    <button type={type} className={`border-black  ${className}`} >
      {children}
     </button>
   )
