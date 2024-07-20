@@ -13,6 +13,7 @@
     "@fortawesome/fontawesome-free": "^6.6.0",
     "@reduxjs/toolkit": "^2.2.6",
     "appwrite": "^15.0.0",
+    "material-symbols": "^0.21.2",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
     "react-redux": "^9.1.2",

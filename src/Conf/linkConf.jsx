@@ -20,7 +20,7 @@ const linkConfig = [
         activeStyling: true,
         hoverAnim: true,
         defaultStyling: true,
-        icon: <i style={{ marginRight: "0.3vw" }} className="fa-regular fa-pen-to-square"></i>,
+        icon: <span style={{ marginRight: "0.3vw" }} className="fa-regular fa-pen-to-square"></span>,
         isRestricted: false
     },
     {

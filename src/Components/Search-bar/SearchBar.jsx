@@ -9,7 +9,7 @@ function Search({placeholder="Tell me what's in your mind ?",className_wrapper,c
        onChange={handleChange} 
        placeholder={placeholder}/>
 
-      <i style={{fontWeight:"regular", padding:"0.7vw",}} 
+      <i style={{fontWeight:"regular", padding:"0.8vw",}} 
       className={`fa-solid fa-magnifying-glass rounded-xl text-gray-400 transition-all rounded-bl-none rounded-tl-none  bg-gray-100 
       ${className_icon}`}></i>
       </div>

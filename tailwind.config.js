@@ -1,7 +1,7 @@
 /** @type {import('tailwindcss').Config} */
 export default {
-  content: ["./src/**/**/**.{jsx,js}","./*.html"],
-  darkMode:"class",
+  content: ["./src/**/**/**.{jsx,js}", "./*.html"],
+  darkMode: "class",
   theme: {
     extend: {
       fontFamily: {
@@ -169,6 +169,19 @@ export default {
         "0.2vw": "0.2vw",
         "0.3vw": "0.3vw",
         "0.4vw": "0.4vw",
+        "0.6vw": "0.6vw",
+        "0.7vw": "0.7vw",
+        "0.8vw": "0.8vw",
+        "0.9vw": "0.9vw",
+        "1.1vw": "1.1vw",
+        "1.2vw": "1.2vw",
+        "1.3vw": "1.3vw",
+        "1.4vw": "1.4vw",
+        "1.6vw": "1.6vw",
+        "1.7vw": "1.7vw",
+        "1.8vw": "1.8vw",
+        "1.9vw": "1.9vw",
+        "2.5vw" : "2.5vw"
       },
       width: {
         '0p': '0%',     // 0%
@@ -328,11 +341,25 @@ export default {
         "0.5vw": "0.5vw",
         "1p": "1%",
         "0.5%": "0.5%", "0.1vw": "0.1vw",
+        "0.1vw": "0.1vw",
         "0.2vw": "0.2vw",
         "0.3vw": "0.3vw",
         "0.4vw": "0.4vw",
+        "0.6vw": "0.6vw",
+        "0.7vw": "0.7vw",
+        "0.8vw": "0.8vw",
+        "0.9vw": "0.9vw",
+        "1.1vw": "1.1vw",
+        "1.2vw": "1.2vw",
+        "1.3vw": "1.3vw",
+        "1.4vw": "1.4vw",
+        "1.6vw": "1.6vw",
+        "1.7vw": "1.7vw",
+        "1.8vw": "1.8vw",
+        "1.9vw": "1.9vw",
+        "2.5vw" : "2.5vw"
       },
-      minHeight:{
+      minHeight: {
         '0p': '0%',     // 0%
         '2p': '2%',     // 2%
         '4p': '4%',     // 4%
@@ -494,6 +521,18 @@ export default {
         "0.2vw": "0.2vw",
         "0.3vw": "0.3vw",
         "0.4vw": "0.4vw",
+        "0.6vw": "0.6vw",
+        "0.7vw": "0.7vw",
+        "0.8vw": "0.8vw",
+        "0.9vw": "0.9vw",
+        "1.1vw": "1.1vw",
+        "1.2vw": "1.2vw",
+        "1.3vw": "1.3vw",
+        "1.4vw": "1.4vw",
+        "1.6vw": "1.6vw",
+        "1.7vw": "1.7vw",
+        "1.8vw": "1.8vw",
+        "1.9vw": "1.9vw",
       }
       ,
 
@@ -659,8 +698,18 @@ export default {
         "0.2vw": "0.2vw",
         "0.3vw": "0.3vw",
         "0.4vw": "0.4vw",
-
-
+        "0.6vw": "0.6vw",
+        "0.7vw": "0.7vw",
+        "0.8vw": "0.8vw",
+        "0.9vw": "0.9vw",
+        "1.1vw": "1.1vw",
+        "1.2vw": "1.2vw",
+        "1.3vw": "1.3vw",
+        "1.4vw": "1.4vw",
+        "1.6vw": "1.6vw",
+        "1.7vw": "1.7vw",
+        "1.8vw": "1.8vw",
+        "1.9vw": "1.9vw",
       },
       margin: {
         '0p': '0%',     // 0%
@@ -824,8 +873,18 @@ export default {
         "0.2vw": "0.2vw",
         "0.3vw": "0.3vw",
         "0.4vw": "0.4vw",
-
-
+        "0.6vw": "0.6vw",
+        "0.7vw": "0.7vw",
+        "0.8vw": "0.8vw",
+        "0.9vw": "0.9vw",
+        "1.1vw": "1.1vw",
+        "1.2vw": "1.2vw",
+        "1.3vw": "1.3vw",
+        "1.4vw": "1.4vw",
+        "1.6vw": "1.6vw",
+        "1.7vw": "1.7vw",
+        "1.8vw": "1.8vw",
+        "1.9vw": "1.9vw",
       },
 
       fontSize: {
@@ -990,20 +1049,35 @@ export default {
         "0.2vw": "0.2vw",
         "0.3vw": "0.3vw",
         "0.4vw": "0.4vw",
+        "0.6vw": "0.6vw",
+        "0.7vw": "0.7vw",
+        "0.8vw": "0.8vw",
+        "0.9vw": "0.9vw",
+        "1.1vw": "1.1vw",
+        "1.2vw": "1.2vw",
+        "1.3vw": "1.3vw",
+        "1.4vw": "1.4vw",
+        "1.6vw": "1.6vw",
+        "1.7vw": "1.7vw",
+        "1.8vw": "1.8vw",
+        "1.9vw": "1.9vw",
+
 
       },
 
       colors: {
         primary: "#194FE6",
-        darkPrimary_grays:"#242535",
-        darkPrimary:"#181A2A",
-        darkPrimary_grays_darker:"#141624",
-        lightPrimary_grays:"#E8E8EA",
-        lightPrimary_grays_darker:"#F6F6F7",
-        blackColor:"#3B3C4A"
+        darkPrimary_grays: "#242535",
+        darkPrimary: "#181A2A",
+        darkPrimary_grays_darker: "#141624",
+        lightPrimary_grays: "#E8E8EA",
+        lightPrimary_grays_darker: "#F6F6F7",
+        blackColor: "#3B3C4A",
+        footer_text: "#97989F",
+        footer_text_light: "#696A75"
       }
     }
-    
+
   },
   plugins: []
 }
