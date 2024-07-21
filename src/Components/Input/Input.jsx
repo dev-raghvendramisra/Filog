@@ -1,6 +1,6 @@
-import React, { useId, useRef } from 'react'
+import React, { useId } from 'react'
 import {BlinkingCursor, Error} from '../../Components'
-function Input({ 
+const Input=React.forwardRef(({ 
    value="",
    onChange = () => { },
    type="email",
@@ -13,14 +13,14 @@ function Input({
    className_pass_icon='',
    className_pass_icon_replacement='',
    errMsg="",
-   fill=false
-     }) {
+   fill=false,
+     },ref)=> {
 
      
     const id = useId()
-    const [visibility,setVisibility] = React.useState(false);
+    const [visibility,setVisibility] = React.useState(true);
     const [crypticPass, setCrypticPass] = React.useState("")
-    const ref = useRef()
+    
 
     const getIconClass = () => {
         switch(type) {
@@ -37,7 +37,8 @@ function Input({
 
       React.useEffect(() => {
       console.log(value!="")
-       value==""?ref.current.blur():null
+      //  value==""?ref.current.blur():null
+       console.log(ref.current)
         if (type === "password") {
             setCrypticPass(value ? "●".repeat(value.length) : "");
         }
@@ -105,6 +106,6 @@ function Input({
       </div>
 
     )
-}
+})
 
 export default Input

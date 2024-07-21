@@ -8,6 +8,7 @@ import LoginBtn from "./Button/LoginBtn";
 import Input from "./Input/Input";
 import BlinkingCursor from "./Cursor/Cursor";
 import Error from "./Error-message/Error-message";
+import Form from "./Form/Form"
 
 export {
   Navbar,
@@ -19,6 +20,7 @@ export {
   Footer,
   Input,
   ProfilePic,
-  LoginBtn
+  LoginBtn,
+  Form
 };
 export * from "../pages"
