@@ -176,5 +176,10 @@
     font-size: 1.5vw; /* Show when visible class is added */
   }
 
+   .formShadow{
+    -webkit-box-shadow: -10px 0px 93px 0px rgba(0,0,0,0.36);
+-moz-box-shadow: -10px 0px 93px 0px rgba(0,0,0,0.36);
+box-shadow: -10px 0px 93px 0px rgba(0,0,0,0.36);
+   }
 
 }

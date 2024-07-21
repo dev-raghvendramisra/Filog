@@ -1259,6 +1259,9 @@ export default {
       borderWidth: {
         "1": "1px"
       },
+      transitionProperty:{
+         "inset":"inset"
+      },
 
       colors: {
         primary: "#194FE6",

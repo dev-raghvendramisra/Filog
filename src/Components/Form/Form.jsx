@@ -1,19 +1,14 @@
 import React from "react";
-import { Error, Input } from "../../Components";
+import { Input } from "../../Components";
 
-function Form({ type = "login" }) {
-  const [password, setPassword] = React.useState("");
-  const [email, setEmail] = React.useState("");
+const  Form=React.forwardRef(({ className='', type = "login" ,email,setEmail,password ,setPassword,name,setName, setFormErr},formRef)=> {
   const [passErr, setPassErr] = React.useState("");
   const [emailErr, setEmailErr] = React.useState("");
-  const [formErr, setFormErr] = React.useState("");
-
-  const [name, setName] = type=="signup"?React.useState(""):[];
   const [nameErr, setNameErr] = type=="signup"?React.useState(""):[];
 
   const minChars = 8;
   const maxChars = 64;
-  const genErr = "Please fill all the fields!";
+  const genErr = "Please fill all the fields properly !";
   const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
 
   const refs = [
@@ -47,7 +42,7 @@ function Form({ type = "login" }) {
     for (let ref of refs) {
       if (ref && ref.current && ref.current.value === "") {
         ref.current.focus();
-        setFormErr(genErr);
+        // setFormErr(genErr);
         isFormValid = false;
         break;
       }
@@ -68,7 +63,7 @@ function Form({ type = "login" }) {
       return true;
     } else {
       setPassErr(`Password must be between ${minChars} and ${maxChars} characters.`);
-      setFormErr(genErr);
+      // setFormErr(genErr);
       return false;
     }
   }
@@ -79,7 +74,7 @@ function Form({ type = "login" }) {
       return true;
     } else {
       setEmailErr("Please enter a valid email address!");
-      setFormErr(genErr);
+      // setFormErr(genErr);
       return false;
     }
   }
@@ -88,7 +83,7 @@ function Form({ type = "login" }) {
     if (type === "signup") {
       if (name.trim() === "") {
         setNameErr("Please enter a valid name!");
-        setFormErr(genErr);
+        // setFormErr(genErr);
         return false;
       }
       return true;
@@ -96,9 +91,11 @@ function Form({ type = "login" }) {
     return true;
   }
 
+  React.useEffect(()=>refs[0].current.focus(),[])
+
   return (
-    <div>
-      <form onSubmit={handleSubmit}>
+    <div className={` ${className}`}>
+      <form onSubmit={handleSubmit} ref={formRef}>
         {type === "signup" ? (
           <Input
             type={"name"}
@@ -127,12 +124,12 @@ function Form({ type = "login" }) {
           onChange={onPassChange}
           className_icon="text-1.2vw"
         />
-        <button type="submit" className="btn-submit">Submit</button>
+        <button  type="submit" className="btn-submit absolute top-0 left-0 h-0 w-0"></button>
       </form>
 
-      <Error errMsg={formErr} className="transition-all justify-center" />
+      
     </div>
   );
-}
+})
 
 export default Form;

@@ -12,6 +12,7 @@ const Input=React.forwardRef(({
    className_pass_prot_el='',
    className_pass_icon='',
    className_pass_icon_replacement='',
+   className_wrapper="",
    errMsg="",
    fill=false,
      },ref)=> {
@@ -45,16 +46,16 @@ const Input=React.forwardRef(({
     }, [value, type]);
 
     return (
-       <div id="input-errMsg-wrapper">
+       <div id="input-errMsg-wrapper" className={`mb-4p transition-all ${className_wrapper}`}>
         
         <div id="input-container" 
         className={` w-26vw rounded-2xl  flex relative
-        ${fill?"h-3vw bg-gray-100 dark:bg-darkPrimary_grays":"h-3.5vw bg-transparent border-1"}
+        ${fill?"h-3vw bg-gray-100 dark:bg-darkPrimary_grays":"h-3.5vw bg-transparent border-2 dark:border-1"}
         ${errMsg?"border-red-500 border-2 dark:border-1":"border-blackColor dark:border-white"}
         ${className_container}`}>
         
          <label id="label-as-placeholder-for-outlined-input" htmlFor={id} 
-         className={`transition-all absolute z-30  bg-white pl-0.5vw pr-0.5vw dark:bg-darkPrimary_grays_darker 
+         className={`transition-inset absolute z-30  bg-white pl-0.5vw pr-0.5vw dark:bg-darkPrimary
           ${fill?"hidden":""}
           ${value!=""?("left-10p -top-20p text-0.8vw"):(ref.current!=document.activeElement?("left-12p text-1vw top-28p"):("left-10p -top-20p text-0.8vw"))}`}  >
           {type.substring(0,1).toLocaleUpperCase()+type.substring(1)}
@@ -71,12 +72,12 @@ const Input=React.forwardRef(({
           className={`h-100p w-80p relative overflow-hidden ${className_input_prot_el_wrapper}`}>
 
             <input id={id} ref={ref} type="text" value={value} onChange={onChange} placeholder={fill?placeholder:""}
-            className={`bg-transparent h-100p w-100p outline-none ${className_input}`} />
+            className={`bg-transparent h-100p w-100p outline-none ${className_input}`} autoComplete='off'/>
             
             <label id="pass-protection-el" htmlFor={id} 
             className={`absolute inset-0 flex items-center
              ${type=="password"?visibility?"hidden":"block":"hidden"}
-             ${fill?"bg-gray-100 dark:bg-darkPrimary_grays":"bg-white dark:bg-darkPrimary_grays_darker"}
+             ${fill?"bg-gray-100 dark:bg-darkPrimary_grays":"bg-white dark:bg-darkPrimary"}
              ${className_pass_prot_el}`}>
               {crypticPass}
               <BlinkingCursor input={ref}/>
@@ -102,7 +103,7 @@ const Input=React.forwardRef(({
           
 
         </div>
-        <Error errMsg={errMsg} />
+        <Error className='transition-all' errMsg={errMsg} />
       </div>
 
     )
