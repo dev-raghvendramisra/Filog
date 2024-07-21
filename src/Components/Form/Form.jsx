@@ -8,8 +8,8 @@ function Form({ type = "login" }) {
   const [emailErr, setEmailErr] = React.useState("");
   const [formErr, setFormErr] = React.useState("");
 
-  const [name, setName] = React.useState("");
-  const [nameErr, setNameErr] = React.useState("");
+  const [name, setName] = type=="signup"?React.useState(""):[];
+  const [nameErr, setNameErr] = type=="signup"?React.useState(""):[];
 
   const minChars = 8;
   const maxChars = 64;
@@ -52,13 +52,14 @@ function Form({ type = "login" }) {
         break;
       }
     }
-      const nameValid = type === "signup" ? nameValidation() : true;
-      const emailValid = emailValidation();
-      const passValid = passValidation();
 
-      if (nameValid && emailValid && passValid) {
-        console.log("Submitting started");
-        // Add form submission logic here
+    const nameValid = type === "signup" ? nameValidation() : true;
+    const emailValid = emailValidation();
+    const passValid = passValidation();
+
+    if (isFormValid && nameValid && emailValid && passValid) {
+      console.log("Submitting started");
+      // Add form submission logic here
     }
   };
 
@@ -126,7 +127,7 @@ function Form({ type = "login" }) {
           onChange={onPassChange}
           className_icon="text-1.2vw"
         />
-        <button type="submit">submit</button>
+        <button type="submit" className="btn-submit">Submit</button>
       </form>
 
       <Error errMsg={formErr} className="transition-all justify-center" />
