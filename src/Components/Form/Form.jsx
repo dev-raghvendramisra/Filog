@@ -1,135 +1,47 @@
+
 import React from "react";
-import { Input } from "../../Components";
+import { FormValidation } from "../../Components";
 
-const  Form=React.forwardRef(({ className='', type = "login" ,email,setEmail,password ,setPassword,name,setName, setFormErr},formRef)=> {
-  const [passErr, setPassErr] = React.useState("");
-  const [emailErr, setEmailErr] = React.useState("");
-  const [nameErr, setNameErr] = type=="signup"?React.useState(""):[];
-
-  const minChars = 8;
-  const maxChars = 64;
-  const genErr = "Please fill all the fields properly !";
-  const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
-
-  const refs = [
-    React.useRef(null),
-    React.useRef(null),
-    type === "signup" ? React.useRef(null) : null,
-  ];
-
-  function onPassChange({ target }) {
-    setPassword(target.value);
-    setPassErr("");
-    setFormErr("");
-  }
-
-  function onEmailChange({ target }) {
-    setEmail(target.value);
-    setEmailErr("");
-    setFormErr("");
-  }
-
-  function onNameChange({ target }) {
-    setName(target.value);
-    setNameErr("");
-    setFormErr("");
-  }
-
-  const handleSubmit = (evt) => {
-    evt.preventDefault();
-    let isFormValid = true;
-
-    for (let ref of refs) {
-      if (ref && ref.current && ref.current.value === "") {
-        ref.current.focus();
-        // setFormErr(genErr);
-        isFormValid = false;
-        break;
-      }
-    }
-
-    const nameValid = type === "signup" ? nameValidation() : true;
-    const emailValid = emailValidation();
-    const passValid = passValidation();
-
-    if (isFormValid && nameValid && emailValid && passValid) {
-      console.log("Submitting started");
-      // Add form submission logic here
-    }
-  };
-
-  function passValidation() {
-    if (password.length >= minChars && password.length <= maxChars) {
-      return true;
-    } else {
-      setPassErr(`Password must be between ${minChars} and ${maxChars} characters.`);
-      // setFormErr(genErr);
-      return false;
-    }
-  }
-
-  function emailValidation() {
-    const res = emailRegex.test(email);
-    if (res) {
-      return true;
-    } else {
-      setEmailErr("Please enter a valid email address!");
-      // setFormErr(genErr);
-      return false;
-    }
-  }
-
-  function nameValidation() {
-    if (type === "signup") {
-      if (name.trim() === "") {
-        setNameErr("Please enter a valid name!");
-        // setFormErr(genErr);
-        return false;
-      }
-      return true;
-    }
-    return true;
-  }
-
-  React.useEffect(()=>refs[0].current.focus(),[])
+function Form({ formRef, type, buttonComponent, heading = "Welcome back ", subHeading = "Enter your credentials to login your account" }) {
 
   return (
-    <div className={` ${className}`}>
-      <form onSubmit={handleSubmit} ref={formRef}>
-        {type === "signup" ? (
-          <Input
-            type={"name"}
-            value={name}
-            ref={refs[2]}
-            errMsg={nameErr}
-            onChange={onNameChange}
-            className_icon="text-1.2vw"
-          />
-        ) : null}
+    <div id={`${type}-container`} 
+    className='h-100vh w-100p  flex justify-center items-start' 
+    style={{ paddingTop: "3.5vh" }}>
 
-        <Input
-          type={"email"}
-          value={email}
-          ref={type === "signup" ? refs[1] : refs[0]}
-          errMsg={emailErr}
-          onChange={onEmailChange}
-          className_icon="text-1.2vw"
-        />
+      {/* {insert loading element if needed} */}
 
-        <Input
-          type={"password"}
-          value={password}
-          ref={type === "signup" ? refs[2] : refs[1]}
-          errMsg={passErr}
-          onChange={onPassChange}
-          className_icon="text-1.2vw"
-        />
-        <button  type="submit" className="btn-submit absolute top-0 left-0 h-0 w-0"></button>
-      </form>
+      <div id={`${type}-wrapper`}
+        className='bg-blue-100 dark:bg-darkPrimary_grays  h-90p w-70p   justify-center flex items-center   rounded-3xl overflow-hidden '>
 
-      
+        <div id="img-container"
+          className='h-100p pr-2p pl-4p flex items-center  ' >
+          <img className='' src="/Login-ill.png" alt="login" />
+        </div>
+
+        <div id="form-container"
+          className='flex flex-col justify-start items-center h-100p rounded-2xl bg-white dark:bg-darkPrimary  pl-8p pr-8p pt-18p formShadow'>
+          <h1 id="form-heading"
+            className='text-1.6vw'
+            style={{ fontWeight: "600" }} > 
+            {heading}
+          </h1>
+          <p className='text-0.8vw text-darkPrimary_grays mb-4p dark:text-footer_text '>{subHeading}</p>
+          <FormValidation className="mt-2p transition-all" type={type} ref={formRef} />
+
+          <div id="button-wrapper" className='w-90p '>
+            {buttonComponent}
+          </div>
+        </div>
+
+      </div>
     </div>
-  );
-})
 
-export default Form;
+  )
+}
+
+export default Form
+
+// password, setPassword, email, setEmail,name, setName,
+
+//email={email} password={password} setPassword={setPassword} setEmail={setEmail} name={name} setName={setName}

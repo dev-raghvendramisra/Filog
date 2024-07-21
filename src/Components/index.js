@@ -8,8 +8,9 @@ import LoginBtn from "./Button/LoginBtn";
 import Input from "./Input/Input";
 import BlinkingCursor from "./Cursor/Cursor";
 import Error from "./Error-message/Error-message";
-import Form from "./Form/Form";
+import FormValidation from "./Form/Form-Validation";
 import Button from './Button/Button'
+import Form from './Form/Form'
 
 export {
   Navbar,
@@ -22,7 +23,8 @@ export {
   Input,
   ProfilePic,
   LoginBtn,
-  Form,
-  Button
+  FormValidation,
+  Button,
+  Form
 };
 export * from "../pages"
