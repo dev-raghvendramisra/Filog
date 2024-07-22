@@ -7,7 +7,7 @@ const linkConfig = [
     {
         name: "Dashboard",
         status:true,
-        path: '/pd',
+        path: '/pd/dashboard',
         activeStyling: true,
         hoverAnim: true,
         defaultStyling: true,
@@ -15,7 +15,7 @@ const linkConfig = [
     },
     {
         name: "Write",
-        path: '/pw',
+        path: '/pw/write',
         status:true,
         activeStyling: true,
         hoverAnim: true,

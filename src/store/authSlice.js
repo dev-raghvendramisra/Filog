@@ -3,7 +3,8 @@ import { createSlice } from "@reduxjs/toolkit";
 const initialState = {
     isUserLoggedIn:false,
     userData:null,
-    isLoginInitiated:false
+    isLoginInitiated:false,
+    fetching:false
 }
 
 const authSlice = createSlice({
@@ -23,10 +24,13 @@ const authSlice = createSlice({
         iniateLoginSequence:(state)=>{
             state.isLoginInitiated=!state.isLoginInitiated
             console.log(state.isLoginInitiated)
+        },
+        setFetching:({fetching},payload)=>{
+                fetching=payload;
         }
     }
 })
 
-export const {login, logout, iniateLoginSequence} = authSlice.actions;
+export const {login, logout, iniateLoginSequence, setFetching} = authSlice.actions;
 
 export default authSlice.reducer

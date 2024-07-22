@@ -2,10 +2,13 @@ import React from 'react'
 import { Form, Button, Error } from '../../Components'
 import { NavLink } from 'react-router-dom'
 import { useSelector, useDispatch } from 'react-redux';
-import { authServices } from '../../backend-services';
+import { authServices, dbServices } from '../../backend-services';
 import { setEmail, setIsValidate, setPassword } from '../../store/formSlice';
 import { useNavigate } from 'react-router-dom';
-
+import getBlogPosts from '../../utils/getBlogPosts'
+import { clearBlogs, setBlogs } from '../../store/blogsSlice';
+import { login, logout, setFetching } from '../../store/authSlice';
+import startAuthentication from '../../utils/startAuthentication';
 
 
 function Login() {
@@ -13,7 +16,7 @@ function Login() {
   const [loading, setLoading] = React.useState("");
   const formRef = React.useRef(null)
   const {isValidated,email,password} = useSelector((state)=>state.formData)
-  const dispatchChange = useDispatch()
+  const dispatch = useDispatch()
   const navigate = useNavigate()
 
   const handleSubmit = async()=>{
@@ -23,37 +26,46 @@ function Login() {
   }
 
   React.useEffect(()=>{
-   async function createSession(){
+    const startLoginSequence = async()=>{
+       if(isValidated){
+           setLoading(true);
+           dispatch(setIsValidate(false)); //setting the validation false to avoid back to back requests with same credentials
+           const sessionInitRes = await  authServices.login(email,password);
+           if(sessionInitRes.code=="401"){
+                setFormErr("Invalid credentials, re-check your email and password !");
+           }  
+           else if(sessionInitRes.code=="429"){
+                setFormErr("Too many login attempts, please try again later !")
+                setTimeout(() => {
+                  dispatch(setEmail(""))    //setting the form slice's state to default 
+                  dispatch(setPassword(""))
+                  navigate("/") //redirecting user to landing page to avoid further requests
+                }, 7000);
+           }
 
-    if(isValidated){
-     setLoading(true)
-     var res = await authServices.login(email,password);
-    //  console.log(`message:${res.message},type:${res.type},code:${res.code},name:${res.name}`);
-    //  console.log(Object.keys(res))
-      dispatchChange(setIsValidate(false))
+           else if(sessionInitRes.$id){
+               const blogPostsRes = await getBlogPosts({ //(caching)calling the getBlogPosts util to fetch the posts before redirecting user to dashboard 
+                dispatch:dispatch,
+                setBlogs:setBlogs,
+                clearBlogs:clearBlogs
+                })
+                const authRes = await startAuthentication({//calling the strtauthentication util to verify the session and retreive the user details
+                  dispatch:dispatch,
+                  login:login,
+                  logout:logout,
+                  setFetching:setFetching
+                })
 
-      if(res.code=="401"){
-       setFormErr("Invalid user credentials")
-      }
-      else if(res.code=='429'){
-        setFormErr("Too many attempts, please try after sometime !")
-        setTimeout(()=>{
-          navigate("/");
-          dispatchChange(setEmail(""));
-          dispatchChange(setPassword(""));
-        },7000);
-      }
-      else if(res.$id){
-           //useAuth to authenticate user
-           setFormErr("")
-           dispatchChange(setEmail(""))
-           dispatchChange(setPassword(""))
+                if(authRes.message){
+                  setFormErr(authRes.message)
+                }
+           }
+
+           setLoading(false)
        }
-      }
-      setLoading(false)
     }
-    createSession()
-  },[isValidated])
+    startLoginSequence()
+    },[isValidated])
 
   return (
 
@@ -65,7 +77,7 @@ function Login() {
       subHeading='Enter your credentials to login your account'
       buttonComponent={
         <div className='w-100p text-center flex flex-col items-center'>
-         {/* <button onClick={()=>{authServices.logout()}}>logout</button> */}
+         <button onClick={()=>{authServices.logout()}}>logout</button>
           <Button primary loading={loading?true:false} className='w-70p overflow-hidden transition-all' onClick={
            handleSubmit
           }>

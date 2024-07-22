@@ -33,9 +33,9 @@ export class Auth{
 
     async login(email,password){
         try {
-        console.log("calling-db");
+        console.log("calling-auth");
            const res =  await this.account.createEmailPasswordSession(email,password);
-           console.log(res)
+        //    console.log(res)
            if(res.$id){
             return res;
            }
