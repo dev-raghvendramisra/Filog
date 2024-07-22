@@ -25,8 +25,8 @@ const authSlice = createSlice({
             state.isLoginInitiated=!state.isLoginInitiated
             console.log(state.isLoginInitiated)
         },
-        setFetching:({fetching},payload)=>{
-                fetching=payload;
+        setFetching:(state,action)=>{
+                state.fetching=action.payload;
         }
     }
 })

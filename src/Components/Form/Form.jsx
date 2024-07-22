@@ -1,19 +1,21 @@
 
 import React from "react";
-import { FormValidation } from "../../Components";
+import { FormValidation, InfinitePogressbar} from "../../Components";
 
-function Form({ formRef, type, buttonComponent, heading = "Welcome back ", subHeading = "Enter your credentials to login your account" }) {
+
+function Form({ formRef, type, buttonComponent, heading = "Welcome back ", subHeading = "Enter your credentials to login your account" ,loading}) {
 
   return (
     <div id={`${type}-container`} 
     className='h-100vh w-100p  flex justify-center items-start' 
     style={{ paddingTop: "3.5vh" }}>
 
-      {/* {insert loading element if needed} */}
-
       <div id={`${type}-wrapper`}
-        className='bg-blue-100 dark:bg-darkPrimary_grays  h-90p w-70p   justify-center flex items-center   rounded-3xl overflow-hidden '>
-
+        className='bg-blue-100 dark:bg-darkPrimary_grays  h-90p w-70p relative  justify-center flex items-center   rounded-3xl overflow-hidden '>
+       
+       {loading?<InfinitePogressbar />:null} 
+       
+         
         <div id="img-container"
           className='h-100p pr-2p pl-4p flex items-center  ' >
           <img className='' src="/Login-ill.png" alt="login" />

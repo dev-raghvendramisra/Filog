@@ -16,13 +16,13 @@ function SignUp() {
       buttonComponent={
         <div className='w-100p text-center flex flex-col items-center'>
           <Button primary className='w-70p overflow-hidden transition-all' onClick={
-            (handleSubmission) => {
+            () => {
               const event = new Event("submit", { bubbles: true })
               console.log(formRef.current)
               formRef.current ? formRef.current.dispatchEvent(event) : null
             }
           }>
-            Login
+            Signup
           </Button >
           <Error errMsg={formErr} className="transition-all justify-center mt-4p" />
           <NavLink to="/login" className='mt-4p w-100p cursor-pointer text-0.8vw text-gray-600 dark:text-white ' >

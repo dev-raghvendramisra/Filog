@@ -11,6 +11,7 @@ import { login, logout, setFetching } from '../../store/authSlice';
 import startAuthentication from '../../utils/startAuthentication';
 
 
+
 function Login() {
   const [formErr, setFormErr] = React.useState("");
   const [loading, setLoading] = React.useState("");
@@ -31,10 +32,10 @@ function Login() {
            setLoading(true);
            dispatch(setIsValidate(false)); //setting the validation false to avoid back to back requests with same credentials
            const sessionInitRes = await  authServices.login(email,password);
-           if(sessionInitRes.code=="401"){
+           if(sessionInitRes.code==401){
                 setFormErr("Invalid credentials, re-check your email and password !");
            }  
-           else if(sessionInitRes.code=="429"){
+           else if(sessionInitRes.code==429){
                 setFormErr("Too many login attempts, please try again later !")
                 setTimeout(() => {
                   dispatch(setEmail(""))    //setting the form slice's state to default 
@@ -75,10 +76,11 @@ function Login() {
       formRef={formRef}
       heading='Welcome back 👋 '
       subHeading='Enter your credentials to login your account'
+      loading={loading}
       buttonComponent={
         <div className='w-100p text-center flex flex-col items-center'>
          <button onClick={()=>{authServices.logout()}}>logout</button>
-          <Button primary loading={loading?true:false} className='w-70p overflow-hidden transition-all' onClick={
+          <Button primary className='w-70p overflow-hidden transition-all' onClick={
            handleSubmit
           }>
             Login

@@ -57,7 +57,7 @@ export class Auth{
         try {
             const res = await this.account.get()
 
-             if(res.name){
+             if(res.code!==401){
                 return res;
             }
             else{

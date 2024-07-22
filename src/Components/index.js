@@ -11,6 +11,7 @@ import Error from "./Error-message/Error-message";
 import FormValidation from "./Form/Form-Validation";
 import Button from './Button/Button'
 import Form from './Form/Form'
+import InfinitePogressbar from './Loader/Infinite-progressbar'
 
 export {
   Navbar,
@@ -25,6 +26,7 @@ export {
   LoginBtn,
   FormValidation,
   Button,
-  Form
+  Form,
+  InfinitePogressbar
 };
 export * from "../pages"

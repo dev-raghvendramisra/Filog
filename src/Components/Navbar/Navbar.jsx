@@ -12,7 +12,7 @@ function Navbar({className='',style={},...props}) {
   const links = useLinks()
 
   return (
-   <div className={`flex  z-40 justify-center items-center sticky top-0${className}`} style={{top:"2vh",...style}}{...props}>
+   <div className={`flex  z-50 justify-center items-center sticky top-0${className}`} style={{top:"2vh",...style}}{...props}>
     <nav style={{padding:"0.7vw 0"}} className='transition-all flex justify-between items-center w-80vw p-0.5vw  bg-white outline outline-1 outline-gray-300 rounded-full backdrop-blur-lg nav_light_Shadow dark:nav_dark_Shadow bg-opacity-50 dark:bg-darkPrimary_grays dark:outline-darkPrimary dark:outline-4 dark:bg-opacity-50' id="mainNav">
             
            
