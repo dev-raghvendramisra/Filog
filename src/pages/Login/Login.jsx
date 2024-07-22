@@ -1,12 +1,59 @@
 import React from 'react'
 import { Form, Button, Error } from '../../Components'
 import { NavLink } from 'react-router-dom'
+import { useSelector, useDispatch } from 'react-redux';
+import { authServices } from '../../backend-services';
+import { setEmail, setIsValidate, setPassword } from '../../store/formSlice';
+import { useNavigate } from 'react-router-dom';
+
 
 
 function Login() {
   const [formErr, setFormErr] = React.useState("");
+  const [loading, setLoading] = React.useState("");
   const formRef = React.useRef(null)
+  const {isValidated,email,password} = useSelector((state)=>state.formData)
+  const dispatchChange = useDispatch()
+  const navigate = useNavigate()
 
+  const handleSubmit = async()=>{
+      const event = new Event("submit", { bubbles: true })
+      formRef.current ? formRef.current.dispatchEvent(event) : null
+     
+  }
+
+  React.useEffect(()=>{
+   async function createSession(){
+
+    if(isValidated){
+     setLoading(true)
+     var res = await authServices.login(email,password);
+    //  console.log(`message:${res.message},type:${res.type},code:${res.code},name:${res.name}`);
+    //  console.log(Object.keys(res))
+      dispatchChange(setIsValidate(false))
+
+      if(res.code=="401"){
+       setFormErr("Invalid user credentials")
+      }
+      else if(res.code=='429'){
+        setFormErr("Too many attempts, please try after sometime !")
+        setTimeout(()=>{
+          navigate("/");
+          dispatchChange(setEmail(""));
+          dispatchChange(setPassword(""));
+        },7000);
+      }
+      else if(res.$id){
+           //useAuth to authenticate user
+           setFormErr("")
+           dispatchChange(setEmail(""))
+           dispatchChange(setPassword(""))
+       }
+      }
+      setLoading(false)
+    }
+    createSession()
+  },[isValidated])
 
   return (
 
@@ -18,13 +65,9 @@ function Login() {
       subHeading='Enter your credentials to login your account'
       buttonComponent={
         <div className='w-100p text-center flex flex-col items-center'>
-
-          <Button primary className='w-70p overflow-hidden transition-all' onClick={
-            (handleSubmission) => {
-              const event = new Event("submit", { bubbles: true })
-              console.log(formRef.current)
-              formRef.current ? formRef.current.dispatchEvent(event) : null
-            }
+         {/* <button onClick={()=>{authServices.logout()}}>logout</button> */}
+          <Button primary loading={loading?true:false} className='w-70p overflow-hidden transition-all' onClick={
+           handleSubmit
           }>
             Login
           </Button >

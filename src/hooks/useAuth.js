@@ -3,10 +3,12 @@ import {authServices} from '../backend-services'
 import { useDispatch, useSelector } from "react-redux";
 import { login, logout } from "../store/authSlice";
 
-const useUserData = () => {
+const useAuth = () => {
     const dispatch = useDispatch();
     const { isLoginInitiated } = useSelector((state) => state.auth);
     const [loading, setLoading] = useState(true);
+    const [err, setErr]  = useState("")
+    
 
     useEffect(() => {
         const fetchUserData = async () => {
@@ -17,10 +19,12 @@ const useUserData = () => {
                     dispatch(login(res));
                 } else {
                     dispatch(logout());
+                    setErr(res)
                 }
             } catch (error) {
                 console.error("Error fetching user data:", error);
-                dispatch(logout()); // Handle error scenario, logout user
+                dispatch(logout());
+                setErr(error) // Handle error scenario, logout user
             } finally {
                 setLoading(false);
             }
@@ -29,7 +33,7 @@ const useUserData = () => {
         fetchUserData();
     }, [ isLoginInitiated]);
 
-    return { loading };
+    return { loading,err };
 };
 
-export default useUserData;
+export default useAuth;

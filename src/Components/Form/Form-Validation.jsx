@@ -1,15 +1,14 @@
 import React from "react";
 import { Input } from "..";
 import { useSelector, useDispatch } from "react-redux";
-import { setEmail, setPassword, setName } from "../../store/formSlice";
+import { setEmail, setPassword, setName, setIsValidate } from "../../store/formSlice";
 
 const  FormValidation=React.forwardRef(({ className='', type = "login"},formRef)=> {
+
   const [passErr, setPassErr] = React.useState("");
   const [emailErr, setEmailErr] = React.useState("");
   const [nameErr, setNameErr] = type=="signup"?React.useState(""):[];
-
-  console.log(useSelector((state)=>state))
-  const {name,password,email} = useSelector((state)=>state.formData)
+  const {name,password,email,isValidated} = useSelector((state)=>state.formData)
 
   const minChars = 8;
   const maxChars = 64;
@@ -50,8 +49,9 @@ const  FormValidation=React.forwardRef(({ className='', type = "login"},formRef)
     for (let ref of refs) {
       if (ref && ref.current && ref.current.value === "") {
         ref.current.focus();
-        // setFormErr(genErr);
+        dispatchChange(setIsValidate(false))
         isFormValid = false;
+
         break;
       }
     }
@@ -62,7 +62,11 @@ const  FormValidation=React.forwardRef(({ className='', type = "login"},formRef)
 
     if (isFormValid && nameValid && emailValid && passValid) {
       console.log("Submitting started");
-      // Add form submission logic here
+      dispatchChange(setIsValidate(true))
+    }
+
+    else{
+      dispatchChange(setIsValidate(false))
     }
   };
 

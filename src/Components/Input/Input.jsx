@@ -37,9 +37,6 @@ const Input=React.forwardRef(({
       };
 
       React.useEffect(() => {
-      console.log(value!="")
-      //  value==""?ref.current.blur():null
-       console.log(ref.current)
         if (type === "password") {
             setCrypticPass(value ? "●".repeat(value.length) : "");
         }

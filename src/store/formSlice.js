@@ -4,6 +4,7 @@ const initialState={
     name:"",
     email:"",
     password:"",
+    isValidated:false
 }
 
 
@@ -19,11 +20,14 @@ const formSlice = createSlice({
         } ,
         setPassword:(state,action)=>{
             state.password = action.payload
+        },
+        setIsValidate:(state,action)=>{
+             state.isValidated=action.payload;
         }
     }
 })
-const {setName, setEmail, setPassword} = formSlice.actions;
+const {setName, setEmail, setPassword, setIsValidate} = formSlice.actions;
 
-export {setName, setEmail, setPassword} 
+export {setName, setEmail, setPassword, setIsValidate} 
 export default formSlice.reducer
 

@@ -1,7 +1,5 @@
 import { Client,ID,Account } from "appwrite";
 import conf from "../../Conf/conf";
-import { useDispatch } from "react-redux";
-import { login, logout } from "../../store/authSlice";
 
 export class Auth{
       
@@ -35,8 +33,9 @@ export class Auth{
 
     async login(email,password){
         try {
-            
+        console.log("calling-db");
            const res =  await this.account.createEmailPasswordSession(email,password);
+           console.log(res)
            if(res.$id){
             return res;
            }
