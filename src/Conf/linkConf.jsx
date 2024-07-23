@@ -7,7 +7,7 @@ const linkConfig = [
     {
         name: "Dashboard",
         status:true,
-        path: '/pd/dashboard',
+        path: '/dashboard',
         activeStyling: true,
         hoverAnim: true,
         defaultStyling: true,
@@ -15,7 +15,7 @@ const linkConfig = [
     },
     {
         name: "Write",
-        path: '/pw/write',
+        path: '/write',
         status:true,
         activeStyling: true,
         hoverAnim: true,
@@ -56,7 +56,7 @@ const linkConfig = [
     {
         component: <ProfilePic />,
         status: false,
-        path: 'pd/dashboard/user-profile',
+        path: '/dashboard/user-profile',
         name: "profile-pic",
         activeStyling: false,
         defaultStyling: false,

@@ -1,5 +1,5 @@
 import React from 'react';
-import { Footer, InfinitePogressbar, Navbar } from './Components';
+import { AlertWrapper, Footer, InfinitePogressbar, Navbar } from './Components';
 import './App.css';
 import '@fortawesome/fontawesome-free/css/all.min.css';
 import 'material-symbols/outlined.css';
@@ -7,20 +7,25 @@ import 'material-symbols/outlined.css';
 import { Outlet } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import { login, logout, setFetching } from './store/authSlice';
+import { setAlert } from './store/alertSlice';
 import { useNavigate } from 'react-router-dom';
 import startAuthentication from './utils/startAuthentication';
+
 
 function App() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const { isUserLoggedIn, fetching } = useSelector((state) => state.auth);
+  const { isUserLoggedIn, fetching,userData } = useSelector((state) => state.auth);
+
 
   React.useEffect(() => {
 
     if (isUserLoggedIn) {
-      navigate("/pd");
+      navigate("/dashboard",{replace:true});
+      dispatch(setAlert({type:"welcome",message:`Welcome, ${userData.name}`}))
+
     } else {
-      navigate("/login");
+      navigate("/",{replace:true});
     }
 
     const startLoginSequence = async () => {
@@ -33,10 +38,23 @@ function App() {
     }
   }, [isUserLoggedIn]);
 
+  // React.useEffect(()=>{
+  //   let timer
+  //   if(showAlert){
+  //      timer =  setTimeout(()=>{dispatch(disableAlert())},4100)
+  //   }
+  //   return ()=>{
+  //      clearTimeout(timer)
+
+  //   }
+
+  // },[alertId])
+
   return (
     <>
-      {fetching ? <InfinitePogressbar /> : null}
+      {fetching? <InfinitePogressbar /> : null}
       <Navbar />
+      <AlertWrapper />
       <div className='min-h-56vh'>
         <Outlet />
       </div>

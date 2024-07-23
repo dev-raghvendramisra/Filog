@@ -8,6 +8,7 @@ import Home from "./Home/Home";
 import Write from "./Write/Write";
 import About from "./About/About";
 import SearchResult from "./Search-Result/SearchResult";
+import AlertWrapper from "../Components/Alert/AlertWrapper";
 
 export {
     Dashboard,
@@ -19,5 +20,6 @@ export {
     Home,
     Write,
     About,
-    SearchResult
+    SearchResult,
+    AlertWrapper
   };

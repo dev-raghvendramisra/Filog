@@ -2,13 +2,14 @@ import React from 'react'
 import { Form, Button, Error } from '../../Components'
 import { NavLink } from 'react-router-dom'
 import { useSelector, useDispatch } from 'react-redux';
-import { authServices, dbServices } from '../../backend-services';
+import { authServices } from '../../backend-services';
 import { setEmail, setIsValidate, setPassword } from '../../store/formSlice';
 import { useNavigate } from 'react-router-dom';
 import getBlogPosts from '../../utils/getBlogPosts'
 import { clearBlogs, setBlogs } from '../../store/blogsSlice';
 import { login, logout, setFetching } from '../../store/authSlice';
 import startAuthentication from '../../utils/startAuthentication';
+
 
 
 
@@ -79,7 +80,7 @@ function Login() {
       loading={loading}
       buttonComponent={
         <div className='w-100p text-center flex flex-col items-center'>
-         <button onClick={()=>{authServices.logout()}}>logout</button>
+
           <Button primary className='w-70p overflow-hidden transition-all' onClick={
            handleSubmit
           }>

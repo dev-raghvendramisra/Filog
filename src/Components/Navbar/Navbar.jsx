@@ -2,6 +2,9 @@ import React from 'react';
 import { NavLink } from 'react-router-dom';
 import { Logo, SearchBar, ToggleBtn } from '../index'; 
 import useLinks from '../../hooks/useLinks';
+import { Alert } from '../../Components';
+import { useSelector } from 'react-redux';
+
 
 
 
@@ -10,6 +13,8 @@ function Navbar({className='',style={},...props}) {
   
 
   const links = useLinks()
+  const alerts = useSelector((state)=>state.alert)
+  
 
   return (
    <div className={`flex  z-50 justify-center items-center sticky top-0${className}`} style={{top:"2vh",...style}}{...props}>

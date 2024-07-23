@@ -9,7 +9,7 @@ function Footer() {
   const links = useLinks()
 
   return (
-    <div className=' h-30vh w-100p' id="main-footer-wrapper">
+    <div className=' w-100p' id="main-footer-wrapper">
       <div id='footer-upper-section' className='flex gap-10 bg-lightPrimary_grays dark:bg-darkPrimary_grays_darker justify-center items-start pt-1vw pb-1vw'>
         <div id='footer-about-section' className='w-20p text-0.7vw' >
           <p id="footer-about-heading" className='text-0.9vw'><strong>About</strong></p>

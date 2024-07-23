@@ -12,6 +12,8 @@ import FormValidation from "./Form/Form-Validation";
 import Button from './Button/Button'
 import Form from './Form/Form'
 import InfinitePogressbar from './Loader/Infinite-progressbar'
+import Alert from "./Alert/Alert";
+import Suggestion from "./Suggestions/Suggestion";
 
 export {
   Navbar,
@@ -27,6 +29,8 @@ export {
   FormValidation,
   Button,
   Form,
-  InfinitePogressbar
+  InfinitePogressbar,
+  Alert,
+  Suggestion
 };
 export * from "../pages"
