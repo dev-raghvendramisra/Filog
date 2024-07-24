@@ -1,0 +1,244 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap');
+
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+    body {
+        @apply font-sans;
+        @apply dark:text-white;
+        @apply transition-all;
+    }
+}
+
+@layer utilities {
+    .brandP-Color {
+        background-color: #194FE6;
+    }
+
+    .brandS-Color {
+        background-color: #ffffff;
+    }
+
+    .maskLogoNav {
+        /* position: absolute;
+        height: 100%;
+        width: 100%;
+        left:0;
+        top:0;
+        bottom: 0; */
+        mask-image: url('/logoMuted.png');
+        mask-size: contain;
+        /* Adjust mask size to fit the element */
+        mask-repeat: no-repeat;
+        /* Prevent the mask from repeating */
+        mask-position: center;
+        /* Center the mask image within the element */
+        -webkit-mask-image: url('/logoMuted.png');
+        /* For Safari support */
+        -webkit-mask-size: contain;
+        -webkit-mask-repeat: no-repeat;
+        -webkit-mask-position: center;
+    }
+
+    .maskLogoFooter {
+        /* position: absolute;
+        height: 100%;
+        width: 100%;
+        left:0;
+        top:0;
+        bottom: 0; */
+        mask-image: url('/final logo -footer.png');
+        mask-size: contain;
+        /* Adjust mask size to fit the element */
+        mask-repeat: no-repeat;
+        /* Prevent the mask from repeating */
+        mask-position: center;
+        /* Center the mask image within the element */
+        -webkit-mask-image: url('/final logo -footer.png');
+        /* For Safari support */
+        -webkit-mask-size: contain;
+        -webkit-mask-repeat: no-repeat;
+        -webkit-mask-position: center;
+    }
+
+    .linkActiveLight {
+        color: white;
+        background-color: #194FE6;
+    }
+
+    .linkActiveDark {
+        /* color:#194FE6;
+        background-color:#ffffff ; */
+        color: white;
+        background-color: #194FE6;
+    }
+
+    .nav_light_Shadow {
+        box-shadow: -9px 11px 86px -26px rgba(0, 0, 0, 0.1);
+
+    }
+
+    .nav_dark_Shadow {
+        /*box-shadow: -9px 11px 86px -26px rgba(41, 32, 82, 0.5);8*/
+        box-shadow: inset 0px 0px 73px -51px rgba(126, 117, 255, 0.75);
+
+    }
+
+    .toggleBtnShadow {
+        -webkit-box-shadow: inset 3px 3px 50px -19px rgba(0, 0, 0, 0.31);
+        -moz-box-shadow: inset 3px 3px 50px -19px rgba(0, 0, 0, 0.31);
+        box-shadow: inset 3px 3px 50px -19px rgba(0, 0, 0, 0.31);
+    }
+
+    .hoverAnim {
+        color: white;
+        position: relative;
+        z-index: 1;
+        color: rgb(94 94 131);
+        border-color: #c3d3ff;
+        @apply dark:text-darkPrimary_grays;
+        animation: shake 0.1s cubic-bezier(1, 0.02, 0, 1) 4 alternate forwards;
+    }
+
+    .hoverAnim::before {
+        content: '';
+        position: absolute;
+        height: 100%;
+        width: 100%;
+        top: 0;
+        left: 0;
+        z-index: -11;
+        background-color: #c3d3ff;
+        transform: translateY(100%);
+        animation: slide 0.1s ease-in 1 forwards;
+        animation-fill-mode: forwards;
+
+    }
+
+    @keyframes slide {
+        0% {
+            transform: translateY(100%);
+        }
+
+        100% {
+            transform: translateY(0%);
+        }
+    }
+
+    @keyframes shake {
+        0% {
+            transform: translateX(0%);
+        }
+
+        100% {
+            transform: translateX(3%);
+        }
+    }
+
+    .min-h-100vh {
+        min-height: 100vh;
+    }
+
+    /* Customize the scrollbar track */
+    ::-webkit-scrollbar-track {
+        background-color: transparent;
+    }
+
+    /* Customize the scrollbar thumb */
+    ::-webkit-scrollbar-thumb {
+        @apply bg-slate-300;
+        @apply dark:bg-slate-800;
+        /* Change the color of the scrollbar thumb */
+        border-radius: 10px;
+        /* Round the corners of the scrollbar thumb */
+    }
+
+    /* Customize the scrollbar thumb when hovered */
+    ::-webkit-scrollbar-thumb:hover {
+        @apply bg-primary
+        /* Change the color of the scrollbar thumb on hover */
+    }
+
+    /* Customize the scrollbar itself */
+    ::-webkit-scrollbar {
+        width: 12px;
+        /* Change the width of the scrollbar */
+    }
+
+
+
+    .cursor {
+        visibility: hidden;
+        /* Hide by default */
+    }
+
+    .cursor.visible {
+        visibility: visible;
+        font-weight: 100;
+        @apply text-gray-400;
+        font-size: 1.5vw;
+    }
+
+    .formShadow {
+        -webkit-box-shadow: -10px 0px 93px 0px rgba(0, 0, 0, 0.36);
+        -moz-box-shadow: -10px 0px 93px 0px rgba(0, 0, 0, 0.36);
+        box-shadow: -10px 0px 93px 0px rgba(0, 0, 0, 0.36);
+    }
+
+    @keyframes slideIn {
+        0% {
+            transform: translateX(30%);
+            opacity: 0;
+        }
+
+        5% {
+            transform: translateX(0%);
+            opacity: 1;
+        }
+
+        95% {
+            transform: translateX(0%);
+            opacity: 1;
+        }
+        100%{
+            display: none;
+        }
+
+        /* 100%{
+      transform:translateY(30%);opacity: 1;
+    } */
+
+    }
+
+    .tickIcon::before {
+        @apply bg-green-400 rounded-full
+    }
+
+    .tickIcon {
+        @apply text-white;
+    }
+
+    .alertAnim {
+        transform: translateX(30%);
+        opacity: 0;
+        animation: slideIn 4s ease-in 1 forwards;
+    }
+
+    .slideLeft {
+        @apply w-0p;
+        animation: SlideLeft 3.8s linear 1 forwards;
+    }
+
+    @keyframes SlideLeft {
+        from {
+            @apply w-0;
+        }
+
+        to {
+            @apply w-100p;
+        }
+    }
+}
