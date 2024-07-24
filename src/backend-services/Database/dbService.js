@@ -43,7 +43,7 @@ export class DatabaseService {
                 ]  //permission array
             );
 
-            if (res.databaseId) {
+            if (res.$databaseId) {
                 return res;
             } else
                 throw { err: "dbService error :: failed to create document", res: res };
