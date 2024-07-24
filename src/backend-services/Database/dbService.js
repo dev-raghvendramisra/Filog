@@ -34,7 +34,7 @@ export class DatabaseService {
         try {
             const res = await this.database.createDocument(
                 conf.dbId,
-                conf.collectionId,
+                conf.blogCollectionID,
                 ID.unique(),
                 blogAttr,
                 [Permission.read(Role.any()),
@@ -43,7 +43,7 @@ export class DatabaseService {
                 ]  //permission array
             );
 
-            if (res.databaseID) {
+            if (res.databaseId) {
                 return res;
             } else
                 throw { err: "dbService error :: failed to create document", res: res };
@@ -57,7 +57,7 @@ export class DatabaseService {
        try {
         const updatedBlog =  await this.database.updateDocument(
              conf.dbId,
-             conf.collectionId,
+             conf.blogCollectionID,
              blogId,
              updatedBlogAttr
  
@@ -78,7 +78,7 @@ export class DatabaseService {
          try {
             const res = await this.database.deleteDocument(
                conf.dbId,
-               conf.collectionId,
+               conf.blogCollectionID,
                blogId
             )
             if(res.documentID){
@@ -98,7 +98,7 @@ export class DatabaseService {
        try {
         const res = await this.database.listDocuments(
              conf.dbId,
-             conf.collectionId,
+             conf.blogCollectionID,
              query,
              offset
          );
@@ -144,7 +144,29 @@ export class DatabaseService {
             return { err: "error in dbService :: imageUpload error: ", error };
         }
     }
+    
+    async createProfileDocument(docObj,userId) {
+        try {
+            const res = await this.database.createDocument(
+                conf.dbId,
+                conf.userProfilesCollectionID,
+                ID.unique(),
+                docObj,
+                [Permission.read(Role.any()),
+                 Permission.update(Role.user(userId)),
+                 Permission.delete(Role.user(userId))
+                ]  //permission array
+            );
 
+            if (res.$databaseID) {
+                return res;
+            } else
+                throw { err: "dbService error :: failed to create document", res: res };
+        } catch (error) {
+            console.log("dbService error :: failed to create document", error);
+            return error
+        }
+    }
 
 }
 

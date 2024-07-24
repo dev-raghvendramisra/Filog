@@ -1,5 +1,6 @@
 import { Client,ID,Account } from "appwrite";
 import conf from "../../Conf/conf";
+import {dbServices} from "../../backend-services"
 
 export class Auth{
       
@@ -20,7 +21,11 @@ export class Auth{
                 const res = await this.login(email,password);
                 if(res.code!=401 || res.code!==429){
                     const prefRes = await this.updatePreferences(prefs)
-                    return prefRes
+                    if(prefRes){
+                       const dbRes = await dbServices.createProfileDocument({name:name,profilePicture:prefs.avatarUrl},id)
+                       console.log(dbRes)
+                       return dbRes
+                    }
                 }
                 return res;
             }
@@ -78,7 +83,7 @@ export class Auth{
     async updatePreferences(prefs){
         try {
             const updatedPrefs = await this.account.updatePrefs(prefs)
-            if(updatedPrefs.code!==401 || res.code){
+            if(updatedPrefs.code!==401 && updatedPrefs.code!==500){
              return updatedPrefs;
             }
             else{
