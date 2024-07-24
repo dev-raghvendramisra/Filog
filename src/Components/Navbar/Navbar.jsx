@@ -2,18 +2,10 @@ import React from 'react';
 import { NavLink } from 'react-router-dom';
 import { Logo, SearchBar, ToggleBtn } from '../index'; 
 import useLinks from '../../hooks/useLinks';
-import { Alert } from '../../Components';
-import { useSelector } from 'react-redux';
 
+export default function Navbar({className='',style={},...props}) {
+   const links = useLinks()
 
-
-
-
-function Navbar({className='',style={},...props}) {
-  
-
-  const links = useLinks()
-  const alerts = useSelector((state)=>state.alert)
   
 
   return (
@@ -73,7 +65,6 @@ function Navbar({className='',style={},...props}) {
   );
 }
 
-export default Navbar;
 
 
 

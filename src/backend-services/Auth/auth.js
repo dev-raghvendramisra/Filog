@@ -12,12 +12,16 @@ export class Auth{
          this.account = new Account(this.client)
     }
 
-    async createAccount({email,password,name}){
+    async createAccount({id=ID.unique(),email,password,name,prefs={}}){
          try {
             
-            const createdAccount =  await this.account.create(ID.unique(),email,password,name)
+            const createdAccount =  await this.account.create(id,email,password,name)
             if(createdAccount){
                 const res = await this.login(email,password);
+                if(res.code!=401 || res.code!==429){
+                    const prefRes = await this.updatePreferences(prefs)
+                    return prefRes
+                }
                 return res;
             }
             else{
@@ -69,6 +73,22 @@ export class Auth{
         }
        
 
+    }
+    
+    async updatePreferences(prefs){
+        try {
+            const updatedPrefs = await this.account.updatePrefs(prefs)
+            if(updatedPrefs.code!==401 || res.code){
+             return updatedPrefs;
+            }
+            else{
+                throw {err:"failed to update prefs: ",res:updatedPrefs}
+            }
+
+        } catch (error) {
+            console.log("auth service error :: failed to update prefs ",error)
+            return error
+        }
     }
 
 }

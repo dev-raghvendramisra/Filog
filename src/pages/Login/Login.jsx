@@ -9,11 +9,12 @@ import getBlogPosts from '../../utils/getBlogPosts'
 import { clearBlogs, setBlogs } from '../../store/blogsSlice';
 import { login, logout, setFetching } from '../../store/authSlice';
 import startAuthentication from '../../utils/startAuthentication';
+import { errHandler } from '../../utils';
 
 
 
 
-function Login() {
+export default function Login() {
   const [formErr, setFormErr] = React.useState("");
   const [loading, setLoading] = React.useState("");
   const formRef = React.useRef(null)
@@ -32,19 +33,19 @@ function Login() {
        if(isValidated){
            setLoading(true);
            dispatch(setIsValidate(false)); //setting the validation false to avoid back to back requests with same credentials
-           const sessionInitRes = await  authServices.login(email,password);
-           if(sessionInitRes.code==401){
-                setFormErr("Invalid credentials, re-check your email and password !");
-           }  
-           else if(sessionInitRes.code==429){
-                setFormErr("Too many login attempts, please try again later !")
-                setTimeout(() => {
-                  dispatch(setEmail(""))    //setting the form slice's state to default 
-                  dispatch(setPassword(""))
-                  navigate("/") //redirecting user to landing page to avoid further requests
-                }, 7000);
-           }
+           const sessionInitRes = await  authServices.login(email,password)
+           const didErrOccured = errHandler({
+            res:sessionInitRes,
+            dispatch:dispatch,
+            navigate:navigate,
+            setEmail:setEmail,
+            setPass:setPassword,
+            setFormErr:setFormErr,
+           })
 
+           if(didErrOccured){
+            console.log("An error occured") 
+           }
            else if(sessionInitRes.$id){
                const blogPostsRes = await getBlogPosts({ //(caching)calling the getBlogPosts util to fetch the posts before redirecting user to dashboard 
                 dispatch:dispatch,
@@ -55,7 +56,9 @@ function Login() {
                   dispatch:dispatch,
                   login:login,
                   logout:logout,
-                  setFetching:setFetching
+                  setFetching:setFetching,
+                  setEmail:setEmail,
+                  setPass:setPassword,
                 })
 
                 if(authRes.message){
@@ -107,4 +110,4 @@ function Login() {
   )
 }
 
-export default Login
+
