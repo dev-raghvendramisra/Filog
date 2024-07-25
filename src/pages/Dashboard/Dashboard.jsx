@@ -8,7 +8,7 @@ import { useNavigate } from 'react-router-dom';
 
 function Dashboard() {
   const dispatch = useDispatch()
-  const {isUserLoggedIn} = useSelector((state)=>state.auth)
+  const {isUserLoggedIn,userData} = useSelector((state)=>state.auth)
   const navigate = useNavigate()
    
   React.useEffect(()=>{
