@@ -1,6 +1,6 @@
 export default function errHandler({res,dispatch,navigate,setEmail,setPass,setName,setFormErr}){
     if(res.code==401){
-        setFormErr("Invalid credentials. Re-check your email and password!")
+        setFormErr("Invalid credentials!")
         return true;
     }
     else if(res.code==429){
