@@ -4,7 +4,7 @@ import './App.css';
 import '@fortawesome/fontawesome-free/css/all.min.css';
 import 'material-symbols/outlined.css';
 
-import { Outlet } from 'react-router-dom';
+import { Outlet, useLocation } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import { login, logout, setFetching } from './store/authSlice';
 import { setAlert } from './store/alertSlice';
@@ -16,20 +16,27 @@ function App() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const { isUserLoggedIn, fetching,userData } = useSelector((state) => state.auth);
+  const {pathname} = useLocation()
 
 
   React.useEffect(() => {
 
     if (isUserLoggedIn) {
-      navigate("/dashboard",{replace:true});
+      if(pathname=="/login" || pathname=="/signup" || pathname==""){
+        navigate("/dashboard",{replace:true});
+      }
+      else navigate(pathname)
       dispatch(setAlert({type:"welcome",message:`Welcome, ${userData.name}`}))
 
-    } else {
-      navigate("/",{replace:true});
+    } 
+    else {
+      if(pathname=="/dashboard" || pathname=="/write" || pathname==""){
+        navigate("/",{replace:true});
+      }
+      else navigate(pathname)
     }
 
     const startLoginSequence = async () => {
-      
       const res = await startAuthentication({ dispatch, login, logout, setFetching });
     };
 

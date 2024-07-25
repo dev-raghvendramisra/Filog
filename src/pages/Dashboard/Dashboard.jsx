@@ -13,7 +13,7 @@ function Dashboard() {
    
   React.useEffect(()=>{
     if(!isUserLoggedIn){
-      navigate("/login",{replace:true})
+      navigate("/login")
    }
   },[])
 
