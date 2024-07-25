@@ -13,8 +13,10 @@ const Input=React.forwardRef(({
    className_pass_icon='',
    className_pass_icon_replacement='',
    className_wrapper="",
+   className_icon_cont="",
    errMsg="",
    fill=false,
+   errClassName=""
      },ref)=> {
 
      
@@ -59,7 +61,7 @@ const Input=React.forwardRef(({
           </label>
          
          <div  id="icon-cont" className={` w-10p h-100p  text-1.5vw flex justify-center items-center 
-          ${fill?("text-darkPrimary_grays_darker text-opacity-70 dark:text-opacity-100 dark:text-footer_text"):("text-darkPrimary_grays_darker text-opacity-70 dark:text-opacity-80 dark:text-white")}`}>
+          ${fill?("text-darkPrimary_grays_darker text-opacity-70 dark:text-opacity-100 dark:text-footer_text"):("text-darkPrimary_grays_darker text-opacity-70 dark:text-opacity-80 dark:text-white")} ${className_icon_cont}`}>
            <span id="input-icon" 
           className={`inline ${getIconClass()} ${className_icon}`}>
           </span>
@@ -100,7 +102,7 @@ const Input=React.forwardRef(({
           
 
         </div>
-        <Error className='transition-all' errMsg={errMsg} />
+        <Error className={`transition-all ${errClassName}`} errMsg={errMsg} />
       </div>
 
     )
