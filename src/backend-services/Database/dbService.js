@@ -42,6 +42,7 @@ export class DatabaseService {
                  Permission.delete(Role.user(userId))
                 ]  //permission array
             );
+            
 
             if (res.$databaseId) {
                 return res;
