@@ -22,7 +22,7 @@ function App() {
   React.useEffect(() => {
 
     if (isUserLoggedIn) {
-      if(pathname=="/login" || pathname=="/signup" || pathname==""){
+      if(pathname=="/login" || pathname=="/signup" || pathname=="/"){
         navigate("/dashboard",{replace:true});
       }
       else navigate(pathname)
@@ -30,7 +30,7 @@ function App() {
 
     } 
     else {
-      if(pathname=="/dashboard" || pathname=="/write" || pathname==""){
+      if(pathname=="/dashboard" || pathname=="/write" || pathname=="/"){
         navigate("/",{replace:true});
       }
       else navigate(pathname)
@@ -48,10 +48,10 @@ function App() {
 
   return (
     <>
-      {fetching? <InfinitePogressbar /> : null}
+      {fetching? <InfinitePogressbar className={`${pathname=="/"?"bg-opacity-0 dark:bg-opacity-0":""}`} /> : null}
       <Navbar />
       <AlertWrapper />
-      <div className='min-h-56vh'>
+      <div className='min-h-56vh mt-2p'>
         <Outlet />
       </div>
       <Footer />

@@ -29,7 +29,10 @@ function Footer() {
             Filog is a dynamic blogging platform empowering writers and readers. Our mission is to provide a space for engaging articles, story sharing, and community connection.Join us and be part of a community that values creativity, knowledge, and the power of words.
           </p>
           <p id="footer-email" className='pt-0.5vw text-0.9vw'>
-            <strong className=''>Email</strong> : <NavLink to="mailto:teamfilog@gmail.com" className="text-footer_text_light dark:text-footer_text text-0.7vw hover:underline underline-offset-4">teamfilog@gmail.com</NavLink>
+            <strong className=''>Email</strong> : 
+            <NavLink to="mailto:teamfilog@gmail.com" className="text-footer_text_light dark:text-footer_text text-0.7vw hover:underline underline-offset-4">
+              teamfilog@gmail.com
+            </NavLink>
           </p>
         </div>
         <div id="footer-quicklink-section" className='w-8p'>
@@ -49,7 +52,7 @@ function Footer() {
             ref={ref} 
             type="email" 
             fill={true} 
-            className_container="w-90p h-2vw rounded-xl ml-auto mr-auto dark:bg-darkPrimary_grays_darker" className_input_prot_el_wrapper="w-70p" className_icon_cont="w-14p" className_pass_icon_replacement="w-14p" errClassName="justify-center" />
+            className_container="w-90p h-2vw rounded-xl ml-auto mr-auto dark:bg-darkPrimary_grays_darker" className_input_prot_el_wrapper="w-70p" className_icon_cont="w-14p" className_icon="text-1.1vw" className_pass_icon_replacement="w-14p" errClassName="justify-center" />
             <Button primary className='w-90p ml-auto mr-auto bg-opacity-80 border-opacity-70'>
                Subscribe
             </Button>

@@ -14,6 +14,8 @@ import Form from './Form/Form'
 import InfinitePogressbar from './Loader/Infinite-progressbar'
 import Alert from "./Alert/Alert";
 import Suggestion from "./Suggestions/Suggestion";
+import HomeUpper from "./Home-upper-section/HomeUpper";
+import HomeHero from "./Home-hero-section/HomeHero";
 
 export {
   Navbar,
@@ -31,6 +33,8 @@ export {
   Form,
   InfinitePogressbar,
   Alert,
-  Suggestion
+  Suggestion,
+  HomeUpper,
+  HomeHero
 };
 export * from "../pages"
