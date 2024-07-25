@@ -3,10 +3,10 @@ import { ColorRing } from 'react-loader-spinner'
 
 function Button({children="Button",onClick=()=>{},className='',disabled=false,type='',primary=false,outline=false,loading=false,...props}) {
   return (
-    <button type={type} onClick={onClick} className={`  text-1vw flex justify-center overflow-hidden items-center gap-1 border-2 rounded-full p-0.5vw pl-2vw pr-2vw
+    <button type={type} onClick={onClick} className={`  text-1vw flex justify-center transition-all overflow-hidden items-center gap-1 border-2 rounded-full p-0.5vw pl-2vw pr-2vw
     ${className}
      ${disabled?"bg-gray-300 border-gray-300 text-gray-400":"**"} 
-    ${primary?"bg-primary border-primary text-white":"**"}
+    ${primary?"bg-primary border-primary text-white active:bg-opacity-70":"**"}
     ${outline?"bg-transparent hover:hoverAnim border-black text-black dark:border-white dark:text-white":"**"}
     `} {...props}>
         {children}

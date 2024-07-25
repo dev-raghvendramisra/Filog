@@ -1,6 +1,5 @@
 import { Client, ID, Databases, Storage, Query, Permission, Role } from "appwrite";
 import conf from "../../Conf/conf";
-import  authServices  from "../Auth/auth";
 
 export class DatabaseService {
     client = new Client()
@@ -46,8 +45,9 @@ export class DatabaseService {
 
             if (res.$databaseId) {
                 return res;
-            } else
-                throw { err: "dbService error :: failed to create document", res: res };
+            } else{
+                
+                throw { err: "dbService error :: failed to create document", res: res };}
         } catch (error) {
             console.log("dbService error :: failed to create document", error);
             return error
@@ -159,7 +159,8 @@ export class DatabaseService {
                 ]  //permission array
             );
 
-            if (res.$databaseID) {
+            if (res.$databaseId) {
+                console.log("Yhan thi gadbad")
                 return res;
             } else
                 throw { err: "dbService error :: failed to create document", res: res };

@@ -38,17 +38,6 @@ function App() {
     }
   }, [isUserLoggedIn]);
 
-  // React.useEffect(()=>{
-  //   let timer
-  //   if(showAlert){
-  //      timer =  setTimeout(()=>{dispatch(disableAlert())},4100)
-  //   }
-  //   return ()=>{
-  //      clearTimeout(timer)
-
-  //   }
-
-  // },[alertId])
 
   return (
     <>
