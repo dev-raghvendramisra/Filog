@@ -1,13 +1,12 @@
 import React from 'react'
 import { Outlet } from 'react-router-dom'
 import { authServices} from '../../backend-services';
-import { setAlert } from '../../store/alertSlice';
-import { useDispatch, useSelector } from 'react-redux';
+import toast from 'react-hot-toast';
+import {  useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 
 
 function Dashboard() {
-  const dispatch = useDispatch()
   const {isUserLoggedIn,userData} = useSelector((state)=>state.auth)
   const navigate = useNavigate()
    
@@ -23,7 +22,14 @@ function Dashboard() {
     <div>Dashboard
                <button onClick={()=>{
           authServices.logout();
-          dispatch(setAlert({type:"welcome",message:`Bye, ${userData.name}`}))
+          toast(`Bye, ${userData.name}`, {
+            icon: '👋',
+            style: {
+              borderRadius: '10px',
+              background: '#333',
+              color: '#fff',
+            },
+          });
           }}>logout</button>
       <Outlet/>
     </div>
