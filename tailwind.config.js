@@ -2,6 +2,36 @@
 export default {
   content: ["./src/**/**/**.{jsx,js}", "./*.html"],
   darkMode: "class",
+  safelist:[
+    // Light Mode Classes
+    'bg-technology-light',
+    'bg-health-light',
+    'bg-nature-light',
+    'bg-lifestyle-light',
+    'bg-travel-light',
+    'bg-food-light',
+    'bg-education-light',
+    'bg-finance-light',
+    'bg-entertainment-light',
+    'bg-fashion-light',
+    'bg-sports-light',
+    'bg-science-light',
+    'bg-politics-light',
+
+    // Dark Mode Classes
+    'dark:bg-technology-dark',
+    'dark:bg-health-dark',
+    'dark:bg-nature-dark',
+    'dark:bg-lifestyle-dark',
+    'dark:bg-travel-dark',
+    'dark:bg-food-dark',
+    'dark:bg-education-dark',
+    'dark:bg-finance-dark',
+    'dark:bg-entertainment-dark',
+    'dark:bg-fashion-dark',
+    'dark:bg-sports-dark',
+    'dark:bg-science-dark',
+    'dark:bg-politics-dark',],
   theme: {
     extend: {
       fontFamily: {
@@ -431,6 +461,7 @@ export default {
         '14vw': '14vw',
         '16vw': '16vw',
         '18vw': '18vw',
+        '19vw' :'19vw',
         '20vw': '20vw',
         '22vw': '22vw',
         '24vw': '24vw',
@@ -1269,9 +1300,10 @@ export default {
         lightPrimary_grays_darker: "#F6F6F7",
         blackColor: "#3B3C4A",
         footer_text: "#97989F",
-        footer_text_light: "#696A75"
+        footer_text_light: "#696A75",
 
       }
+
     }
 
   },

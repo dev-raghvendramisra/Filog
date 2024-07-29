@@ -16,6 +16,7 @@ import Alert from "./Alert/Alert";
 import Suggestion from "./Suggestions/Suggestion";
 import HomeUpper from "./Home-upper-section/HomeUpper";
 import HomeHero from "./Home-hero-section/HomeHero";
+import PostCard from "./Post-card/PostCard";
 
 export {
   Navbar,
@@ -35,6 +36,7 @@ export {
   Alert,
   Suggestion,
   HomeUpper,
-  HomeHero
+  HomeHero,
+  PostCard
 };
 export * from "../pages"

@@ -8,56 +8,6 @@ const conf = {
    bucketId:String(import.meta.env.VITE_BUCKET_ID)
 }
 
-export const colorConf = [
-   {
-     tag: "Technology",
-     color: "#1E90FF"
-   },
-   {
-     tag: "Health",
-     color: "#32CD32"
-   },
-   {
-     tag: "Lifestyle",
-     color: "#FF69B4"
-   },
-   {
-     tag: "Travel",
-     color: "#FF4500"
-   },
-   {
-     tag: "Food",
-     color: "#FFD700"
-   },
-   {
-     tag: "Education",
-     color: "#8A2BE2"
-   },
-   {
-     tag: "Finance",
-     color: "#2E8B57"
-   },
-   {
-     tag: "Entertainment",
-     color: "#FF6347"
-   },
-   {
-     tag: "Fashion",
-     color: "#FFC0CB"
-   },
-   {
-     tag: "Sports",
-     color: "#4682B4"
-   },
-   {
-     tag: "Science",
-     color: "#7FFF00"
-   },
-   {
-     tag: "Politics",
-     color: "#DC143C"
-   }
- ];
  
 
  
