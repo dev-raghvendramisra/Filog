@@ -20,6 +20,9 @@ export class DatabaseService {
         subImagesId = [],
         userId,
         status = true,
+        tags=[],
+        author,
+        authorImg
     }) {
         const blogAttr = {
             title:title,
@@ -28,7 +31,10 @@ export class DatabaseService {
             subImagesId:subImagesId,
             userId:userId,
             createdAt:createdAt(),
-            status:status
+            status:status,
+            tags:tags,
+            author:author,
+            authorImg:authorImg
         }
         try {
             const res = await this.database.createDocument(
