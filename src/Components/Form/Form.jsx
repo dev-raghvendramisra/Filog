@@ -25,7 +25,7 @@ function Form({ formRef, type, buttonComponent, heading = "Welcome back ", subHe
           className='flex flex-col justify-start items-center h-100p rounded-2xl bg-white dark:bg-darkPrimary  pl-8p pr-8p pt-18p formShadow'>
           <h1 id="form-heading"
             className='text-1.6vw'
-            style={{ fontWeight: "600" }} > 
+            style={{ fontWeight: "700" }} > 
             {heading}
           </h1>
           <p className='text-0.8vw text-darkPrimary_grays mb-4p dark:text-footer_text '>{subHeading}</p>

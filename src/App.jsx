@@ -1,35 +1,49 @@
 import React from 'react';
-import { AlertWrapper, Footer, InfinitePogressbar, Navbar } from './Components';
+import { Footer, InfinitePogressbar, Navbar } from './Components';
 import './App.css';
 import '@fortawesome/fontawesome-free/css/all.min.css';
 import 'material-symbols/outlined.css';
 
-import { Outlet } from 'react-router-dom';
+import { Outlet, useLocation } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import { login, logout, setFetching } from './store/authSlice';
-import { setAlert } from './store/alertSlice';
 import { useNavigate } from 'react-router-dom';
 import startAuthentication from './utils/startAuthentication';
+import toast,{Toaster} from 'react-hot-toast'
 
 
 function App() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const { isUserLoggedIn, fetching,userData } = useSelector((state) => state.auth);
-
+  const {pathname} = useLocation()
+  
 
   React.useEffect(() => {
 
     if (isUserLoggedIn) {
-      navigate("/dashboard",{replace:true});
-      dispatch(setAlert({type:"welcome",message:`Welcome, ${userData.name}`}))
-
-    } else {
-      navigate("/",{replace:true});
+      if(pathname=="/login" || pathname=="/signup" || pathname=="/"){
+        navigate("/dashboard",{replace:true});
+      }
+      else navigate(pathname)
+      // dispatch(setAlert({type:"welcome",message:`Welcome, ${userData.name}`}))
+      toast(`Welcome, ${userData.name}`, {
+        icon: '👋',
+        style: {
+          borderRadius: '10px',
+          background: '#333',
+          color: '#fff',
+        },
+      });
+    } 
+    else {
+      if(pathname=="/dashboard" || pathname=="/write" || pathname=="/"){
+        navigate("/",{replace:true});
+      }
+      else navigate(pathname)
     }
 
     const startLoginSequence = async () => {
-      
       const res = await startAuthentication({ dispatch, login, logout, setFetching });
     };
 
@@ -41,10 +55,10 @@ function App() {
 
   return (
     <>
-      {fetching? <InfinitePogressbar /> : null}
+      {fetching? <InfinitePogressbar className={`${pathname==""?"bg-opacity-0 dark:bg-opacity-0":""}`} /> : null}
       <Navbar />
-      <AlertWrapper />
-      <div className='min-h-56vh'>
+      <Toaster containerStyle={{marginTop:"5%"}} />
+      <div className='min-h-56vh mt-2p'>
         <Outlet />
       </div>
       <Footer />
