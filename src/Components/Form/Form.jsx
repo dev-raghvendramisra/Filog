@@ -8,7 +8,7 @@ function Form({ formRef, type, buttonComponent, heading = "Welcome back ", subHe
   return (
     <div id={`${type}-container`} 
     className='h-100vh w-100p  flex justify-center items-start' 
-    style={{ paddingTop: "3.5vh" }}>
+    style={{ paddingTop: "4.5vh" }}>
 
       <div id={`${type}-wrapper`}
         className='bg-blue-100 dark:bg-darkPrimary_grays  h-90p w-70p relative  justify-center flex items-center   rounded-3xl overflow-hidden '>

@@ -58,10 +58,13 @@ function App() {
       {fetching? <InfinitePogressbar className={`${pathname==""?"bg-opacity-0 dark:bg-opacity-0":""}`} /> : null}
       <Navbar />
       <Toaster containerStyle={{marginTop:"5%"}} />
-      <div className='min-h-56vh mt-2p'>
+      <div className='min-h-56vh'>
         <Outlet />
       </div>
+      {pathname=="/login" || pathname=="/signup" || pathname=="/about"?
       <Footer />
+      :null
+      }
     </>
   );
 }
