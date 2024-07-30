@@ -4,7 +4,7 @@ import LinearProgress from '@mui/material/LinearProgress';
 
 function InfinitePogressbar({className}) {
   return (
-    <div id="progressbar-login" className={`h-100p w-100p absolute bg-white transition-all bg-opacity-40 z-40 dark:bg-darkPrimary_grays_darker dark:bg-opacity-50 ${className}`}>
+    <div style={{zIndex:"100",position:"fixed",top:"0"}} id="progressbar-login" className={`h-100p w-100p bg-white transition-all bg-opacity-40 dark:bg-darkPrimary_grays_darker dark:bg-opacity-50 ${className}`}>
             <LinearProgress
         sx={{
           color: "#194FE6", 

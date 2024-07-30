@@ -11,21 +11,23 @@ import { ID } from 'appwrite';
 function Home() {
   const posts = useSelector((state)=>state.blogs)
   const dispatch = useDispatch()
+
   React.useEffect(()=>{
-    getBlogPosts({ //(caching)calling the getBlogPosts util to fetch the posts before redirecting user to dashboard 
+    getBlogPosts({ 
       dispatch:dispatch,
       setBlogs:setBlogs,
       clearBlogs:clearBlogs,
       })
   },[])
-  console.log(posts)
+
   return (
-    <div className='flex flex-col justify-start gap-80 items-center min-h-100vh  mb-6vw'>
+    <div className='flex flex-col justify-start gap-80 items-center min-h-100vh  mb-6vw'  style={{ marginTop: "12vh" }}>
       <HomeUpper />
       {/* <h1>Get Featured</h1> */}
 
       <div  className='homeGrid'>
         {posts[0].title!==""?posts.map((post)=>(<PostCard 
+        classNamePostCardCont='flex-col gap-4'
         key={ID.unique()}
         title={post.title} 
          tags={post.tags}

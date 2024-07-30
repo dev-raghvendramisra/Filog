@@ -11,8 +11,14 @@ export default function Navbar({className='',style={},...props}) {
   
 
   return (
-   <div className={`flex  z-50 justify-center items-center sticky top-0 ${className}`} style={{top:"2vh",...style}}{...props}>
-    <nav style={{padding:"0.7vw 0"}} className='transition-all flex justify-between items-center w-80vw p-0.5vw  bg-white outline outline-1 outline-gray-300 rounded-full backdrop-blur-lg nav_light_Shadow dark:nav_dark_Shadow bg-opacity-50 dark:bg-darkPrimary_grays dark:outline-darkPrimary dark:outline-4 dark:bg-opacity-50' id="mainNav">
+   <div className={`flex transition-all z-50 justify-center items-center fixed w-100p
+    ${isUserLoggedIn?
+    "bg-white outline-1 outline outline-gray-300  backdrop-blur-lg bg-opacity-50 dark:bg-darkPrimary_grays dark:outline-darkPrimary dark:outline-4 dark:bg-opacity-50 "
+    :"top-1vh "} ${className}`} style={{...style}}{...props}>
+
+    <nav style={{padding:"0.9vw 0"}} className={`transition-all flex justify-between items-center w-80vw p-0.5vw  
+      ${isUserLoggedIn?""
+      :"bg-white outline  outline-gray-300 rounded-full backdrop-blur-lg nav_light_Shadow dark:nav_dark_Shadow bg-opacity-50 dark:bg-darkPrimary_grays dark:outline-darkPrimary dark:outline-4 dark:bg-opacity-50 outline-1"}`} id="mainNav">
             
            
             <div id="wrapper_logo_searchbar " className='rounded-full pl-1vw w-40p h-100p flex justify-between items-center'>

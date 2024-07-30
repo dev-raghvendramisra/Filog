@@ -42,15 +42,17 @@ function PostCard({ coverImage, tags = [], title, author, authorImg, createdAt,c
   }
 
   return (
-    <div className={`bg-transparent border-2 dark:bg-darkPrimary_grays dark:border-footer_text_light  p-1vw rounded-3xl ${classNamePostCardCont}`}>
+    <div className={`flex  bg-transparent border-2 dark:bg-darkPrimary_grays dark:border-footer_text_light  p-1vw rounded-3xl ${classNamePostCardCont}`}>
 
       {coverImage ? (
         <div id={`postCard-img-cont-${ID.unique()}`} className={`w-19vw h-12vw rounded-xl overflow-hidden ${classNamepostCardImgCont}`}>
           <img className='h-100p w-100p object-cover' src={coverImage} />
         </div>
       ) : null}
+      <div id="postCard-content-wrapper">
 
-      <div id={`postCard-tag-cont-${ID.unique()}`} className={`w-19vw h-2vw  overflow-hidden text-0.9vw flex items-center justify-start gap-3 mt-0.9vw ${classNamePostCardTagCont}`} >
+      
+      <div id={`postCard-tag-cont-${ID.unique()}`} className={`w-19vw h-2vw  overflow-hidden text-0.9vw flex items-center justify-start gap-3 ${classNamePostCardTagCont}`} >
         {tags.map((tag) => (
           <div  className={`dark:${getClass(tag,true)} ${getClass(tag)} text-white px-0.5vw py-0.2vw rounded-md`} key={ID.unique()}>
             {tag}
@@ -80,7 +82,7 @@ function PostCard({ coverImage, tags = [], title, author, authorImg, createdAt,c
         </div>
       </div>:null
       }
-
+</div>
     </div>
   );
 }
