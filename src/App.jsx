@@ -26,7 +26,6 @@ function App() {
         navigate("/dashboard",{replace:true});
       }
       else navigate(pathname)
-      // dispatch(setAlert({type:"welcome",message:`Welcome, ${userData.name}`}))
       toast(`Welcome, ${userData.name}`, {
         icon: '👋',
         style: {
@@ -37,7 +36,7 @@ function App() {
       });
     } 
     else {
-      if(pathname=="/dashboard" || pathname=="/write" || pathname=="/"){
+      if(pathname=="/dashboard" || pathname=="/write" || pathname=="/" || pathname=="/profile"){
         navigate("/",{replace:true});
       }
       else navigate(pathname)

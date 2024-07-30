@@ -56,7 +56,7 @@ const linkConfig = [
     {
         component: <ProfilePic />,
         status: false,
-        path: '/dashboard/user-profile',
+        path: '/profile',
         name: "profile-pic",
         activeStyling: false,
         defaultStyling: false,
