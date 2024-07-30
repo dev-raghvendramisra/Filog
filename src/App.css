@@ -83,7 +83,7 @@ box-shadow: 0px 38px 75px -1px rgba(0,0,0,0.07);
     }
 
     .nav_dark_Shadow {
-        /*box-shadow: -9px 11px 86px -26px rgba(41, 32, 82, 0.5);8*/
+        /*box-shadow: -9px 11px 86px -26px rgba(41, 32, 82, 0.1);8*/
         box-shadow: inset 0px 0px 73px -51px rgba(126, 117, 255, 0.75);
 
     }
@@ -243,21 +243,28 @@ box-shadow: 0px 38px 75px -1px rgba(0,0,0,0.07);
         }
     }
 
+    .homeGrid{
+        display: grid;
+        grid-template-columns: repeat(3,auto);
+        grid-auto-rows:auto;
+        row-gap: 2vw;
+        column-gap: 2vw;
+    }
 
     /* Dark Mode Background Color Utilities */
-.bg-technology-dark { background-color: rgba(30, 144, 255, 0.5); color: #1E90FF; }
-.bg-health-dark { background-color: rgba(50, 205, 50, 0.5); color: #32CD32; }
-.bg-nature-dark { background-color: rgba(50, 205, 50, 0.5); color: #32CD32; }
-.bg-lifestyle-dark { background-color: rgba(255, 105, 180, 0.5); color: #FF69B4; }
-.bg-travel-dark { background-color: rgba(255, 69, 0, 0.5); color: #FF4500; }
-.bg-food-dark { background-color: rgba(255, 215, 0, 0.5); color: #FFD700; }
-.bg-education-dark { background-color: rgba(138, 43, 226, 0.5); color: #8A2BE2; }
-.bg-finance-dark { background-color: rgba(46, 139, 87, 0.5); color: #2E8B57; }
-.bg-entertainment-dark { background-color: rgba(255, 99, 71, 0.5); color: #FF6347; }
-.bg-fashion-dark { background-color: rgba(255, 192, 203, 0.5); color: #FFC0CB; }
-.bg-sports-dark { background-color: rgba(70, 130, 180, 0.5); color: #4682B4; }
-.bg-science-dark { background-color: rgba(127, 255, 0, 0.5); color: #7FFF00; }
-.bg-politics-dark { background-color: rgba(220, 20, 60, 0.5); color: #DC143C; }
+.bg-technology-dark { background-color: rgba(30, 144, 255, 0.1); color: #1E90FF; }
+.bg-health-dark { background-color: rgba(50, 205, 50, 0.1); color: #32CD32; }
+.bg-nature-dark { background-color: rgba(50, 205, 50, 0.1); color: #32CD32; }
+.bg-lifestyle-dark { background-color: rgba(255, 105, 180, 0.1); color: #FF69B4; }
+.bg-travel-dark { background-color: rgba(255, 69, 0, 0.1); color: #FF4500; }
+.bg-food-dark { background-color: rgba(255, 215, 0, 0.1); color: #FFD700; }
+.bg-education-dark { background-color: rgba(138, 43, 226, 0.1); color: #8A2BE2; }
+.bg-finance-dark { background-color: rgba(46, 139, 87, 0.1); color: #2E8B57; }
+.bg-entertainment-dark { background-color: rgba(255, 99, 71, 0.1); color: #FF6347; }
+.bg-fashion-dark { background-color: rgba(255, 192, 203, 0.1); color: #FFC0CB; }
+.bg-sports-dark { background-color: rgba(70, 130, 180, 0.1); color: #4682B4; }
+.bg-science-dark { background-color: rgba(127, 255, 0, 0.1); color: #7FFF00; }
+.bg-politics-dark { background-color: rgba(220, 20, 60, 0.1); color: #DC143C; }
 
 /* Light Mode Background Color Utilities */
 .bg-technology-light { background-color: #1E90FF; color: white; }
@@ -271,7 +278,7 @@ box-shadow: 0px 38px 75px -1px rgba(0,0,0,0.07);
 .bg-entertainment-light { background-color: #FF6347; color: white; }
 .bg-fashion-light { background-color: #FFC0CB; color: white; }
 .bg-sports-light { background-color: #4682B4; color: white; }
-.bg-science-light { background-color: #7FFF00; color: white; }
+.bg-science-light { background-color: #55aa00; color: white; }
 .bg-politics-light { background-color: #DC143C; color: white; }
 
 }

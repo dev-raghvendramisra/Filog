@@ -8,7 +8,7 @@ const store = configureStore({
     reducer:{
            auth:authReducers,
            formData:formReducers,
-           blogPosts:blogsReducers,
+           blogs:blogsReducers,
            alerts:alertSlice
     }
 })

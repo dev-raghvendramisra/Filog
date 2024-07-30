@@ -7,18 +7,38 @@ function PostCard({ coverImage, tags = [], title, author, authorImg, createdAt,c
   const authorRef = useRef();
   const [truncatedTitle, setTruncatedTitle] = useState(title);
   const [truncatedAuthor, setTruncatedAuthor] = useState(author);
+  const [rerender, forceRerender]  = React.useState(false)
+  
+  
 
   useEffect(() => {
     if (headingRef.current && headingRef.current.scrollHeight > headingRef.current.clientHeight) {
       setTruncatedTitle(title.substring(0, 67) + ' . . .');
     }
     if (authorRef.current && authorRef.current.scrollWidth > authorRef.current.clientWidth) {
-      setTruncatedAuthor(author.substring(0, 11) + '.');
+      setTruncatedAuthor(author.substring(0, 12) + '.');
+     
     }
-  }, [title]);
+
+  }, [rerender]);
+
+  useEffect(()=>{
+    const timer = setTimeout(()=>{forceRerender(true)},500)
+    return ()=>{
+      clearTimeout(timer)
+    }
+
+  },[])
 
   function getClass(tag,dark=false) {
     return (dark?`bg-${tag.toLowerCase()}-dark`:`bg-${tag.toLowerCase()}-light`)
+  }
+
+  function trimTime(time){
+    let str= time.substring(0,time.lastIndexOf(" "))
+    return str.substring(0,str.lastIndexOf(" "))
+
+
   }
 
   return (
@@ -56,7 +76,7 @@ function PostCard({ coverImage, tags = [], title, author, authorImg, createdAt,c
         </div>
         <div id={`postCard-date-cont ${ID.unique()}`}
          className='whitespace-nowrap'>   
-          {createdAt.substring(0,createdAt.lastIndexOf(" "))}
+          {trimTime(createdAt)}
         </div>
       </div>:null
       }

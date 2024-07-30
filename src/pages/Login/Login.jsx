@@ -19,6 +19,7 @@ export default function Login() {
   const [loading, setLoading] = React.useState("");
   const formRef = React.useRef(null)
   const {isValidated,email,password} = useSelector((state)=>state.formData)
+  const {userData} = useSelector((state)=>state.auth)
   const dispatch = useDispatch()
   const navigate = useNavigate()
 
@@ -47,19 +48,14 @@ export default function Login() {
             console.log("An error occured") 
            }
            else if(sessionInitRes.$id){
-               const blogPostsRes = await getBlogPosts({ //(caching)calling the getBlogPosts util to fetch the posts before redirecting user to dashboard 
-                dispatch:dispatch,
-                setBlogs:setBlogs,
-                clearBlogs:clearBlogs
-                })
-                const authRes = await startAuthentication({//calling the strtauthentication util to verify the session and retreive the user details
-                  dispatch:dispatch,
-                  login:login,
-                  logout:logout,
-                  setFetching:setFetching,
-                  setEmail:setEmail,
-                  setPass:setPassword,
-                })
+             const authRes = await startAuthentication({//calling the strtauthentication util to verify the session and retreive the user details
+               dispatch:dispatch,
+               login:login,
+               logout:logout,
+               setFetching:setFetching,
+               setEmail:setEmail,
+               setPass:setPassword,
+             })
 
                 if(authRes.message){
                   setFormErr(authRes.message)
