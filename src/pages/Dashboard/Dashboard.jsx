@@ -2,9 +2,9 @@ import React from 'react';
 import { Navigate, useNavigate } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import { getBlogPosts } from '../../utils';
-import { PostCard } from '../../Components';
+import { PostCard, FollowingSecErr } from '../../Components';
 import { clearBlogs, setBlogs } from '../../store/blogsSlice';
-import { ID } from 'appwrite';
+import { ID, Query } from 'appwrite';
 import getUsersUtil from '../../utils/getUsersUtil';
 import { clearUsers, setUsers } from '../../store/usersSlice';
 
@@ -12,11 +12,13 @@ function Dashboard() {
   const navigate = useNavigate()
   const [initLoading, setInitLoading] = React.useState(true);
   const [topOffset, setTopOffset] = React.useState(0);
+  const [followingSectionErr,  setFollowingSectionErr] = React.useState(null)
   const tags = [React.useRef(), React.useRef()];
   const sideBar = React.useRef();
   const container = React.useRef();
   const dispatch = useDispatch();
   const { isUserLoggedIn, userData } = useSelector((state) => state.auth);
+  const {following} = useSelector((state)=>state.userProfile)
   const posts = useSelector((state) => state.blogs);
 
   if (!isUserLoggedIn) {
@@ -33,23 +35,28 @@ function Dashboard() {
   }, []);
 
   const handleClick = async ({ target }) => {
+    setFollowingSectionErr(null)
     setInitLoading(true);
     tags.forEach(({ current }) => {
       current.classList.remove('btnActive');
     });
     target.classList.add('btnActive');
+
+    const query = []
+    if(target.id=="following-blogs"){
+      following.length>0?query[0]=Query.equal("userId",[...following]):setFollowingSectionErr(following)
+      dispatch(clearBlogs())
+      setInitLoading(false);
+      return;
+    }
     const {res} = await getBlogPosts({
       userId: userData.$id,
       dispatch: dispatch,
       setBlogs: setBlogs,
       clearBlogs: clearBlogs,
+      query:query
     });
-    const profRes = await getUsersUtil({
-      userId:userData.$id,
-      dispatch:dispatch,
-      setUsers:setUsers,
-      clearUsers:clearUsers
-    })
+    res.message==""?setFollowingSectionErr([res.message]):null
     setInitLoading(false);
   };
 
@@ -61,12 +68,12 @@ function Dashboard() {
             <i className='fa-solid fa-bolt mr-0.5vw'></i>
             Featured
           </button>
-          <button onClick={handleClick} ref={tags[1]} id='featured-blogs' className='px-1.5vw py-0.5vw rounded-full'>
+          <button onClick={handleClick} ref={tags[1]} id='following-blogs' className='px-1.5vw py-0.5vw rounded-full'>
             <i className='fa-solid fa-users mr-0.5vw'></i>
             Following
           </button>
         </div>
-
+        
         <div id='main-post-cont' className='flex-col flex gap-8 py-2vw'>
           {initLoading
             ? Array.from({ length: 20 }, (i) => (
@@ -77,7 +84,9 @@ function Dashboard() {
                   loader
                 />
               ))
-            : posts.map((post) => (
+            : followingSectionErr?
+              <FollowingSecErr error={followingSectionErr} />:
+             posts.map((post) => (
                 <PostCard
                   onClick={()=>{
                     navigate(`/post/${post.postID}`)
