@@ -10,6 +10,8 @@ import { login, logout, setFetching } from './store/authSlice';
 import { useNavigate } from 'react-router-dom';
 import startAuthentication from './utils/startAuthentication';
 import toast,{Toaster} from 'react-hot-toast'
+import { clearProfile, setProfile } from './store/userProfileSlice';
+import getUserProfile from './utils/getUserProfile';
 
 
 function App() {
@@ -44,6 +46,10 @@ function App() {
 
     const startLoginSequence = async () => {
       const res = await startAuthentication({ dispatch, login, logout, setFetching });
+      console.log(res);
+     if(res.$id){
+       await getUserProfile({dispatch,setProfile,clearProfile,userId:res.$id})
+     } 
     };
 
     if (!isUserLoggedIn) {

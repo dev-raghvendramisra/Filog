@@ -6,10 +6,10 @@ import { useSelector } from 'react-redux';
 function UserProfile() {
   const{userData } = useSelector((state) => state.auth);
   return (
-    <div>UserProfile
+    <div className='pt-20p'>UserProfile
       // <button
-  onClick={() => {
-    authServices.logout();
+  onClick={async() => {
+   await authServices.logout();
     toast(`Bye, ${userData.name}`, {
       icon: '👋',
       style: {
@@ -18,7 +18,8 @@ function UserProfile() {
         color: '#fff',
       },
     });
-  }}
+    location.reload()}
+  }
 >
   logout
 </button>

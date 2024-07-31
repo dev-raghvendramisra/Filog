@@ -122,6 +122,27 @@ export class DatabaseService {
 
        }
     }
+    async getUsers(query = [Query.notEqual("userId", ["#"])],offset){
+       try {
+        const res = await this.database.listDocuments(
+             conf.dbId,
+             conf.userProfilesCollectionID,
+             query,
+             offset
+         );
+
+         if(res.documents){
+            return res
+         }
+         else{
+            throw{err:"dbService error :: failed to retreive users :" ,res:res}
+         }
+       } catch (error) {
+            console.log("dbService error :: failed to retreive users :", error)
+            return error
+
+       }
+    }
 
     async uploadImage(coverImage, subImages = []) {
         const imageIds = {};
@@ -175,6 +196,7 @@ export class DatabaseService {
             return error
         }
     }
+    ///will have to create a function to update documents 
 
 }
 

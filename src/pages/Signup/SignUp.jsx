@@ -8,6 +8,7 @@ import { authServices } from '../../backend-services';
 import {startAuthentication, getBlogPosts, errHandler} from '../../utils';
 import { setBlogs, clearBlogs } from '../../store/blogsSlice';
 import { login, logout, setFetching } from '../../store/authSlice';
+import { clearProfile, setProfile } from '../../store/userProfileSlice';
 
 
 export default function SignUp() {
@@ -70,6 +71,10 @@ export default function SignUp() {
 
                if(authRes.message){
                  setFormErr(authRes.message)
+               }
+
+               if(authRes.$id){
+                await getUserProfile({userId:authRes.$id,dispatch,setProfile,clearProfile})
                }
           }
 

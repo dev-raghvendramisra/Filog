@@ -65,7 +65,7 @@ export class Auth{
     async getLoggedInUser(){
         try {
             const res = await this.account.get()
-
+            
              if(res.code!==401){
                 return res;
             }
@@ -73,7 +73,6 @@ export class Auth{
                 throw {err:"auth service error :: failed to retreive loggedIn user: ",res:res}
             }
         } catch (error) {
-            console.log("auth service error :: failed to retreive loggedIn user: ",error)
             return error
         }
        

@@ -5,6 +5,8 @@ import { getBlogPosts } from '../../utils';
 import { PostCard } from '../../Components';
 import { clearBlogs, setBlogs } from '../../store/blogsSlice';
 import { ID } from 'appwrite';
+import getUsersUtil from '../../utils/getUsersUtil';
+import { clearUsers, setUsers } from '../../store/usersSlice';
 
 function Dashboard() {
   const navigate = useNavigate()
@@ -42,6 +44,12 @@ function Dashboard() {
       setBlogs: setBlogs,
       clearBlogs: clearBlogs,
     });
+    const profRes = await getUsersUtil({
+      userId:userData.$id,
+      dispatch:dispatch,
+      setUsers:setUsers,
+      clearUsers:clearUsers
+    })
     setInitLoading(false);
   };
 

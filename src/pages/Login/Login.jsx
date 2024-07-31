@@ -8,6 +8,8 @@ import { useNavigate } from 'react-router-dom';
 import { login, logout, setFetching } from '../../store/authSlice';
 import startAuthentication from '../../utils/startAuthentication';
 import { errHandler } from '../../utils';
+import getUserProfile from '../../utils/getUserProfile';
+import { clearProfile, setProfile } from '../../store/userProfileSlice';
 
 
 
@@ -54,10 +56,14 @@ export default function Login() {
                setEmail:setEmail,
                setPass:setPassword,
              })
+             
+             if(authRes.message){
+               setFormErr(authRes.message)
+             }
+             if(authRes.$id){
+              await getUserProfile({userId:authRes.$id,dispatch,setProfile,clearProfile})
+             }
 
-                if(authRes.message){
-                  setFormErr(authRes.message)
-                }
            }
 
            setLoading(false)
