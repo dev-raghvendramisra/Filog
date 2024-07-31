@@ -142,7 +142,10 @@ box-shadow: 0px 38px 75px -1px rgba(0,0,0,0.07);
     .min-h-100vh {
         min-height: 100vh;
     }
-
+     
+    .hideScrollbar::-webkit-scrollbar{
+        display: none;
+    }
     /* Customize the scrollbar track */
     ::-webkit-scrollbar-track {
         background-color: transparent;
@@ -257,6 +260,31 @@ box-shadow: 0px 38px 75px -1px rgba(0,0,0,0.07);
         @apply text-blue-600 text-opacity-100 dark:text-blue-200;
     }
 
+    .postCardLoader{
+        position:relative;
+        overflow: hidden;
+        @apply bg-opacity-60 dark:bg-opacity-50;
+    }
+    .postCardLoader::before{
+        content: '';
+        position:absolute;
+        @apply bg-white dark:bg-darkPrimary_grays w-20vw h-6vw bg-opacity-100 dark:bg-opacity-100;
+        transform: rotate(125deg);
+        top:20%;
+        left:-90%;
+        animation: loader 0.8s ease 0s infinite forwards ;
+        @apply blur-2xl;
+    }
+
+    @keyframes loader {
+        from{
+            left:-90%
+        }
+        to{
+            left:100%
+        }
+    }
+
     /* Dark Mode Background Color Utilities */
 .bg-technology-dark { background-color: rgba(30, 144, 255, 0.1); color: #1E90FF; }
 .bg-health-dark { background-color: rgba(50, 205, 50, 0.1); color: #32CD32; }
@@ -264,7 +292,7 @@ box-shadow: 0px 38px 75px -1px rgba(0,0,0,0.07);
 .bg-lifestyle-dark { background-color: rgba(255, 105, 180, 0.1); color: #FF69B4; }
 .bg-travel-dark { background-color: rgba(255, 69, 0, 0.1); color: #FF4500; }
 .bg-food-dark { background-color: rgba(255, 215, 0, 0.1); color: #FFD700; }
-.bg-education-dark { background-color: rgba(138, 43, 226, 0.1); color: #8A2BE2; }
+.bg-education-dark { background-color: rgba(138, 43, 226, 0.1); color: #9930fc; }
 .bg-finance-dark { background-color: rgba(46, 139, 87, 0.1); color: #2E8B57; }
 .bg-entertainment-dark { background-color: rgba(255, 99, 71, 0.1); color: #FF6347; }
 .bg-fashion-dark { background-color: rgba(255, 192, 203, 0.1); color: #FFC0CB; }

@@ -9,6 +9,7 @@ import Write from "./Write/Write";
 import About from "./About/About";
 import SearchResult from "./Search-Result/SearchResult";
 import AlertWrapper from "../Components/Alert/AlertWrapper";
+import Post from "./Post/Post";
 
 export {
     Dashboard,
@@ -21,5 +22,6 @@ export {
     Write,
     About,
     SearchResult,
-    AlertWrapper
+    AlertWrapper,
+    Post
   };

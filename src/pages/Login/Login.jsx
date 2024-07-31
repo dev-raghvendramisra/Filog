@@ -1,12 +1,10 @@
 import React from 'react'
 import { Form, Button, Error } from '../../Components'
-import { NavLink } from 'react-router-dom'
+import { Navigate, NavLink } from 'react-router-dom'
 import { useSelector, useDispatch } from 'react-redux';
 import { authServices } from '../../backend-services';
 import { setEmail, setIsValidate, setPassword } from '../../store/formSlice';
 import { useNavigate } from 'react-router-dom';
-import getBlogPosts from '../../utils/getBlogPosts'
-import { clearBlogs, setBlogs } from '../../store/blogsSlice';
 import { login, logout, setFetching } from '../../store/authSlice';
 import startAuthentication from '../../utils/startAuthentication';
 import { errHandler } from '../../utils';
@@ -19,7 +17,7 @@ export default function Login() {
   const [loading, setLoading] = React.useState("");
   const formRef = React.useRef(null)
   const {isValidated,email,password} = useSelector((state)=>state.formData)
-  const {userData} = useSelector((state)=>state.auth)
+  const {isUserLoggedIn} = useSelector((state)=>state.auth)
   const dispatch = useDispatch()
   const navigate = useNavigate()
 
@@ -68,7 +66,11 @@ export default function Login() {
     startLoginSequence()
     },[isValidated])
 
-  return (
+
+  if(isUserLoggedIn){
+    return <Navigate to="/dashboard" />
+  }
+  else return (
 
 
 

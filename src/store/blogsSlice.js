@@ -1,7 +1,8 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 const initialState =[
-    {title:"",
+    {postID:"",
+     title:"",
      content:"",
      createdAt:"",
      author:"",
@@ -18,9 +19,10 @@ const blogsSlice = createSlice({
     name:"blogs",
     initialState,
     reducers:{
-        setBlogs:(state,{payload})=>{
+        setBlogs:(state,{payload})=>{         
           payload.forEach(blogData => {
               const newBlog = {
+                  postID:blogData.$id,
                   title:blogData.title,
                   content:blogData.content,
                   createdAt:blogData.createdAt,
@@ -30,14 +32,13 @@ const blogsSlice = createSlice({
                   coverImg:blogData.coverImageId,
                   subImages:blogData.subImagesId,
                   tags:blogData.tags
-
               }
               state.push(newBlog)
           });
         },
 
         clearBlogs:(state,action)=>{
-              for(let i=0;i<state.length;i++){
+              for(let i=0;i<=state.length;i++){
                   state.pop()
               }
         }

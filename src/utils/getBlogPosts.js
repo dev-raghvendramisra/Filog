@@ -4,7 +4,6 @@ import { dbServices } from "../backend-services";
 
 export default async function getBlogPosts({userId="#",offset=0,dispatch,clearBlogs,setBlogs}){
     const res =  await dbServices.getBlogs([Query.equal("status",[true]),Query.notEqual("userId",[userId]),Query.offset(offset)])
-    // console.log(res)
     if(offset==0){
             if(res.documents.length>0){
                dispatch(clearBlogs());
