@@ -18,6 +18,8 @@ import HomeUpper from "./Home-upper-section/HomeUpper";
 import HomeHero from "./Home-hero-section/HomeHero";
 import PostCard from "./Post-card/PostCard";
 import FollowingSecErr from './Error-message/FollowingSecErr'
+import PostCont from "./Post-cont/PostCont";
+import SideBarDash from "./Sidebar-dash/SideBarDash";
 
 export {
   Navbar,
@@ -39,6 +41,8 @@ export {
   HomeUpper,
   HomeHero,
   PostCard,
-  FollowingSecErr
+  FollowingSecErr,
+  PostCont,
+  SideBarDash
 };
 export * from "../pages"
