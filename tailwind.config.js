@@ -459,6 +459,7 @@ export default {
         '10vw': '10vw',
         '12vw': '12vw',
         '14vw': '14vw',
+        '15vw': '15vw',
         '16vw': '16vw',
         '18vw': '18vw',
         '19vw' :'19vw',

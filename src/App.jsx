@@ -10,6 +10,8 @@ import { login, logout, setFetching } from './store/authSlice';
 import { useNavigate } from 'react-router-dom';
 import startAuthentication from './utils/startAuthentication';
 import toast,{Toaster} from 'react-hot-toast'
+import { clearProfile, setProfile } from './store/userProfileSlice';
+import getUserProfile from './utils/getUserProfile';
 
 
 function App() {
@@ -26,18 +28,19 @@ function App() {
         navigate("/dashboard",{replace:true});
       }
       else navigate(pathname)
-      // dispatch(setAlert({type:"welcome",message:`Welcome, ${userData.name}`}))
       toast(`Welcome, ${userData.name}`, {
         icon: '👋',
         style: {
           borderRadius: '10px',
           background: '#333',
           color: '#fff',
+          width:"fit-content",
+          fontSize:"1vw",
         },
       });
     } 
     else {
-      if(pathname=="/dashboard" || pathname=="/write" || pathname=="/"){
+      if(pathname=="/dashboard" || pathname=="/write" || pathname=="/" || pathname=="/profile"){
         navigate("/",{replace:true});
       }
       else navigate(pathname)
@@ -45,6 +48,10 @@ function App() {
 
     const startLoginSequence = async () => {
       const res = await startAuthentication({ dispatch, login, logout, setFetching });
+      console.log(res);
+     if(res.$id){
+       await getUserProfile({dispatch,setProfile,clearProfile,userId:res.$id})
+     } 
     };
 
     if (!isUserLoggedIn) {
@@ -58,10 +65,13 @@ function App() {
       {fetching? <InfinitePogressbar className={`${pathname==""?"bg-opacity-0 dark:bg-opacity-0":""}`} /> : null}
       <Navbar />
       <Toaster containerStyle={{marginTop:"5%"}} />
-      <div className='min-h-56vh mt-2p'>
+      <div className='min-h-56vh'>
         <Outlet />
       </div>
+      {pathname=="/login" || pathname=="/signup" || pathname=="/about"?
       <Footer />
+      :null
+      }
     </>
   );
 }

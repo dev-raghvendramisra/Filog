@@ -1,15 +1,15 @@
 import React from 'react'
 import { Form, Button, Error } from '../../Components'
-import { NavLink } from 'react-router-dom'
+import { Navigate, NavLink } from 'react-router-dom'
 import { useSelector, useDispatch } from 'react-redux';
 import { authServices } from '../../backend-services';
 import { setEmail, setIsValidate, setPassword } from '../../store/formSlice';
 import { useNavigate } from 'react-router-dom';
-import getBlogPosts from '../../utils/getBlogPosts'
-import { clearBlogs, setBlogs } from '../../store/blogsSlice';
 import { login, logout, setFetching } from '../../store/authSlice';
 import startAuthentication from '../../utils/startAuthentication';
 import { errHandler } from '../../utils';
+import getUserProfile from '../../utils/getUserProfile';
+import { clearProfile, setProfile } from '../../store/userProfileSlice';
 
 
 
@@ -19,6 +19,7 @@ export default function Login() {
   const [loading, setLoading] = React.useState("");
   const formRef = React.useRef(null)
   const {isValidated,email,password} = useSelector((state)=>state.formData)
+  const {isUserLoggedIn} = useSelector((state)=>state.auth)
   const dispatch = useDispatch()
   const navigate = useNavigate()
 
@@ -47,23 +48,22 @@ export default function Login() {
             console.log("An error occured") 
            }
            else if(sessionInitRes.$id){
-               const blogPostsRes = await getBlogPosts({ //(caching)calling the getBlogPosts util to fetch the posts before redirecting user to dashboard 
-                dispatch:dispatch,
-                setBlogs:setBlogs,
-                clearBlogs:clearBlogs
-                })
-                const authRes = await startAuthentication({//calling the strtauthentication util to verify the session and retreive the user details
-                  dispatch:dispatch,
-                  login:login,
-                  logout:logout,
-                  setFetching:setFetching,
-                  setEmail:setEmail,
-                  setPass:setPassword,
-                })
+             const authRes = await startAuthentication({//calling the strtauthentication util to verify the session and retreive the user details
+               dispatch:dispatch,
+               login:login,
+               logout:logout,
+               setFetching:setFetching,
+               setEmail:setEmail,
+               setPass:setPassword,
+             })
+             
+             if(authRes.message){
+               setFormErr(authRes.message)
+             }
+             if(authRes.$id){
+              await getUserProfile({userId:authRes.$id,dispatch,setProfile,clearProfile})
+             }
 
-                if(authRes.message){
-                  setFormErr(authRes.message)
-                }
            }
 
            setLoading(false)
@@ -72,7 +72,11 @@ export default function Login() {
     startLoginSequence()
     },[isValidated])
 
-  return (
+
+  if(isUserLoggedIn){
+    return <Navigate to="/dashboard" />
+  }
+  else return (
 
 
 

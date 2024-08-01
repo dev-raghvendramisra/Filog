@@ -1,7 +1,6 @@
 import React from 'react'
 import Alert from './Alert.jsx'
 import { useSelector, useDispatch } from 'react-redux'
-import {clearAlerts} from '../../store/alertSlice.js'
 
 function AlertWrapper({className}) {
    const alerts = useSelector((state)=>state.alerts)

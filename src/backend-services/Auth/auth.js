@@ -22,7 +22,7 @@ export class Auth{
                 if(res.code!=401 || res.code!==429){
                     const prefRes = await this.updatePreferences(prefs)
                     if(prefRes){
-                       const dbRes = await dbServices.createProfileDocument({name:name,profilePicture:prefs.avatarUrl},id)
+                       const dbRes = await dbServices.createProfileDocument({userName:name,userAvatar:prefs.avatarUrl,userId:id},id)
                        console.log(dbRes)
                        return dbRes
                     }
@@ -65,7 +65,7 @@ export class Auth{
     async getLoggedInUser(){
         try {
             const res = await this.account.get()
-
+            
              if(res.code!==401){
                 return res;
             }
@@ -73,7 +73,6 @@ export class Auth{
                 throw {err:"auth service error :: failed to retreive loggedIn user: ",res:res}
             }
         } catch (error) {
-            console.log("auth service error :: failed to retreive loggedIn user: ",error)
             return error
         }
        
