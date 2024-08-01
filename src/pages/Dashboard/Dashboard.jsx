@@ -8,12 +8,12 @@ import { PostCont, SideBarDash } from '../../Components';
 
 function Dashboard() {
   const [initLoading, setInitLoading] = React.useState(true);
-  const [followingSectionErr,  setFollowingSectionErr] = React.useState(null)
+  const [followingSectionErr, setFollowingSectionErr] = React.useState(null);
   const tags = [React.useRef(), React.useRef()];
   const container = React.useRef();
   const dispatch = useDispatch();
   const { isUserLoggedIn, userData } = useSelector((state) => state.auth);
-  const {following} = useSelector((state)=>state.userProfile)
+  const { following } = useSelector((state) => state.userProfile);
   const posts = useSelector((state) => state.blogs);
 
   if (!isUserLoggedIn) {
@@ -21,50 +21,53 @@ function Dashboard() {
   }
 
   React.useEffect(() => {
-    const evt = new Event("click",{bubbles:true})
-    tags[0].current.dispatchEvent(evt)
+    const evt = new Event('click', { bubbles: true });
+    tags[0].current.dispatchEvent(evt);
   }, []);
 
   const handleClick = async ({ target }) => {
-    setFollowingSectionErr(null)
     setInitLoading(true);
     tags.forEach(({ current }) => {
       current.classList.remove('btnActive');
     });
 
-    target.tagName=="I"?target.parentElement.classList.add('btnActive'):target.classList.add('btnActive');
+    const activeTarget = target.tagName === 'I' ? target.parentElement : target;
+    activeTarget.classList.add('btnActive');
 
-    const query = []
-    if(target.id=="following-blogs" || target.parentElement.id=="following-blogs"){
-      if(following.length>0)query[0]=Query.equal("userId",[...following])
-      else{ 
-       setFollowingSectionErr(following)
-       dispatch(clearBlogs())
-       setInitLoading(false);
-       return;
+    const query = [];
+    if (activeTarget.id === 'following-blogs') {
+      if (following.length > 0) {
+        query.push(Query.equal('userId', following));
+      } else {
+        setFollowingSectionErr(following);//here following is empty this means user is not following anyone ,this is first type of following sec err
+        dispatch(clearBlogs());
+        setInitLoading(false);
+        return;
       }
     }
-    const {res} = await getBlogPosts({
+
+    const res = await getBlogPosts({
       userId: userData.$id,
       dispatch: dispatch,
       setBlogs: setBlogs,
       clearBlogs: clearBlogs,
-      query:query
+      query: query,
     });
-    res.message==""?setFollowingSectionErr([res.message]):null
+
+    setFollowingSectionErr(res.ok ? null : following);//here following is either null or an array with some length which determines the second type of following sec err
     setInitLoading(false);
   };
 
   return (
-    <div ref={container} className='h-100vh overflow-y-scroll justify-center flex pt-10vh' id='main-dashboard-cont'>
+    <div ref={container} className="h-100vh overflow-y-scroll justify-center flex pt-10vh" id="main-dashboard-cont">
       <PostCont
-      handleClick={handleClick}
-      refs={tags}
-      initLoading={initLoading}
-      posts={posts}
-      followingSectionErr={followingSectionErr}
-       />
-      <SideBarDash contRef={container}/>
+        handleClick={handleClick}
+        refs={tags}
+        initLoading={initLoading}
+        posts={posts}
+        followingSectionErr={followingSectionErr}
+      />
+      <SideBarDash contRef={container} />
     </div>
   );
 }

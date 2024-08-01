@@ -16,7 +16,9 @@ function UserProfile() {
         borderRadius: '10px',
         background: '#333',
         color: '#fff',
-      },
+        width:"fit-content",
+        fontSize:"1vw",
+      }
     });
     location.reload()}
   }
