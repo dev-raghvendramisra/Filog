@@ -2,11 +2,13 @@ import { Query } from "appwrite";
 import { dbServices } from "../backend-services";
 
 
-export default async function getBlogPosts({userId="#",query=[],offset=0,dispatch,clearBlogs,setBlogs}){
+export default async function getBlogPosts({userId="#",query=[],offset=0,limit=10,dispatch,clearBlogs,setBlogs}){
      
     const queries=[
         Query.equal("status",[true]),
+        Query.orderAsc("randomIndex"), //temporary query just to scramble the data
         Query.notEqual("userId",[userId]),
+        Query.limit(limit),
         ...query
     ]
 

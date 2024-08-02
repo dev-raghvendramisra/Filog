@@ -5,7 +5,7 @@ import { useSelector } from 'react-redux';
 import { getBlogPosts } from '../../utils';
 import { clearBlogs, setBlogs } from '../../store/blogsSlice';
 import { useDispatch } from 'react-redux';
-import { ID, Query } from 'appwrite';
+import { ID } from 'appwrite';
 
 
 function Home() {
@@ -17,7 +17,7 @@ function Home() {
       dispatch:dispatch,
       setBlogs:setBlogs,
       clearBlogs:clearBlogs,
-      query:[Query.limit(15)]
+      limit:15
       })
   },[])
 
