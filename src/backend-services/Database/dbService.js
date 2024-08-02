@@ -210,7 +210,7 @@ export class DatabaseService {
     }
 
     generateImgUrl(fileId){
-       let url = `https://cloud.appwrite.io/v1/storage/buckets/${conf.bucketId}/files/${fileId}/view?project=${conf.projectId}`
+       let url = `${conf.appWriteUrl}/storage/buckets/${conf.bucketId}/files/${fileId}/view?project=${conf.projectId}`
        return url
     }
     ///will have to create a function to update documents 
