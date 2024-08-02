@@ -40,8 +40,7 @@ export default function SignUp() {
               prefs:{avatarUrl:avatarUrl}
             })
 
-            console.log(signUpRes.code)
-            
+                        
             const didErrOccured = errHandler({
               res:signUpRes,
               dispatch:dispatch,

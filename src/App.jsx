@@ -48,7 +48,6 @@ function App() {
 
     const startLoginSequence = async () => {
       const res = await startAuthentication({ dispatch, login, logout, setFetching });
-      console.log(res);
      if(res.$id){
        await getUserProfile({dispatch,setProfile,clearProfile,userId:res.$id})
      } 
@@ -68,7 +67,7 @@ function App() {
       <div className='min-h-56vh'>
         <Outlet />
       </div>
-      {pathname=="/login" || pathname=="/signup" || pathname=="/about"?
+      {pathname=="/login" || pathname=="/signup" || pathname=="/about" || pathname=="/"?
       <Footer />
       :null
       }

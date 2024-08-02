@@ -1,9 +1,11 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 const initialState =[ {
+    profileId:"",
     userId:"",
     userName:"",
     userAvatar:"",
+    userAvatarId:"",
     blogs:[]
 }]
 
@@ -16,9 +18,10 @@ const usersSlice = createSlice({
             payload.forEach(user => {
                const newUser = {}
                newUser.userId = user.userId;
-               newUser.userName = user.userName;
+               newUser.userName = user.userName;console.log("Yhan thi gadbad")
                newUser.userAvatar = user.userAvatar;
-               newUser.blogs = user.blogs;
+               newUser.profileId = user.$id;
+               newUser.userAvatar = user.userAvatar;
                state.push(newUser)
            });
         },
