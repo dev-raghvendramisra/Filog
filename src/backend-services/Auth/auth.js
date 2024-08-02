@@ -20,13 +20,9 @@ export class Auth{
             if(createdAccount){
                 const res = await this.login(email,password);
                 if(res.code!=401 || res.code!==429){
-                    const prefRes = await this.updatePreferences(prefs)
-                    if(prefRes){
                        const dbRes = await dbServices.createProfileDocument({userName:name,userAvatar:prefs.avatarUrl,userId:id},id)
-                       console.log(dbRes)
                        return dbRes
                     }
-                }
                 return res;
             }
             else{
@@ -44,8 +40,7 @@ export class Auth{
         try {
         console.log("calling-auth");
            const res =  await this.account.createEmailPasswordSession(email,password);
-        //    console.log(res)
-           if(res.$id){
+                if(res.$id){
             return res;
            }
            else {

@@ -250,8 +250,8 @@ box-shadow: 0px 38px 75px -1px rgba(0,0,0,0.07);
         display: grid;
         grid-template-columns: repeat(3,auto);
         grid-auto-rows:auto;
-        row-gap: 2vw;
-        column-gap: 2vw;
+        row-gap: 4vw;
+        column-gap: 4vw;
     }
 
     .btnActive{

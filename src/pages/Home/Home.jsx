@@ -5,7 +5,7 @@ import { useSelector } from 'react-redux';
 import { getBlogPosts } from '../../utils';
 import { clearBlogs, setBlogs } from '../../store/blogsSlice';
 import { useDispatch } from 'react-redux';
-import { ID } from 'appwrite';
+import { ID, Query } from 'appwrite';
 
 
 function Home() {
@@ -17,11 +17,12 @@ function Home() {
       dispatch:dispatch,
       setBlogs:setBlogs,
       clearBlogs:clearBlogs,
+      query:[Query.limit(15)]
       })
   },[])
 
   return (
-    <div className='flex flex-col justify-start gap-80 items-center min-h-100vh  mb-6vw'  style={{ marginTop: "12vh" }}>
+    <div className='flex flex-col justify-start gap-80 items-center mb-6vw'  style={{ marginTop: "12vh" }}>
       <HomeUpper />
       {/* <h1>Get Featured</h1> */}
 
@@ -31,9 +32,9 @@ function Home() {
         key={ID.unique()}
         title={post.title} 
          tags={post.tags}
-         coverImage={post.coverImg}
-         author={post.author}
-         authorImg={post.authorImg}
+         coverImage={post.coverImageUrl}
+         author={post.authorName}
+         authorImg={post.authorAvatar}
          createdAt={post.createdAt}
         />)):null}
       </div>

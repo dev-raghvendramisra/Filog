@@ -64,9 +64,9 @@ function PostCont({
                 key={post.postID || ID.unique()} 
                 title={post.title}
                 tags={post.tags}
-                coverImage={post.coverImg}
-                author={post.author}
-                authorImg={post.authorImg}
+                coverImage={post.coverImageUrl}
+                author={post.authorName}
+                authorImg={post.authorAvatar}
                 createdAt={post.createdAt}
               />
             ))}

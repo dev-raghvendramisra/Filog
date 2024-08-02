@@ -6,6 +6,8 @@ const initialState = {
     userAvatar:"",
     following:[],
     followers:[],
+    blogs:[],
+    userAvatarId:"",
 }
 
 const userProfileSlice = createSlice({
@@ -19,7 +21,7 @@ const userProfileSlice = createSlice({
         },
         setProfile:(state,{payload})=>{
             for(let key in state){
-                state[key]=payload[key]
+              state[key]=payload[key]
             }
         }
 

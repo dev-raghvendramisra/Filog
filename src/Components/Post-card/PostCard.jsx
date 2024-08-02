@@ -21,7 +21,7 @@ function PostCard({
   const authorRef = useRef();
   const [truncatedTitle, setTruncatedTitle] = useState(title);
   const [truncatedAuthor, setTruncatedAuthor] = useState(author);
-  const [rerender, forceRerender]  = React.useState(false)
+  const [rerender, forceRerender]  = React.useState(false);
   
   
 

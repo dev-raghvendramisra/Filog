@@ -6,8 +6,10 @@ const initialState =[
      content:"",
      createdAt:"",
      author:"",
-     coverImg:"",
-     subImages:[],
+     coverImageUrl:"",
+     subImageUrl:[],
+     coverImageId:"",
+     subImageId:[],
      authorId:"",
      authorImg:"",
      tags:[]
@@ -27,10 +29,12 @@ const blogsSlice = createSlice({
                   content:blogData.content,
                   createdAt:blogData.createdAt,
                   authorId:blogData.userId,
-                  author:blogData.author,
-                  authorImg:blogData.authorImg,
-                  coverImg:blogData.coverImageId,
-                  subImages:blogData.subImagesId,
+                  authorName:blogData.authorName,
+                  authorAvatar:blogData.authorAvatar,
+                  coverImageUrl:blogData.coverImageUrl,
+                  subImageUrl:blogData.subImageUrl,
+                  coverImageId:blogData.coverImageId,
+                  subImageId:blogData.subImageId,
                   tags:blogData.tags
               }
               state.push(newBlog)
@@ -38,9 +42,7 @@ const blogsSlice = createSlice({
         },
 
         clearBlogs:(state,action)=>{
-              for(let i=0;i<=state.length;i++){
-                  state.pop()
-              }
+            return []
         }
     }
 })

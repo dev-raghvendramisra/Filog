@@ -17,24 +17,28 @@ export class DatabaseService {
         title,
         content,
         coverImageId,
-        subImagesId = [],
+        coverImageUrl,
+        subImageId = [],
+        subImageUrl=[],
         userId,
         status = true,
         tags=[],
-        author,
-        authorImg
+        authorName,
+        authorAvatar
     }) {
         const blogAttr = {
             title:title,
             content:content,
             coverImageId:coverImageId,
-            subImagesId:subImagesId,
+            coverImageUrl:coverImageUrl,
+            subImageId:subImageId,
+            subImageUrl:subImageUrl,
             userId:userId,
             createdAt:createdAt(),
             status:status,
             tags:tags,
-            author:author,
-            authorImg:authorImg
+            authorName:authorName,
+            authorAvatar:authorAvatar
         }
         try {
             const res = await this.database.createDocument(
@@ -145,14 +149,21 @@ export class DatabaseService {
     }
 
     async uploadImage(coverImage, subImages = []) {
-        const imageIds = {};
+        const imageData = {
+            coverImageId:"",
+            subImageId:[],
+            coverImageUrl:"",
+            subImageUrl:[]
+        };
         try {
             const { $id } = await this.storageBucket.createFile(
                 conf.bucketId,
                 ID.unique(),
                 coverImage
             );
-            imageIds.$id = $id;
+            imageData.coverImageId = $id;
+            imageData.coverImageUrl=this.generateImgUrl($id)
+
 
             if (subImages.length !== 0) {
                 const subImagesId = await Promise.all(
@@ -164,7 +175,9 @@ export class DatabaseService {
                         );
                     })
                 );
-                imageIds.subImagesId = subImagesId;
+                imageData.subImageId = subImagesId;
+                imageData.subImageUrl= subImagesId.map((subImage)=>(this.generateImgUrl(subImage.$id)))
+                
             }
             return imageIds;
         } catch (error) {
@@ -187,7 +200,6 @@ export class DatabaseService {
             );
 
             if (res.$databaseId) {
-                console.log("Yhan thi gadbad")
                 return res;
             } else
                 throw { err: "dbService error :: failed to create document", res: res };
@@ -195,6 +207,11 @@ export class DatabaseService {
             console.log("dbService error :: failed to create document", error);
             return error
         }
+    }
+
+    generateImgUrl(fileId){
+       let url = `https://cloud.appwrite.io/v1/storage/buckets/${conf.bucketId}/files/${fileId}/view?project=${conf.projectId}`
+       return url
     }
     ///will have to create a function to update documents 
 
