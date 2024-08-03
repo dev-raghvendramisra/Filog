@@ -47,7 +47,7 @@ function App() {
     }
 
     const startLoginSequence = async () => {
-      const res = await startAuthentication({ dispatch, login, logout, setFetching });
+      const res = await startAuthentication({ dispatch, login, logout, setFetching ,navigate});     
      if(res.$id){
        await getUserProfile({dispatch,setProfile,clearProfile,userId:res.$id})
      } 

@@ -25,7 +25,7 @@ function PostCont({
             onClick={handleClick}
             ref={refs[0]}
             id="featured-blogs"
-            className="px-1.5vw py-0.5vw rounded-full"
+            className="px-1.5vw py-0.5vw rounded-full hover:text-black hover:bg-slate-100 hover:dark:bg-blue-950 transition-all hover:dark:text-white"
           >
             <i className="fa-solid fa-bolt mr-0.5vw"></i>
             Featured
@@ -34,7 +34,7 @@ function PostCont({
             onClick={handleClick}
             ref={refs[1]}
             id="following-blogs"
-            className="px-1.5vw py-0.5vw rounded-full"
+            className="px-1.5vw py-0.5vw rounded-full hover:text-black hover:bg-slate-100 hover:dark:bg-blue-950 transition-all hover:dark:text-white"
           >
             <i className="fa-solid fa-users mr-0.5vw"></i>
             Following

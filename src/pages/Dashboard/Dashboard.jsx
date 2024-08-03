@@ -13,7 +13,7 @@ function Dashboard() {
   const container = React.useRef();
   const dispatch = useDispatch();
   const { isUserLoggedIn, userData } = useSelector((state) => state.auth);
-  const { following } = useSelector((state) => state.userProfile);
+  const userProfile = useSelector((state) => state.userProfile);
   const posts = useSelector((state) => state.blogs);
 
   if (!isUserLoggedIn) {
@@ -36,8 +36,8 @@ function Dashboard() {
 
     const query = [];
     if (activeTarget.id === 'following-blogs') {
-      if (following.length > 0) {
-        query.push(Query.equal('userId', following));
+      if (userProfile.following.length > 0) {
+        query.push(Query.equal('userId', userProfile.following));
       } else {
         setFollowingSectionErr(following);//here following is empty this means user is not following anyone ,this is first type of following sec err
         dispatch(clearBlogs());
@@ -54,7 +54,7 @@ function Dashboard() {
       query: query,
     });
 
-    setFollowingSectionErr(res.ok ? null : following);//here following is either null or an array with some length which determines the second type of following sec err
+    setFollowingSectionErr(res.ok ? null : userProfile.following);//here following is either null or an array with some length which determines the second type of following sec err
     setInitLoading(false);
   };
 
@@ -67,7 +67,7 @@ function Dashboard() {
         posts={posts}
         followingSectionErr={followingSectionErr}
       />
-      <SideBarDash contRef={container} />
+      <SideBarDash userData={userProfile} contRef={container} />
     </div>
   );
 }

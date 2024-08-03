@@ -20,6 +20,7 @@ import PostCard from "./Post-card/PostCard";
 import FollowingSecErr from './Error-message/FollowingSecErr'
 import PostCont from "./Post-cont/PostCont";
 import SideBarDash from "./Sidebar-dash/SideBarDash";
+import FollowSuggestionsCard from "./Follow-suggestion/FollowSuggestionsCard";
 
 export {
   Navbar,
@@ -43,6 +44,7 @@ export {
   PostCard,
   FollowingSecErr,
   PostCont,
-  SideBarDash
+  SideBarDash,
+  FollowSuggestionsCard
 };
 export * from "../pages"

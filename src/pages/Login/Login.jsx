@@ -55,6 +55,7 @@ export default function Login() {
                setFetching:setFetching,
                setEmail:setEmail,
                setPass:setPassword,
+               navigate
              })
              
              if(authRes.message){

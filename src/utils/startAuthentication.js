@@ -1,14 +1,23 @@
 import { authServices } from "../backend-services";
 import toast from "react-hot-toast";
 
-export default async function startAuthentication({dispatch,login,logout,setFetching,setEmail,setPass,setName}){
+export default async function startAuthentication({dispatch,login,logout,setFetching,setEmail,setPass,setName,navigate}){
 
     dispatch(setFetching(true))
 
     const timer = setTimeout(()=>{
      dispatch(setFetching(false));
      dispatch(logout());
-     toast.error("Authentication failed, internal server error")
+     toast.error("Authentication failed, internal server error",{
+        style: {
+        borderRadius: '10px',
+        background: '#333',
+        color: '#fff',
+        width:"fit-content",
+        fontSize:"1vw",
+      }})
+     navigate("")
+     return null
     },10000)
  
     const res  = await authServices.getLoggedInUser();
