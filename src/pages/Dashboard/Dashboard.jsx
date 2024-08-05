@@ -39,7 +39,7 @@ function Dashboard() {
       if (userProfile.following.length > 0) {
         query.push(Query.equal('userId', userProfile.following));
       } else {
-        setFollowingSectionErr(following);//here following is empty this means user is not following anyone ,this is first type of following sec err
+        setFollowingSectionErr(userProfile.following);//here following is empty this means user is not following anyone ,this is first type of following sec err
         dispatch(clearBlogs());
         setInitLoading(false);
         return;

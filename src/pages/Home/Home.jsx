@@ -19,7 +19,7 @@ function Home() {
       clearBlogs:clearBlogs,
       limit:15
       })
-  })
+  },[])
 
   return (
     <div className='flex flex-col justify-start gap-80 items-center mb-6vw'  style={{ marginTop: "12vh" }}>
