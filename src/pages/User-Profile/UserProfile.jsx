@@ -25,7 +25,6 @@ function UserProfile() {
         fontSize:"1vw",
       }
     });
-    handleAuthObject({clear:true})
     location.reload()}
   }
 >

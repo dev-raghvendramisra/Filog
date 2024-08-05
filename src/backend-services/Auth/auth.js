@@ -53,8 +53,13 @@ export class Auth{
         }
     }
     async logout(){
+        console.log(
+            "cleared-session"
+        );
         const result  = await this.account.deleteSession("current");
         localStorage.removeItem("cookieFallback")
+        localStorage.removeItem("authObj")
+        
         return result;
     }
 
