@@ -28,16 +28,16 @@ function App() {
         navigate("/dashboard",{replace:true});
       }
       else navigate(pathname)
-      toast(`Welcome, ${userData.name}`, {
-        icon: '👋',
-        style: {
-          borderRadius: '10px',
-          background: '#333',
-          color: '#fff',
-          width:"fit-content",
-          fontSize:"1vw",
-        },
-      });
+      // toast(`Welcome, ${userData.name}`, {
+      //   icon: '👋',
+      //   style: {
+      //     borderRadius: '10px',
+      //     background: '#333',
+      //     color: '#fff',
+      //     width:"fit-content",
+      //     fontSize:"1vw",
+      //   },
+      // });
     } 
     else {
       if(pathname=="/dashboard" || pathname=="/write" || pathname=="/" || pathname=="/profile"){
@@ -61,7 +61,7 @@ function App() {
 
   return (
     <>
-      {fetching? <InfinitePogressbar className={`${pathname==""?"bg-opacity-0 dark:bg-opacity-0":""}`} /> : null}
+      {fetching? pathname=="/login" || pathname=="/signup"? <InfinitePogressbar className={`${pathname==""?"bg-opacity-0 dark:bg-opacity-0":""}`} /> : null:null}
       <Navbar />
       <Toaster containerStyle={{marginTop:"5%"}} />
       <div className='min-h-56vh'>

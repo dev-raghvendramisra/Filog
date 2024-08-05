@@ -8,6 +8,7 @@ function PostCont({
   handleClick = () => {},
   type = "dashboard",
   initLoading,
+  postLoading,
   posts,
   followingSectionErr,
   id = "main-dashboard-posts-cont",
@@ -43,7 +44,7 @@ function PostCont({
       )}
 
       <div id="main-post-cont" className="flex-col flex gap-8 py-1vw">
-        {initLoading
+        {initLoading || postLoading
           ? Array.from({ length: 8 }).map((_, i) => (
               <PostCard
                 key={i}

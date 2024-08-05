@@ -17,6 +17,7 @@
     "@mui/material": "^5.16.4",
     "@reduxjs/toolkit": "^2.2.6",
     "appwrite": "^15.0.0",
+    "crypto-js": "^4.2.0",
     "gsap": "^3.12.5",
     "material-symbols": "^0.21.2",
     "react": "^18.3.1",

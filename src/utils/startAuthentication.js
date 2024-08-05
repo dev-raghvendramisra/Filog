@@ -1,5 +1,6 @@
 import { authServices } from "../backend-services";
 import toast from "react-hot-toast";
+import {handleAuthObject} from "../utils";
 
 export default async function startAuthentication({dispatch,login,logout,setFetching,setEmail,setPass,setName,navigate}){
 
@@ -19,8 +20,12 @@ export default async function startAuthentication({dispatch,login,logout,setFetc
      navigate("")
      return null
     },10000)
- 
+
+    const isAuthObjValid = handleAuthObject({read:true})
+    if(isAuthObjValid) dispatch(login())
+
     const res  = await authServices.getLoggedInUser();
+    
     clearTimeout(timer)
 
     dispatch(setFetching(false))
@@ -30,6 +35,7 @@ export default async function startAuthentication({dispatch,login,logout,setFetc
     }
     else if(res.code!==401){
         dispatch(login(res))
+        if(!isAuthObjValid) handleAuthObject({write:true , name:res.name})
         setEmail? dispatch(setEmail("")):null
         setPass? dispatch(setPass("")):null
         setName? dispatch(setName("")):null

@@ -2,6 +2,7 @@ import React, { useRef } from 'react'
 import { authServices, dbServices } from '../../backend-services';
 import toast from 'react-hot-toast';
 import { useSelector } from 'react-redux';
+import { handleAuthObject } from '../../utils';
 
 function UserProfile() {
   const{userData } = useSelector((state) => state.auth);
@@ -24,6 +25,7 @@ function UserProfile() {
         fontSize:"1vw",
       }
     });
+    handleAuthObject({clear:true})
     location.reload()}
   }
 >

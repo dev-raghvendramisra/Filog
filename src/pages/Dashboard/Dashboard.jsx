@@ -8,6 +8,8 @@ import { PostCont, SideBarDash } from '../../Components';
 
 function Dashboard() {
   const [initLoading, setInitLoading] = React.useState(true);
+  const [postLoading, setPostLoading] = React.useState(true);
+  // const [initLoading, setInitLoading] = React.useState(true
   const [followingSectionErr, setFollowingSectionErr] = React.useState(null);
   const tags = [React.useRef(), React.useRef()];
   const container = React.useRef();
@@ -16,17 +18,20 @@ function Dashboard() {
   const userProfile = useSelector((state) => state.userProfile);
   const posts = useSelector((state) => state.blogs);
 
-  if (!isUserLoggedIn) {
-    return <Navigate to="/login" />;
-  }
 
   React.useEffect(() => {
-    const evt = new Event('click', { bubbles: true });
-    tags[0].current.dispatchEvent(evt);
-  }, []);
+    if(!isUserLoggedIn) return
+    if(userProfile.$id!==""){
+      setInitLoading(false)
+      const evt = new Event('click', { bubbles: true });
+      tags[0].current.dispatchEvent(evt);
+    }
+   console.log("render");
+   
+  }, [userProfile.$id]);
 
   const handleClick = async ({ target }) => {
-    setInitLoading(true);
+    setPostLoading(true);
     tags.forEach(({ current }) => {
       current.classList.remove('btnActive');
     });
@@ -41,7 +46,7 @@ function Dashboard() {
       } else {
         setFollowingSectionErr(userProfile.following);//here following is empty this means user is not following anyone ,this is first type of following sec err
         dispatch(clearBlogs());
-        setInitLoading(false);
+        setPostLoading(false);
         return;
       }
     }
@@ -55,9 +60,11 @@ function Dashboard() {
     });
 
     setFollowingSectionErr(res.ok ? null : userProfile.following);//here following is either null or an array with some length which determines the second type of following sec err
-    setInitLoading(false);
+    setPostLoading(false);
   };
-
+  if (!isUserLoggedIn) {
+    return <Navigate to="/login" />;
+  }
   return (
     <div ref={container} className="h-100vh overflow-y-scroll justify-center flex pt-10vh" id="main-dashboard-cont">
       <PostCont
@@ -66,8 +73,9 @@ function Dashboard() {
         initLoading={initLoading}
         posts={posts}
         followingSectionErr={followingSectionErr}
+        postLoading={postLoading}
       />
-      <SideBarDash userData={userProfile} contRef={container} />
+      {/* <SideBarDash userData={userProfile} contRef={container} /> */}
     </div>
   );
 }

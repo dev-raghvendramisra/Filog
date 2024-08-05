@@ -54,6 +54,7 @@ export class Auth{
     }
     async logout(){
         const result  = await this.account.deleteSession("current");
+        localStorage.removeItem("cookieFallback")
         return result;
     }
 
