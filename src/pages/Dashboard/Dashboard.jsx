@@ -1,15 +1,16 @@
 import React from 'react';
 import { Navigate } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
-import { getBlogPosts } from '../../utils';
+import { getBlogPosts, getUsersUtil } from '../../utils';
 import { clearBlogs, setBlogs } from '../../store/blogsSlice';
 import { Query } from 'appwrite';
 import { PostCont, SideBarDash } from '../../Components';
+import {setUsers, clearUsers} from '../../store/usersSlice'
 
 function Dashboard() {
   const [initLoading, setInitLoading] = React.useState(true);
   const [postLoading, setPostLoading] = React.useState(true);
-  // const [initLoading, setInitLoading] = React.useState(true
+  const [sideBarLoading, setSideBarLoading] = React.useState(true);
   const [followingSectionErr, setFollowingSectionErr] = React.useState(null);
   const tags = [React.useRef(), React.useRef()];
   const container = React.useRef();
@@ -17,7 +18,7 @@ function Dashboard() {
   const { isUserLoggedIn, userData } = useSelector((state) => state.auth);
   const userProfile = useSelector((state) => state.userProfile);
   const posts = useSelector((state) => state.blogs);
-
+  const users = useSelector((state)=>state.users)
 
   React.useEffect(() => {
     if(!isUserLoggedIn) return
@@ -26,9 +27,23 @@ function Dashboard() {
       const evt = new Event('click', { bubbles: true });
       tags[0].current.dispatchEvent(evt);
     }
-   console.log("render");
-   
   }, [userProfile.$id]);
+
+
+  React.useEffect(()=>{
+    const fetchUsers = async(query)=>{
+        if(users.length<0)setSideBarLoading(true)
+        const res = await getUsersUtil({userId:userProfile.userId,query:query,dispatch,setUsers,clearUsers})
+        setSideBarLoading(false)
+    }
+    
+    if(userProfile.$id){
+      const query = userProfile.following.map((user)=>{
+       return Query.notEqual("userId",[user])
+      })
+      fetchUsers(query)
+    }
+  },[userProfile.following])
 
   const handleClick = async ({ target }) => {
     setPostLoading(true);
@@ -44,7 +59,7 @@ function Dashboard() {
       if (userProfile.following.length > 0) {
         query.push(Query.equal('userId', userProfile.following));
       } else {
-        setFollowingSectionErr(userProfile.following);//here following is empty this means user is not following anyone ,this is first type of following sec err
+        setFollowingSectionErr("user");//here following is empty this means user is not following anyone ,this is first type of following sec err
         dispatch(clearBlogs());
         setPostLoading(false);
         return;
@@ -59,9 +74,14 @@ function Dashboard() {
       query: query,
     });
 
-    setFollowingSectionErr(res.ok ? null : userProfile.following);//here following is either null or an array with some length which determines the second type of following sec err
+    
+
+    setFollowingSectionErr(res.ok ? null : "post");//here following is either null or an array with some length which determines the second type of following sec err
     setPostLoading(false);
   };
+
+
+
   if (!isUserLoggedIn) {
     return <Navigate to="/login" />;
   }
@@ -75,7 +95,7 @@ function Dashboard() {
         followingSectionErr={followingSectionErr}
         postLoading={postLoading}
       />
-      {/* <SideBarDash userData={userProfile} contRef={container} /> */}
+      <SideBarDash initLoading={initLoading} userData={userProfile} sideBarLoading={sideBarLoading} suggestedUsers={users} contRef={container} />
     </div>
   );
 }

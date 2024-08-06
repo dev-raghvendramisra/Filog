@@ -27,9 +27,7 @@ const usersSlice = createSlice({
         },
 
         clearUsers:(state,action)=>{
-            for(let i = 0;i<=state.length;i++){
-                state.pop()
-            }
+             return []
         }
     }
 })

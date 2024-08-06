@@ -142,7 +142,8 @@ box-shadow: 0px 38px 75px -1px rgba(0,0,0,0.07);
     .min-h-100vh {
         min-height: 100vh;
     }
-     
+
+  
     .hideScrollbar::-webkit-scrollbar{
         display: none;
     }

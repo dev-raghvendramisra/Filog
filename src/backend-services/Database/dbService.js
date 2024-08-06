@@ -88,7 +88,7 @@ export class DatabaseService {
        try {
         const updatedProfile =  await this.database.updateDocument(
              conf.dbId,
-             conf.blogCollectionID,
+             conf.userProfilesCollectionID,
              userProfileId,
              {following:[...following]}
          )

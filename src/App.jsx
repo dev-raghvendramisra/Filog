@@ -28,16 +28,7 @@ function App() {
         navigate("/dashboard",{replace:true});
       }
       else navigate(pathname)
-      toast(`Welcome, ${userData.name}`, {
-        icon: '👋',
-        style: {
-          borderRadius: '10px',
-          background: '#333',
-          color: '#fff',
-          width:"fit-content",
-          fontSize:"1vw",
-        },
-      });
+     //toast
     } 
     else {
       if(pathname=="/dashboard" || pathname=="/write" || pathname=="/" || pathname=="/profile"){

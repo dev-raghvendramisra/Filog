@@ -54,7 +54,7 @@ function PostCont({
               />
             ))
           : followingSectionErr
-          ? <FollowingSecErr error={followingSectionErr} />
+          ? <FollowingSecErr type={followingSectionErr} />
           : posts.map((post) => (
               <PostCard
                 onClick={() => {
