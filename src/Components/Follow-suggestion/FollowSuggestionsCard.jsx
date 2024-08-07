@@ -58,7 +58,7 @@ function FollowSuggestionsCard({
            target.nodeName!=="BUTTON" && target.nodeName !== "I" ? navigate(`/user/${suggestedUser.userId}`):null
         }
       }
-      className={`flex items-center text-1vw text-darkPrimary_grays dark:text-white justify-between p-1vw rounded-2xl border-2 dark:bg-darkPrimary_grays border-opacity-100 dark:border-footer_text_light dark:border-opacity-50 ${classNameCont}`}
+      className={`cursor-pointer flex items-center text-1vw text-darkPrimary_grays dark:text-white justify-between p-1vw rounded-2xl border-2 dark:bg-darkPrimary_grays border-opacity-100 dark:border-footer_text_light dark:border-opacity-50 ${classNameCont}`}
     >
       <div
         id="name-avatar-cont"
