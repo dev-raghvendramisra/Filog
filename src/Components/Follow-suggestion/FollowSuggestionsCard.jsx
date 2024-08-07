@@ -5,7 +5,7 @@ import toast from 'react-hot-toast';
 import { useDispatch } from 'react-redux';  
 import { clearProfile, setProfile } from '../../store/userProfileSlice';
 import { ColorRing } from 'react-loader-spinner'
-
+import {ProfilePic} from '../../Components'
 
 function FollowSuggestionsCard({
   type="dashboard",
@@ -70,13 +70,7 @@ function FollowSuggestionsCard({
           className={`rounded-full h-2.5vw w-2.5vw ${loader ? "bg-slate-200 dark:bg-darkPrimary postCardLoader" : ""}`}
         >
           {loader ? null : (
-            <img
-              id="user-avatar"
-              onError={({ target }) => target.src = "/userPfpFallback.webp"}
-              src={suggestedUser.userAvatar}
-              className={`h-full w-full object-cover rounded-full ${classNameAvatar}`}
-              alt="User Avatar"
-            />
+            <ProfilePic height="h-full" width='w-full' src={suggestedUser.userAvatar} />
           )}
         </div>
         <div

@@ -21,6 +21,7 @@ import FollowingSecErr from './Error-message/FollowingSecErr'
 import PostCont from "./Post-cont/PostCont";
 import SideBarDash from "./Sidebar-dash/SideBarDash";
 import FollowSuggestionsCard from "./Follow-suggestion/FollowSuggestionsCard";
+import ProfileNavlink from "./Profile-navlink/ProfileNavlink";
 
 export {
   Navbar,
@@ -45,6 +46,7 @@ export {
   FollowingSecErr,
   PostCont,
   SideBarDash,
-  FollowSuggestionsCard
+  FollowSuggestionsCard,
+  ProfileNavlink
 };
 export * from "../pages"

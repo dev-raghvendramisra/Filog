@@ -1,6 +1,6 @@
 import React from 'react';
 import LoginBtn from '../Components/Button/LoginBtn.jsx';
-import ProfilePic from '../Components/ProfilePic/ProfilePic.jsx';
+import  ProfileNavlink from '../Components/Profile-navlink/ProfileNavlink.jsx';
 
 // Link configuration with components directly included
 const linkConfig = [
@@ -54,7 +54,7 @@ const linkConfig = [
         restrictedForAuthUsers: true
     },
     {
-        component: <ProfilePic />,
+        component: <ProfileNavlink />,
         status: false,
         path: '/profile',
         name: "profile-pic",

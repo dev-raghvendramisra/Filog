@@ -6,7 +6,7 @@ import { NavLink } from 'react-router-dom';
 function PostCont({
   type = "dashboard",
   paginationLoad,
-  initLoading,
+  initLoading=false,
   posts,
   dashboardErr,
   postLoading,
