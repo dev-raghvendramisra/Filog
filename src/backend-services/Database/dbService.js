@@ -124,13 +124,12 @@ export class DatabaseService {
          }
     }
 
-    async getBlogs(query = [Query.equal("status", [true])],offset){
+    async getBlogs(query){
        try {
         const res = await this.database.listDocuments(
              conf.dbId,
              conf.blogCollectionID,
-             query,
-             offset
+             query
          );
 
          if(res.documents){

@@ -1,103 +1,54 @@
 import React from 'react';
-import { Navigate } from 'react-router-dom';
-import { useSelector, useDispatch } from 'react-redux';
-import { getBlogPosts, getUsersUtil } from '../../utils';
-import { clearBlogs, setBlogs } from '../../store/blogsSlice';
-import { Query } from 'appwrite';
-import { PostCont, SideBarDash } from '../../Components';
-import {setUsers, clearUsers} from '../../store/usersSlice'
+import { Navigate, NavLink, Outlet } from 'react-router-dom';
+import { useSelector } from 'react-redux';
+
 
 function Dashboard() {
-  const [initLoading, setInitLoading] = React.useState(true);
-  const [postLoading, setPostLoading] = React.useState(true);
-  const [sideBarLoading, setSideBarLoading] = React.useState(true);
-  const [followingSectionErr, setFollowingSectionErr] = React.useState(null);
-  const tags = [React.useRef(), React.useRef()];
-  const container = React.useRef();
-  const dispatch = useDispatch();
-  const { isUserLoggedIn, userData } = useSelector((state) => state.auth);
-  const userProfile = useSelector((state) => state.userProfile);
-  const posts = useSelector((state) => state.blogs);
-  const users = useSelector((state)=>state.users)
-
-  React.useEffect(() => {
-    if(!isUserLoggedIn) return
-    if(userProfile.$id!==""){
-      setInitLoading(false)
-      const evt = new Event('click', { bubbles: true });
-      tags[0].current.dispatchEvent(evt);
-    }
-  }, [userProfile.$id]);
-
-
-  React.useEffect(()=>{
-    const fetchUsers = async(query)=>{
-        if(users.length<0)setSideBarLoading(true)
-        const res = await getUsersUtil({userId:userProfile.userId,query:query,dispatch,setUsers,clearUsers})
-        setSideBarLoading(false)
-    }
-    
-    if(userProfile.$id){
-      const query = userProfile.following.map((user)=>{
-       return Query.notEqual("userId",[user])
-      })
-      fetchUsers(query)
-    }
-  },[userProfile.following])
-
-  const handleClick = async ({ target }) => {
-    setPostLoading(true);
-    tags.forEach(({ current }) => {
-      current.classList.remove('btnActive');
-    });
-
-    const activeTarget = target.tagName === 'I' ? target.parentElement : target;
-    activeTarget.classList.add('btnActive');
-
-    const query = [];
-    if (activeTarget.id === 'following-blogs') {
-      if (userProfile.following.length > 0) {
-        query.push(Query.equal('userId', userProfile.following));
-      } else {
-        setFollowingSectionErr("user");//here following is empty this means user is not following anyone ,this is first type of following sec err
-        dispatch(clearBlogs());
-        setPostLoading(false);
-        return;
-      }
-    }
-
-    const res = await getBlogPosts({
-      userId: userData.$id,
-      dispatch: dispatch,
-      setBlogs: setBlogs,
-      clearBlogs: clearBlogs,
-      query: query,
-    });
-
-    
-
-    setFollowingSectionErr(res.ok ? null : "post");//here following is either null or an array with some length which determines the second type of following sec err
-    setPostLoading(false);
-  };
-
-
+  
+  const {isUserLoggedIn} = useSelector((state)=>state.auth)
+  const container = React.useRef(null)
 
   if (!isUserLoggedIn) {
     return <Navigate to="/login" />;
   }
+
   return (
-    <div ref={container} className="h-100vh overflow-y-scroll justify-center flex pt-10vh" id="main-dashboard-cont">
-      <PostCont
-        handleClick={handleClick}
-        refs={tags}
-        initLoading={initLoading}
-        posts={posts}
-        followingSectionErr={followingSectionErr}
-        postLoading={postLoading}
-      />
-      <SideBarDash initLoading={initLoading} userData={userProfile} sideBarLoading={sideBarLoading} suggestedUsers={users} contRef={container} />
+    <div ref={container} className="min-h-100vh overflow-y-scroll justify-center flex pt-10vh" id="main-dashboard-cont">
+   
+     <div id="dashboard-post-section" className='w-50p py-1vw'>
+      <div id="tag-container"
+       className="h-fit flex text-1vw text-darkPrimary_grays dark:text-white dark:text-opacity-70 text-opacity-80 flex-start gap-3"
+        >
+          <NavLink to="./featured"
+            id="featured-blogs"
+            className={({isActive})=>`px-1.5vw py-0.5vw rounded-full hover:text-black hover:bg-slate-100 hover:dark:bg-blue-950 transition-all hover:dark:text-white ${isActive?"btnActive":""}`}
+          >
+            <i className="fa-solid fa-bolt mr-0.5vw"></i>
+            Featured
+          </NavLink>
+          <NavLink to="./following"
+            className={({isActive})=>`px-1.5vw py-0.5vw rounded-full hover:text-black hover:bg-slate-100 hover:dark:bg-blue-950 transition-all hover:dark:text-white ${isActive?"btnActive":""}`}
+          >
+            <i className="fa-solid fa-users mr-0.5vw"></i>
+            Following
+          </NavLink>
+      </div>
+      <Outlet />
+     </div>
+     {/* <SideBarDash initLoading={initLoading} userData={userProfile} sideBarLoading={sideBarLoading} suggestedUsers={users} contRef={container} /> */}
+    
     </div>
   );
 }
 
 export default Dashboard;
+
+{/* <PostCont
+handleClick={handleClick}
+refs={tags}
+initLoading={initLoading}
+posts={posts}
+dashboardErr={dashboardErr}
+query={query}
+setDashboardErr = {setDashboardErr}
+/> */}

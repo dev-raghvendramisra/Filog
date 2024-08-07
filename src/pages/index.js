@@ -10,7 +10,8 @@ import About from "./About/About";
 import SearchResult from "./Search-Result/SearchResult";
 import AlertWrapper from "../Components/Alert/AlertWrapper";
 import Post from "./Post/Post";
-
+import FeaturedPosts from "./Featured/FeaturedPosts";
+import FollowingPosts from "./Followed/FollowingPosts";
 export {
     Dashboard,
     Login,
@@ -23,5 +24,7 @@ export {
     About,
     SearchResult,
     AlertWrapper,
-    Post
+    Post,
+    FeaturedPosts,
+    FollowingPosts
   };

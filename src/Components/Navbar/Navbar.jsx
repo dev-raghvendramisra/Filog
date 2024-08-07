@@ -11,7 +11,7 @@ export default function Navbar({className='',style={},...props}) {
   
 
   return (
-   <div className={`flex transition-all z-50 justify-center items-center fixed w-100p
+   <div className={`flex transition-all z-50 justify-center items-center fixed w-100vw
     ${isUserLoggedIn?
     "bg-white outline-1 outline outline-gray-300  backdrop-blur-lg bg-opacity-50 dark:bg-darkPrimary_grays dark:outline-darkPrimary dark:outline-4 dark:bg-opacity-50 "
     :"top-1vh "} ${className}`} style={{...style}}{...props}>

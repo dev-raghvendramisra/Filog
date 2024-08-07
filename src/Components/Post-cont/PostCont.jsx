@@ -1,68 +1,40 @@
 import React from 'react';
 import { ID } from 'appwrite';
 import { PostCard, FollowingSecErr } from '../../Components';
-import { useNavigate } from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
 
 function PostCont({
-  refs,
-  handleClick = () => {},
   type = "dashboard",
+  paginationLoad,
   initLoading,
-  postLoading,
   posts,
-  followingSectionErr,
+  dashboardErr,
+  postLoading,
   id = "main-dashboard-posts-cont",
 }) {
-  const navigate = useNavigate();
+
+ 
 
   return (
-    <div id={id} className="h-fit w-50p py-1vw relative">
-      {type === "dashboard" && (
-        <div
-          id="tag-container"
-          className="h-fit flex text-1vw text-darkPrimary_grays dark:text-white dark:text-opacity-70 text-opacity-80 flex-start gap-3"
-        >
-          <button
-            onClick={handleClick}
-            ref={refs[0]}
-            id="featured-blogs"
-            className="px-1.5vw py-0.5vw rounded-full hover:text-black hover:bg-slate-100 hover:dark:bg-blue-950 transition-all hover:dark:text-white"
-          >
-            <i className="fa-solid fa-bolt mr-0.5vw"></i>
-            Featured
-          </button>
-          <button
-            onClick={handleClick}
-            ref={refs[1]}
-            id="following-blogs"
-            className="px-1.5vw py-0.5vw rounded-full hover:text-black hover:bg-slate-100 hover:dark:bg-blue-950 transition-all hover:dark:text-white"
-          >
-            <i className="fa-solid fa-users mr-0.5vw"></i>
-            Following
-          </button>
-        </div>
-      )}
-
-      <div id="main-post-cont" className="flex-col flex gap-8 py-1vw">
-        {initLoading || postLoading
-          ? Array.from({ length: 8 }).map((_, i) => (
+    <div id={id} className="h-fit w-fit py-1vw relative">
+      <div id="main-post-cont" className="flex-col flex gap-8">
+        {dashboardErr ? (
+          <FollowingSecErr type={dashboardErr} />
+        ) : initLoading || postLoading ? (
+          Array.from({ length: 8 }).map((_, i) => (
+            <PostCard
+              key={i}
+              classNamePostCardCont="flex-row w-fit gap-8"
+              classNamePostCardAuthorDateCont="mt-1vw"
+              loader
+            />
+          ))
+        ) : (
+          posts.map((post) => (
+            <NavLink key={post.postID || ID.unique()} id={`postLink-${post.postID}`} to={`/post/${post.postID}`}>
               <PostCard
-                key={i}
-                classNamePostCardCont="flex-row w-fit gap-8"
-                classNamePostCardAuthorDateCont="mt-1vw"
-                loader
-              />
-            ))
-          : followingSectionErr
-          ? <FollowingSecErr type={followingSectionErr} />
-          : posts.map((post) => (
-              <PostCard
-                onClick={() => {
-                  navigate(`/post/${post.postID}`);
-                }}
                 classNamePostCardCont="flex-row w-fit gap-8"
                 classNamePostCardAuthorDateCont="h-fit mt-1vw"
-                key={post.postID || ID.unique()} 
                 title={post.title}
                 tags={post.tags}
                 coverImage={post.coverImageUrl}
@@ -70,7 +42,22 @@ function PostCont({
                 authorImg={post.authorAvatar}
                 createdAt={post.createdAt}
               />
-            ))}
+            </NavLink>
+          ))
+        )}
+        
+        {!initLoading && !postLoading && !dashboardErr && posts.length > 0 && (
+          paginationLoad ? (
+            <PostCard
+              key={"paginationLoader"}
+              classNamePostCardCont="flex-row w-fit gap-8"
+              classNamePostCardAuthorDateCont="mt-1vw"
+              loader
+            />
+          ) : (
+            <p className='text-center'>Nothing more to display</p>
+          )
+        )}
       </div>
     </div>
   );
