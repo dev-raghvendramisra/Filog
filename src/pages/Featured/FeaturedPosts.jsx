@@ -12,31 +12,33 @@ function FeaturedPosts() {
     const [paginationLoad, setPaginationLoad] = React.useState(true);
     const [postLoading, setPostLoading] = React.useState(true);
     const [offset, setOffset] = React.useState(0);
+    const [limit, setLimit] = React.useState(10);
     const [initLoading, setInitLoading] = React.useState(true);
     
     const dispatch = useDispatch();
-    const query = [];
-    
-    const paginationLoadRef = React.useRef(paginationLoad);
-    const postLoadingRef = React.useRef(postLoading);
-    const isFetching = React.useRef(false);
+    const [query , setQuery] = React.useState([])
+    const [isFetching, setIsFetching] = React.useState(false)
+    let container;
 
-    const handlePagination = () => {
+    const handlePagination = React.useCallback(() => {
         if (
-            paginationLoadRef.current &&
-            !postLoadingRef.current &&
-            !isFetching.current &&
-            window.innerHeight + window.scrollY + 1 > document.body.scrollHeight
+            paginationLoad &&
+            !postLoading &&
+            !isFetching &&
+            container.clientHeight + container.scrollTop + 1 > container.scrollHeight
         ) {
-            setOffset(prevOffset => prevOffset + 10);
+            setOffset(prevOffset => limit === 3 ? prevOffset + 3 : prevOffset + 10);
+            setLimit(3);
         }
-    };
+    }, [paginationLoad, postLoading, isFetching, limit]);
 
-    const fetchPosts = async (offset) => {
-        isFetching.current = true;
+
+
+    const fetchPosts = async () => {
+        setIsFetching(true)
         const res = await getBlogPosts({
             query,
-            limit: 10,
+            limit,
             offset,
             dispatch,
             clearBlogs,
@@ -46,33 +48,45 @@ function FeaturedPosts() {
             setPaginationLoad(false);
         }
         setPostLoading(false);
-        isFetching.current = false;
+        setIsFetching(false)
     };
+
+
 
     React.useEffect(() => {
         if (!initLoading) {
-            query.push(Query.notEqual("userId", [userProfile.userId]));
-            fetchPosts(offset);
+            fetchPosts();
         }
-    }, [initLoading, offset]);
+    }, [initLoading, offset,limit]);
+
+
 
     React.useEffect(() => {
         if (userProfile.$id !== "") {
             setInitLoading(false);
+            setQuery([Query.notEqual("userId", [userProfile.userId])]);
         }
     }, [userProfile.$id]);
 
-    React.useEffect(() => {
-        window.addEventListener("scroll", handlePagination);
-        return () => {
-            window.removeEventListener("scroll", handlePagination);
-        };
-    }, []);
+
 
     React.useEffect(() => {
-        paginationLoadRef.current = paginationLoad;
-        postLoadingRef.current = postLoading;
-    }, [paginationLoad, postLoading]);
+        container = document.getElementById("main-dashboard-cont");
+        container.addEventListener("scroll", handlePagination);
+        return () => {
+            container.removeEventListener("scroll", handlePagination);
+        };
+    }, [handlePagination]);
+    
+
+
+    // React.useEffect(() => {
+    //     paginationLoadRef.current = paginationLoad;
+    //     postLoadingRef.current = postLoading;
+    //     limitRef.current = limit;
+    // }, [paginationLoad, postLoading,limit]);
+
+
 
 
     

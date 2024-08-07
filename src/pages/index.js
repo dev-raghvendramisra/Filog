@@ -3,7 +3,8 @@ import Login from "./Login/Login";
 import ProtectedRouteForDashboard from "./Protected-Route-Dashboard/ProtectedRouteForDashboard";
 import ProtectedRouteForWrite from "./Protected-Route-write/ProtectedRouteForWrite";
 import SignUp from "./Signup/SignUp";
-import UserProfile from "./User-Profile/UserProfile";
+import Profile from "./Profile/Profile";
+import UserProfile from './User-Profile/UserProfile'
 import Home from "./Home/Home";
 import Write from "./Write/Write";
 import About from "./About/About";
@@ -18,7 +19,7 @@ export {
     ProtectedRouteForDashboard,
     ProtectedRouteForWrite,
     SignUp,
-    UserProfile,
+    Profile,
     Home,
     Write,
     About,
@@ -26,5 +27,6 @@ export {
     AlertWrapper,
     Post,
     FeaturedPosts,
-    FollowingPosts
+    FollowingPosts,
+    UserProfile
   };

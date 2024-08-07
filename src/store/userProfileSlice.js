@@ -24,10 +24,14 @@ const userProfileSlice = createSlice({
             for(let key in state){
               state[key]=payload[key]
             }
+        },
+
+        updateFollowing:(state,{payload})=>{
+            state.following=payload;
         }
 
     }
 })
 
 export default userProfileSlice.reducer
-export const{clearProfile, setProfile} = userProfileSlice.actions
+export const{clearProfile, setProfile, updateFollowing} = userProfileSlice.actions

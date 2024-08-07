@@ -1296,6 +1296,7 @@ export default {
 
       colors: {
         primary: "#194FE6",
+        primary_darkMode: "#3566ed",
         darkPrimary_grays: "#242535",
         darkPrimary: "#181A2A",
         darkPrimary_grays_darker: "#141624",

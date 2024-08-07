@@ -1,6 +1,6 @@
 import {   Navigate, Route, createBrowserRouter, createRoutesFromElements } from "react-router-dom";
 import App from "../App";
-import {Write,About, SearchResult, Dashboard, Login, SignUp, UserProfile, Home, Post,FeaturedPosts,FollowingPosts}  from "../Components";
+import {Write,About, SearchResult, Dashboard, Login, SignUp, UserProfile,Profile, Home, Post,FeaturedPosts,FollowingPosts}  from "../Components";
 
 const router = createBrowserRouter(createRoutesFromElements(
     <Route path="/" element={<App />}>
@@ -10,8 +10,9 @@ const router = createBrowserRouter(createRoutesFromElements(
       <Route path="featured" element={<FeaturedPosts />}></Route>
       <Route path="following" element={<FollowingPosts />}></Route>
     </Route>
-    <Route path="/profile" element={<UserProfile />}></Route>
+    <Route path="/profile" element={<Profile />}></Route>
     <Route path="/write" element={<Write />}></Route>
+    <Route path="/user/:userId" element={<UserProfile />}></Route>
     <Route path="/login" element={<Login />}></Route>
     <Route path="/signup" element={<SignUp />}></Route>
     <Route path="/about" element={<About />}></Route>

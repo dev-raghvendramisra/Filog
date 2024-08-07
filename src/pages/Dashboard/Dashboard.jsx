@@ -1,6 +1,7 @@
 import React from 'react';
 import { Navigate, NavLink, Outlet } from 'react-router-dom';
 import { useSelector } from 'react-redux';
+import {SideBarDash} from '../../Components'
 
 
 function Dashboard() {
@@ -13,7 +14,7 @@ function Dashboard() {
   }
 
   return (
-    <div ref={container} className="min-h-100vh overflow-y-scroll justify-center flex pt-10vh" id="main-dashboard-cont">
+    <div ref={container} className=" relative h-100vh overflow-y-scroll justify-center flex pt-10vh" id="main-dashboard-cont">
    
      <div id="dashboard-post-section" className='w-50p py-1vw'>
       <div id="tag-container"
@@ -35,20 +36,10 @@ function Dashboard() {
       </div>
       <Outlet />
      </div>
-     {/* <SideBarDash initLoading={initLoading} userData={userProfile} sideBarLoading={sideBarLoading} suggestedUsers={users} contRef={container} /> */}
+      <SideBarDash contRef={container} /> 
     
     </div>
   );
 }
 
 export default Dashboard;
-
-{/* <PostCont
-handleClick={handleClick}
-refs={tags}
-initLoading={initLoading}
-posts={posts}
-dashboardErr={dashboardErr}
-query={query}
-setDashboardErr = {setDashboardErr}
-/> */}

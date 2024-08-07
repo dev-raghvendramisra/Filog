@@ -10,9 +10,9 @@ export default async function getUsersUtil({userId="#",offset=0,limit=10,dispatc
     else queries=[...query]
 
     const res =  await dbServices.getUsers([...queries,Query.offset(offset),Query.limit(limit)])
-    
+
     if(offset==0){
-            if(res.documents.length>=0){
+            if(res.documents.length>0){
               dispatch(clearUsers());
               dispatch(setUsers(res.documents))
               return {ok:true,res:res}
@@ -24,9 +24,11 @@ export default async function getUsersUtil({userId="#",offset=0,limit=10,dispatc
     if(offset>0){
          if(res.documents.length>0){
             dispatch(setUsers(res.documents))
+            return {ok:true,res:res}
          }
          else{
-            return {ok:false,res:res,message:"Nothing to show here !"}
+            console.log(res.documents);
+            return {ok:false,pagination:true,res:res,message:"Nothing to show here !"}
          }
     }
 }

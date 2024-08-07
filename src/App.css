@@ -68,11 +68,15 @@
         background-color: #194FE6;
     }
 
+    .border-3px{
+        border-width: 3px;
+    }
+
     .linkActiveDark {
         /* color:#194FE6;
         background-color:#ffffff ; */
         color: white;
-        background-color: #194FE6;
+        @apply bg-primary_darkMode;
     }
 
     .nav_light_Shadow {
