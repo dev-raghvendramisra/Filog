@@ -97,6 +97,8 @@ function FeaturedPosts() {
             posts={posts}
             paginationLoad={paginationLoad}
             postLoading={postLoading}
+            dashboard={document.getElementById("main-dashboard-cont")}
+            footer = {document.getElementById("footer-cont-sidebar")}
         />
     );
 }

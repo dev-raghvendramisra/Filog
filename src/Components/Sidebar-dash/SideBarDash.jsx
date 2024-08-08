@@ -117,7 +117,7 @@ function SideBarDash({ contRef }) {
               setFollowing={(following)=>{dispatch(updateFollowing(following))}}
             />
           ))}
-          { !sideBarLoading && !errInFetching? paginationLoad?
+          { !sideBarLoading && !errInFetching? paginationLoad && suggestionCont.current.clientHeight!==suggestionCont.current.scrollHeight?
            <FollowSuggestionsCard loader /> 
            :<p className='text-center'>Nothing more to display</p>
            :null

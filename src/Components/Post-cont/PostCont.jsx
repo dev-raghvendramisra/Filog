@@ -13,7 +13,6 @@ function PostCont({
   id = "main-dashboard-posts-cont",
 }) {
 
- 
 
   return (
     <div id={id} className="h-fit w-fit py-1vw relative">
@@ -46,7 +45,7 @@ function PostCont({
           ))
         )}
         
-        {!initLoading && !postLoading && !dashboardErr && posts.length > 0 && (
+        {!initLoading && !postLoading && !dashboardErr && posts.length > 4 && (
           paginationLoad ? (
             <PostCard
               key={"paginationLoader"}

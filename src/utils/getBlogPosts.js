@@ -12,8 +12,7 @@ export default async function getBlogPosts({userId="#",query=[],offset=0,limit=1
      query.length==0?
      queries.push(Query.notEqual("userId",[userId]))
      :queries.push(...query)
-
-
+   
     const res =  await dbServices.getBlogs(queries)
     if(offset==0){
         console.log(res.documents);
