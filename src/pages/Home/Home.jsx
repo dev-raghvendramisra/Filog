@@ -6,6 +6,7 @@ import { getBlogPosts } from '../../utils';
 import { clearBlogs, setBlogs } from '../../store/blogsSlice';
 import { useDispatch } from 'react-redux';
 import { ID } from 'appwrite';
+import { NavLink } from 'react-router-dom';
 
 
 function Home() {
@@ -27,16 +28,18 @@ function Home() {
       {/* <h1>Get Featured</h1> */}
 
       <div  className='homeGrid'>
-        {posts[0].title!==""?posts.map((post)=>(<PostCard 
+        {posts[0].title!==""?posts.map((post)=>(
+        <NavLink to={`/post/${post.postID}`} id={`post-${post.postID}`} key={ID.unique()}>
+          <PostCard 
         classNamePostCardCont='flex-col gap-4'
-        key={ID.unique()}
         title={post.title} 
          tags={post.tags}
          coverImage={post.coverImageUrl}
          author={post.authorName}
          authorImg={post.authorAvatar}
          createdAt={post.createdAt}
-        />)):null}
+        />
+        </NavLink>)):null}
       </div>
       <HomeHero />
     </div>
