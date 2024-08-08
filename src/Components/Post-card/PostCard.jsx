@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { ID } from 'appwrite';
+import ProfilePic from '../ProfilePic/ProfilePic';
 
 
 function PostCard({ 
@@ -19,6 +20,7 @@ function PostCard({
     
   const headingRef = useRef();
   const authorRef = useRef();
+  const fallbackImgRef = useRef();
   const [truncatedTitle, setTruncatedTitle] = useState(title);
   const [truncatedAuthor, setTruncatedAuthor] = useState(author);
   const [rerender, forceRerender]  = React.useState(false);
@@ -59,16 +61,21 @@ function PostCard({
   return (
     <div id={`postCard-${ID.unique()}`} 
     onClick={onClick}
-    className={`flex  bg-transparent border-2 dark:bg-darkPrimary_grays dark:border-footer_text_light  p-1vw rounded-3xl cursor-pointer ${loader?"dark:bg-opacity-50 ":""}
+    className={`flex  bg-transparent border-2 dark:bg-darkPrimary_grays dark:border-footer_text_light dark:border-opacity-50 p-1vw rounded-3xl cursor-pointer ${loader?"dark:bg-opacity-50 ":""}
     ${classNamePostCardCont}`}>
 
       {coverImage || loader ? (
         <div id={`postCard-img-cont-${ID.unique()}`} 
-        className={`w-19vw h-12vw rounded-xl overflow-hidden 
+        className={`w-19vw h-12vw rounded-xl overflow-hidden relative
         ${loader?"bg-slate-200  dark:bg-darkPrimary postCardLoader rounded-xl":""}
         ${classNamepostCardImgCont}`}>
 
-         { !loader? <img className='h-100p w-100p object-cover' src={coverImage} />:null }   
+         { !loader?
+         <>
+          <img ref={fallbackImgRef} id="fallback-img" className='absolute h-100p w-100p object-cover bg-white dark:bg-darkPrimary_grays' src="/thumbnailFallback.webp" />
+          <img 
+          onLoad={()=>{fallbackImgRef.current.classList.add("hidden")}}
+          className='h-100p w-100p object-cover' src={coverImage} /></>:null }   
 
         </div>
       ) : null}
@@ -105,16 +112,15 @@ function PostCard({
        >
         {!loader?<>
         <div className='flex items-center gap-2' ref={authorRef}>
-        <img src={authorImg} 
-        className="h-2vw w-2vw object-cover rounded-full" />
-        <span 
-        className='whitespace-nowrap'>
-          {truncatedAuthor}
-        </span>
-        </div>
-        <div id={`postCard-date-cont ${ID.unique()}`}
-         className='whitespace-nowrap'>   
-          {trimTime(createdAt)}
+          <ProfilePic height='h-2vw' width='w-2vw' className='ml-0' src={authorImg} />
+          <span 
+          className='whitespace-nowrap'>
+           {truncatedAuthor}
+          </span>
+          </div>
+          <div id={`postCard-date-cont ${ID.unique()}`}
+           className='whitespace-nowrap'>   
+            {trimTime(createdAt)}
         </div>
         </>:null}
 

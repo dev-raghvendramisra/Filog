@@ -1,17 +1,25 @@
 import { authServices } from "../backend-services";
 import toast from "react-hot-toast";
+import {handleAuthObject} from ".";
+import { GenToast } from "../Components";
 
-export default async function startAuthentication({dispatch,login,logout,setFetching,setEmail,setPass,setName}){
+export default async function startAuthentication({dispatch,login,logout,setFetching,setEmail,setPass,setName,navigate}){
 
     dispatch(setFetching(true))
 
     const timer = setTimeout(()=>{
      dispatch(setFetching(false));
      dispatch(logout());
-     toast.error("Authentication failed, internal server error")
+     toast.custom(<GenToast type="err">Authentication failed, internal server error</GenToast>)
+     navigate("")
+     return null
     },10000)
- 
+
+    const isAuthObjValid = handleAuthObject({read:true})
+    if(isAuthObjValid) dispatch(login({name:isAuthObjValid}))
+
     const res  = await authServices.getLoggedInUser();
+    
     clearTimeout(timer)
 
     dispatch(setFetching(false))
@@ -21,6 +29,8 @@ export default async function startAuthentication({dispatch,login,logout,setFetc
     }
     else if(res.code!==401){
         dispatch(login(res))
+        if(!isAuthObjValid) console.log(handleAuthObject({write:true , name:res.name}));
+        
         setEmail? dispatch(setEmail("")):null
         setPass? dispatch(setPass("")):null
         setName? dispatch(setName("")):null

@@ -12,7 +12,6 @@ import FormValidation from "./Form/Form-Validation";
 import Button from './Button/Button'
 import Form from './Form/Form'
 import InfinitePogressbar from './Loader/Infinite-progressbar'
-import Alert from "./Alert/Alert";
 import Suggestion from "./Suggestions/Suggestion";
 import HomeUpper from "./Home-upper-section/HomeUpper";
 import HomeHero from "./Home-hero-section/HomeHero";
@@ -20,6 +19,10 @@ import PostCard from "./Post-card/PostCard";
 import FollowingSecErr from './Error-message/FollowingSecErr'
 import PostCont from "./Post-cont/PostCont";
 import SideBarDash from "./Sidebar-dash/SideBarDash";
+import FollowSuggestionsCard from "./Follow-suggestion/FollowSuggestionsCard";
+import ProfileNavlink from "./Profile-navlink/ProfileNavlink";
+import FollowToast from "./Toast/FollowToast";
+import GenToast from './Toast/GenToast'
 
 export {
   Navbar,
@@ -36,13 +39,16 @@ export {
   Button,
   Form,
   InfinitePogressbar,
-  Alert,
   Suggestion,
   HomeUpper,
   HomeHero,
   PostCard,
   FollowingSecErr,
   PostCont,
-  SideBarDash
+  SideBarDash,
+  FollowSuggestionsCard,
+  ProfileNavlink,
+  FollowToast,
+  GenToast
 };
 export * from "../pages"

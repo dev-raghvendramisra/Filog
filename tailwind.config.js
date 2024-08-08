@@ -810,6 +810,7 @@ export default {
         '98p': '98%',   // 98%
         '100p': '100%',
         '2vw': '2vw',
+        '3vw': '3vw',
         '4vw': '4vw',
         '6vw': '6vw',
         '8vw': '8vw',
@@ -1295,6 +1296,7 @@ export default {
 
       colors: {
         primary: "#194FE6",
+        primary_darkMode: "#3566ed",
         darkPrimary_grays: "#242535",
         darkPrimary: "#181A2A",
         darkPrimary_grays_darker: "#141624",

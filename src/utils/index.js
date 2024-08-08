@@ -1,7 +1,9 @@
 import getBlogPosts from "./getBlogPosts";
-import startAuthentication from './startAuthentication'
+import startAuthentication from './startAuthentication.jsx'
 import errHandler from "./errHandler";
 import getUserProfile from "./getUserProfile";
 import getUsersUtil from './getUsersUtil'
+import handleAuthObject from './handleAuthObject'
 
-export {getBlogPosts, startAuthentication, errHandler, getUserProfile, getUsersUtil}
+
+export {getBlogPosts, startAuthentication, errHandler, getUserProfile, getUsersUtil, handleAuthObject}

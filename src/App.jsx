@@ -1,14 +1,14 @@
 import React from 'react';
-import { Footer, InfinitePogressbar, Navbar } from './Components';
+import { Footer, InfinitePogressbar, Navbar, GenToast } from './Components';
 import './App.css';
 import '@fortawesome/fontawesome-free/css/all.min.css';
-import 'material-symbols/outlined.css';
+
 
 import { Outlet, useLocation } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import { login, logout, setFetching } from './store/authSlice';
 import { useNavigate } from 'react-router-dom';
-import startAuthentication from './utils/startAuthentication';
+import { startAuthentication } from './utils';
 import toast,{Toaster} from 'react-hot-toast'
 import { clearProfile, setProfile } from './store/userProfileSlice';
 import getUserProfile from './utils/getUserProfile';
@@ -28,16 +28,7 @@ function App() {
         navigate("/dashboard",{replace:true});
       }
       else navigate(pathname)
-      toast(`Welcome, ${userData.name}`, {
-        icon: '👋',
-        style: {
-          borderRadius: '10px',
-          background: '#333',
-          color: '#fff',
-          width:"fit-content",
-          fontSize:"1vw",
-        },
-      });
+      toast.custom(<GenToast type="greet">Welcome, {userData.name}</GenToast>);
     } 
     else {
       if(pathname=="/dashboard" || pathname=="/write" || pathname=="/" || pathname=="/profile"){
@@ -47,7 +38,7 @@ function App() {
     }
 
     const startLoginSequence = async () => {
-      const res = await startAuthentication({ dispatch, login, logout, setFetching });
+      const res = await startAuthentication({ dispatch, login, logout, setFetching ,navigate});     
      if(res.$id){
        await getUserProfile({dispatch,setProfile,clearProfile,userId:res.$id})
      } 
@@ -61,9 +52,9 @@ function App() {
 
   return (
     <>
-      {fetching? <InfinitePogressbar className={`${pathname==""?"bg-opacity-0 dark:bg-opacity-0":""}`} /> : null}
+      {fetching? pathname=="/login" || pathname=="/signup"? <InfinitePogressbar className={`${pathname==""?"bg-opacity-0 dark:bg-opacity-0":""}`} /> : null:null}
       <Navbar />
-      <Toaster containerStyle={{marginTop:"5%"}} />
+      <Toaster toastOptions={{duration: 7000,}} containerStyle={{marginTop:"5%"}} />
       <div className='min-h-56vh'>
         <Outlet />
       </div>

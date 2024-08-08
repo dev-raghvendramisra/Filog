@@ -18,7 +18,7 @@ const usersSlice = createSlice({
             payload.forEach(user => {
                const newUser = {}
                newUser.userId = user.userId;
-               newUser.userName = user.userName;console.log("Yhan thi gadbad")
+               newUser.userName = user.userName;
                newUser.userAvatar = user.userAvatar;
                newUser.profileId = user.$id;
                newUser.userAvatar = user.userAvatar;
@@ -27,9 +27,7 @@ const usersSlice = createSlice({
         },
 
         clearUsers:(state,action)=>{
-            for(let i = 0;i<=state.length;i++){
-                state.pop()
-            }
+             return []
         }
     }
 })

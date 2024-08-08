@@ -1,73 +1,43 @@
 import React from 'react';
-import { Navigate } from 'react-router-dom';
-import { useSelector, useDispatch } from 'react-redux';
-import { getBlogPosts } from '../../utils';
-import { clearBlogs, setBlogs } from '../../store/blogsSlice';
-import { Query } from 'appwrite';
-import { PostCont, SideBarDash } from '../../Components';
+import { Navigate, NavLink, Outlet } from 'react-router-dom';
+import { useSelector } from 'react-redux';
+import {SideBarDash} from '../../Components'
+
 
 function Dashboard() {
-  const [initLoading, setInitLoading] = React.useState(true);
-  const [followingSectionErr, setFollowingSectionErr] = React.useState(null);
-  const tags = [React.useRef(), React.useRef()];
-  const container = React.useRef();
-  const dispatch = useDispatch();
-  const { isUserLoggedIn, userData } = useSelector((state) => state.auth);
-  const { following } = useSelector((state) => state.userProfile);
-  const posts = useSelector((state) => state.blogs);
+  
+  const {isUserLoggedIn} = useSelector((state)=>state.auth)
+  const container = React.useRef(null)
 
   if (!isUserLoggedIn) {
     return <Navigate to="/login" />;
   }
 
-  React.useEffect(() => {
-    const evt = new Event('click', { bubbles: true });
-    tags[0].current.dispatchEvent(evt);
-  }, []);
-
-  const handleClick = async ({ target }) => {
-    setInitLoading(true);
-    tags.forEach(({ current }) => {
-      current.classList.remove('btnActive');
-    });
-
-    const activeTarget = target.tagName === 'I' ? target.parentElement : target;
-    activeTarget.classList.add('btnActive');
-
-    const query = [];
-    if (activeTarget.id === 'following-blogs') {
-      if (following.length > 0) {
-        query.push(Query.equal('userId', following));
-      } else {
-        setFollowingSectionErr(following);//here following is empty this means user is not following anyone ,this is first type of following sec err
-        dispatch(clearBlogs());
-        setInitLoading(false);
-        return;
-      }
-    }
-
-    const res = await getBlogPosts({
-      userId: userData.$id,
-      dispatch: dispatch,
-      setBlogs: setBlogs,
-      clearBlogs: clearBlogs,
-      query: query,
-    });
-
-    setFollowingSectionErr(res.ok ? null : following);//here following is either null or an array with some length which determines the second type of following sec err
-    setInitLoading(false);
-  };
-
   return (
-    <div ref={container} className="h-100vh overflow-y-scroll justify-center flex pt-10vh" id="main-dashboard-cont">
-      <PostCont
-        handleClick={handleClick}
-        refs={tags}
-        initLoading={initLoading}
-        posts={posts}
-        followingSectionErr={followingSectionErr}
-      />
-      <SideBarDash contRef={container} />
+    <div ref={container} className=" relative h-100vh overflow-y-scroll justify-center flex pt-10vh" id="main-dashboard-cont">
+   
+     <div id="dashboard-post-section" className='w-50p py-1vw'>
+      <div id="tag-container"
+       className="h-fit flex text-1vw text-darkPrimary_grays dark:text-white dark:text-opacity-70 text-opacity-80 flex-start gap-3"
+        >
+          <NavLink to="./featured"
+            id="featured-blogs"
+            className={({isActive})=>`px-1.5vw py-0.5vw rounded-full hover:text-black hover:bg-slate-100 hover:dark:bg-blue-950 transition-all hover:dark:text-white ${isActive?"btnActive":""}`}
+          >
+            <i className="fa-solid fa-bolt mr-0.5vw"></i>
+            Featured
+          </NavLink>
+          <NavLink to="./following"
+            className={({isActive})=>`px-1.5vw py-0.5vw rounded-full hover:text-black hover:bg-slate-100 hover:dark:bg-blue-950 transition-all hover:dark:text-white ${isActive?"btnActive":""}`}
+          >
+            <i className="fa-solid fa-users mr-0.5vw"></i>
+            Following
+          </NavLink>
+      </div>
+      <Outlet />
+     </div>
+      <SideBarDash contRef={container} /> 
+    
     </div>
   );
 }

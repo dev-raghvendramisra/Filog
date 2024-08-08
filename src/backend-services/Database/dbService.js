@@ -64,7 +64,7 @@ export class DatabaseService {
         }
     }
 
-    async updateBlog(blogId,updatedBlogAttr){
+     async updateBlog(blogId,updatedBlogAttr){
        try {
         const updatedBlog =  await this.database.updateDocument(
              conf.dbId,
@@ -81,6 +81,25 @@ export class DatabaseService {
          }
        } catch (error) {
            console.log("dbService error :: failed to update document : ",error )
+           return error
+       }
+    }
+     async updateFollowing(userProfileId,following){
+       try {
+        const updatedProfile =  await this.database.updateDocument(
+             conf.dbId,
+             conf.userProfilesCollectionID,
+             userProfileId,
+             {following:[...following]}
+         )
+         if(updatedProfile.$id){
+            return updatedProfile;
+         }
+         else{
+            throw {err:"dbService error :: failed to update profile : " ,res:updatedProfile}
+         }
+       } catch (error) {
+           console.log("dbService error :: failed to update profile : ",error )
            return error
        }
     }
@@ -105,13 +124,12 @@ export class DatabaseService {
          }
     }
 
-    async getBlogs(query = [Query.equal("status", [true])],offset){
+    async getBlogs(query){
        try {
         const res = await this.database.listDocuments(
              conf.dbId,
              conf.blogCollectionID,
-             query,
-             offset
+             query
          );
 
          if(res.documents){
@@ -213,8 +231,8 @@ export class DatabaseService {
        let url = `${conf.appWriteUrl}/storage/buckets/${conf.bucketId}/files/${fileId}/view?project=${conf.projectId}`
        return url
     }
+    
     ///will have to create a function to update documents 
-
 }
 
 function createdAt() {

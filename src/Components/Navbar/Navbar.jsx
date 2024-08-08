@@ -11,7 +11,7 @@ export default function Navbar({className='',style={},...props}) {
   
 
   return (
-   <div className={`flex transition-all z-50 justify-center items-center fixed w-100p
+   <div className={`flex transition-all z-50 justify-center items-center fixed w-100vw
     ${isUserLoggedIn?
     "bg-white outline-1 outline outline-gray-300  backdrop-blur-lg bg-opacity-50 dark:bg-darkPrimary_grays dark:outline-darkPrimary dark:outline-4 dark:bg-opacity-50 "
     :"top-1vh "} ${className}`} style={{...style}}{...props}>
@@ -40,7 +40,7 @@ export default function Navbar({className='',style={},...props}) {
                           ${link.defaultStyling?"flex justify-center items-center text-1vw overflow-hidden rounded-full text-blackColor p-0.4vw pl-1vw pr-1vw dark:text-lightPrimary_grays_darker ":""} 
                           ${link.activeStyling?isActive?"linkActiveLight dark:linkActiveDark relative after:h-100p after:w-100p after:top-0 after:left-0 after:inset-0 after:bg-primary after:-z-10 after:absolute":"":""} 
                           ${link.hoverAnim?isActive?"":"hover:hoverAnim ":""} 
-                          ${link.border?isActive?"border-primary border-2":" border-2 border-opacity-100 dark:border-lightPrimary_grays border-darkPrimary_grays":""}`
+                          ${link.border?isActive?"border-primary dark:border-primary_darkMode border-2":" border-2 border-opacity-100 dark:border-lightPrimary_grays border-darkPrimary_grays":""}`
                         )
                        }}>
                        { 
