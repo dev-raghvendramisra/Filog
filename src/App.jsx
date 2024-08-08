@@ -20,9 +20,18 @@ function App() {
   const { isUserLoggedIn, fetching,userData } = useSelector((state) => state.auth);
   const {pathname} = useLocation()
   
-
+  
   React.useEffect(() => {
+    const startLoginSequence = async () => {
+      const res = await startAuthentication({ dispatch, login, logout, setFetching ,navigate});     
+     if(res.$id){
+       await getUserProfile({dispatch,setProfile,clearProfile,userId:res.$id})
+     } 
+    };
 
+    if (!isUserLoggedIn) {
+      startLoginSequence();
+    }
     if (isUserLoggedIn) {
       if(pathname=="/login" || pathname=="/signup" || pathname=="/"){
         navigate("/dashboard",{replace:true});
@@ -37,16 +46,7 @@ function App() {
       else navigate(pathname)
     }
 
-    const startLoginSequence = async () => {
-      const res = await startAuthentication({ dispatch, login, logout, setFetching ,navigate});     
-     if(res.$id){
-       await getUserProfile({dispatch,setProfile,clearProfile,userId:res.$id})
-     } 
-    };
 
-    if (!isUserLoggedIn) {
-      startLoginSequence();
-    }
   }, [isUserLoggedIn]);
 
 
