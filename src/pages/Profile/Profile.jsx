@@ -2,11 +2,10 @@ import React, { useRef } from 'react'
 import { authServices, dbServices } from '../../backend-services';
 import toast from 'react-hot-toast';
 import { useSelector } from 'react-redux';
-import { handleAuthObject } from '../../utils';
+import { GenToast } from '../../Components';
 
 function Profile() {
   const{userData } = useSelector((state) => state.auth);
-  const author = useSelector((state)=>state.userProfile)
 
   
 
@@ -15,17 +14,8 @@ function Profile() {
       // <button
   onClick={async() => {
    await authServices.logout();
-    toast(`Bye, ${userData.name}`, {
-      icon: '👋',
-      style: {
-        borderRadius: '10px',
-        background: '#333',
-        color: '#fff',
-        width:"fit-content",
-        fontSize:"1vw",
-      }
-    });
-    location.reload()}
+    toast.custom(<GenToast type="greet">See you, {userData.name}</GenToast>);
+    setTimeout(()=>location.reload(),4000)}
   }
 >
   logout
@@ -35,6 +25,8 @@ function Profile() {
     uploadBlogs(documents)
   }
 }>Upload</button>
+
+<GenToast />
     </div>
   )
 }

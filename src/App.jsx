@@ -1,8 +1,8 @@
 import React from 'react';
-import { Footer, InfinitePogressbar, Navbar } from './Components';
+import { Footer, InfinitePogressbar, Navbar, GenToast } from './Components';
 import './App.css';
 import '@fortawesome/fontawesome-free/css/all.min.css';
-import 'material-symbols/outlined.css';
+
 
 import { Outlet, useLocation } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
@@ -28,7 +28,7 @@ function App() {
         navigate("/dashboard",{replace:true});
       }
       else navigate(pathname)
-     //toast
+      toast.custom(<GenToast type="greet">Welcome, {userData.name}</GenToast>);
     } 
     else {
       if(pathname=="/dashboard" || pathname=="/write" || pathname=="/" || pathname=="/profile"){
@@ -54,7 +54,7 @@ function App() {
     <>
       {fetching? pathname=="/login" || pathname=="/signup"? <InfinitePogressbar className={`${pathname==""?"bg-opacity-0 dark:bg-opacity-0":""}`} /> : null:null}
       <Navbar />
-      <Toaster containerStyle={{marginTop:"5%"}} />
+      <Toaster toastOptions={{duration: 7000,}} containerStyle={{marginTop:"5%"}} />
       <div className='min-h-56vh'>
         <Outlet />
       </div>

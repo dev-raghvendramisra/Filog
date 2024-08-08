@@ -103,7 +103,7 @@ box-shadow: 0px 38px 75px -1px rgba(0,0,0,0.07);
         position: relative;
         z-index: 1;
         color: rgb(94 94 131);
-        border-color: #c3d3ff;
+        @apply border-[#c3d3ff] dark:border-[#c3d3ff];
         @apply dark:text-darkPrimary_grays;
         animation: shake 0.1s cubic-bezier(1, 0.02, 0, 1) 4 alternate forwards;
     }
@@ -198,28 +198,34 @@ box-shadow: 0px 38px 75px -1px rgba(0,0,0,0.07);
         box-shadow: -10px 0px 93px 0px rgba(0, 0, 0, 0.36);
     }
 
+    .alertAnim {
+        transform: translateY(-90%);
+        opacity: 0;
+        animation: slideIn 7s ease-in 1;
+    }
     @keyframes slideIn {
         0% {
-            transform: translateX(30%);
+            transform: translateY(-90%);
             opacity: 0;
         }
 
         5% {
-            transform: translateX(0%);
+            transform: translateY(0%);
             opacity: 1;
         }
 
-        95% {
-            transform: translateX(0%);
+        94% {
+            transform: translateY(0%);
             opacity: 1;
         }
+        99%{
+            transform: translateY(-90%);
+            opacity: 0;
+        }
+
         100%{
             display: none;
         }
-
-        /* 100%{
-      transform:translateY(30%);opacity: 1;
-    } */
 
     }
 
@@ -231,27 +237,22 @@ box-shadow: 0px 38px 75px -1px rgba(0,0,0,0.07);
         @apply text-white;
     }
 
-    .alertAnim {
-        transform: translateX(30%);
-        opacity: 0;
-        animation: slideIn 4s ease-in 1 forwards;
-    }
-
+    
     .slideLeft {
         @apply w-0p;
         animation: SlideLeft 3.8s linear 1 forwards;
     }
-
+    
     @keyframes SlideLeft {
         from {
             @apply w-0;
         }
-
+        
         to {
             @apply w-100p;
         }
     }
-
+    
     .homeGrid{
         display: grid;
         grid-template-columns: repeat(3,auto);
@@ -259,7 +260,7 @@ box-shadow: 0px 38px 75px -1px rgba(0,0,0,0.07);
         row-gap: 4vw;
         column-gap: 4vw;
     }
-
+    
     .btnActive{
         @apply bg-blue-600;
         @apply bg-opacity-10;
@@ -281,7 +282,7 @@ box-shadow: 0px 38px 75px -1px rgba(0,0,0,0.07);
         animation: loader 0.8s ease 0s infinite forwards ;
         @apply blur-2xl;
     }
-
+    
     @keyframes loader {
         from{
             left:-90%
@@ -290,8 +291,8 @@ box-shadow: 0px 38px 75px -1px rgba(0,0,0,0.07);
             left:100%
         }
     }
-
-
+    
+    
     .avatarInAnim{
         transform: scale(0);
         animation: scaleIn 0.5s cubic-bezier(1, 0.04, 0, 0.98) 0s 1 forwards;
@@ -304,16 +305,16 @@ box-shadow: 0px 38px 75px -1px rgba(0,0,0,0.07);
             transform: scale(1);
         }
     }
-
+    
     /* Dark Mode Background Color Utilities */
-.bg-technology-dark { background-color: rgba(30, 144, 255, 0.1); color: #1E90FF; }
-.bg-health-dark { background-color: rgba(50, 205, 50, 0.1); color: #32CD32; }
-.bg-nature-dark { background-color: rgba(50, 205, 50, 0.1); color: #32CD32; }
-.bg-lifestyle-dark { background-color: rgba(255, 105, 180, 0.1); color: #FF69B4; }
-.bg-travel-dark { background-color: rgba(255, 69, 0, 0.1); color: #FF4500; }
-.bg-food-dark { background-color: rgba(255, 215, 0, 0.1); color: #FFD700; }
-.bg-education-dark { background-color: rgba(138, 43, 226, 0.1); color: #9930fc; }
-.bg-finance-dark { background-color: rgba(46, 139, 87, 0.1); color: #2E8B57; }
+    .bg-technology-dark { background-color: rgba(30, 144, 255, 0.1); color: #1E90FF; }
+    .bg-health-dark { background-color: rgba(50, 205, 50, 0.1); color: #32CD32; }
+    .bg-nature-dark { background-color: rgba(50, 205, 50, 0.1); color: #32CD32; }
+    .bg-lifestyle-dark { background-color: rgba(255, 105, 180, 0.1); color: #FF69B4; }
+    .bg-travel-dark { background-color: rgba(255, 69, 0, 0.1); color: #FF4500; }
+    .bg-food-dark { background-color: rgba(255, 215, 0, 0.1); color: #FFD700; }
+    .bg-education-dark { background-color: rgba(138, 43, 226, 0.1); color: #9930fc; }
+    .bg-finance-dark { background-color: rgba(46, 139, 87, 0.1); color: #2E8B57; }
 .bg-entertainment-dark { background-color: rgba(255, 99, 71, 0.1); color: #FF6347; }
 .bg-fashion-dark { background-color: rgba(255, 192, 203, 0.1); color: #FFC0CB; }
 .bg-sports-dark { background-color: rgba(70, 130, 180, 0.1); color: #4682B4; }

@@ -9,7 +9,6 @@ import Home from "./Home/Home";
 import Write from "./Write/Write";
 import About from "./About/About";
 import SearchResult from "./Search-Result/SearchResult";
-import AlertWrapper from "../Components/Alert/AlertWrapper";
 import Post from "./Post/Post";
 import FeaturedPosts from "./Featured/FeaturedPosts";
 import FollowingPosts from "./Followed/FollowingPosts";
@@ -24,7 +23,6 @@ export {
     Write,
     About,
     SearchResult,
-    AlertWrapper,
     Post,
     FeaturedPosts,
     FollowingPosts,
