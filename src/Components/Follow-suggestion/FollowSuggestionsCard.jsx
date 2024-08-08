@@ -12,6 +12,7 @@ function FollowSuggestionsCard({
   userProfileId,
   following,
   navigate,
+  suggestionCont,
   classNameAvatar = "",
   classNameBtn = "",
   classNameCont = "",
@@ -19,6 +20,7 @@ function FollowSuggestionsCard({
   className_UserName_Avatar_Cont = ""
 }) {
   const [loading, setLoading] = React.useState(false);
+  const [rerender, setRerender] = React.useState(false);
   const [isFollowing, setIsFollowing] = React.useState(false);
 
   const followUser = async () => {
@@ -49,6 +51,17 @@ function FollowSuggestionsCard({
 
     }
   };
+
+  React.useEffect(()=>{
+   const timer =  loader?setTimeout(() => {
+       setRerender(true);
+    }, 100):null
+    return ()=>clearTimeout(timer)
+  },[])
+
+   if( rerender && suggestionCont && loader && suggestionCont.current.clientHeight==suggestionCont.current.scrollHeight){
+    return null
+   }
 
   return (
     <div

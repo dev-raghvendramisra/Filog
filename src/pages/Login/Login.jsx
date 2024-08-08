@@ -6,7 +6,7 @@ import { authServices } from '../../backend-services';
 import { setEmail, setIsValidate, setPassword } from '../../store/formSlice';
 import { useNavigate } from 'react-router-dom';
 import { login, logout, setFetching } from '../../store/authSlice';
-import startAuthentication from '../../utils/startAuthentication';
+import {startAuthentication} from '../../utils';
 import { errHandler } from '../../utils';
 import getUserProfile from '../../utils/getUserProfile';
 import { clearProfile, setProfile } from '../../store/userProfileSlice';

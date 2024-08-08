@@ -1,49 +1,42 @@
 import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
-import { FollowingSecErr, FollowSuggestionsCard } from '../../Components';
-import { getUsersUtil } from '../../utils';
+import { FollowingSecErr, FollowSuggestionsCard, Footer } from '../../Components';
 import { Query } from 'appwrite';
-import { setUsers, clearUsers } from '../../store/usersSlice';
 import { updateFollowing } from '../../store/userProfileSlice';
+import useFetchUsers from '../../hooks/useFetch';
 
 function SideBarDash({ contRef }) {
+
+  // Refs for sidebar and suggestions container
   const sideBar = useRef();
   const suggestionCont = useRef(null);
+
+  // State variables
   const [topOffset, setTopOffset] = useState("");
   const [initLoading, setInitLoading] = useState(true);
-  const [sideBarLoading, setSideBarLoading] = useState(true);
-  const [paginationLoad, setPaginationLoad] = useState(true);
   const [offset, setOffset] = useState(0);
   const [query, setQuery] = useState([]);
   const [limit, setLimit] = useState(10);
-  const [errInFetching, setErrInFetching] = useState(false);
-  const [fetching, setFetching] = React.useState(false)
 
+
+  
+  // Redux state and dispatch
   const userProfile = useSelector(state => state.userProfile);
   const suggestedUsers = useSelector(state => state.users);
-
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  const fetchUsers = async () => {
-    setFetching(true)
-    setErrInFetching(false);
-    const res = await getUsersUtil({ offset, limit, query, dispatch, clearUsers, setUsers });
+ const [sideBarLoading, paginationLoad, isFetching, errInFetching] = useFetchUsers({initLoading,offset,limit,query,container:suggestionCont.current})
 
-    if (res.pagination && !res.ok) {
-      setPaginationLoad(false);
-    } else if (!res.ok) {
-      setErrInFetching(true);
-    }
-    setFetching(false)
-    suggestionCont.current.classList.add('overflow-scroll');
-    setSideBarLoading(false);
-  };
 
+
+
+
+  // Handle pagination on scroll
   const handlePagination = useCallback(() => {
     if (
-      !fetching &&
+      !isFetching &&
       paginationLoad &&
       !sideBarLoading &&
       suggestionCont.current &&
@@ -52,8 +45,11 @@ function SideBarDash({ contRef }) {
       setOffset(prevOffset => limit === 3 ? prevOffset + 3 : prevOffset + 10);
       setLimit(3);
     }
-  }, [paginationLoad, sideBarLoading, limit,fetching]);
+  }, [paginationLoad, sideBarLoading, limit, isFetching]);
 
+
+
+  // Set top offset for sidebar
   useEffect(() => {
     if (sideBar.current && contRef.current) {
       const topOffset = contRef.current.clientHeight - sideBar.current.clientHeight;
@@ -61,6 +57,9 @@ function SideBarDash({ contRef }) {
     }
   }, [contRef]);
 
+
+
+  // Update query for fetching users
   useEffect(() => {
     if (userProfile.$id !== "") {
       setInitLoading(false);
@@ -69,12 +68,8 @@ function SideBarDash({ contRef }) {
     }
   }, [userProfile.$id]);
 
-  useEffect(() => {
-    if (!initLoading) {
-      fetchUsers();
-    }
-  }, [initLoading, offset, limit]);
 
+  // Add scroll event listener for pagination
   useEffect(() => {
     const element = suggestionCont.current;
     element.addEventListener("scroll", handlePagination);
@@ -85,49 +80,67 @@ function SideBarDash({ contRef }) {
   }, [handlePagination]);
 
 
+
+
   return (
     <div
       ref={sideBar}
       id='main-dashboard-sidebar-cont'
-      className='w-18p h-fit sticky py-1.8vw'
+      className='w-20p h-fit sticky py-1.8vw'
       style={{ top: `${topOffset}px` }}
     >
       <h1 className='font-medium text-1.2vw'>You may follow</h1>
       <div
-        ref = {suggestionCont}
+        ref={suggestionCont}
         id="sidebar-suggestion-cont"
-        className='h-60vh bg-sate-200 overflow-hidden pb-1vw mt-1vw px-0 flex flex-col gap-4 hideScrollbar relative border-light-mode scrollScrim '
-      > 
+        className='h-60vh bg-sate-200 overflow-hidden pb-1vw mt-1vw px-0 flex flex-col gap-4 hideScrollbar relative border-light-mode scrollScrim'
+      >
         {initLoading || sideBarLoading
           ? Array.from({ length: 7 }).map((_, index) => (
               <FollowSuggestionsCard loader key={index} />
             ))
-          : errInFetching?
-            <FollowingSecErr type="user"  classNameImg='h-14vw opacity-70 dark:opacity-80' classNameText='text-0.9vw w-80p '
-            userErrMsg='No users found. Please try again later or adjust your search criteria.'/>
-          :
-           suggestedUsers.map((user)=>(
-            <FollowSuggestionsCard
-              key={user.profileId}
-              navigate={navigate}
-              userId={userProfile.userId}
-              userProfileId={userProfile.$id}
-              suggestedUser={user}
-              following={userProfile.following}
-              setFollowing={(following)=>{dispatch(updateFollowing(following))}}
-            />
-          ))}
-          { !sideBarLoading && !errInFetching? paginationLoad && suggestionCont.current.clientHeight!==suggestionCont.current.scrollHeight?
-           <FollowSuggestionsCard loader /> 
-           :<p className='text-center'>Nothing more to display</p>
-           :null
-          }
+          : errInFetching
+            ? <FollowingSecErr
+                type="user"
+                classNameImg='h-14vw opacity-70 dark:opacity-80'
+                classNameText='text-0.9vw w-80p'
+                userErrMsg='No users found. Please try again later or adjust your search criteria.'
+              />
+            : suggestedUsers.map((user) => (
+                <FollowSuggestionsCard
+                  key={user.profileId}
+                  navigate={navigate}
+                  userId={userProfile.userId}
+                  userProfileId={userProfile.$id}
+                  suggestedUser={user}
+                  following={userProfile.following}
+                  setFollowing={(following) => { dispatch(updateFollowing(following)) }}
+                />
+              ))
+        }
+        { !sideBarLoading && !errInFetching && paginationLoad
+          ? <FollowSuggestionsCard suggestionCont={suggestionCont} loader />
+          : !sideBarLoading && !errInFetching
+            ? <p className='text-center'>Nothing more to display</p>
+            : null
+        }
       </div>
-      <div id="footer-cont-sidebar" className='h-60vh'>footer</div>
+      <Footer
+        classNameWrapper='p-1.2vw border-2 pt-0 dark:border-0 rounded-xl bg-lightPrimary_grays_darker dark:bg-darkPrimary_grays_darker mt-1vw'
+        classNameUpperSec='flex-col'
+        classNameAboutSec='w-100p'
+        classNameQuickLinkSec='hidden'
+        classNameForm='hidden'
+        classNameEmail='mt-2vw'
+        classNameEmailLink='pl-0.5vw text-0.9vw'
+        classNameAboutText="text-0.9vw"
+        classNameLogo='w-4vw'
+        classNameCopyrightText='text-0.7vw pl-0'
+        classNameLowerSec='justify-start'
+        dashboardFooter
+      />
     </div>
   );
 }
-
-
 
 export default SideBarDash;

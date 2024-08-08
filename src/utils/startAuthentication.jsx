@@ -1,6 +1,7 @@
 import { authServices } from "../backend-services";
 import toast from "react-hot-toast";
-import {handleAuthObject} from "../utils";
+import {handleAuthObject} from ".";
+import { GenToast } from "../Components";
 
 export default async function startAuthentication({dispatch,login,logout,setFetching,setEmail,setPass,setName,navigate}){
 
@@ -9,14 +10,7 @@ export default async function startAuthentication({dispatch,login,logout,setFetc
     const timer = setTimeout(()=>{
      dispatch(setFetching(false));
      dispatch(logout());
-     toast.error("Authentication failed, internal server error",{
-        style: {
-        borderRadius: '10px',
-        background: '#333',
-        color: '#fff',
-        width:"fit-content",
-        fontSize:"1vw",
-      }})
+     toast.custom(<GenToast type="err">Authentication failed, internal server error</GenToast>)
      navigate("")
      return null
     },10000)

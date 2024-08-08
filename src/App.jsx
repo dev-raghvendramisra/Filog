@@ -8,7 +8,7 @@ import { Outlet, useLocation } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import { login, logout, setFetching } from './store/authSlice';
 import { useNavigate } from 'react-router-dom';
-import startAuthentication from './utils/startAuthentication';
+import { startAuthentication } from './utils';
 import toast,{Toaster} from 'react-hot-toast'
 import { clearProfile, setProfile } from './store/userProfileSlice';
 import getUserProfile from './utils/getUserProfile';
