@@ -54,7 +54,7 @@ function PostCont({
               loader
             />
           ) : (
-            <p className='text-center'>Nothing more to display</p>
+            <p className='text-center dark:text-footer_text_light text-footer_text'>Nothing more to display</p>
           )
         )}
       </div>

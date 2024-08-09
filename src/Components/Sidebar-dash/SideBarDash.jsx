@@ -107,7 +107,7 @@ function SideBarDash({ contRef }) {
         { !sideBarLoading && !errInFetching && paginationLoad
           ? <FollowSuggestionsCard suggestionCont={suggestionCont} loader />
           : !sideBarLoading && !errInFetching
-            ? <p className='text-center'>Nothing more to display</p>
+            ? <p className='text-center dark:text-footer_text_light text-footer_text'>Nothing more to display</p>
             : null
         }
       </div>
