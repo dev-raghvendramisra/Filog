@@ -9,7 +9,7 @@ export default function usePagination ({paginationLoad, containerLoading,contain
             paginationLoad &&
             !containerLoading &&
             !isFetching &&
-        container.clientHeight + container.scrollTop + 1 > container.scrollHeight
+        container.clientHeight + container.scrollTop + 2 > container.scrollHeight
     ) {
         setOffset(prevOffset => limit+prevOffset);
         setLimit(3);

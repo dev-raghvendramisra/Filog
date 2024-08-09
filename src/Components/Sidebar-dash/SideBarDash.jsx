@@ -5,6 +5,7 @@ import { FollowingSecErr, FollowSuggestionsCard, Footer } from '../../Components
 import { Query } from 'appwrite';
 import { updateFollowing } from '../../store/userProfileSlice';
 import useFetchUsers from '../../hooks/useFetch';
+import { usePagination } from '../../hooks';
 
 function SideBarDash({ contRef }) {
 
@@ -30,22 +31,7 @@ function SideBarDash({ contRef }) {
  const [sideBarLoading, paginationLoad, isFetching, errInFetching] = useFetchUsers({initLoading,offset,limit,query,container:suggestionCont.current})
 
 
-
-
-
-  // Handle pagination on scroll
-  const handlePagination = useCallback(() => {
-    if (
-      !isFetching &&
-      paginationLoad &&
-      !sideBarLoading &&
-      suggestionCont.current &&
-      suggestionCont.current.clientHeight + suggestionCont.current.scrollTop + 1 > suggestionCont.current.scrollHeight
-    ) {
-      setOffset(prevOffset => limit === 3 ? prevOffset + 3 : prevOffset + 10);
-      setLimit(3);
-    }
-  }, [paginationLoad, sideBarLoading, limit, isFetching]);
+ const handlePagination = usePagination({paginationLoad,containerLoading:sideBarLoading, isFetching,container:suggestionCont.current,limit,setLimit,setOffset})
 
 
 
