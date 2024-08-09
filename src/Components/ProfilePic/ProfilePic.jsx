@@ -9,7 +9,7 @@ function ProfilePic({height='h-2.5vw' ,width='w-2.5vw', src="", className = ''})
         target.classList.remove("opacity-0","hidden")}} 
         className="h-full opacity-0 hidden  w-full object-cover avatarInAnim rounded-full" src={src} alt="profile-pic" 
         />
-       <img ref={fallbackRef} className='h-full w-full absolute object-cover top-0' src="/userPfpFallback.webp" />
+       <img ref={fallbackRef} className='h-full w-full absolute object-cover top-0' src="/fallback img/userPfpFallback.webp" />
     </div>
   )
 }

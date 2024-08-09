@@ -1,6 +1,6 @@
 import React from 'react';
 import { ID } from 'appwrite';
-import { PostCard, FollowingSecErr } from '../../Components';
+import { PostCard, ErrorPlaceHolderImage } from '../../Components';
 import { NavLink } from 'react-router-dom';
 
 function PostCont({
@@ -10,6 +10,7 @@ function PostCont({
   posts,
   dashboardErr,
   postLoading,
+  customErrMsg="",
   id = "main-dashboard-posts-cont",
 }) {
 
@@ -18,7 +19,7 @@ function PostCont({
     <div id={id} className="h-fit w-fit py-1vw relative">
       <div id="main-post-cont" className="flex-col flex gap-8">
         {dashboardErr ? (
-          <FollowingSecErr type={dashboardErr} />
+          <ErrorPlaceHolderImage customErrMsg={customErrMsg} type={dashboardErr} />
         ) : initLoading || postLoading ? (
           Array.from({ length: 8 }).map((_, i) => (
             <PostCard

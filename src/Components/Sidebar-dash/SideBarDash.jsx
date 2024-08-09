@@ -1,7 +1,7 @@
-import React, { useCallback, useEffect, useRef, useState } from 'react';
+import React, {  useEffect, useRef, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
-import { FollowingSecErr, FollowSuggestionsCard, Footer } from '../../Components';
+import { ErrorPlaceHolderImage, FollowSuggestionsCard, Footer } from '../../Components';
 import { Query } from 'appwrite';
 import { updateFollowing } from '../../store/userProfileSlice';
 import useFetchUsers from '../../hooks/useFetch';
@@ -86,7 +86,7 @@ function SideBarDash({ contRef }) {
               <FollowSuggestionsCard loader key={index} />
             ))
           : errInFetching
-            ? <FollowingSecErr
+            ? <ErrorPlaceHolderImage
                 type="user"
                 classNameImg='h-14vw opacity-70 dark:opacity-80'
                 classNameText='text-0.9vw w-80p'

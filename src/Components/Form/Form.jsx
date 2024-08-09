@@ -18,7 +18,7 @@ function Form({ formRef, type, buttonComponent, heading = "Welcome back ", subHe
          
         <div id="img-container"
           className='h-100p pr-4p pl-3p flex items-center  ' >
-          <img className='' src="/Login-ill.webp" alt="login" />
+          <img className='' src="/Login-hero.webp" alt="login" />
         </div>
 
         <div id="form-container"
@@ -44,6 +44,3 @@ function Form({ formRef, type, buttonComponent, heading = "Welcome back ", subHe
 
 export default Form
 
-// password, setPassword, email, setEmail,name, setName,
-
-//email={email} password={password} setPassword={setPassword} setEmail={setEmail} name={name} setName={setName}

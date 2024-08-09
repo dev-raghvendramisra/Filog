@@ -28,14 +28,14 @@
         left:0;
         top:0;
         bottom: 0; */
-        mask-image: url('/logoMuted.png');
+        mask-image: url('/logo/logoMuted.png');
         mask-size: contain;
         /* Adjust mask size to fit the element */
         mask-repeat: no-repeat;
         /* Prevent the mask from repeating */
         mask-position: center;
         /* Center the mask image within the element */
-        -webkit-mask-image: url('/logoMuted.png');
+        -webkit-mask-image: url('/logo/logoMuted.png');
         /* For Safari support */
         -webkit-mask-size: contain;
         -webkit-mask-repeat: no-repeat;
@@ -49,14 +49,14 @@
         left:0;
         top:0;
         bottom: 0; */
-        mask-image: url('/final logo -footer.png');
+        mask-image: url('/logo/final logo -footer.png');
         mask-size: contain;
         /* Adjust mask size to fit the element */
         mask-repeat: no-repeat;
         /* Prevent the mask from repeating */
         mask-position: center;
         /* Center the mask image within the element */
-        -webkit-mask-image: url('/final logo -footer.png');
+        -webkit-mask-image: url('/logo/final logo -footer.png');
         /* For Safari support */
         -webkit-mask-size: contain;
         -webkit-mask-repeat: no-repeat;

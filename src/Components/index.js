@@ -16,7 +16,7 @@ import Suggestion from "./Suggestions/Suggestion";
 import HomeUpper from "./Home-upper-section/HomeUpper";
 import HomeHero from "./Home-hero-section/HomeHero";
 import PostCard from "./Post-card/PostCard";
-import FollowingSecErr from './Error-message/FollowingSecErr'
+import ErrorPlaceHolderImage from './Error-message/ErrorPlaceHolderImage'
 import PostCont from "./Post-cont/PostCont";
 import SideBarDash from "./Sidebar-dash/SideBarDash";
 import FollowSuggestionsCard from "./Follow-suggestion/FollowSuggestionsCard";
@@ -43,7 +43,7 @@ export {
   HomeUpper,
   HomeHero,
   PostCard,
-  FollowingSecErr,
+  ErrorPlaceHolderImage,
   PostCont,
   SideBarDash,
   FollowSuggestionsCard,

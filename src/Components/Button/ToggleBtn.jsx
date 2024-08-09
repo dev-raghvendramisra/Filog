@@ -1,10 +1,13 @@
 import React from 'react'
+import useTheme from '../../context/themeContext'
 
 function ToggleBtn({className='',handleClick,children,...props}) {
 
-  const[isDark, setIsDark] = React.useState(()=>(localStorage.getItem("isDark")?(
-    JSON.parse(localStorage.getItem("isDark"))
-  ):false))
+  // const[isDark, setIsDark] = React.useState(()=>(localStorage.getItem("isDark")?(
+  //   JSON.parse(localStorage.getItem("isDark"))
+  // ):false))
+
+  const {isDark , setIsDark} = useTheme()
 
   if(!handleClick){
     handleClick=()=>{
