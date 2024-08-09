@@ -12,10 +12,10 @@ function ErrorPlaceHolderImage({
   
   const {isDark} = useTheme()
 
-   React.useCallback(function getImage(type){
-      if (type=="post") return isDark ?"/error-placeholders/postErr-dark.webp": "/error-placeholders/postErr-light.webp"
-      else if(type!=="post") return isDark?"/error-placeholders/userErr-dark.webp": "/error-placeholders/userErr-light.webp"
-   },[isDark])
+   const getImage = React.useCallback( (type) =>{
+    if (type=="post") return isDark ?"/error-placeholders/postErr-dark.webp": "/error-placeholders/postErr-light.webp"
+    else if(type!=="post") return isDark?"/error-placeholders/userErr-dark.webp": "/error-placeholders/userErr-light.webp"
+ },[isDark])
   
   return (
     <div className={`flex w-100p justify-center text-1.1vw mt-4vw flex-col items-center ${classNameCont}`}>
