@@ -24,7 +24,7 @@ function ErrorPlaceHolderImage({
         src={type=="post" ? getImage(type) : getImage(type)} 
         alt={type=="post" ? "No posts from followed users" : "No followed users"} 
       />
-      <h1 className={` mt-1vw text-center text-footer_text_light dark:text-footer_text ${classNameText}`}>
+      <h1 className={` mt-1vw text-center dark:text-footer_text_light text-footer_text ${classNameText}`}>
         {type=="post" 
           ? customErrMsg?customErrMsg:postErrMsg
           : customErrMsg?customErrMsg:userErrMsg
