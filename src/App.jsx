@@ -40,8 +40,10 @@ function App() {
       toast.custom(<GenToast type="greet">Welcome, {userData.name}</GenToast>);
     } 
     else {
-      if(pathname=="/dashboard" || pathname=="/write" || pathname=="/" || pathname=="/profile"){
+      if(pathname=="/dashboard" || pathname=="/dashboard/featured" || pathname=="/dashboard/following" || pathname=="/write" || pathname=="/" || pathname=="/profile"){
         navigate("/",{replace:true});
+        console.log("navigated");
+        
       }
       else navigate(pathname)
     }
