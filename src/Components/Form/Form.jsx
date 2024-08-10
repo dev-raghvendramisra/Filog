@@ -18,7 +18,7 @@ function Form({ formRef, type, buttonComponent, heading = "Welcome back ", subHe
          
         <div id="img-container"
           className='h-100p pr-4p pl-3p flex items-center  ' >
-          <img className='' src="/Login-hero.webp" alt="login" />
+          <img className='' src="/Login-heroImg.webp" alt="login" />
         </div>
 
         <div id="form-container"
