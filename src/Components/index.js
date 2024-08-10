@@ -12,7 +12,7 @@ import FormValidation from "./Form/Form-Validation";
 import Button from './Button/Button'
 import Form from './Form/Form'
 import InfinitePogressbar from './Loader/Infinite-progressbar'
-import Suggestion from "./Suggestions/Suggestion";
+import SearchSuggestions from "./Search-suggestions/SearchSuggestions";
 import HomeUpper from "./Home-upper-section/HomeUpper";
 import HomeHero from "./Home-hero-section/HomeHero";
 import PostCard from "./Post-card/PostCard";
@@ -39,7 +39,7 @@ export {
   Button,
   Form,
   InfinitePogressbar,
-  Suggestion,
+  SearchSuggestions,
   HomeUpper,
   HomeHero,
   PostCard,

@@ -2,7 +2,7 @@ import React from 'react';
 import { dbServices } from '../../backend-services';
 import toast from 'react-hot-toast';
 import { ColorRing } from 'react-loader-spinner'
-import {ProfilePic} from '../../Components'
+import {FollowToast, GenToast, ProfilePic} from '../../Components'
 
 function FollowSuggestionsCard({
   type="dashboard",
@@ -23,20 +23,18 @@ function FollowSuggestionsCard({
   const [rerender, setRerender] = React.useState(false);
   const [isFollowing, setIsFollowing] = React.useState(false);
 
-  const followUser = async () => {
+  const handleFollow_Unfollow = async () => {
     setLoading(true);
     if (isFollowing === false) {
       const updateFollowing = [...following, suggestedUser.userId]
-      console.log(updateFollowing);
-      
       const res = await dbServices.updateFollowing(userProfileId, updateFollowing);
       if (res.$id) {
-        toast(`Following, ${suggestedUser.userName}`, {
-         icon:<img src={suggestedUser.userAvatar} className='h-2vw rounded-full'/>
-        });
+        toast.custom(<FollowToast avatar={suggestedUser.userAvatar} following>{suggestedUser.userName}</FollowToast>)
         setIsFollowing(true);
         setFollowing(updateFollowing)
-        setLoading(false);
+      }
+      else{
+        toast.custom(<GenToast type='err'>Internal server error</GenToast>)
       }
     }
     else if (isFollowing === true) {
@@ -44,12 +42,12 @@ function FollowSuggestionsCard({
       const res = await dbServices.updateFollowing(userProfileId, updateFollowing);
       if (res.$id) setIsFollowing(false);
       setFollowing(updateFollowing)
-      setLoading(false)
-      toast(`Unfollowed, ${suggestedUser.userName}`, {
-        icon:<img src={suggestedUser.userAvatar} className='h-2vw rounded-full'/>
-       });
-
+      toast.custom(<FollowToast avatar={suggestedUser.userAvatar}>{suggestedUser.userName}</FollowToast>)
     }
+    else{
+      toast.custom(<GenToast type='err'>Internal server error</GenToast>)
+    }
+    setLoading(false);
   };
 
   React.useEffect(()=>{
@@ -100,7 +98,7 @@ function FollowSuggestionsCard({
         <button
           id="follow-btn"
           className={` ${classNameBtn}`}
-          onClick={followUser}
+          onClick={handleFollow_Unfollow}
         >
           {loading ? (
             <ColorRing

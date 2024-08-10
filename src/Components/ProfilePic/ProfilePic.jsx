@@ -1,9 +1,9 @@
 import React from 'react'
 
-function ProfilePic({height='h-2.5vw' ,width='w-2.5vw', src="", className = ''}) {
+function ProfilePic({height='h-2.5vw' ,width='w-2.5vw', src="", className = 'ml-1',...props}) {
   const fallbackRef = React.useRef(null)
   return (
-    <div className={`ml-1 overflow-hidden rounded-full relative ${height} ${width} ${className}`}>
+    <div className={`overflow-hidden rounded-full relative ${height} ${width} ${className}`}{...props}>
        <img onLoad={({target})=>{
         fallbackRef.current.classList.add("hidden");
         target.classList.remove("opacity-0","hidden")}} 
@@ -16,4 +16,3 @@ function ProfilePic({height='h-2.5vw' ,width='w-2.5vw', src="", className = ''})
 
 export default ProfilePic
 
-// "https://api.dicebear.com/9.x/micah/svg?scale=100&flip=true&baseColor=f9c9b6&seed=raghav&backgroundColor=194FE6"
