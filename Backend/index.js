@@ -19,7 +19,7 @@ export default async function handler({req,res,log}){
             targetUserId:updatedAttribute.value,
             userId:req.body.userId,
             type:updatedAttribute.type,
-            log
+            log:log
           })
           log(res)
           if(res.ok){
