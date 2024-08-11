@@ -1,5 +1,5 @@
-import conf from "../conf/conf";
-import dbServices from "../Services/dbService";
+import conf from "../conf/conf.js";
+import dbServices from "../Services/dbService.js";
 export default async function updateFollowers({targetUserId, userId}){
   const targteUserProfile = await dbServices.getTargteProfile(targetUserId)
   if(targteUserProfile.ok){
