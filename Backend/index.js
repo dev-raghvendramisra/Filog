@@ -16,9 +16,10 @@ export default async function handler({req,res,log}){
            const res =await updateFollowers({
             targetUserId:updatedAttribute.value,
             userId:req.body.userId,
-            type:updatedAttribute.type
+            type:updatedAttribute.type,
+            log
           })
-
+          log(res)
           if(res.ok){
             log(req.body.userName,"-",req.body.userId,"started following",updatedAttribute.value)
           }

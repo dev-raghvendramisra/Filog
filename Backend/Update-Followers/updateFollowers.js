@@ -1,7 +1,8 @@
 import conf from "../conf/conf.js";
 import dbServices from "../Services/dbService.js";
-export default async function updateFollowers({targetUserId, userId,type}){
+export default async function updateFollowers({targetUserId, userId,type,log}){
   const targteUserProfile = await dbServices.getTargteProfile(targetUserId)
+  log(targteUserProfile)
   if(targteUserProfile.ok){
      const existingFollowers = targteUserProfile.followers;
      let updatedAttribute;
