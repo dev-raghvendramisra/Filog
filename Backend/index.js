@@ -13,7 +13,7 @@ export default async function handler({req,res,log}){
       if(!updatedAttrJson) {log("This is not the event to perform operations") ;return null}
         const updatedAttribute = JSON.parse(updatedAttrJson)
         log(updatedAttribute)
-        if(updatedAttribute.type=="following" && updatedAttribute.type=="unfollowing"){
+        if(updatedAttribute.type=="following" || updatedAttribute.type=="unfollowing"){
         log(updatedAttrJson,"yha tak chl rha hai")
            const res =await updateFollowers({
             targetUserId:updatedAttribute.value,
