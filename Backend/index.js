@@ -1,3 +1,9 @@
-export default async ({req,res})=>{
-  return res.send("Hello from Filog!")
+import { dbServices } from "./Services/dbService";
+
+export default async function handler({req,res}){
+
+  console.log(req);
+
 }
+
+
