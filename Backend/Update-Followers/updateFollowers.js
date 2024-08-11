@@ -5,6 +5,7 @@ export default async function updateFollowers({targetUserId, userId,type,log}){
   log(targteUserProfile)
   if(targteUserProfile.ok){
      const existingFollowers = targteUserProfile.followers;
+     log("existing-followers :",...existingFollowers)
      let updatedAttribute;
      if(type=="following") {
        updatedAttribute = [...existingFollowers,userId]
@@ -12,7 +13,9 @@ export default async function updateFollowers({targetUserId, userId,type,log}){
      else if(type=="unfollowing"){
        updatedAttribute = existingFollowers.filter((user)=>(user!==userId))
      }
+     log("updated-followers :",...existingFollowers)
      const res = await dbServices.updateProfileDocument({profileId:targteUserProfile.userId,updatedAttribute})
+     log("updated-profile: ",res)
      if(res.$id){
        return {ok:true,res}
      }
