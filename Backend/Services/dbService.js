@@ -28,7 +28,7 @@ class DatabaseService {
    
     async getTargteProfile(userId){
       try {
-        const res = await this.database.listDocuments(conf.dbId,conf.userProfilesCollectionID,Query.equal("userId",[userId]))
+        const res = await this.database.listDocuments(conf.dbId,conf.userProfilesCollectionID,[Query.equal("userId",[userId])])
         if(res.documents.length>0){
           return res.documents[0]
         }
