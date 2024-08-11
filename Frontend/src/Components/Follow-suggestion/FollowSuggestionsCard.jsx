@@ -27,7 +27,7 @@ function FollowSuggestionsCard({
     setLoading(true);
     if (isFollowing === false) {
       const updateFollowing = [...following, suggestedUser.userId]
-      const res = await dbServices.updateFollowing(userProfileId, updateFollowing,suggestedUser.userId);
+      const res = await dbServices.updateFollowing(userProfileId, updateFollowing,suggestedUser.userId,type="following");
       if (res.$id) {
         toast.custom(<FollowToast avatar={suggestedUser.userAvatar} following>{suggestedUser.userName}</FollowToast>)
         setIsFollowing(true);
@@ -39,7 +39,7 @@ function FollowSuggestionsCard({
     }
     else if (isFollowing === true) {
       const updateFollowing = following.filter((userId)=>userId!==suggestedUser.userId)
-      const res = await dbServices.updateFollowing(userProfileId, updateFollowing);
+      const res = await dbServices.updateFollowing(userProfileId, updateFollowing,suggestedUser.userId,type="unfollowing");
       if (res.$id) setIsFollowing(false);
       setFollowing(updateFollowing)
       toast.custom(<FollowToast avatar={suggestedUser.userAvatar}>{suggestedUser.userName}</FollowToast>)

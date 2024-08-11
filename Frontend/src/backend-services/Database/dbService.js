@@ -84,14 +84,14 @@ export class DatabaseService {
            return error
        }
     }
-     async updateFollowing(userProfileId,following,targetUserId){
+     async updateFollowing(userProfileId,following,targetUserId,type){
        try {
         const updatedProfile =  await this.database.updateDocument(
              conf.dbId,
              conf.userProfilesCollectionID,
              userProfileId,
              {following:[...following],updatedAttribute:JSON.stringify({
-                type:"following",
+                type:type,
                 value:targetUserId
              })},
          )
