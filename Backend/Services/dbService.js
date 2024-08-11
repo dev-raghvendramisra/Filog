@@ -1,7 +1,7 @@
 import {Client, Databases, Role} from 'node-appwrite'
 import conf from '../conf/conf';
 
-class DatabaseService {
+export default class DatabaseService {
     client = new Client()
    .setEndpoint(conf.appWriteUrl)
    .setProject(conf.projectId)
@@ -28,4 +28,4 @@ class DatabaseService {
    
 }
 
-export const{dbServices} = new DatabaseService()
+// export const{dbServices} = new DatabaseService()
