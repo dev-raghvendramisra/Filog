@@ -1,5 +1,5 @@
 import {Client, Databases, Role} from 'node-appwrite'
-import conf from '../conf/conf';
+import conf from '../conf/conf.js';
 
 export default class DatabaseService {
     client = new Client()
