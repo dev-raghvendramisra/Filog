@@ -1,7 +1,7 @@
-import {Client, Databases, Role} from 'node-appwrite'
+import {Client, Databases, Query, Role} from 'node-appwrite'
 import conf from '../conf/conf.js';
 
-export default class DatabaseService {
+class DatabaseService {
     client = new Client()
    .setEndpoint(conf.appWriteUrl)
    .setProject(conf.projectId)
@@ -13,10 +13,10 @@ export default class DatabaseService {
     this.database = new Databases(this.client);
    }
     
-   async updateProfileDocument ({profileId,updatedAttr}) {
+   async updateProfileDocument ({profileId,updatedAttribute}) {
       try {
         const res = await this.database.updateDocument(conf.dbId,conf.userProfilesCollectionID,profileId,
-            updatedAttr,)
+          updatedAttribute,)
         if(res.$id){
             return res;
         }
@@ -26,6 +26,18 @@ export default class DatabaseService {
       }
     }
    
+    async getTargteProfile(userId){
+      try {
+        const res = await this.database.listDocuments(conf.dbId,conf.userProfilesCollectionID,Query.equal("userId",[userId]))
+        if(res.documents.length>0){
+          return res.documents[0]
+        }
+        else throw{res:res,ok:false}
+      } catch (error) {
+        return error
+      }
+    }
 }
 
-// export const{dbServices} = new DatabaseService()
+ const dbServices = new DatabaseService()
+ export default dbServices
