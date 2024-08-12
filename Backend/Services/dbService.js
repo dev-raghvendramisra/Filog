@@ -18,7 +18,7 @@ class DatabaseService {
         ...(updatedFollowers && { followers: updatedFollowers }),
         ...(updatedAttribute !== undefined && { updatedAttribute })
       };
-
+     log(updatedAttr)
       const res = await this.database.updateDocument(
         conf.dbId,
         conf.userProfilesCollectionID,
