@@ -15,14 +15,14 @@ export default async function handler({req,res,log}){
         log(updatedAttribute)
         if(updatedAttribute.type=="following" || updatedAttribute.type=="unfollowing"){
         log(updatedAttrJson,"yha tak chl rha hai")
-           const res =await updateFollowers({
+           const updationRes =await updateFollowers({
             targetUserId:updatedAttribute.value,
             userId:req.body.userId,
             type:updatedAttribute.type,
             log:log
           })
-          log(res)
-          if(res.ok){
+          log(updationRes)
+          if(updationRes.ok){
             log(req.body.userName,"-",req.body.userId,"started following",updatedAttribute.value)
             return res.empty()
           }
