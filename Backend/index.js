@@ -23,7 +23,7 @@ export default async function handler({req,res,log}){
           })
           log(updationRes)
           if(updationRes.ok){
-            log(req.body.userName,"-",req.body.userId,"started following",updatedAttribute.value)
+            log(req.body.userName,"-"+req.body.userId+"started following"+updatedAttribute.value)
             return res.empty()
           }
           else{
