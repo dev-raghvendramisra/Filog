@@ -8,6 +8,4 @@ const conf = {
     apiKey:String(process.env.APPWRITE_API_KEY),
 }
 
-
-
 export default conf;
