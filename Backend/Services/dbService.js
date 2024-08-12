@@ -15,13 +15,18 @@ class DatabaseService {
     
    async updateProfileDocument ({profileId,updatedFollowers,log}) {
       try {
+        let updatedAttr = {}
+        if(updatedFollowers){
+          updatedAttr = {followers:updatedFollowers}
+        }
+        else {
+          updatedAttr = {updatedAttribute:null}
+        }
         const res = await this.database.updateDocument(
           conf.dbId,
           conf.userProfilesCollectionID,
           profileId,
-          {
-            followers:updatedFollowers
-          },)
+          updatedAttr,)
         log(res)
         if(res.$id){
             return res;

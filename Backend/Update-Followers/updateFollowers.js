@@ -18,7 +18,15 @@ export default async function updateFollowers({targetUserId, userId,type,log}){
      const res = await dbServices.updateProfileDocument({profileId:targteUserProfile.$id,updatedFollowers,log:log})
      log("updated-profile: ",res)
      if(res.$id){
-       return {ok:true,res}
+        const userProfile = await dbServices.getTargteProfile(userId)
+        if(userProfile.$id){
+            const resetProfile = await dbServices.updateProfileDocument({profileId:userProfile.$id,})
+            if(resetProfile.$id){
+                log(resetProfile)
+                return {ok:true,res}  
+            }else  return {ok:false,res}
+        }
+       else return {ok:false,res}
      }
      else return {ok:false,res}
   }
