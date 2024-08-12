@@ -90,10 +90,13 @@ export class DatabaseService {
              conf.dbId,
              conf.userProfilesCollectionID,
              userProfileId,
-             {following:[...following],updatedAttribute:JSON.stringify({
+             {
+              following:[...following],
+              stagedAction:JSON.stringify({
                 type:type,
                 value:targetUserId
-             })},
+              })
+            }
          )
          if(updatedProfile.$id){
             return updatedProfile;

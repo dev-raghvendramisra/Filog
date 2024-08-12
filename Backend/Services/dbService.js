@@ -33,7 +33,7 @@ class DatabaseService {
     }
   }
 
-  async getTargteProfile(userId,log) {
+  async getTargetProfile(userId,log) {
     try {
       const res = await this.database.listDocuments(
         conf.dbId,
