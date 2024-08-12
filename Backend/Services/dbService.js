@@ -13,10 +13,15 @@ class DatabaseService {
     this.database = new Databases(this.client);
    }
     
-   async updateProfileDocument ({profileId,updatedAttribute,log}) {
+   async updateProfileDocument ({profileId,updatedFollowers,log}) {
       try {
-        const res = await this.database.updateDocument(conf.dbId,conf.userProfilesCollectionID,profileId,
-          {updatedAttribute},)
+        const res = await this.database.updateDocument(
+          conf.dbId,
+          conf.userProfilesCollectionID,
+          profileId,
+          {
+            followers:updatedFollowers
+          },)
         log(res)
         if(res.$id){
             return res;

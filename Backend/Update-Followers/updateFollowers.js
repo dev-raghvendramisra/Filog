@@ -5,7 +5,7 @@ export default async function updateFollowers({targetUserId, userId,type,log}){
   log(targteUserProfile)
   if(targteUserProfile.$id){
      const existingFollowers = targteUserProfile.followers;
-     let updatedAttribute;
+     let updatedAttribute=[];
      if(type=="following") {
       log("existing-followers :",existingFollowers)
        updatedAttribute = [...existingFollowers,userId]
