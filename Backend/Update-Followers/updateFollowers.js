@@ -8,7 +8,8 @@ export default async function updateFollowers({targetUserId, userId,type,log}){
      log("existing-followers :",...existingFollowers)
      let updatedAttribute;
      if(type=="following") {
-       updatedAttribute = [...existingFollowers,userId]
+       existingFollowers.push(userId)
+       updatedAttribute = existingFollowers
      }
      else if(type=="unfollowing"){
        updatedAttribute = existingFollowers.filter((user)=>(user!==userId))

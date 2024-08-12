@@ -3,7 +3,7 @@ import conf from "./conf/conf.js";
 import updateFollowers from './Update-Followers/updateFollowers.js'
 
 export default async function handler({req,res,log}){
-
+  log(req.body.userId)
   
   const trigger = req.headers["x-appwrite-trigger"];
   if(trigger=="event"){
