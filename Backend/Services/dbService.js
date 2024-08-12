@@ -1,54 +1,49 @@
-import {Client, Databases, Query, Role} from 'node-appwrite'
+import { Client, Databases, Query } from 'node-appwrite';
 import conf from '../conf/conf.js';
 
 class DatabaseService {
-    client = new Client()
-   .setEndpoint(conf.appWriteUrl)
-   .setProject(conf.projectId)
-   .setKey(conf.apiKey)
+  client = new Client()
+    .setEndpoint(conf.appWriteUrl)
+    .setProject(conf.projectId)
+    .setKey(conf.apiKey);
 
-   database ;
+  database;
 
-   constructor () {
+  constructor() {
     this.database = new Databases(this.client);
-   }
-    
-   async updateProfileDocument ({profileId,updatedFollowers,log}) {
-      try {
-        let updatedAttr = {}
-        if(updatedFollowers){
-          updatedAttr = {followers:updatedFollowers}
-        }
-        else {
-          updatedAttr = {updatedAttribute:null}
-        }
-        const res = await this.database.updateDocument(
-          conf.dbId,
-          conf.userProfilesCollectionID,
-          profileId,
-          updatedAttr,)
-        log(res)
-        if(res.$id){
-            return res;
-        }
-        else  throw{res:res,ok:false}
-       } catch (error) {
-        return error
-      }
+  }
+
+  async updateProfileDocument({ profileId, updatedFollowers, log }) {
+    try {
+      const updatedAttr = updatedFollowers ? { followers: updatedFollowers } : { updatedAttribute: null };
+      const res = await this.database.updateDocument(
+        conf.dbId,
+        conf.userProfilesCollectionID,
+        profileId,
+        updatedAttr
+      );
+      log("Document Updated:", res);
+      return res.$id ? res : { ok: false };
+    } catch (error) {
+      log("Error updating document:", error.message);
+      return { ok: false, error: error.message };
     }
-   
-    async getTargteProfile(userId){
-      try {
-        const res = await this.database.listDocuments(conf.dbId,conf.userProfilesCollectionID,[Query.equal("userId",[userId])])
-        if(res.documents.length>0){
-          return res.documents[0]
-        }
-        else throw{res:res,ok:false}
-      } catch (error) {
-        return error
-      }
+  }
+
+  async getTargteProfile(userId) {
+    try {
+      const res = await this.database.listDocuments(
+        conf.dbId,
+        conf.userProfilesCollectionID,
+        [Query.equal("userId", [userId])]
+      );
+      return res.documents.length > 0 ? res.documents[0] : { ok: false };
+    } catch (error) {
+      log("Error fetching profile:", error.message);
+      return { ok: false, error: error.message };
     }
+  }
 }
 
- const dbServices = new DatabaseService()
- export default dbServices
+const dbServices = new DatabaseService();
+export default dbServices;
