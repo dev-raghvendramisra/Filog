@@ -40,14 +40,14 @@ export default async function updateFollowers({ targetUserId, userId, type, log 
             // Proceed if the initiating user's profile exists
             if (initiatingUserProfile.$id) {
                 // Mark the `updatedAttribute` as `null`
-                const updateAttrRes = await dbServices.updateProfileDocument({
+                const updateStagedActionRes = await dbServices.updateProfileDocument({
                     profileId: initiatingUserProfile.$id,
-                    updatedAttribute: null,
+                    stagedAction: null,
                     log
                 });
 
-                log("Marked updatedAttribute as null:", updateAttrRes);
-                return { ok: true, res: updateAttrRes };
+                log("Marked stagedAction as null:", updateStagedActionRes);
+                return { ok: true, res: updateStagedActionRes };
             } else {
                 log("Initiating user profile not found");
                 return { ok: false, res: initiatingUserProfile };
