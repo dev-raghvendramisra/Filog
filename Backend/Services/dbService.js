@@ -16,7 +16,7 @@ class DatabaseService {
    async updateProfileDocument ({profileId,updatedAttribute,log}) {
       try {
         const res = await this.database.updateDocument(conf.dbId,conf.userProfilesCollectionID,profileId,
-          updatedAttribute,)
+          {updatedAttribute},)
         log(res)
         if(res.$id){
             return res;
