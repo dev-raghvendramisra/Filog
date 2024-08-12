@@ -1,8 +1,8 @@
 import dbServices from "../Services/dbService.js";
 
-export default async function updateFollowers({ targetUserId, currentUserId, type, log }) {
+export default async function updateFollowers({ targetUserId, userId, type, log }) {
     // Fetch the target user's profile
-    const targetUserProfile = await dbServices.getTargetProfile(targetUserId);
+    const targetUserProfile = await dbServices.getTargteProfile(targetUserId);
     log("Target User Profile:");
     log(targetUserProfile);
 
@@ -13,9 +13,9 @@ export default async function updateFollowers({ targetUserId, currentUserId, typ
 
         // Update the followers list based on the action type
         if (type === "following") {
-            updatedFollowers = [...existingFollowers, currentUserId];
+            updatedFollowers = [...existingFollowers, userId];
         } else if (type === "unfollowing") {
-            updatedFollowers = existingFollowers.filter(user => user !== currentUserId);
+            updatedFollowers = existingFollowers.filter(user => user !== userId);
         } else {
             throw new Error("Invalid type");
         }
@@ -34,7 +34,7 @@ export default async function updateFollowers({ targetUserId, currentUserId, typ
         // If the profile update is successful, update the initiating user's profile
         if (updateRes.$id) {
             // Fetch the initiating user's profile
-            const initiatingUserProfile = await dbServices.getTargetProfile(currentUserId, log);
+            const initiatingUserProfile = await dbServices.getTargteProfile(userId, log);
             log("Initiating User Profile:", initiatingUserProfile);
 
             // Proceed if the initiating user's profile exists
