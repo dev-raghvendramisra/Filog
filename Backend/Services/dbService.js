@@ -1,5 +1,5 @@
 import {Client, Databases} from 'node-appwrite'
-
+import conf from '../conf/conf';
 class DatabaseService {
   client = new Client()
     .setEndpoint(conf.appWriteUrl)
