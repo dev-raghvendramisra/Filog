@@ -1,6 +1,3 @@
-import { Client, Databases, Query } from 'node-appwrite';
-import conf from '../conf/conf.js';
-
 class DatabaseService {
   client = new Client()
     .setEndpoint(conf.appWriteUrl)
@@ -13,9 +10,13 @@ class DatabaseService {
     this.database = new Databases(this.client);
   }
 
-  async updateProfileDocument({ profileId, updatedFollowers, log }) {
+  async updateProfileDocument({ profileId, updatedFollowers, updatedAttribute, log }) {
     try {
-      const updatedAttr = updatedFollowers ? { followers: updatedFollowers } : { updatedAttribute: null };
+      const updatedAttr = {
+        ...(updatedFollowers && { followers: updatedFollowers }),
+        ...(updatedAttribute !== undefined && { updatedAttribute })
+      };
+
       const res = await this.database.updateDocument(
         conf.dbId,
         conf.userProfilesCollectionID,
