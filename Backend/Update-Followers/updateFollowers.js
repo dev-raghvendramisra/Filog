@@ -42,7 +42,7 @@ export default async function updateFollowers({ targetUserId, userId, type, log 
                 // Mark the `updatedAttribute` as `null`
                 const updateAttrRes = await dbServices.updateProfileDocument({
                     profileId: initiatingUserProfile.$id,
-                    updatedAttribute: null,
+                    stagedAction: null,
                     log
                 });
 
