@@ -1,8 +1,6 @@
 import dbServices from "../Services/dbService.js";
 
 export default async function updateFollowers({ targetUserId, userId, type, log }) {
-  try {
-    // Fetch the target user profile
     const targetUserProfile = await dbServices.getTargteProfile(targetUserId);
     log("Target User Profile:" );
     log(targetUserProfile)
@@ -45,19 +43,18 @@ export default async function updateFollowers({ targetUserId, userId, type, log 
           });
 
           log("Marked updatedAttribute as null:", updateAttrRes);
-
-          return { ok: true, res: updateRes };
+          return { ok: true, res: updateAttrRes };
         } else {
-          throw new Error("Initiating user profile not found");
+             log("Initiating user profile not found")
+            return { ok: false, res: initiatingUserProfile }
         }
       } else {
-        throw new Error("Failed to update target user profile");
+        log("Failed to update target user profile");
+        return { ok: false, res: updateRes }
       }
     } else {
-      throw new Error("Target user profile not found");
+        log("Targte Profile not found:");
+        return { ok: false, res:targetUserId};
     }
-  } catch (error) {
-    log("Error in updateFollowers:", error.message);
-    return { ok: false, error: error.message };
+  
   }
-}
