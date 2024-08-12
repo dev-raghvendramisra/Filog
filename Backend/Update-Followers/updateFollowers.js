@@ -3,7 +3,7 @@ import dbServices from "../Services/dbService.js";
 export default async function updateFollowers({targetUserId, userId,type,log}){
   const targteUserProfile = await dbServices.getTargteProfile(targetUserId)
   log(targteUserProfile)
-  if(targteUserProfile.userId){
+  if(targteUserProfile.$id){
      const existingFollowers = targteUserProfile.followers;
      log("existing-followers :",...existingFollowers)
      let updatedAttribute;
@@ -14,7 +14,7 @@ export default async function updateFollowers({targetUserId, userId,type,log}){
        updatedAttribute = existingFollowers.filter((user)=>(user!==userId))
      }
      log("updated-followers :",...updatedAttribute)
-     const res = await dbServices.updateProfileDocument({profileId:targteUserProfile.profileId,updatedAttribute})
+     const res = await dbServices.updateProfileDocument({profileId:targteUserProfile.$id,updatedAttribute,log:log})
      log("updated-profile: ",res)
      if(res.$id){
        return {ok:true,res}
