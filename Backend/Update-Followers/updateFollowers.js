@@ -32,7 +32,7 @@ export default async function updateFollowers({ targetUserId, userId, type, log 
       // If the update is successful, update the initiating user's profile document
       if (updateRes.$id) {
         // Mark the `updatedAttribute` of the initiating user’s profile as `null`
-        const initiatingUserProfile = await dbServices.getTargteProfile(userId);
+        const initiatingUserProfile = await dbServices.getTargteProfile(userId,log);
         log("Initiating User Profile:", initiatingUserProfile);
 
         if (initiatingUserProfile.$id) {

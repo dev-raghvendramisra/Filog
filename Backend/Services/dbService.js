@@ -1,4 +1,4 @@
-import {Client, Databases} from 'node-appwrite'
+import {Client, Databases, Query} from 'node-appwrite'
 import conf from '../conf/conf.js';
 class DatabaseService {
   client = new Client()
@@ -33,7 +33,7 @@ class DatabaseService {
     }
   }
 
-  async getTargteProfile(userId) {
+  async getTargteProfile(userId,log) {
     try {
       const res = await this.database.listDocuments(
         conf.dbId,
