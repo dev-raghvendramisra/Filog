@@ -1,11 +1,11 @@
-import conf from "../conf/conf.js";
 import dbServices from "../Services/dbService.js";
 
 export default async function updateFollowers({ targetUserId, userId, type, log }) {
   try {
     // Fetch the target user profile
     const targetUserProfile = await dbServices.getTargteProfile(targetUserId);
-    log("Target User Profile:", targetUserProfile);
+    log("Target User Profile:" );
+    log(targetUserProfile)
 
     if (targetUserProfile.$id) {
       const existingFollowers = targetUserProfile.followers || [];
