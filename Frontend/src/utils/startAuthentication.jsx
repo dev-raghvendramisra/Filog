@@ -16,7 +16,7 @@ export default async function startAuthentication({dispatch,login,logout,setFetc
     },10000)
 
     const isAuthObjValid = handleAuthObject({read:true})
-    if(isAuthObjValid) dispatch(login({name:isAuthObjValid}))
+    if(isAuthObjValid){ dispatch(login({name:isAuthObjValid}))}
 
     const res  = await authServices.getLoggedInUser();
     
