@@ -7,10 +7,11 @@ import { clearBlogs, setBlogs } from '../../store/blogsSlice';
 import { useDispatch } from 'react-redux';
 import { ID } from 'appwrite';
 import { NavLink } from 'react-router-dom';
-
+import {Navigate} from 'react-router-dom'
 
 function Home() {
   const posts = useSelector((state)=>state.blogs)
+  const isUserLoggedIn = useSelector((state)=>state.auth.isUserLoggedIn)
   const dispatch = useDispatch()
 
   React.useEffect(()=>{
@@ -22,6 +23,9 @@ function Home() {
       })
   },[])
 
+  if (isUserLoggedIn) {
+    return <Navigate to="/dashboard" />;
+  }
   return (
     <div className='flex flex-col justify-start gap-80 items-center mb-6vw'  style={{ marginTop: "12vh" }}>
       <HomeUpper />

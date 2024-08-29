@@ -18,7 +18,7 @@ function App() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const { isUserLoggedIn, fetching,userData } = useSelector((state) => state.auth);
-  const {pathname} = useLocation()
+  const {pathname,search} = useLocation()
   
   
   React.useEffect(() => {
@@ -36,7 +36,7 @@ function App() {
       if(pathname=="/login" || pathname=="/signup" || pathname=="/"){
         navigate("/dashboard",{replace:true});
       }
-      else navigate(pathname)
+      else navigate(`${pathname}${search&&search}`)
       toast.custom(<GenToast type="greet">Welcome, {userData.name}</GenToast>);
     } 
     else {
@@ -45,17 +45,15 @@ function App() {
         console.log("navigated");
         
       }
-      else navigate(pathname)
+      else navigate(`${pathname}${search&&search}`)
     }
-
-
   }, [isUserLoggedIn]);
 
 
   return (
     <>
       {fetching? pathname=="/login" || pathname=="/signup"? <InfinitePogressbar className={`${pathname==""?"bg-opacity-0 dark:bg-opacity-0":""}`} /> : null:null}
-      <Navbar />
+      { pathname=="/verify-email" || <Navbar /> }
       <Toaster toastOptions={{duration: 7000,}} containerStyle={{marginTop:"5%"}} />
       <div className='min-h-56vh'>
         <Outlet />

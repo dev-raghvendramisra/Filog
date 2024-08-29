@@ -41,7 +41,7 @@ export default function Login() {
             navigate:navigate,
             setEmail:setEmail,
             setPass:setPassword,
-            setFormErr:setFormErr,
+            setErr:setFormErr,
            })
 
            if(didErrOccured){

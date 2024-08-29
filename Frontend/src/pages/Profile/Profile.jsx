@@ -25,7 +25,9 @@ function Profile() {
     uploadBlogs(documents)
   }
 }>Upload</button>
-
+<button onClick={()=>{authServices.createEmailVerification()}}>
+  create verification
+</button>
 <GenToast />
     </div>
   )

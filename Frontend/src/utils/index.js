@@ -5,5 +5,4 @@ import getUserProfile from "./getUserProfile";
 import getUsersUtil from './getUsersUtil'
 import handleAuthObject from './handleAuthObject'
 
-
-export {getBlogPosts, startAuthentication, errHandler, getUserProfile, getUsersUtil, handleAuthObject}
+export {getBlogPosts, startAuthentication, errHandler, getUserProfile, getUsersUtil, handleAuthObject }

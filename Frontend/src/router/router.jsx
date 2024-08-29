@@ -19,7 +19,7 @@ const router = createBrowserRouter(createRoutesFromElements(
     <Route path="/about" element={<About />}></Route>
     <Route path="/post/:postID" element={<Post />}></Route>
     <Route path="/search/:query" element={<SearchResult />}></Route>
-    <Route path="/verify" element={<EmailVerification />}></Route>
+    <Route path="/verify-email" element={<EmailVerification />}></Route>
     <Route path="*" element={<UnknownRoute />}></Route>
   </Route>
 ))

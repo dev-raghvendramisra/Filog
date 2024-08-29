@@ -2,7 +2,7 @@ import React from 'react'
 
 function UnknownRoute() {
   return (
-    <div>UnknownRoute</div>
+    <div className='pt-20p'>UnknownRoute</div>
   )
 }
 

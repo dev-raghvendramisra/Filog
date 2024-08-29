@@ -1,43 +1,45 @@
-export default function errHandler({res,dispatch,navigate,setEmail,setPass,setName,setFormErr}){
+export default function errHandler({res,dispatch,navigate,setEmail,setPass,setName,setErr,errMsg=[],setResCode}){
     if(res.code==401){
-        setFormErr("Invalid credentials!")
+        setErr(errMsg[0] || "Invalid credentials!")
+        setResCode && setResCode(res.code)
         return true;
     }
-    else if(res.code==429){
-        setFormErr("Too many attempts. Please try again later!")
+    if(res.code==429){
+        setErr("Too many attempts. Please try again later!")
         setTimeout(()=>{
-            dispatch(setEmail(""))    //setting the form slice's state to default 
-            dispatch(setPass(""))
-            setName?dispatch(setName("")):null
+            setEmail && dispatch(setEmail(""))    //setting the form slice's state to default 
+            setPass && dispatch(setPass(""))
+            setName && dispatch(setName(""))
             navigate("/") //redirecting user to landing page to avoid further requests
         },7000)
         return true;  
     }
-    else if(res.code==409){
-        setFormErr("An account already exists with same email!")
+    if(res.code==409){
+        setErr(errMsg[1] || "An account already exists with same email!")
+        setResCode && setResCode(res.code)
         return true;
     }
-    else if(res.code==500){
-        setFormErr("Internal server error, Please try again later!")
+    if(res.code==500){
+        setErr("Internal server error, Please try again later!")
         setTimeout(()=>{
-            dispatch(setEmail(""))    //setting the form slice's state to default 
-            dispatch(setPass(""))
-            setName?dispatch(setName("")):null
+            setEmail && dispatch(setEmail(""))    //setting the form slice's state to default 
+            setPass && dispatch(setPass(""))
+            setName && dispatch(setName(""))
             navigate("/") //redirecting user to landing page to avoid further requests
         },7000)
         return true;
     }
-    else if(res.code==503){
-        setFormErr("Service unavailable, Please try again later!")
+    if(res.code==503){
+        setErr("Service unavailable, Please try again later!")
         setTimeout(()=>{
-            dispatch(setEmail(""))    //setting the form slice's state to default 
-            dispatch(setPass(""))
-            setName?dispatch(setName("")):null
+            setEmail && dispatch(setEmail(""))    //setting the form slice's state to default 
+            setPass && dispatch(setPass(""))
+            setName && dispatch(setName(""))
             navigate("/") //redirecting user to landing page to avoid further requests
         },7000)
         return true;
     }
 
-    else return false
+     return false
 
 }

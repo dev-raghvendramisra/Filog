@@ -47,7 +47,7 @@ export default function SignUp() {
               navigate:navigate,
               setEmail:setEmail,
               setPass:setPassword,
-              setFormErr:setFormErr,
+              setErr:setFormErr,
               setName:setName
              })
   
