@@ -1,6 +1,6 @@
 
 import React from "react";
-import { FormValidation, InfinitePogressbar} from "../../Components";
+import { FormValidation, InfinitePogressbar} from "../../components";
 
 
 function Form({ formRef, type, buttonComponent, heading = "Welcome back ", subHeading = "Enter your credentials to login your account" ,loading}) {

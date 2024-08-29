@@ -1,7 +1,7 @@
 import React, {  useEffect, useRef, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
-import { ErrorPlaceHolderImage, FollowSuggestionsCard, Footer } from '../../Components';
+import { ErrorPlaceHolderImage, FollowSuggestionsCard, Footer } from '../../components';
 import { Query } from 'appwrite';
 import { updateFollowing } from '../../store/userProfileSlice';
 import useFetchUsers from '../../hooks/useFetch';

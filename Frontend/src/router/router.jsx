@@ -1,6 +1,7 @@
 import {   Navigate, Route, createBrowserRouter, createRoutesFromElements } from "react-router-dom";
 import App from "../App";
-import {Write,About, SearchResult, Dashboard, Login, SignUp, UserProfile,Profile, Home, Post,FeaturedPosts,FollowingPosts}  from "../Components";
+import {Write,About, SearchResult, Dashboard, Login, SignUp, UserProfile,Profile, Home, Post, FeaturedPosts, FollowingPosts, UnknownRoute, EmailVerification}  from "../components";
+
 
 const router = createBrowserRouter(createRoutesFromElements(
     <Route path="/" element={<App />}>
@@ -18,6 +19,8 @@ const router = createBrowserRouter(createRoutesFromElements(
     <Route path="/about" element={<About />}></Route>
     <Route path="/post/:postID" element={<Post />}></Route>
     <Route path="/search/:query" element={<SearchResult />}></Route>
+    <Route path="/verify" element={<EmailVerification />}></Route>
+    <Route path="*" element={<UnknownRoute />}></Route>
   </Route>
 ))
 

@@ -1,5 +1,5 @@
 import { Query } from "appwrite";
-import { dbServices } from "../backend-services";
+import { dbServices } from "../services";
 
 export default async function getUserProfile({userId="#",setProfile,clearProfile,dispatch}){
     const res = await dbServices.getUsers([Query.equal("userId",[userId])])

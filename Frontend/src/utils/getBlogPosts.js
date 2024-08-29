@@ -1,5 +1,5 @@
 import { Query } from "appwrite";
-import { dbServices } from "../backend-services";
+import { dbServices } from "../services";
 
 
 export default async function getBlogPosts({userId="#",query=[],offset=0,limit=10,dispatch,clearBlogs,setBlogs}){

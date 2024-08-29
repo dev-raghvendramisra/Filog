@@ -1,8 +1,8 @@
 import React from 'react';
-import { dbServices } from '../../backend-services';
+import { dbServices } from '../../services';
 import toast from 'react-hot-toast';
 import { ColorRing } from 'react-loader-spinner'
-import {FollowToast, GenToast, ProfilePic} from '../../Components'
+import {FollowToast, GenToast, ProfilePic} from '../../components'
 
 function FollowSuggestionsCard({
   type="dashboard",

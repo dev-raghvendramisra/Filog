@@ -1,6 +1,6 @@
 import React from 'react';
 import { ID } from 'appwrite';
-import { PostCard, ErrorPlaceHolderImage } from '../../Components';
+import { PostCard, ErrorPlaceHolderImage } from '../../components';
 import { NavLink } from 'react-router-dom';
 
 function PostCont({

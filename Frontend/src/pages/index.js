@@ -12,6 +12,8 @@ import SearchResult from "./Search-Result/SearchResult";
 import Post from "./Post/Post";
 import FeaturedPosts from "./Featured/FeaturedPosts";
 import FollowingPosts from "./Followed/FollowingPosts";
+import EmailVerification from "./Email-Verification/EmailVerification";
+import UnknownRoute from "./Unknown-Route/UnknownRoute";
 export {
     Dashboard,
     Login,
@@ -26,5 +28,7 @@ export {
     Post,
     FeaturedPosts,
     FollowingPosts,
-    UserProfile
+    UserProfile,
+    EmailVerification,
+    UnknownRoute
   };

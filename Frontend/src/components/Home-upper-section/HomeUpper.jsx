@@ -1,5 +1,5 @@
 import React from 'react'
-import {Button} from '../../Components'
+import {Button} from '../../components'
 import { useGSAP } from '@gsap/react'
 import gsap from 'gsap'
 import { useNavigate } from 'react-router-dom'

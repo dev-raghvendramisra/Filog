@@ -1,8 +1,8 @@
 import React from 'react'
-import { Form, Button, Error } from '../../Components'
+import { Form, Button, Error } from '../../components'
 import { Navigate, NavLink } from 'react-router-dom'
 import { useSelector, useDispatch } from 'react-redux';
-import { authServices } from '../../backend-services';
+import { authServices } from '../../services';
 import { setEmail, setIsValidate, setPassword } from '../../store/formSlice';
 import { useNavigate } from 'react-router-dom';
 import { login, logout, setFetching } from '../../store/authSlice';

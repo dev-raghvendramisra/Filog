@@ -1,8 +1,8 @@
 import React from 'react'
-import { authServices } from '../../backend-services';
+import { authServices } from '../../services';
 import toast from 'react-hot-toast';
 import { useSelector } from 'react-redux';
-import { GenToast } from '../../Components';
+import { GenToast } from '../../components';
 
 function Profile() {
   const{userData } = useSelector((state) => state.auth);

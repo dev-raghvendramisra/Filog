@@ -1,5 +1,5 @@
 import React from 'react';
-import { FollowingSecErr, FollowSuggestionsCard } from "../../Components";
+import { FollowingSecErr, FollowSuggestionsCard } from "../../components";
 import { useSelector } from 'react-redux';
 import { getUsersUtil } from '../../utils';
 import { Query } from 'appwrite';
@@ -111,7 +111,7 @@ export default SideBarDash;
 import React from 'react';
 import { Navigate, NavLink, Outlet } from 'react-router-dom';
 import { useSelector } from 'react-redux';
-import {SideBarDash} from '../../Components'
+import {SideBarDash} from '../../components'
 
 
 function Dashboard() {
@@ -167,7 +167,7 @@ setDashboardErr = {setDashboardErr}
 
 
 import React from 'react';
-import { PostCont } from '../../Components';
+import { PostCont } from '../../components';
 import { useSelector, useDispatch } from 'react-redux';
 import { getBlogPosts } from '../../utils';
 import { setBlogs, clearBlogs } from '../../store/blogsSlice';

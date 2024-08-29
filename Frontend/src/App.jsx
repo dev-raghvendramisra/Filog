@@ -1,5 +1,5 @@
 import React from 'react';
-import { Footer, InfinitePogressbar, Navbar, GenToast } from './Components';
+import { Footer, InfinitePogressbar, Navbar, GenToast } from './components';
 import './App.css';
 import '@fortawesome/fontawesome-free/css/all.min.css';
 

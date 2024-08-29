@@ -1,7 +1,7 @@
-import { authServices } from "../backend-services";
+import { authServices } from "../services";
 import toast from "react-hot-toast";
 import {handleAuthObject} from ".";
-import { GenToast } from "../Components";
+import { GenToast } from "../components";
 
 export default async function startAuthentication({dispatch,login,logout,setFetching,setEmail,setPass,setName,navigate}){
 

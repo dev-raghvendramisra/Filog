@@ -1,5 +1,5 @@
 import { Client, ID, Databases, Storage, Query, Permission, Role } from "appwrite";
-import conf from "../../Conf/conf";
+import conf from "../../conf/conf";
 
 export class DatabaseService {
     client = new Client()

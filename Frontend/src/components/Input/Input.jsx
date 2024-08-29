@@ -1,5 +1,5 @@
 import React, { useId } from 'react'
-import {BlinkingCursor, Error} from '../../Components'
+import {BlinkingCursor, Error} from '../../components'
 const Input=React.forwardRef(({ 
    value="",
    onChange = () => { },

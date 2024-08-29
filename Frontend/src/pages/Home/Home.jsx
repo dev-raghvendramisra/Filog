@@ -1,6 +1,6 @@
 import React from 'react'
-import { HomeHero, HomeUpper } from '../../Components'
-import {PostCard} from '../../Components';
+import { HomeHero, HomeUpper } from '../../components'
+import {PostCard} from '../../components';
 import { useSelector } from 'react-redux';
 import { getBlogPosts } from '../../utils';
 import { clearBlogs, setBlogs } from '../../store/blogsSlice';

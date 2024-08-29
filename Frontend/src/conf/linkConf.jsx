@@ -1,6 +1,6 @@
 import React from 'react';
-import LoginBtn from '../Components/Button/LoginBtn.jsx';
-import  ProfileNavlink from '../Components/Profile-navlink/ProfileNavlink.jsx';
+import LoginBtn from '../components/Button/LoginBtn.jsx';
+import  ProfileNavlink from '../components/Profile-navlink/ProfileNavlink.jsx';
 
 // Link configuration with components directly included
 const linkConfig = [

@@ -1,6 +1,6 @@
 import { Client,ID,Account } from "appwrite";
-import conf from "../../Conf/conf";
-import {dbServices} from "../../backend-services"
+import conf from "../../conf/conf";
+import {dbServices} from "../../services"
 
 export class Auth{
       

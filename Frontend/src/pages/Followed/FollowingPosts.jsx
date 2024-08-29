@@ -1,5 +1,5 @@
 import React from 'react'
-import {PostCont} from '../../Components'
+import {PostCont} from '../../components'
 import { useSelector } from 'react-redux';
 import { Query } from 'appwrite';
 import { useFetch as useFetchPosts , usePagination } from '../../hooks';

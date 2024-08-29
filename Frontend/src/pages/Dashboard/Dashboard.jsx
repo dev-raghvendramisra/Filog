@@ -1,7 +1,7 @@
 import React from 'react';
 import { Navigate, NavLink, Outlet } from 'react-router-dom';
 import { useSelector } from 'react-redux';
-import {SideBarDash} from '../../Components'
+import {SideBarDash} from '../../components'
 
 
 function Dashboard() {

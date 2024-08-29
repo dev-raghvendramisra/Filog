@@ -1,7 +1,7 @@
 import React, { useRef } from 'react'
 import { NavLink } from 'react-router-dom'
 import useLinks from '../../hooks/useLinks'
-import { Button, Input, Logo } from '../../Components'
+import { Button, Input, Logo } from '../../components'
 
 
 function Footer({classNameUpperSec="",classNameLowerSec="justify-center",classNameAboutSec="w-20p",classNameForm="w-20p",classNameQuickLinkSec="w-8p",classNameWrapper="",classNameEmail="",classNameEmailLink="",classNameAboutText="",classNameCopyrightText="pl-0.5vw",classNameLogo="",dashboardFooter=false}) {

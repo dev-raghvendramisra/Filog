@@ -1,6 +1,6 @@
 import CryptoJS from 'crypto-js';
-import conf from "../Conf/conf";
-import { authServices } from '../backend-services';
+import conf from "../conf/conf";
+import { authServices } from '../services';
 
 const generateSignature = (data, key) => {
     return CryptoJS.HmacSHA256(data, key).toString();

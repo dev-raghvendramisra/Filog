@@ -1,10 +1,10 @@
 import React from 'react'
-import { Form, Button, Error } from '../../Components'
+import { Form, Button, Error } from '../../components'
 import { NavLink, useNavigate } from 'react-router-dom'
 import { useSelector, useDispatch } from 'react-redux';
 import { setEmail, setPassword, setName, setIsValidate } from '../../store/formSlice';
 import { ID } from 'appwrite';
-import { authServices } from '../../backend-services';
+import { authServices } from '../../services';
 import {startAuthentication, getBlogPosts, errHandler, getUserProfile} from '../../utils';
 import { setBlogs, clearBlogs } from '../../store/blogsSlice';
 import { login, logout, setFetching } from '../../store/authSlice';

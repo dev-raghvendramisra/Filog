@@ -1,5 +1,5 @@
 import React from "react";
-import linkConfig from '../Conf/linkConf';
+import linkConfig from '../conf/linkConf';
 import { useSelector } from "react-redux";
 
 export default function useLinks() {
