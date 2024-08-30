@@ -93,7 +93,7 @@ function EmailVerification() {
 
   return (
     <div className='h-100vh w-full flex items-center justify-center' id={ID.unique() + "email-verification-wrapper"}>
-      <div className='w-fit h-fit flex items-center justify-start p-4vw flex-col  border-2 rounded-3xl border-footer_text dark:border-footer_text_light' id={ID.unique() + "email-verification-cont"}>
+      <div className='w-fit h-fit flex items-center justify-start p-4vw flex-col  border-2  rounded-3xl border-gray-200 dark:border-footer_text_light' id={ID.unique() + "email-verification-cont"}>
         <div className='flex items-center flex-col' id={ID.unique() + "email-verification-header"}>
           <img className='w-8vw' src={isDark ? "/filogXgmail-dark.webp" : "/filogXgmail-light.webp"} />
           <p className='text-1.7vw mt-0.5vw' id={ID.unique()+"email-verification-heading"}>Email verification</p>

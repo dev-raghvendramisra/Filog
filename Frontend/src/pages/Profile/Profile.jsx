@@ -2,7 +2,7 @@ import React from 'react'
 import { authServices } from '../../services';
 import toast from 'react-hot-toast';
 import { useSelector } from 'react-redux';
-import { GenToast } from '../../components';
+import { AlertModal, GenToast } from '../../components';
 
 function Profile() {
   const{userData } = useSelector((state) => state.auth);
@@ -11,15 +11,15 @@ function Profile() {
 
   return (
     <div className='pt-20p'>UserProfile
-      // <button
-  onClick={async() => {
-   await authServices.logout();
-    toast.custom(<GenToast type="greet">See you, {userData.name}</GenToast>);
-    setTimeout(()=>location.reload(),4000)}
-  }
->
-  logout
-</button>
+  <AlertModal 
+  heading={"Change Email"}
+  message={"Do you want to change this ?"} 
+  feedbackMessage = {"Feedback message is not available"} 
+  primaryOnClick={()=>{}} 
+  secondaryOnClick={()=>{}}
+  ctaDisabled={false}
+  ctaDanger={false}
+  />
 
   <button onClick={()=>{
     uploadBlogs(documents)

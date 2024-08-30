@@ -217,8 +217,9 @@ export class DatabaseService {
                 conf.userProfilesCollectionID,
                 ID.unique(),
                 docObj,
-                [Permission.read(Role.any()),
-                 Permission.update(Role.user(userId)),
+                [
+                 Permission.read(Role.any()),
+                 Permission.update(Role.user(userId,"verified")),
                  Permission.delete(Role.user(userId))
                 ]  //permission array
             );

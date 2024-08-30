@@ -22,7 +22,10 @@ import SideBarDash from "./Sidebar-dash/SideBarDash";
 import FollowSuggestionsCard from "./Follow-suggestion/FollowSuggestionsCard";
 import ProfileNavlink from "./Profile-navlink/ProfileNavlink";
 import FollowToast from "./Toast/FollowToast";
-import GenToast from './Toast/GenToast'
+import GenToast from './Toast/GenToast';
+import AlertModal from "./Modal/AlertModal";
+import FormModal from "./Modal/FormModal";
+import ModalContainer from "./Modal-Container/ModalContainer";
 
 export {
   Navbar,
@@ -49,6 +52,9 @@ export {
   FollowSuggestionsCard,
   ProfileNavlink,
   FollowToast,
-  GenToast
+  GenToast,
+  AlertModal,
+  FormModal,
+  ModalContainer
 };
 export * from "../pages"
