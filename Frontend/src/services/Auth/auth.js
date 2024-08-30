@@ -106,7 +106,7 @@ export class Auth{
     }
     async createEmailVerification(){
       try{
-        const res = await this.account.createVerification("http://localhost:5173/verify-email")
+        const res = await this.account.createVerification(conf.emailVerificationEndpoint)
         console.log(res);
         return res
       }catch(error){
