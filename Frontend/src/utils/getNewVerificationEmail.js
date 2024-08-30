@@ -1,8 +1,8 @@
 import { authServices } from "../services";
 import {authErrHandler} from "../utils";
 
-export default async function getNewVerificationEmail({isUserLoggedIn, userData, setErr, navigate, errMsg}){
-    if(isUserLoggedIn && userData.emailVerification){
+export default async function getNewVerificationEmail({ userData, setErr, navigate, errMsg}){
+    if(userData.emailVerification){
       setTimeout(() => navigate("/"), 7000);
       return setErr("Email already verified");
     }

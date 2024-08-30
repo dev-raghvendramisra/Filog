@@ -1,5 +1,5 @@
 import React from 'react'
-import { Form, Button, Error } from '../../components'
+import { Form, Button, FeedbackMessage as Error } from '../../components'
 import { Navigate, NavLink } from 'react-router-dom'
 import { useSelector, useDispatch } from 'react-redux';
 import { authServices } from '../../services';

@@ -3,7 +3,7 @@ import { useNavigate, useSearchParams } from 'react-router-dom';
 import { authErrHandler, getNewVerificationEmail } from '../../utils';
 import { authServices } from '../../services';
 import useTheme from '../../context/themeContext';
-import { Button, Error, GenToast } from '../../components';
+import { Button, FeedbackMessage, GenToast } from '../../components';
 import toast from 'react-hot-toast';
 import { ID } from 'appwrite';
 import { useSelector } from 'react-redux';
@@ -11,18 +11,35 @@ import { useSelector } from 'react-redux';
 function EmailVerification() {
   const [searchParams] = useSearchParams();
   const [err, setErr] = React.useState(null);
+  const [successMsg, setSuccessMsg] = React.useState(null);
   const [disabled, setDisabled] = React.useState(true);
   const [resCode, setResCode] = React.useState(null);
   const navigate = useNavigate();
   const { isDark } = useTheme();
-  const { isUserLoggedIn, userData } = useSelector((state) => state.auth);
+  const { isUserLoggedIn, userData, fetching } = useSelector((state) => state.auth);
   const errMsg = ["Invalid verification link", "Email already verified"];
   
-  const isVerificationExpired = (expire) => {
+  const isVerificationExpired = React.useCallback((expire) => {
     const crrDate = new Date();
     const expireDate = new Date(expire.replace(" ", "T") + "Z");
     return crrDate >= expireDate;
-  };
+  },[]);
+
+  const handleClick = React.useCallback(async()=>{
+    setDisabled(true);
+    setErr(null);
+    if(resCode!==401 && !isUserLoggedIn){
+      setTimeout(()=>navigate("/login"),7000)
+      return setErr("You need to login first");
+    }
+    const res = await getNewVerificationEmail({isUserLoggedIn, userData,setErr,errMsg, navigate});
+    res 
+    ? (()=>{
+      toast.custom(<GenToast type="successMsg">Verification email sent successfully</GenToast>);
+      setSuccessMsg("Verification email sent , click on the link to verify")
+      })()
+    : null
+  },[resCode,isUserLoggedIn,userData])
 
 
   useEffect(() => {
@@ -45,29 +62,30 @@ function EmailVerification() {
         console.log(res.code);
         const didErrOccured = authErrHandler({ res, setErr, navigate, errMsg, setResCode, verification:true });
         if (!didErrOccured) {
-          toast.custom(<GenToast type="success">Email verified successfully</GenToast>);
+          toast.custom(<GenToast type="success">Email verified successMsgfully</GenToast>);
+          setSuccessMsg("Email verified successfully");
         }
-      } catch (error) {
-        console.error("Verification error:", error);
-        setErr("An unexpected error occurred");
+      } catch (err) {
+        console.FeedbackMessage("Verification FeedbackMessage:", err);
+        setErr("An unexpected FeedbackMessage occurred");
       }
     }
   }, [searchParams]);
-
+  
 
   React.useEffect(() => {
     if (err) toast.custom(<GenToast type="err">{err}</GenToast>);
   }, [err]);
 
+
   React.useEffect(()=>{
-    if(resCode==401 || userData?.$id){
+    if(!fetching){
       setDisabled(false);
     }
-    else setDisabled(true);
-  },[userData,resCode])
+  },[fetching])
 
 
-
+  
 
 
 
@@ -78,23 +96,16 @@ function EmailVerification() {
       <div className='w-fit h-fit flex items-center justify-start p-4vw flex-col  border-2 rounded-3xl border-footer_text dark:border-footer_text_light' id={ID.unique() + "email-verification-cont"}>
         <div className='flex items-center flex-col' id={ID.unique() + "email-verification-header"}>
           <img className='w-8vw' src={isDark ? "/filogXgmail-dark.webp" : "/filogXgmail-light.webp"} />
-          <p className='text-1.7vw mt-0.5vw'>Email verification</p>
-          <Error className='mt-1vw'>{err}</Error>
+          <p className='text-1.7vw mt-0.5vw' id={ID.unique()+"email-verification-heading"}>Email verification</p>
+          <p className='text-0.5vw text-footer_text'>Verifying Your Email, You can request new link if it fails</p>
+          <FeedbackMessage err={err} className='mt-1vw'>{err || successMsg}</FeedbackMessage> 
         </div>
         <div className='flex gap-4 mt-2vw' id={ID.unique() + "email-verification-buttons"}>
           <Button outline className='text-1.2vw' onClick={
             () => navigate("/")}>
             Do it later
           </Button>
-          <Button primary={!disabled} disabled={disabled} onClick={
-            async()=>{
-            setDisabled(true);
-            setErr(null);
-            const res = await getNewVerificationEmail({isUserLoggedIn, userData,setErr,errMsg, navigate});
-            res 
-            ? toast.custom(<GenToast type="success">Email sent successfully</GenToast>) 
-            : null       
-            }} className='text-1.2vw'>
+          <Button primary={!disabled} disabled={disabled} onClick={handleClick} className='text-1.2vw'>
             Get new
           </Button>
         </div>
