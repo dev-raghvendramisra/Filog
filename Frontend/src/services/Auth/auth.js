@@ -106,7 +106,7 @@ export class Auth{
     }
     async createEmailVerification(){
       try{
-        const res = await this.account.createVerification("http://localhost:5173/verify-email")
+        const res = await this.account.createVerification("http://fiilog.vercel.app/verify-email")
         console.log(res);
         return res
       }catch(error){
