@@ -5,7 +5,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { setEmail, setPassword, setName, setIsValidate } from '../../store/formSlice';
 import { ID } from 'appwrite';
 import { authServices } from '../../services';
-import {startAuthentication, getBlogPosts, errHandler, getUserProfile} from '../../utils';
+import {startAuthentication, getBlogPosts, authErrHandler, getUserProfile} from '../../utils';
 import { setBlogs, clearBlogs } from '../../store/blogsSlice';
 import { login, logout, setFetching } from '../../store/authSlice';
 import { clearProfile, setProfile } from '../../store/userProfileSlice';
@@ -41,7 +41,7 @@ export default function SignUp() {
             })
 
                         
-            const didErrOccured = errHandler({
+            const didErrOccured = authErrHandler({
               res:signUpRes,
               dispatch:dispatch,
               navigate:navigate,
@@ -102,7 +102,7 @@ export default function SignUp() {
           <Button primary wide className='w-70p overflow-hidden transition-all' onClick={handleSubmit}>
             Signup
           </Button >
-          <Error errMsg={formErr} className="transition-all justify-center mt-4p" />
+          <Error  className="transition-all justify-center mt-4p" >{formErr}</Error>
           <NavLink to="/login" className='mt-4p w-100p cursor-pointer text-0.8vw text-gray-600 dark:text-white ' >
             Already have an account ?
             <span className="underline-offset-2 underline text-primary ml-2p">

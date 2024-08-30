@@ -7,7 +7,7 @@ import { setEmail, setIsValidate, setPassword } from '../../store/formSlice';
 import { useNavigate } from 'react-router-dom';
 import { login, logout, setFetching } from '../../store/authSlice';
 import {startAuthentication} from '../../utils';
-import { errHandler } from '../../utils';
+import { authErrHandler } from '../../utils';
 import getUserProfile from '../../utils/getUserProfile';
 import { clearProfile, setProfile } from '../../store/userProfileSlice';
 
@@ -35,13 +35,13 @@ export default function Login() {
            setLoading(true);
            dispatch(setIsValidate(false)); //setting the validation false to avoid back to back requests with same credentials
            const sessionInitRes = await  authServices.login(email,password)
-           const didErrOccured = errHandler({
+           const didErrOccured = authErrHandler({
             res:sessionInitRes,
             dispatch:dispatch,
             navigate:navigate,
             setEmail:setEmail,
             setPass:setPassword,
-            setErr:setFormErr,
+            setErr:setFormErr
            })
 
            if(didErrOccured){
@@ -94,7 +94,7 @@ export default function Login() {
           }>
             Login
           </Button >
-          <Error errMsg={formErr} className="transition-all justify-center mt-4p" />
+          <Error  className="transition-all justify-center mt-4p" >{formErr}</Error>
           <NavLink to="/" className='mt-16p w-100p text-0.8vw text-gray-600 dark:text-footer_text ' >
             Forgot password ?
             <span className="underline-offset-2 underline text-primary ml-2p">

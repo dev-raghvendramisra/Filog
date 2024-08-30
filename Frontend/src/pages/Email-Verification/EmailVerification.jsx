@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import { useNavigate, useSearchParams } from 'react-router-dom';
-import { errHandler, getNewVerificationEmail } from '../../utils';
+import { authErrHandler, getNewVerificationEmail } from '../../utils';
 import { authServices } from '../../services';
 import useTheme from '../../context/themeContext';
 import { Button, Error, GenToast } from '../../components';
@@ -43,7 +43,7 @@ function EmailVerification() {
       try {
         const res = await authServices.verifyEmail(userId, secret);
         console.log(res.code);
-        const didErrOccured = errHandler({ res, setErr, navigate, errMsg, setResCode });
+        const didErrOccured = authErrHandler({ res, setErr, navigate, errMsg, setResCode, verification:true });
         if (!didErrOccured) {
           toast.custom(<GenToast type="success">Email verified successfully</GenToast>);
         }
@@ -60,8 +60,7 @@ function EmailVerification() {
   }, [err]);
 
   React.useEffect(()=>{
-    console.log(resCode!==401, userData?.$id );
-    if(resCode!==401, userData?.$id){
+    if(resCode==401 || userData?.$id){
       setDisabled(false);
     }
     else setDisabled(true);
@@ -88,8 +87,13 @@ function EmailVerification() {
             Do it later
           </Button>
           <Button primary={!disabled} disabled={disabled} onClick={
-            ()=>{setDisabled(true);
-            getNewVerificationEmail({isUserLoggedIn, userData,setErr,errMsg})
+            async()=>{
+            setDisabled(true);
+            setErr(null);
+            const res = await getNewVerificationEmail({isUserLoggedIn, userData,setErr,errMsg, navigate});
+            res 
+            ? toast.custom(<GenToast type="success">Email sent successfully</GenToast>) 
+            : null       
             }} className='text-1.2vw'>
             Get new
           </Button>
