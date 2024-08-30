@@ -7,9 +7,9 @@ function GenToast({type="greet",className="",children="Enter Message"}) {
         ${type=="greet"?"bg-white  dark:text-white dark:bg-toastDarkModeBg":""}
         ${type=="err"?"bg-red-200 text-red-900 dark:bg-red-600 dark:text-white":""}
         ${className}`}>
-         {type=="success"?<i class="fa-regular fa-circle-check tickIcon text-1.3vw" style={{display:"flex",alignItems:"center"}}></i>:""}
+         {type=="success"?<i className="fa-regular fa-circle-check tickIcon text-1.3vw" style={{display:"flex",alignItems:"center"}}></i>:""}
          {type=="greet"?<span>👋</span>:""}
-         {type=="err"?<i class="fa-solid fa-triangle-exclamation" style={{display:"flex",alignItems:"center"}}></i>:""}
+         {type=="err"?<i className="fa-solid fa-triangle-exclamation" style={{display:"flex",alignItems:"center"}}></i>:""}
         {children}
    </div>
   )

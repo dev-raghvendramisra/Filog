@@ -37,7 +37,7 @@ function App() {
         navigate("/dashboard",{replace:true});
       }
       else navigate(`${pathname}${search&&search}`)
-      toast.custom(<GenToast type="greet">Welcome, {userData.name}</GenToast>);
+      pathname=="/verify-email" || toast.custom(<GenToast type="greet">Welcome, {userData.name}</GenToast>);
     } 
     else {
       if(pathname=="/dashboard" || pathname=="/dashboard/featured" || pathname=="/dashboard/following" || pathname=="/write" || pathname=="/" || pathname=="/profile"){
@@ -53,12 +53,13 @@ function App() {
   return (
     <>
       {fetching? pathname=="/login" || pathname=="/signup"? <InfinitePogressbar className={`${pathname==""?"bg-opacity-0 dark:bg-opacity-0":""}`} /> : null:null}
-      { pathname=="/verify-email" || <Navbar /> }
-      <Toaster toastOptions={{duration: 7000,}} containerStyle={{marginTop:"5%"}} />
+      { <Navbar /> }
+      {/* //pathname=="/verify-email" && */}
+      <Toaster toastOptions={{duration: 7000,}} containerStyle={{marginTop:`${pathname=="/verify-email"?"5%":"5%"}`}} />
       <div className='min-h-56vh'>
         <Outlet />
       </div>
-      {pathname=="/login" || pathname=="/signup" || pathname=="/about" || pathname=="/"?
+      {pathname=="/login" || pathname=="/signup" || pathname=="/about" || pathname=="/" || pathname=="/verify-email"?
       <Footer />
       :null
       }

@@ -6,9 +6,12 @@ const themeContext = createContext({
 })
 
 const ThemeContextProvider = ({children}) =>{
-  const [isDark, setIsDark] = useState(()=>(localStorage.getItem("isDark")?(
-    JSON.parse(localStorage.getItem("isDark"))
+  const theme = localStorage.getItem("isDark")
+  const [isDark, setIsDark] = useState(()=>(theme?(
+    JSON.parse(theme)
   ):false))
+  isDark?document.querySelector("html").classList.add("dark"):document.querySelector("html").classList.remove("dark")
+  
   return(
      <themeContext.Provider value={{isDark,setIsDark}}>
         {children}

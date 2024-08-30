@@ -102,7 +102,9 @@ const Input=React.forwardRef(({
           
 
         </div>
-        <Error className={`transition-all ${errClassName}`} errMsg={errMsg} />
+        <Error className={`transition-all ${errClassName}`}>
+          {errMsg}
+        </Error>
       </div>
 
     )

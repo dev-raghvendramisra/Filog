@@ -99,7 +99,7 @@ export default function SignUp() {
       loading={loading}
       buttonComponent={
         <div className='w-100p text-center flex flex-col items-center'>
-          <Button primary className='w-70p overflow-hidden transition-all' onClick={handleSubmit}>
+          <Button primary wide className='w-70p overflow-hidden transition-all' onClick={handleSubmit}>
             Signup
           </Button >
           <Error errMsg={formErr} className="transition-all justify-center mt-4p" />
