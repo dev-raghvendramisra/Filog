@@ -72,7 +72,7 @@ function EmailVerification() {
           const timer = setTimeout(()=>navigate("/"),7000)
           setTimer(timer)
           setDisabled(true);
-          dispatch(login({...userData, emailVerification: true}));
+          dispatch(login({userData:{...userData,emailVerification:true}}));
         }
     }
   }, [searchParams]);
