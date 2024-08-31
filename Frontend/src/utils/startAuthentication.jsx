@@ -11,8 +11,7 @@ export default async function startAuthentication({dispatch,login,logout,setFetc
      dispatch(setFetching(false));
      dispatch(logout());
      toast.custom(<GenToast type="err">Authentication failed, internal server error</GenToast>)
-     navigate("")
-     return null
+     return navigate("")
     },10000)
 
     const isAuthObjValid = handleAuthObject({read:true})

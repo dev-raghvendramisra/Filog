@@ -4,6 +4,7 @@ import toast from 'react-hot-toast';
 import { ColorRing } from 'react-loader-spinner'
 import {FollowToast, GenToast, ProfilePic} from '../../components'
 
+
 function FollowSuggestionsCard({
   type="dashboard",
   loader,
@@ -17,13 +18,18 @@ function FollowSuggestionsCard({
   classNameBtn = "",
   classNameCont = "",
   classNameUserName = "",
-  className_UserName_Avatar_Cont = ""
+  className_UserName_Avatar_Cont = "",
+  openAlert = () => {},
+  userData,
 }) {
   const [loading, setLoading] = React.useState(false);
   const [rerender, setRerender] = React.useState(false);
   const [isFollowing, setIsFollowing] = React.useState(false);
 
   const handleFollow_Unfollow = async () => {
+    if(userData.emailVerification===false){
+      return openAlert();
+    }
     setLoading(true);
     if (isFollowing === false) {
       const updateFollowing = [...following, suggestedUser.userId]
@@ -62,6 +68,8 @@ function FollowSuggestionsCard({
    }
 
   return (
+    <>
+    {/* {openAlert && Alert } */}
     <div
       id={`suggestion-${loader ? "skeleton" : suggestedUser.userId}`}
       onClick={
@@ -121,6 +129,7 @@ function FollowSuggestionsCard({
         </button>
       )}
     </div>
+    </>
   );
 }
 

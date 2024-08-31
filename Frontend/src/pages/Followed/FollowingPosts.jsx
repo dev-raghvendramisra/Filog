@@ -38,8 +38,6 @@ function FollowedPosts() {
       if(userProfile.$id!==""){
         setInitLoading(false);
         setQuery([Query.equal("userId",userProfile.following)])
-        console.log(query);
-        
      }
    },[userProfile.$id])
 

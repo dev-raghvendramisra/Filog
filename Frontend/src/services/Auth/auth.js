@@ -96,7 +96,6 @@ export class Auth{
     async verifyEmail(userId,secret){
         try {        
             const res = await this.account.updateVerification(userId, secret)
-             console.log(res)
              return res;
         } catch (error) {
             console.log("auth service error :: failed to verify email: ",error)
@@ -107,7 +106,6 @@ export class Auth{
     async createEmailVerification(){
       try{
         const res = await this.account.createVerification(conf.emailVerificationEndpoint)
-        console.log(res);
         return res
       }catch(error){
         console.log("auth service error :: failed to create email verification: ",error)
