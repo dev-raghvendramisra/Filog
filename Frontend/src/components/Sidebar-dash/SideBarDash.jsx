@@ -79,7 +79,7 @@ function SideBarDash({ contRef }) {
       <div
         ref={suggestionCont}
         id="sidebar-suggestion-cont"
-        className='h-60vh bg-sate-200 overflow-hidden pb-1vw mt-1vw px-0 flex flex-col gap-4 hideScrollbar relative border-light-mode scrollScrim'
+        className='max-h-60vh bg-sate-200 overflow-hidden pb-1vw mt-1vw px-0 flex flex-col gap-4 hideScrollbar relative border-light-mode scrollScrim'
       >
         {initLoading || sideBarLoading
           ? Array.from({ length: 7 }).map((_, index) => (

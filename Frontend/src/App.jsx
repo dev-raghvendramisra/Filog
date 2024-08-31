@@ -1,5 +1,5 @@
 import React from 'react';
-import { Footer, InfinitePogressbar, Navbar, GenToast, ModalContainer } from './components';
+import { Footer, InfinitePogressbar, Navbar, GenToast } from './components';
 import './App.css';
 import '@fortawesome/fontawesome-free/css/all.min.css';
 
@@ -41,9 +41,7 @@ function App() {
     } 
     else {
       if(pathname=="/dashboard" || pathname=="/dashboard/featured" || pathname=="/dashboard/following" || pathname=="/write" || pathname=="/" || pathname=="/profile"){
-        navigate("/",{replace:true});
-        console.log("navigated");
-        
+        navigate("/",{replace:true});    
       }
       else navigate(`${pathname}${search&&search}`)
     }
@@ -53,7 +51,6 @@ function App() {
   return (
     <>
       {fetching? pathname=="/login" || pathname=="/signup"? <InfinitePogressbar className={`${pathname==""?"bg-opacity-0 dark:bg-opacity-0":""}`} /> : null:null}
-      <ModalContainer />
       { <Navbar /> }
       {/* //pathname=="/verify-email" && */}
       <Toaster toastOptions={{duration: 7000,}} containerStyle={{marginTop:`${pathname=="/verify-email"?"5%":"5%"}`}} />

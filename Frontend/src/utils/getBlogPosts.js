@@ -16,7 +16,6 @@ export default async function getBlogPosts({userId="#",query=[],offset=0,limit=1
     const res =  await dbServices.getBlogs(queries)
     
     if(offset==0){
-        console.log(res.documents);
             if(res.documents && res.documents.length>0){
                dispatch(clearBlogs());
               dispatch(setBlogs(res.documents))
@@ -27,7 +26,6 @@ export default async function getBlogPosts({userId="#",query=[],offset=0,limit=1
             }    
         } 
     if(offset>0){
-         console.log(res.documents);
          if(res.documents.length>0){
             dispatch(setBlogs(res.documents))
             return {ok:true,res:res,pagination:true}

@@ -6,7 +6,7 @@ import useTheme from '../../context/themeContext';
 import { Button, FeedbackMessage, GenToast } from '../../components';
 import toast from 'react-hot-toast';
 import { ID } from 'appwrite';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 
 function EmailVerification() {
   const [searchParams] = useSearchParams();
@@ -14,9 +14,11 @@ function EmailVerification() {
   const [successMsg, setSuccessMsg] = React.useState(null);
   const [disabled, setDisabled] = React.useState(true);
   const [resCode, setResCode] = React.useState(null);
+  const { isUserLoggedIn, userData, fetching } = useSelector((state) => state.auth);
   const navigate = useNavigate();
   const { isDark } = useTheme();
-  const { isUserLoggedIn, userData, fetching } = useSelector((state) => state.auth);
+  const dispatch = useDispatch();
+
   const errMsg = ["Invalid verification link", "Email already verified"];
   
   const isVerificationExpired = React.useCallback((expire) => {
@@ -46,7 +48,7 @@ function EmailVerification() {
     const userId = searchParams.get('userId');
     const secret = searchParams.get('secret');
     const expire = searchParams.get('expire');
-    console.log({ userId, secret, expire });
+  
 
     if (userId && secret && !isVerificationExpired(expire)) {
       verification();
@@ -59,15 +61,15 @@ function EmailVerification() {
     async function verification() {
       try {
         const res = await authServices.verifyEmail(userId, secret);
-        console.log(res.code);
         const didErrOccured = authErrHandler({ res, setErr, navigate, errMsg, setResCode, verification:true });
         if (!didErrOccured) {
           toast.custom(<GenToast type="success">Email verified successMsgfully</GenToast>);
           setSuccessMsg("Email verified successfully");
+          dispatch(login({...userData, emailVerification: true}));
         }
       } catch (err) {
-        console.FeedbackMessage("Verification FeedbackMessage:", err);
-        setErr("An unexpected FeedbackMessage occurred");
+        console.log("Verification error:", err);
+        setErr("An unexpected error occurred");
       }
     }
   }, [searchParams]);

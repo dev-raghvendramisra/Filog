@@ -16,8 +16,9 @@ function AlertModal({
   const uniqueId = ID.unique();
 
   return (
-    <div id={`${uniqueId}-alertModal-wrapper`} className='w-fit rounded-3xl p-1.5vw bg-white dark:bg-darkPrimary_grays max-w-40vw absolute'>
-      <div id={`${uniqueId}-alertModal-header`} className='flex justify-between items-center text-1.5vw font-medium'>
+    <div id={uniqueId+"alertModal-container"} className='h-100vh w-full bg-black bg-opacity-50 fixed flex justify-center left-0 top-0 items-center' style={{zIndex:"100"}}>
+      <div id={`${uniqueId}-alertModal-wrapper`} className='w-fit rounded-3xl p-1.5vw bg-white dark:bg-darkPrimary_grays max-w-40vw absolute'>
+       <div id={`${uniqueId}-alertModal-header`} className='flex justify-between items-center text-1.5vw font-medium'>
         <p id={`${uniqueId}-alertModal-heading`}>
           {heading}
         </p>
@@ -34,7 +35,7 @@ function AlertModal({
         <FeedbackMessage
           id={`${uniqueId}-alertModal-feedback`}
           err={feedbackMessage.type === "err"}
-          className='pl-none mt-0.5vw'
+          className='pl-none mt-1vw text-1vw'
         >
           {feedbackMessage.message}
         </FeedbackMessage>
@@ -61,6 +62,7 @@ function AlertModal({
           {primaryBtnText}
         </Button>
       </div>
+     </div>
     </div>
   );
 }
