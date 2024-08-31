@@ -15,6 +15,7 @@ function EmailVerification() {
   const [successMsg, setSuccessMsg] = React.useState(null);
   const [disabled, setDisabled] = React.useState(true);
   const [resCode, setResCode] = React.useState(null);
+  const [timer, setTimer] = React.useState(0);
   const { isUserLoggedIn, userData, fetching } = useSelector((state) => state.auth);
   const navigate = useNavigate();
   const { isDark } = useTheme();
@@ -32,7 +33,8 @@ function EmailVerification() {
     setDisabled(true);
     setErr(null);
     if(resCode!==401 && !isUserLoggedIn){
-      setTimeout(()=>navigate("/login"),7000)
+      const timer = setTimeout(()=>navigate("/login"),7000)
+      setTimer(timer)
       return setErr("You need to login first");
     }
     const res = await getNewVerificationEmail({isUserLoggedIn, userData,setErr,errMsg, navigate});
@@ -62,11 +64,12 @@ function EmailVerification() {
     async function verification() {
       
         const res = await authServices.verifyEmail(userId, secret);
-        const didErrOccured = authErrHandler({ res, setErr, navigate, errMsg, setResCode, verification:true });
+        const didErrOccured = authErrHandler({ res, setErr, navigate, errMsg, setResCode, verification:true,setTimer });
         if (!didErrOccured) {
           toast.custom(<GenToast type="success">Email verified successfully</GenToast>);
           setSuccessMsg("Email verified successfully");
-          setTimeout(()=>navigate(""),7000)
+          const timer = setTimeout(()=>navigate(""),7000)
+          setTimer(timer)
           setDisabled(true);
           dispatch(login({...userData, emailVerification: true}));
         }
@@ -104,7 +107,9 @@ function EmailVerification() {
         </div>
         <div className='flex gap-4 mt-2vw' id={ID.unique() + "email-verification-buttons"}>
           <Button outline className='text-1.2vw' onClick={
-            () => navigate("/")}>
+            () => {
+             clearTimeout(timer)
+             navigate("/")}}>
             Do it later
           </Button>
           <Button primary={!disabled} disabled={disabled} onClick={handleClick} className='text-1.2vw'>
