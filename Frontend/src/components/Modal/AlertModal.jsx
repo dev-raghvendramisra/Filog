@@ -16,8 +16,8 @@ function AlertModal({
   const uniqueId = ID.unique();
 
   return (
-    <div id={uniqueId+"alertModal-container"} className='h-100vh w-full bg-black bg-opacity-50 fixed flex justify-center left-0 top-0 items-center' style={{zIndex:"100"}}>
-      <div id={`${uniqueId}-alertModal-wrapper`} className='w-fit rounded-3xl p-1.5vw bg-white dark:bg-darkPrimary_grays max-w-40vw absolute'>
+    <div id={uniqueId+"alertModal-container"} className='h-100vh w-full bg-black bg-opacity-70 dark:bg-opacity-80 fixed flex justify-center left-0 top-0 items-center ' style={{zIndex:"100"}}>
+      <div id={`${uniqueId}-alertModal-wrapper`} className='w-fit rounded-3xl p-1.5vw bg-white dark:bg-darkPrimary max-w-40vw absolute modalAnim'>
        <div id={`${uniqueId}-alertModal-header`} className='flex justify-between items-center text-1.5vw font-medium'>
         <p id={`${uniqueId}-alertModal-heading`}>
           {heading}
