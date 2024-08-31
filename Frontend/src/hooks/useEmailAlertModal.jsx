@@ -7,15 +7,15 @@ import { useNavigate } from 'react-router-dom';
 export default function useEmailAlertModal({ openAlert, ctaDanger, setOpenAlert, userData }) {
     const [feedbackMessage, setFeedbackMessage] = React.useState({});
     const [err,setErr] = React.useState(null);
+    const [timer,setTimer] = React.useState(null);
     const [ctaDisabled, setCtaDisabled] = React.useState(false);
     const navigate = useNavigate()
     const errMsg = ["Invalid verification link", "Email already verified"];
 
     const primaryOnClick = React.useCallback(async() => {
-        console.log("Primary Clicked");
         setCtaDisabled(true);
         // Call the API to send the verification email
-        const res = await getNewVerificationEmail({userData, setErr, errMsg, navigate}); 
+        const res = await getNewVerificationEmail({userData, setErr, errMsg, navigate, setTimer}); 
         if(res) {
             setFeedbackMessage({type:'success', message:'Email sent successfully!'});
             toast.custom(<GenToast type='success'>Email sent successfully!</GenToast>);
@@ -23,8 +23,9 @@ export default function useEmailAlertModal({ openAlert, ctaDanger, setOpenAlert,
     },[userData]);
 
     const secondaryOnClick = React.useCallback(() => {
-        setOpenAlert(false); // Close the modal on secondary action
-    },[]);
+        setOpenAlert(false);// Close the modal on secondary action
+        clearTimeout(timer);// Clear the timer if the modal is closed
+    },[timer]);
 
     React.useEffect(() => {
         if(err){

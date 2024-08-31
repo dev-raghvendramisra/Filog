@@ -7,6 +7,7 @@ import { Button, FeedbackMessage, GenToast } from '../../components';
 import toast from 'react-hot-toast';
 import { ID } from 'appwrite';
 import { useDispatch, useSelector } from 'react-redux';
+import { login } from '../../store/authSlice';
 
 function EmailVerification() {
   const [searchParams] = useSearchParams();
@@ -38,7 +39,7 @@ function EmailVerification() {
     res 
     ? (()=>{
       toast.custom(<GenToast type="successMsg">Verification email sent successfully</GenToast>);
-      setSuccessMsg("Verification email sent , click on the link to verify")
+      setSuccessMsg("Verification email sent , click on the link to verify");
       })()
     : null
   },[resCode,isUserLoggedIn,userData])
@@ -59,18 +60,16 @@ function EmailVerification() {
     }
 
     async function verification() {
-      try {
+      
         const res = await authServices.verifyEmail(userId, secret);
         const didErrOccured = authErrHandler({ res, setErr, navigate, errMsg, setResCode, verification:true });
         if (!didErrOccured) {
-          toast.custom(<GenToast type="success">Email verified successMsgfully</GenToast>);
+          toast.custom(<GenToast type="success">Email verified successfully</GenToast>);
           setSuccessMsg("Email verified successfully");
+          setTimeout(()=>navigate(""),7000)
+          setDisabled(true);
           dispatch(login({...userData, emailVerification: true}));
         }
-      } catch (err) {
-        console.log("Verification error:", err);
-        setErr("An unexpected error occurred");
-      }
     }
   }, [searchParams]);
   
@@ -81,10 +80,11 @@ function EmailVerification() {
 
 
   React.useEffect(()=>{
-    if(!fetching){
-      setDisabled(false);
+    if(fetching){
+      setDisabled(true);
     }
-  },[fetching])
+    else  setDisabled(false)
+  },[fetching,successMsg])
 
 
   

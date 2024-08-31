@@ -36,14 +36,14 @@ function App() {
       if(pathname=="/login" || pathname=="/signup" || pathname=="/"){
         navigate("/dashboard",{replace:true});
       }
-      else navigate(`${pathname}${search&&search}`)
+      else navigate(`${pathname}${search && search}`)
       pathname=="/verify-email" || toast.custom(<GenToast type="greet">Welcome, {userData.name}</GenToast>);
     } 
     else {
       if(pathname=="/dashboard" || pathname=="/dashboard/featured" || pathname=="/dashboard/following" || pathname=="/write" || pathname=="/" || pathname=="/profile"){
         navigate("/",{replace:true});    
       }
-      else navigate(`${pathname}${search&&search}`)
+      else navigate(`${pathname}${search && search}`)
     }
   }, [isUserLoggedIn]);
 

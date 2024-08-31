@@ -3,8 +3,7 @@ import { dbServices } from '../../services';
 import toast from 'react-hot-toast';
 import { ColorRing } from 'react-loader-spinner'
 import {FollowToast, GenToast, ProfilePic} from '../../components'
-import { useSelector } from 'react-redux';
-import { useEmailAlertModal } from '../../hooks';
+
 
 function FollowSuggestionsCard({
   type="dashboard",
@@ -19,20 +18,17 @@ function FollowSuggestionsCard({
   classNameBtn = "",
   classNameCont = "",
   classNameUserName = "",
-  className_UserName_Avatar_Cont = ""
+  className_UserName_Avatar_Cont = "",
+  openAlert = () => {},
+  userData,
 }) {
   const [loading, setLoading] = React.useState(false);
   const [rerender, setRerender] = React.useState(false);
   const [isFollowing, setIsFollowing] = React.useState(false);
-  const {userData} = useSelector(state=>state.auth);
-  const [openAlert, setOpenAlert] = React.useState(false);
-
-  const Alert = useEmailAlertModal({openAlert,ctaDanger:false,setOpenAlert,userData})
 
   const handleFollow_Unfollow = async () => {
     if(userData.emailVerification===false){
-      toast.custom(<GenToast type='err'>Please verify your email to follow users</GenToast>)
-      return setOpenAlert(true);
+      return openAlert();
     }
     setLoading(true);
     if (isFollowing === false) {
@@ -73,7 +69,7 @@ function FollowSuggestionsCard({
 
   return (
     <>
-    {openAlert && Alert }
+    {/* {openAlert && Alert } */}
     <div
       id={`suggestion-${loader ? "skeleton" : suggestedUser.userId}`}
       onClick={

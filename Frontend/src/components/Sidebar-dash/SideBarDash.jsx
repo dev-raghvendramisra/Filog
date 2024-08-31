@@ -1,11 +1,12 @@
 import React, {  useEffect, useRef, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
-import { ErrorPlaceHolderImage, FollowSuggestionsCard, Footer } from '../../components';
+import { ErrorPlaceHolderImage, FollowSuggestionsCard, Footer, GenToast } from '../../components';
 import { Query } from 'appwrite';
 import { updateFollowing } from '../../store/userProfileSlice';
 import useFetchUsers from '../../hooks/useFetch';
-import { usePagination } from '../../hooks';
+import { usePagination, useEmailAlertModal } from '../../hooks';
+import { toast } from 'react-hot-toast';
 
 function SideBarDash({ contRef }) {
 
@@ -19,19 +20,21 @@ function SideBarDash({ contRef }) {
   const [offset, setOffset] = useState(0);
   const [query, setQuery] = useState([]);
   const [limit, setLimit] = useState(10);
-
+  const [openAlert, setOpenAlert] = useState(false);
+  
 
   
   // Redux state and dispatch
   const userProfile = useSelector(state => state.userProfile);
   const suggestedUsers = useSelector(state => state.users);
+  const {userData} = useSelector(state=>state.auth);
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
- const [sideBarLoading, paginationLoad, isFetching, errInFetching] = useFetchUsers({initLoading,offset,limit,query,container:suggestionCont.current})
-
-
- const handlePagination = usePagination({paginationLoad,containerLoading:sideBarLoading, isFetching,container:suggestionCont.current,limit,setLimit,setOffset})
+  // Custom hooks
+  const Alert = useEmailAlertModal({openAlert,ctaDanger:false,setOpenAlert,userData})
+  const [sideBarLoading, paginationLoad, isFetching, errInFetching] = useFetchUsers({initLoading,offset,limit,query,container:suggestionCont.current})
+  const handlePagination = usePagination({paginationLoad,containerLoading:sideBarLoading, isFetching,container:suggestionCont.current,limit,setLimit,setOffset})
 
 
 
@@ -69,6 +72,8 @@ function SideBarDash({ contRef }) {
 
 
   return (
+    <>
+    {openAlert && Alert}
     <div
       ref={sideBar}
       id='main-dashboard-sidebar-cont'
@@ -101,6 +106,11 @@ function SideBarDash({ contRef }) {
                   suggestedUser={user}
                   following={userProfile.following}
                   setFollowing={(following) => { dispatch(updateFollowing(following)) }}
+                  openAlert={()=>{
+                    toast.custom(<GenToast type='err'>Please verify your email to follow users</GenToast>)
+                    return setOpenAlert(true)
+                  }}
+                  userData={userData}
                 />
               ))
         }
@@ -126,6 +136,7 @@ function SideBarDash({ contRef }) {
         dashboardFooter
       />
     </div>
+    </>
   );
 }
 

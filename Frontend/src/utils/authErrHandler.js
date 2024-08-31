@@ -1,4 +1,4 @@
-export default function authErrHandler({res, dispatch, navigate, setEmail, setPass, setName, setErr, errMsg = [], setResCode, verification=false}) {
+export default function authErrHandler({res, dispatch, navigate, setEmail, setPass, setName, setErr, errMsg = [], setResCode, verification=false, setTimer}) {
     const errMsgMap = {
         401: errMsg[0] || "Invalid credentials!",
         429: "Too many attempts. Please try again later!",
@@ -19,7 +19,8 @@ export default function authErrHandler({res, dispatch, navigate, setEmail, setPa
         setResCode && setResCode(res.code);
 
         if ([429, 500, 503].includes(res.code)) {
-            setTimeout(handleResetAndRedirect, 7000);
+            const timer = setTimeout(handleResetAndRedirect, 7000);
+            setTimer && setTimer(timer);
         } else if (res.code === 409 && verification) {
             setTimeout(() => navigate("/"), 7000);
         }
