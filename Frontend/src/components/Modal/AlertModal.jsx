@@ -36,6 +36,7 @@ function AlertModal({
           id={`${uniqueId}-alertModal-feedback`}
           err={feedbackMessage.type === "err"}
           className='pl-none mt-1vw text-1vw'
+          iconType='solid'
         >
           {feedbackMessage.message}
         </FeedbackMessage>

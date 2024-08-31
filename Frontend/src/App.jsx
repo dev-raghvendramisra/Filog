@@ -23,6 +23,7 @@ function App() {
   
   React.useEffect(() => {
     const startLoginSequence = async () => {
+      console.log("Authenticating user...");
       const res = await startAuthentication({ dispatch, login, logout, setFetching ,navigate});     
      if(res.$id){
        await getUserProfile({dispatch,setProfile,clearProfile,userId:res.$id})
@@ -57,7 +58,7 @@ function App() {
       <div className='min-h-56vh'>
         <Outlet />
       </div>
-      {pathname=="/login" || pathname=="/signup" || pathname=="/about" || pathname=="/" || pathname=="/verify-email"?
+      {pathname!=="/dashboard/featured" && pathname!=="/dashboard/following"?
       <Footer />
       :null
       }

@@ -39,7 +39,7 @@ export default function useEmailAlertModal({ openAlert, ctaDanger, setOpenAlert,
     return openAlert ? 
         <AlertModal
             heading='Email verification'
-            message='To verify your email address, please click the button below to request a verification email. Once sent, follow the instructions in the email to complete the verification process. If you don’t receive the email within a few minutes, check your spam folder or try requesting it again.'
+            message="To verify your email, click the button below to request a verification email. Follow the instructions in the email to complete verification. If you don't receive it within a few minutes, check your spam folder or try again."
             feedbackMessage={feedbackMessage}
             ctaDisabled={ctaDisabled}
             ctaDanger={ctaDanger}

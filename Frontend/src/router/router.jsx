@@ -1,7 +1,7 @@
 import {   Navigate, Route, createBrowserRouter, createRoutesFromElements } from "react-router-dom";
 import App from "../App";
 import {Write,About, SearchResult, Dashboard, Login, SignUp, UserProfile,Profile, Home, Post, FeaturedPosts, FollowingPosts, UnknownRoute, EmailVerification}  from "../components";
-
+import Playground from "../pages/Playground";
 
 const router = createBrowserRouter(createRoutesFromElements(
     <Route path="/" element={<App />}>
@@ -20,6 +20,7 @@ const router = createBrowserRouter(createRoutesFromElements(
     <Route path="/post/:postID" element={<Post />}></Route>
     <Route path="/search/:query" element={<SearchResult />}></Route>
     <Route path="/verify-email" element={<EmailVerification />}></Route>
+    <Route path="/playground" element={<Playground />}></Route>{/* This is a test route */}
     <Route path="*" element={<UnknownRoute />}></Route>
   </Route>
 ))

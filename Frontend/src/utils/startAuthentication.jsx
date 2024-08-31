@@ -4,11 +4,14 @@ import {handleAuthObject} from ".";
 import { GenToast } from "../components";
 
 export default async function startAuthentication({dispatch,login,logout,setFetching,setEmail,setPass,setName,navigate}){
-
-    dispatch(setFetching(true))
-
+    
+    const dispatchFetching = (val) =>{
+        setFetching && dispatch(setFetching(val))
+    }
+    dispatchFetching(true)
+ 
     const timer = setTimeout(()=>{
-     dispatch(setFetching(false));
+     dispatchFetching(false);
      dispatch(logout());
      toast.custom(<GenToast type="err">Authentication failed, internal server error</GenToast>)
      return navigate("")
@@ -21,14 +24,14 @@ export default async function startAuthentication({dispatch,login,logout,setFetc
     
     clearTimeout(timer)
 
-    dispatch(setFetching(false))
+    dispatchFetching(false)
     if(res.err){
         dispatch(logout())
         return res.err
     }
     else if(res.code!==401){
         dispatch(login(res))
-        if(!isAuthObjValid) console.log(handleAuthObject({write:true , name:res.name}));
+        if(!isAuthObjValid) handleAuthObject({write:true , name:res.name});
         
         setEmail? dispatch(setEmail("")):null
         setPass? dispatch(setPass("")):null
