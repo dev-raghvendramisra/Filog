@@ -37,7 +37,7 @@ function EmailVerification() {
       setTimer(timer)
       return setErr("You need to login first");
     }
-    const res = await getNewVerificationEmail({isUserLoggedIn, userData,setErr,errMsg, navigate});
+    const res = await getNewVerificationEmail({isUserLoggedIn, userData,setErr,errMsg, navigate, timer, setTimer});
     res 
     ? (()=>{
       toast.custom(<GenToast type="successMsg">Verification email sent successfully</GenToast>);

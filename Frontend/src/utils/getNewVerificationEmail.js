@@ -1,10 +1,11 @@
 import { authServices } from "../services";
 import {authErrHandler} from "../utils";
 
-export default async function getNewVerificationEmail({ userData, setErr, navigate, errMsg, setTimer}){
+export default async function getNewVerificationEmail({ userData, setErr, navigate, errMsg, setTimer, timer}){
     if(userData.emailVerification){
-      const timer = setTimeout(() => navigate("/"), 7000);
-      setTimer && setTimer(timer)
+      timer && clearTimeout(timer);
+      const newTimer = setTimeout(() => navigate("/"), 7000);
+      setTimer && setTimer(newTimer)
       return setErr("Email already verified");
     }
     const res = await authServices.createEmailVerification();
