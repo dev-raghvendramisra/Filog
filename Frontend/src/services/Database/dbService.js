@@ -150,13 +150,12 @@ export class DatabaseService {
 
        }
     }
-    async getUsers(query = [Query.notEqual("userId", ["#"])],offset){
+    async getUsers(query = [Query.notEqual("userId", ["#"])]){
        try {
         const res = await this.database.listDocuments(
              conf.dbId,
              conf.userProfilesCollectionID,
              query,
-             offset
          );
 
          if(res.documents){

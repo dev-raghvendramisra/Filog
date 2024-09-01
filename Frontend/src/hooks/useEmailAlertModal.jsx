@@ -9,17 +9,20 @@ export default function useEmailAlertModal({ openAlert, ctaDanger, setOpenAlert,
     const [err,setErr] = React.useState(null);
     const [timer,setTimer] = React.useState(null);
     const [ctaDisabled, setCtaDisabled] = React.useState(false);
+    const [loading, setLoading  ] = React.useState(false);
     const navigate = useNavigate()
     const errMsg = ["Invalid verification link", "Email already verified"];
 
     const primaryOnClick = React.useCallback(async() => {
         setCtaDisabled(true);
         // Call the API to send the verification email
+        setLoading(true);
         const res = await getNewVerificationEmail({userData, setErr, errMsg, navigate, setTimer}); 
         if(res) {
             setFeedbackMessage({type:'success', message:'Email sent successfully!'});
             toast.custom(<GenToast type='success'>Email sent successfully!</GenToast>);
         }
+        setLoading(false);
     },[userData]);
 
     const secondaryOnClick = React.useCallback(() => {
@@ -47,6 +50,7 @@ export default function useEmailAlertModal({ openAlert, ctaDanger, setOpenAlert,
             secondaryBtnText='Cancel'
             primaryOnClick={primaryOnClick}
             secondaryOnClick={secondaryOnClick}
+            btnLoading={loading}
         />
      : null;
 }
