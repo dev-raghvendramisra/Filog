@@ -18,15 +18,16 @@ export default function Login() {
   const [formErr, setFormErr] = React.useState("");
   const [loading, setLoading] = React.useState("");
   const formRef = React.useRef(null)
+  const [disabled, setDisabled] = React.useState(false)
   const {isValidated,email,password} = useSelector((state)=>state.formData)
   const {isUserLoggedIn} = useSelector((state)=>state.auth)
   const dispatch = useDispatch()
   const navigate = useNavigate()
 
-  const handleSubmit = async()=>{
+  const handleSubmit = ()=>{
+      setDisabled(true)
       const event = new Event("submit", { bubbles: true })
       formRef.current ? formRef.current.dispatchEvent(event) : null
-     
   }
 
   React.useEffect(()=>{
@@ -89,7 +90,7 @@ export default function Login() {
       buttonComponent={
         <div className='w-100p text-center flex flex-col items-center'>
 
-          <Button primary wide className='w-70p overflow-hidden transition-all' onClick={
+          <Button primary wide disabled={disabled} className='w-70p overflow-hidden transition-all' onClick={
            handleSubmit
           }>
             Login

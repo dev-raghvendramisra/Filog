@@ -218,7 +218,7 @@ export class DatabaseService {
                 docObj,
                 [
                  Permission.read(Role.any()),
-                 Permission.update(Role.user(userId,"verified")),
+                 Permission.update(Role.user(userId)),
                  Permission.delete(Role.user(userId))
                 ]  //permission array
             );

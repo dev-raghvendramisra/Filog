@@ -16,13 +16,16 @@ export default function SignUp() {
   const formRef = React.useRef(null)
   const {isValidated,email,name,password} = useSelector((state)=>state.formData)
   const [loading, setLoading] = React.useState(false)
+  const [disabled, setDisabled] = React.useState(false)
   const dispatch = useDispatch()
   const navigate = useNavigate()
   
   const handleSubmit = ()=>{
+    setDisabled(true)
     const event = new Event("submit", { bubbles: true })
     formRef.current ? formRef.current.dispatchEvent(event) : null
-  }
+}
+
 
   React.useEffect(()=>{
         const initiateSignup = async()=>{
@@ -99,7 +102,7 @@ export default function SignUp() {
       loading={loading}
       buttonComponent={
         <div className='w-100p text-center flex flex-col items-center'>
-          <Button primary wide className='w-70p overflow-hidden transition-all' onClick={handleSubmit}>
+          <Button primary disabled={disabled} wide className='w-70p overflow-hidden transition-all' onClick={handleSubmit}>
             Signup
           </Button >
           <Error  className="transition-all justify-center mt-4p" >{formErr}</Error>
