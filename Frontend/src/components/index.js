@@ -25,6 +25,7 @@ import FollowToast from "./Toast/FollowToast";
 import GenToast from './Toast/GenToast';
 import AlertModal from "./Modal/AlertModal";
 import FormModal from "./Modal/FormModal";
+import ModalContainer from "./Modal-Container/ModalContainer";
 
 
 export {
@@ -55,6 +56,7 @@ export {
   GenToast,
   AlertModal,
   FormModal,
+  ModalContainer
 
 };
 export * from "../pages"

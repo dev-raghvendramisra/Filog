@@ -1,5 +1,5 @@
 import React from 'react';
-import { Footer, InfinitePogressbar, Navbar, GenToast } from './components';
+import { Footer, InfinitePogressbar, Navbar, GenToast, ModalContainer } from './components';
 import './App.css';
 import '@fortawesome/fontawesome-free/css/all.min.css';
 
@@ -52,6 +52,7 @@ function App() {
   return (
     <>
       {fetching? pathname=="/login" || pathname=="/signup"? <InfinitePogressbar className={`${pathname==""?"bg-opacity-0 dark:bg-opacity-0":""}`} /> : null:null}
+      <ModalContainer />
       { <Navbar /> }
       {/* //pathname=="/verify-email" && */}
       <Toaster toastOptions={{duration: 7000,}} containerStyle={{marginTop:`${pathname=="/verify-email"?"5%":"5%"}`}} />

@@ -26,7 +26,7 @@ function Button({
     : "";
 
   const primaryClasses = primary
-    ? "bg-primary dark:bg-primary_darkMode border-primary dark:border-primary_darkMode text-white active:bg-opacity-70 active:scale-110 active:bg-primary/60 dark:active:bg-primary_darkMode/60"
+    ? "bg-primary dark:bg-primary_darkMode border-primary dark:border-primary_darkMode text-white active:bg-opacity-70 active:scale-110 active:bg-primary/60 dark:active:bg-primary_darkMode/60 hover:primaryHoverAnim"
     : "";
 
   const dangerClasses = danger
@@ -38,6 +38,8 @@ function Button({
     : "";
 
   const loaderColor = `#9ca3af`
+
+  
    
   return (
     <button

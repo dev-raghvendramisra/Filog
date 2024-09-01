@@ -5,5 +5,6 @@ import getUserProfile from "./getUserProfile";
 import getUsersUtil from './getUsersUtil'
 import handleAuthObject from './handleAuthObject'
 import getNewVerificationEmail from './getNewVerificationEmail'
+import getAlertModel from "./getAlertModel";
 
-export {getBlogPosts, startAuthentication, authErrHandler, getUserProfile, getUsersUtil, handleAuthObject, getNewVerificationEmail }
+export {getBlogPosts, startAuthentication, authErrHandler, getUserProfile, getUsersUtil, handleAuthObject, getNewVerificationEmail, getAlertModel }

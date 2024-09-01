@@ -20,7 +20,7 @@ function SideBarDash({ contRef }) {
   const [offset, setOffset] = useState(0);
   const [query, setQuery] = useState([]);
   const [limit, setLimit] = useState(10);
-  const [openAlert, setOpenAlert] = useState(false);
+  
   
 
   
@@ -32,7 +32,7 @@ function SideBarDash({ contRef }) {
   const navigate = useNavigate();
 
   // Custom hooks
-  const Alert = useEmailAlertModal({openAlert,ctaDanger:false,setOpenAlert,userData})
+  const setOpenAlert = useEmailAlertModal()
   const [sideBarLoading, paginationLoad, isFetching, errInFetching] = useFetchUsers({initLoading,offset,limit,query,container:suggestionCont.current})
   const handlePagination = usePagination({paginationLoad,containerLoading:sideBarLoading, isFetching,container:suggestionCont.current,limit,setLimit,setOffset})
 
@@ -73,7 +73,6 @@ function SideBarDash({ contRef }) {
 
   return (
     <>
-    {openAlert && Alert}
     <div
       ref={sideBar}
       id='main-dashboard-sidebar-cont'

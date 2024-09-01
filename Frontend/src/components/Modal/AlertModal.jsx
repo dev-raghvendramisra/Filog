@@ -17,7 +17,6 @@ function AlertModal({
   const uniqueId = ID.unique();
 
   return (
-    <div id={uniqueId+"alertModal-container"} className='h-100vh w-full bg-black bg-opacity-70 dark:bg-opacity-80 fixed flex justify-center left-0 top-0 items-center ' style={{zIndex:"100"}}>
       <div id={`${uniqueId}-alertModal-wrapper`} className='w-fit rounded-3xl p-1.5vw bg-white dark:bg-darkPrimary max-w-40vw absolute modalAnim'>
        <div id={`${uniqueId}-alertModal-header`} className='flex justify-start gap-4 items-center text-1.7vw font-medium'>
         <img
@@ -66,7 +65,6 @@ function AlertModal({
         </Button>
       </div>
      </div>
-    </div>
   );
 }
 

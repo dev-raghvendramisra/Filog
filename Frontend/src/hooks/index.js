@@ -1,6 +1,7 @@
 import useFetch from "./useFetch";
 import useLinks from "./useLinks";
 import usePagination from './usePagination';
-import useEmailAlertModal from "./useEmailAlertModal.jsx";
+import useAlertModal, {useEmailAlertModal} from "./useAlertModal";
 
-export {useFetch,useLinks, usePagination, useEmailAlertModal}
+
+export {useFetch,useLinks, usePagination, useEmailAlertModal, useAlertModal}
