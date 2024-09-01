@@ -1,8 +1,9 @@
 import React from 'react'
+import { WorkInProgress } from '../../components'
 
 function About() {
   return (
-    <div>About</div>
+    <div><WorkInProgress /></div>
   )
 }
 

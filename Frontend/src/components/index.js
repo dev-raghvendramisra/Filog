@@ -26,6 +26,7 @@ import GenToast from './Toast/GenToast';
 import AlertModal from "./Modal/AlertModal";
 import FormModal from "./Modal/FormModal";
 import ModalContainer from "./Modal-Container/ModalContainer";
+import WorkInProgress from "./Error-message/WorkInProgress";
 
 
 export {
@@ -56,7 +57,8 @@ export {
   GenToast,
   AlertModal,
   FormModal,
-  ModalContainer
+  ModalContainer,
+  WorkInProgress
 
 };
 export * from "../pages"

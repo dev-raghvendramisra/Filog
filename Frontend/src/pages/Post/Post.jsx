@@ -1,8 +1,11 @@
 import React from 'react'
+import { WorkInProgress } from '../../components'
 
 function Post() {
   return (
-    <div>Post</div>
+    <div>
+      <WorkInProgress />
+    </div>
   )
 }
 

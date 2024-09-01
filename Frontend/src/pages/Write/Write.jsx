@@ -1,6 +1,7 @@
 import React from 'react'
 import { useSelector } from 'react-redux';
 import { Navigate } from 'react-router-dom';
+import { WorkInProgress } from '../../components';
 
 function Write() {
   const { isUserLoggedIn } = useSelector((state) => state.auth);
@@ -10,7 +11,7 @@ function Write() {
   }
 
   return (
-    <div>Write</div>
+    <div><WorkInProgress /></div>
   )
 }
 

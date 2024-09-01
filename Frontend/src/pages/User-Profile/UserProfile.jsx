@@ -1,8 +1,9 @@
 import React from 'react'
+import { WorkInProgress } from '../../components'
 
 function UserProfile() {
   return (
-    <div>UserProfile</div>
+    <div><WorkInProgress /></div>
   )
 }
 
