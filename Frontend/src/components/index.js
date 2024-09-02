@@ -6,7 +6,6 @@ import ToggleBtn from './Button/ToggleBtn';
 import Footer from "./Footer/Footer";
 import LoginBtn from "./Button/LoginBtn";
 import Input from "./Input/Input";
-import BlinkingCursor from "./Cursor/Cursor";
 import FeedbackMessage from "./Error-message/FeedbackMessage";
 import FormValidation from "./Form/Form-Validation";
 import Button from './Button/Button'
@@ -34,7 +33,6 @@ export {
   Logo,
   SearchBar,
   ToggleBtn,
-  BlinkingCursor,
   FeedbackMessage,
   Footer,
   Input,

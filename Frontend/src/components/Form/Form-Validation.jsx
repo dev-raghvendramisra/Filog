@@ -146,4 +146,3 @@ const  FormValidation=React.forwardRef(({ className='', type = "login"},formRef)
 
 export default FormValidation;
 
-//email,setEmail,password ,setPassword,name,setName,
