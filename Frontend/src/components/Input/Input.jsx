@@ -1,5 +1,5 @@
 import React, { useId } from 'react'
-import {BlinkingCursor, FeedbackMessage as Error} from '../../components'
+import { FeedbackMessage as Error} from '../../components'
 const Input=React.forwardRef(({ 
    value="",
    onChange = () => { },
@@ -9,7 +9,6 @@ const Input=React.forwardRef(({
    className_icon = '',
    className_input_prot_el_wrapper = '',
    className_input = '',
-   className_pass_prot_el='',
    className_pass_icon='',
    className_pass_icon_replacement='',
    className_wrapper="",
@@ -21,8 +20,7 @@ const Input=React.forwardRef(({
 
      
     const id = useId()
-    const [visibility,setVisibility] = React.useState(true);
-    const [crypticPass, setCrypticPass] = React.useState("")
+    const [isTypePass, setIsTypePass] = React.useState(false)
     
 
     const getIconClass = () => {
@@ -38,11 +36,6 @@ const Input=React.forwardRef(({
         }
       };
 
-      React.useEffect(() => {
-        if (type === "password") {
-            setCrypticPass(value ? "●".repeat(value.length) : "");
-        }
-    }, [value, type]);
 
     return (
        <div id="input-errMsg-wrapper" className={`mb-4p transition-all ${className_wrapper}`}>
@@ -69,28 +62,18 @@ const Input=React.forwardRef(({
 
           <div id="pass-protection-wrapper" 
           className={`h-100p w-80p relative overflow-hidden ${className_input_prot_el_wrapper}`}>
-
-            <input id={id} ref={ref} type="text" value={value} onChange={onChange} placeholder={fill?placeholder:""}
+            <input id={id} ref={ref} type={isTypePass?"password":"text"} value={value} onChange={onChange} placeholder={fill?placeholder:""}
             className={`bg-transparent h-100p w-100p outline-none ${className_input}`} autoComplete='off'/>
-            
-            <label id="pass-protection-el" htmlFor={id} 
-            className={`absolute inset-0 flex items-center
-             ${type=="password"?visibility?"hidden":"block":"hidden"}
-             ${fill?"bg-gray-100 dark:bg-darkPrimary_grays":"bg-white dark:bg-darkPrimary"}
-             ${className_pass_prot_el}`}>
-              {crypticPass}
-              <BlinkingCursor input={ref}/>
-            </label>
           </div>
 
           {/* {conditional rendering between replacement and icon of pass} */}
           {type=="password"?
-          <div id="passIcon-cont" className='flex text-1.5vw  h-100p w-10p justify-center items-center '>
+          <div id="passIcon-cont" className='flex text-1.5vw  h-100p w-10p justify-center items-center cursor-pointer '>
             <span id="passIcon" 
-            onClick={()=>{setVisibility(!visibility);ref.current.focus()}}
+            onClick={()=>{setIsTypePass(!isTypePass);}}
             className={` transition-all
               ${fill?("text-darkPrimary_grays_darker text-opacity-70 dark:text-opacity-100 dark:text-footer_text"):("text-darkPrimary_grays_darker text-opacity-70 dark:text-opacity-80 dark:text-white")}
-            ${visibility?"fa-regular fa-eye":"fa-regular fa-eye-slash"}
+            ${isTypePass?"fa-regular fa-eye-slash":"fa-regular fa-eye"}
             ${className_pass_icon}`}>
             </span>
           </div>
