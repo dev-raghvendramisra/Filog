@@ -30,7 +30,7 @@ function Button({
     : "";
 
   const dangerClasses = danger
-    ? "bg-red-500 border-red-500 text-white active:bg-opacity-70"
+    ? "bg-danger border-red-500 text-white active:bg-opacity-70"
     : "";
 
   const outlineClasses = outline

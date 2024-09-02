@@ -2044,7 +2044,9 @@ export default {
         blackColor: "#3B3C4A",
         footer_text: "#97989F",
         footer_text_light: "#696A75",
-        toastDarkModeBg:"#38383b"
+        toastDarkModeBg:"#38383b",
+        caution:"#FF9D14",
+        danger:"#ef4444"
       }
 
     }

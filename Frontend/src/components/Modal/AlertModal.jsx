@@ -17,13 +17,9 @@ function AlertModal({
   const uniqueId = ID.unique();
 
   return (
-      <div id={`${uniqueId}-alertModal-wrapper`} className='w-fit rounded-3xl p-1.5vw bg-white dark:bg-darkPrimary max-w-40vw absolute modalAnim'>
-       <div id={`${uniqueId}-alertModal-header`} className='flex justify-start gap-4 items-center text-1.7vw font-medium'>
-        <img
-          id={`${uniqueId}-alertModal-icon`}
-          src={ctaDanger ? "/icons/dangerIcon.webp" : "/icons/warningIcon.webp"}
-          className='h-2vw'
-        />
+    <div id={`${uniqueId}-alertModal-wrapper`} className='w-fit rounded-3xl p-1.5vw bg-white dark:bg-darkPrimary max-w-40vw absolute modalAnim'>
+      <div id={`${uniqueId}-alertModal-header`} className='flex justify-start gap-4 items-center text-1.7vw font-medium'>
+        <span className={`${ctaDanger ? "text-danger" : "text-caution"} fa-solid fa-triangle-exclamation text-2vw`}></span>
         <p id={`${uniqueId}-alertModal-heading`}>
           {heading}
         </p>
@@ -64,7 +60,7 @@ function AlertModal({
           {primaryBtnText}
         </Button>
       </div>
-     </div>
+    </div>
   );
 }
 
