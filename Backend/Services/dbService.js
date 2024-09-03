@@ -20,17 +20,17 @@ class DatabaseService {
         ...(version && { version:version }),
         ...(updatedFollowing && { following:updatedFollowing })
       };
-     log(updatedAttr)
+    //  log(updatedAttr)
       const res = await this.database.updateDocument(
         conf.dbId,
         conf.userProfilesCollectionID,
         profileId,
         updatedAttr
       );
-      log("Document Updated:", res);
+      log("Document Updated in database:", res);
       return res.$id ? res : { ok: false };
     } catch (error) {
-      log("Error updating document:", error.message);
+      log("Error updating document database:", error.message);
       return { ok: false, error: error.message };
     }
   }

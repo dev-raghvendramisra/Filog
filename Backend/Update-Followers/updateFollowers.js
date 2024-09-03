@@ -1,13 +1,14 @@
 import dbServices from "../Services/dbService.js";
 
 export default async function updateFollowers({ targetUserId, userId, type, log, currentUserProfile, version }) {
-    // Fetch the target user's profile
+    log("Fetching target user profile...");
     const targetUserProfile = await dbServices.getUserProfile(targetUserId);
-    log("Target User Profile:");
-    log(targetUserProfile);
+
 
     // Proceed if the target user's profile exists
     if (targetUserProfile.$id) {
+        log("Target User Profile found successfully :",targetUserProfile);
+
         const existingFollowers = targetUserProfile.followers || [];
         const existingFollowing = currentUserProfile.following || [];
         let updatedFollowers;
@@ -24,46 +25,55 @@ export default async function updateFollowers({ targetUserId, userId, type, log,
         }
 
         log("Updated Followers:", updatedFollowers);
+        log("Updated Following:", updatedFollowing);
+        log("Fetching initiating user profile...");
+        
+        const initiatingUserProfile = await dbServices.getUserProfile(userId, log);
 
-        // Update the target user's profile with the new followers list
-        const updateRes = await dbServices.updateProfileDocument({
-            profileId: targetUserProfile.$id,
-            updatedFollowers,
-            log
-        });
+        if (initiatingUserProfile.$id) {
+        log("Initiating User Profile found successfully :", initiatingUserProfile);
 
-        log("Profile Update Response:", updateRes);
+            if(version !== initiatingUserProfile.version) {
+                log("Profile version mismatch- recreating following array");
+                log("Previous version:", version);
+                log("Current version:", initiatingUserProfile.version);
 
-        // If the profile update is successful, update the initiating user's profile
-        if (updateRes.$id) {
-            // Fetch the initiating user's profile
-            const initiatingUserProfile = await dbServices.getUserProfile(userId, log);
-            log("Initiating User Profile:", initiatingUserProfile);
+                updatedFollowing = [...initiatingUserProfile.following, targetUserId];
+                log("Recreated Following array:", updatedFollowing);
+            }
+            const updateStagedActionRes = await dbServices.updateProfileDocument({
+                profileId: initiatingUserProfile.$id,
+                stagedAction: null,
+                updatedFollowing,
+                version: version + 1,
+                log
+            });
             
-            // Proceed if the initiating user's profile exists
-            if (initiatingUserProfile.$id) {
-                // Mark the `stagedAction` attribute as `null` and update the initiating user's profile 'following' attrubute with target user's ID
-                if(version !== initiatingUserProfile.version) {
-                    log("Profile version mismatch- rechecking following array");
-                    updatedFollowing = [...initiatingUserProfile.following, targetUserId];
-                }
-                const updateStagedActionRes = await dbServices.updateProfileDocument({
-                    profileId: initiatingUserProfile.$id,
-                    stagedAction: null,
-                    updatedFollowing,
-                    version: version+1,
+            if (updateStagedActionRes.$id) {
+                log("Marked stagedAction as null and updated initiating user profile successfully:", updateStagedActionRes);
+                log("Updating target user profile with new followers list...");
+
+                const updateRes = await dbServices.updateProfileDocument({
+                    profileId: targetUserProfile.$id,
+                    updatedFollowers,
                     log
                 });
-
-                log("Marked stagedAction as null:", updateStagedActionRes);
-                return { ok: true, res: updateStagedActionRes };
-            } else {
-                log("Initiating user profile not found");
-                return { ok: false, res: initiatingUserProfile };
+                if (updateRes.$id) {
+                    log("Target user profile updated successfully:", updateRes);
+                    return { ok: true, res: updateRes };
+                }
+                else {
+                    log("Failed to update target user profile");
+                    return { ok: false, res: updateRes };
+                }
+            }
+            else {
+                log("Failed to update initiating user profile");
+                return { ok: false, res: updateRes };
             }
         } else {
-            log("Failed to update target user profile");
-            return { ok: false, res: updateRes };
+            log("Initiating user profile not found");
+            return { ok: false, res: initiatingUserProfile };
         }
     } else {
         log("Target Profile not found:");
