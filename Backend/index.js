@@ -14,6 +14,9 @@ export default async function handler({ req, res, log }) {
         if (evtType.includes(conf.userProfilesCollectionID) && evtType.includes("update")) {
             // Parse the updated attribute from the request body
             const stagedActionJson = req.body.stagedAction ? req.body.stagedAction : null;
+            const version = req.body.version ? req.body.version : null; // Version of the document
+            log("Version:", version);
+
             if (!stagedActionJson) {
                 log("This is not the event to perform operations");
                 return res.empty();
@@ -32,7 +35,9 @@ export default async function handler({ req, res, log }) {
                     targetUserId: stagedAction.value,
                     userId: req.body.userId,
                     type: stagedAction.type,
-                    log: log
+                    log: log,
+                    currentUserProfile: req.body,
+                    version
                 });
 
                 log("Update Followers Response:", updationRes);

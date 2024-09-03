@@ -90,18 +90,14 @@ export class DatabaseService {
            return error
        }
     }
-     async updateFollowing(userProfileId,following,targetUserId,type){
+     async follow_unfollowUser(userProfileId,targetUserId,type){
        try {
         const updatedProfile =  await this.database.updateDocument(
              conf.dbId,
              conf.userProfilesCollectionID,
              userProfileId,
              {
-              following:[...following],
-              stagedAction:JSON.stringify({
-                type:type,
-                value:targetUserId
-              })
+              stagedAction : type=="following" ? action.follow(targetUserId) : action.unfollow(targetUserId)
             }
          )
          if(updatedProfile.$id){
@@ -346,6 +342,25 @@ export class DatabaseService {
     ///will have to create a function to update documents 
 }
 
+class Action {
+    stagedAction;
+    constructor() {
+    }
+    follow(userId) {
+        return this.stagedAction = JSON.stringify({
+            type: "following",
+            value: userId
+        });
+    }
+    unfollow(userId) {
+        return this.stagedAction = JSON.stringify({
+            type: "unfollowing",
+            value: userId
+        });
+    }
+}
+
+
 function createdAt() {
     const crrDate = new Date();
     let formattedDate = crrDate.toDateString();
@@ -366,6 +381,7 @@ function createdAt() {
 }
 
 const dbServices = new DatabaseService();
+export const action = new Action();
 export default dbServices;
 
 

@@ -32,8 +32,7 @@ function FollowSuggestionsCard({
     }
     setLoading(true);
     if (isFollowing === false) {
-      const updateFollowing = [...following, suggestedUser.userId]
-      const res = await dbServices.updateFollowing(userProfileId, updateFollowing,suggestedUser.userId,type="following");
+      const res = await dbServices.follow_unfollowUser(userProfileId,suggestedUser.userId,type="following");
       if (res.$id) {
         toast.custom(<FollowToast avatar={suggestedUser.userAvatar} following>{suggestedUser.userName}</FollowToast>)
         setIsFollowing(true);
@@ -44,11 +43,14 @@ function FollowSuggestionsCard({
       }
     }
     else if (isFollowing === true) {
-      const updateFollowing = following.filter((userId)=>userId!==suggestedUser.userId)
-      const res = await dbServices.updateFollowing(userProfileId, updateFollowing,suggestedUser.userId,type="unfollowing");
-      if (res.$id) setIsFollowing(false);
+      const res = await dbServices.follow_unfollowUser(userProfileId,suggestedUser.userId,type="unfollowing");
+      if (res.$id) {
+      setIsFollowing(false);
       setFollowing({type:"remove",val:suggestedUser.userId})
       toast.custom(<FollowToast avatar={suggestedUser.userAvatar}>{suggestedUser.userName}</FollowToast>)
+      }else {
+        toast.custom(<GenToast type='err'>Failed to unfollow user, Internal server error</GenToast>)
+      }
     }
     else{
       toast.custom(<GenToast type='err'>Internal server error</GenToast>)
