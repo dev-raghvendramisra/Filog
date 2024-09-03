@@ -26,6 +26,7 @@ export class DatabaseService {
         authorName,
         authorAvatar
     }) {
+        console.log(userId);
         const blogAttr = {
             title:title,
             content:content,
@@ -38,7 +39,8 @@ export class DatabaseService {
             status:status,
             tags:tags,
             authorName:authorName,
-            authorAvatar:authorAvatar
+            authorAvatar:authorAvatar,
+            // randomIndex:100000000
         }
         try {
             const res = await this.database.createDocument(
@@ -61,7 +63,7 @@ export class DatabaseService {
                 }
                 return res;
             } else{
-                throw { err: "dbService error :: failed to create document", res: res };}
+                throw { err: "dbService error :: failed to create blog", res: res };}
         } catch (error) {
             console.log("dbService error :: failed to create document", error);
             return error
@@ -121,7 +123,7 @@ export class DatabaseService {
                conf.blogCollectionID,
                blogId
             )
-            if(res.documentID){
+            if(res.$id){
                 return res;
             }
             else{
@@ -257,7 +259,7 @@ export class DatabaseService {
                 return res;
             }
             else{
-                throw {err:"dbService error :: failed to create document",res:res}
+                throw {err:"dbService error :: failed to create blogsLiked document",res:res}
             }
         } catch (error) {
             console.log(error);
@@ -285,9 +287,9 @@ export class DatabaseService {
             ])
             if(res.$id){
                 return res;
-            } else throw {err:"dbService error :: failed to create document", res:res}
+            } else throw {err:"dbService error :: failed to comment", res:res}
           }
-          throw {err:"dbService error :: failed to create document", res:res}
+          throw {err:"dbService error :: failed to update profile document", res:res}
        } catch (error) {
            console.log(error)
            return error
@@ -367,3 +369,4 @@ const dbServices = new DatabaseService();
 export default dbServices;
 
 
+//implement cloudfunctions to reflect the changes on profile of liking blog, commenting on them , unliking them or deleting comment
