@@ -51,7 +51,7 @@ export default async function updateFollowers({ targetUserId, userId, type, log,
                     profileId: initiatingUserProfile.$id,
                     stagedAction: null,
                     updatedFollowing,
-                    version: version,
+                    version: version+1,
                     log
                 });
 
