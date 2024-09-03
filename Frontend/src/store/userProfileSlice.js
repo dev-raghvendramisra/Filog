@@ -26,8 +26,8 @@ const userProfileSlice = createSlice({
             }
         },
 
-        updateFollowing:(state,{payload})=>{
-            state.following=payload;
+        updateFollowing:(state,{payload:{type,val}})=>{
+             type==="add"?state.following.push(val):state.following=state.following.filter(id=>id!==val)
         }
 
     }
