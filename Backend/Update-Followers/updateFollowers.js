@@ -2,7 +2,7 @@ import dbServices from "../Services/dbService.js";
 
 export default async function updateFollowers({ targetUserId, userId, type, log, currentUserProfile, version }) {
     log("Fetching target user profile...");
-    const targetUserProfile = await dbServices.getUserProfile(targetUserId);
+    const targetUserProfile = await dbServices.getUserProfile(targetUserId,log);
 
 
     // Proceed if the target user's profile exists
@@ -50,7 +50,7 @@ export default async function updateFollowers({ targetUserId, userId, type, log,
             });
             
             if (updateStagedActionRes.$id) {
-                log("Marked stagedAction as null and updated initiating user profile successfully:", updateStagedActionRes);
+                log("Marked stagedAction as null and updated initiating user profile following list successfully:", updateStagedActionRes);
                 log("Updating target user profile with new followers list...");
 
                 const updateRes = await dbServices.updateProfileDocument({
@@ -76,7 +76,22 @@ export default async function updateFollowers({ targetUserId, userId, type, log,
             return { ok: false, res: initiatingUserProfile };
         }
     } else {
-        log("Target Profile not found:");
+        log("Target Profile not found:", targetUserProfile);
+        log("Fetching initiating user profile to reset stagedAction...");
+        const res = await dbServices.getUserProfile(userId, log);
+        if(res.$id){
+           log("Initiating user profile found successfully:",res);
+           log("Reseting stagedAction of initiating user profile...");
+           const currentUserInitialProfile = await dbServices.updateProfileDocument({profileId:res.$id,log,stagedAction:null})
+           if(currentUserInitialProfile.$id){
+               log("Initiating user profile staged action marked as null successfully:",currentUserInitailProfile)
+               return { ok: false, res: targetUserId };
+           }else{
+            log("Failed to reset stagedAction of initiating user profile")
+            return { ok: false, res: targetUserId };
+           }
+        }
+        else log("Failed to fetch initiating user profile")
         return { ok: false, res: targetUserId };
     }
 }
