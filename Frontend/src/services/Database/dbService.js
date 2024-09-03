@@ -46,7 +46,8 @@ export class DatabaseService {
                 conf.blogCollectionID,
                 ID.unique(),
                 blogAttr,
-                [Permission.read(Role.any()),
+                [
+                 Permission.read(Role.any()),
                  Permission.update(Role.user(userId)),
                  Permission.delete(Role.user(userId))
                 ]  //permission array
@@ -54,9 +55,12 @@ export class DatabaseService {
             
 
             if (res.$databaseId) {
+                const likesDoc = await this.createBlogLikesDocument(res.$id,userId)
+                if(likesDoc.$id){
+                    return res;
+                }
                 return res;
             } else{
-                
                 throw { err: "dbService error :: failed to create document", res: res };}
         } catch (error) {
             console.log("dbService error :: failed to create document", error);
@@ -232,6 +236,105 @@ export class DatabaseService {
             return error
         }
     }
+     
+    async createBlogLikesDocument(docId,userId){
+        try {
+            const res = await this.database.createDocument(
+                conf.dbId,
+                conf.blogLikesCollectionID,
+                docId,
+                {
+                    likes:0,
+                    blogId:docId
+                },
+                [
+                    Permission.read(Role.any()),
+                    Permission.update(Role.any()),
+                    Permission.delete(Role.user(userId))
+                ]
+            )
+            if(res.$id){
+                return res;
+            }
+            else{
+                throw {err:"dbService error :: failed to create document",res:res}
+            }
+        } catch (error) {
+            console.log(error);
+            return error
+        }
+    }
+
+    async commentOnBlog(blogId,userId,comment,blogsCommentedOn,isFirstComment,authorId){
+       try {
+          const res = isFirstComment ? await this.database.updateDocument(conf.dbId,conf.userProfilesCollectionID,profileId,{
+            blogsCommentedOn
+          }) : {$id:"#"}
+
+          if(res.$id){
+            const res = await this.database.createDocument(conf.dbId,conf.blogCommentsCollectionID,blogId,{
+                blogId,
+                userId,
+                comment
+            },
+            [
+                Permission.read(Role.any()),
+                Permission.update(Role.user(userId)),
+                Permission.delete(Role.user(userId)),
+                Permission.delete(Role.user(authorId))
+            ])
+            if(res.$id){
+                return res;
+            } else throw {err:"dbService error :: failed to create document", res:res}
+          }
+          throw {err:"dbService error :: failed to create document", res:res}
+       } catch (error) {
+           console.log(error)
+           return error
+       }
+    }
+
+    async deleteComment(commentId,blogsCommentedOn,profileId){
+        try {
+            const res = await this.database.deleteDocument(conf.dbId,conf.blogCommentsCollectionID,commentId)
+            if(res.$id){
+                if(blogsCommentedOn && profileId){
+                    const res = await this.database.updateDocument(conf.dbId,conf.userProfilesCollectionID,profileId,{
+                        blogsCommentedOn
+                    })
+                    if(res.$id){
+                        return res
+                    }
+                    else throw {err:"dbService error :: failed to update profile document",res:res}
+
+                }
+                return res
+            }
+             else throw {err:"dbService error :: failed to delete comment document",res:res}
+        } catch (error) {
+            
+        }
+    }  
+    
+    async like_unlikeBlog(blogId,profileId,newLikes,blogsLiked){
+      try {
+        const res = await this.database.updateDocument(conf.dbId,conf.userProfilesCollectionID,profileId,{blogsLiked})
+        if(res.$id){
+            const res = await this.database.updateDocument(conf.dbId,conf.blogLikesCollectionID,blogId,{
+                likes:newLikes
+            })
+            if(res.$id){
+                return res
+            }
+            else throw {err:"dbService error failed to update likes",res}
+        }
+        else throw {err:"dbService error failed to update profile document",res}
+      } catch (error) {
+        console.log(error)
+        return error
+      }
+    }
+    
 
     generateImgUrl(fileId){
        let url = `${conf.appWriteUrl}/storage/buckets/${conf.bucketId}/files/${fileId}/view?project=${conf.projectId}`

@@ -40,7 +40,7 @@ function FollowSuggestionsCard({
         setFollowing(updateFollowing)
       }
       else{
-        toast.custom(<GenToast type='err'>Internal server error</GenToast>)
+        toast.custom(<GenToast type='err'>Failed to follow user, Internal server error</GenToast>)
       }
     }
     else if (isFollowing === true) {
