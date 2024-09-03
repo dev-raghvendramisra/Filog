@@ -41,6 +41,7 @@ export default async function updateFollowers({ targetUserId, userId, type, log,
                 updatedFollowing = [...initiatingUserProfile.following, targetUserId];
                 log("Recreated Following array:", updatedFollowing);
             }
+            log("Updating initiating user profile with stagedAction as null and  new following list...");
             const updateStagedActionRes = await dbServices.updateProfileDocument({
                 profileId: initiatingUserProfile.$id,
                 stagedAction: null,
