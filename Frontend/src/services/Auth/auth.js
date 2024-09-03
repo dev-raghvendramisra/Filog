@@ -20,7 +20,11 @@ export class Auth{
             if(createdAccount){
                 const res = await this.login(email,password);
                 if(res.code!=401 || res.code!==429){
-                       const dbRes = await dbServices.createProfileDocument({userName:name,userAvatar:prefs.avatarUrl,userId:id},id)
+                       const dbRes = await dbServices.createProfileDocument({userName:name,
+                        userAvatar:prefs.avatarUrl,
+                        userId:id,
+                        version:1
+                        },id)
                        return dbRes
                     }
                 return res;
