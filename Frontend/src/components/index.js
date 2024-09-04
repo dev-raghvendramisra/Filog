@@ -26,6 +26,9 @@ import AlertModal from "./Modal/AlertModal";
 import FormModal from "./Modal/FormModal";
 import ModalContainer from "./Modal-Container/ModalContainer";
 import WorkInProgress from "./Error-message/WorkInProgress";
+import CommentIcon from "./Icons/CommentIcon";
+import AnimatedHeartIcon from "./Icons/AnimatedHeartIcon";
+import ShareIcon from "./Icons/ShareIcon";
 
 
 export {
@@ -56,7 +59,10 @@ export {
   AlertModal,
   FormModal,
   ModalContainer,
-  WorkInProgress
+  WorkInProgress,
+  AnimatedHeartIcon,
+  CommentIcon,
+  ShareIcon
 
 };
 export * from "../pages"

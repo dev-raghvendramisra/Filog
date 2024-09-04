@@ -1,6 +1,7 @@
 import React from 'react'
 import { authServices, dbServices } from '../services'
 import { useSelector } from 'react-redux'
+import { CommentIcon, AnimatedHeartIcon, ShareIcon } from '../components'
 function Playground() {
  const {userName,userId, userAvatar,$id} = useSelector(state=>state.userProfile)
 
@@ -16,6 +17,9 @@ function Playground() {
         <button onClick={()=>{
         authServices.logout()
      }}>Logout</button>
+     <AnimatedHeartIcon />
+     <CommentIcon />
+     <ShareIcon />
     </div>
   )
 }

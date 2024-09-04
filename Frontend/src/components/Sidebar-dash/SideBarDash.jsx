@@ -27,13 +27,13 @@ function SideBarDash({ contRef }) {
   // Redux state and dispatch
   const userProfile = useSelector(state => state.userProfile);
   const suggestedUsers = useSelector(state => state.users);
-  const {userData} = useSelector(state=>state.auth);
+  const {userData} = useSelector(state => state.auth);
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
   // Custom hooks
   const setOpenAlert = useEmailAlertModal()
-  const [sideBarLoading, paginationLoad, isFetching, errInFetching] = useFetchUsers({initLoading,offset,limit,query,container:suggestionCont.current})
+  const [sideBarLoading, paginationLoad, isFetching, errInFetching] = useFetchUsers({type:"user",initLoading,offset,limit,query,container:suggestionCont.current})
   const handlePagination = usePagination({paginationLoad,containerLoading:sideBarLoading, isFetching,container:suggestionCont.current,limit,setLimit,setOffset})
 
 
