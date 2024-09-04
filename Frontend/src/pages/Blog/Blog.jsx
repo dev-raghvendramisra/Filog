@@ -1,7 +1,7 @@
 import React from 'react'
 import { WorkInProgress } from '../../components'
 
-function Post() {
+function Blog() {
   return (
     <div>
       <WorkInProgress />
@@ -9,4 +9,4 @@ function Post() {
   )
 }
 
-export default Post
+export default Blog

@@ -9,7 +9,7 @@ import Home from "./Home/Home";
 import Write from "./Write/Write";
 import About from "./About/About";
 import SearchResult from "./Search-Result/SearchResult";
-import Post from "./Post/Post";
+import Blog from "./Blog/Blog";
 import FeaturedPosts from "./Featured/FeaturedPosts";
 import FollowingPosts from "./Followed/FollowingPosts";
 import EmailVerification from "./Email-Verification/EmailVerification";
@@ -25,7 +25,7 @@ export {
     Write,
     About,
     SearchResult,
-    Post,
+    Blog,
     FeaturedPosts,
     FollowingPosts,
     UserProfile,

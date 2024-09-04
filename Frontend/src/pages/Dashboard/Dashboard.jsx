@@ -16,7 +16,7 @@ function Dashboard() {
   return (
     <div ref={container} className=" relative h-100vh overflow-y-scroll justify-center flex pt-10vh" id="main-dashboard-cont">
    
-     <div id="dashboard-post-section" className='w-50p py-1vw'>
+     <div id="dashboard-post-section" className='w-54p py-1vw'>
       <div id="tag-container"
        className="h-fit flex text-1vw text-darkPrimary_grays dark:text-white dark:text-opacity-70 text-opacity-80 flex-start gap-3"
         >

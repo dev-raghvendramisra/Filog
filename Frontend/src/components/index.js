@@ -14,9 +14,8 @@ import InfinitePogressbar from './Loader/Infinite-progressbar'
 import SearchSuggestions from "./Search-suggestions/SearchSuggestions";
 import HomeUpper from "./Home-upper-section/HomeUpper";
 import HomeHero from "./Home-hero-section/HomeHero";
-import PostCard from "./Post-card/PostCard";
+import BlogCard from "./Blog-Card/BlogCard";
 import ErrorPlaceHolderImage from './Error-message/ErrorPlaceHolderImage'
-import PostCont from "./Post-cont/PostCont";
 import SideBarDash from "./Sidebar-dash/SideBarDash";
 import FollowSuggestionsCard from "./Follow-suggestion/FollowSuggestionsCard";
 import ProfileNavlink from "./Profile-navlink/ProfileNavlink";
@@ -29,7 +28,8 @@ import WorkInProgress from "./Error-message/WorkInProgress";
 import CommentIcon from "./Icons/CommentIcon";
 import AnimatedHeartIcon from "./Icons/AnimatedHeartIcon";
 import ShareIcon from "./Icons/ShareIcon";
-
+import BlogInteraction from "./Blog-Interactions/BlogInteraction";
+import PostCont from "./Post-Cont/PostCont";
 
 export {
   Navbar,
@@ -48,9 +48,8 @@ export {
   SearchSuggestions,
   HomeUpper,
   HomeHero,
-  PostCard,
+  BlogCard,
   ErrorPlaceHolderImage,
-  PostCont,
   SideBarDash,
   FollowSuggestionsCard,
   ProfileNavlink,
@@ -62,7 +61,8 @@ export {
   WorkInProgress,
   AnimatedHeartIcon,
   CommentIcon,
-  ShareIcon
-
+  ShareIcon,
+  BlogInteraction,
+  PostCont
 };
 export * from "../pages"

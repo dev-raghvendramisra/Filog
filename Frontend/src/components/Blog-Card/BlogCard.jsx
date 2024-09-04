@@ -3,7 +3,7 @@ import { ID } from 'appwrite';
 import ProfilePic from '../ProfilePic/ProfilePic';
 
 
-function PostCard({ 
+function BlogCard({ 
   loader=false,
   coverImage, 
   tags = [], 
@@ -11,11 +11,12 @@ function PostCard({
   author, 
   authorImg, 
   createdAt,
-  classNamePostCardCont="",
-  classNamepostCardImgCont="",
-  classNamePostCardTagCont="",
-  classNamePostCardHeadingCont="",
-  classNamePostCardAuthorDateCont="",
+  type="horizontal",
+  classNameBlogCardCont="",
+  classNameBlogCardImgCont="",
+  classNameBlogCardTagCont="",
+  classNameBlogCardHeadingCont="",
+  classNameBlogCardAuthorDateCont="",
   onClick=()=>{} }) {
     
   const headingRef = useRef();
@@ -24,6 +25,8 @@ function PostCard({
   const [truncatedTitle, setTruncatedTitle] = useState(title);
   const [truncatedAuthor, setTruncatedAuthor] = useState(author);
   const [rerender, forceRerender]  = React.useState(false);
+  const uniqueId = ID.unique();
+ 
   
   
 
@@ -59,33 +62,35 @@ function PostCard({
   }
 
   return (
-    <div id={`postCard-${ID.unique()}`} 
+    <div id={`BlogCard-${uniqueId}`} 
     onClick={onClick}
-    className={`flex  bg-transparent border-2 dark:bg-darkPrimary_grays dark:border-footer_text_light dark:border-opacity-50 p-1vw rounded-3xl cursor-pointer ${loader?"dark:bg-opacity-50 ":""}
-    ${classNamePostCardCont}`}>
+    className={`flex relative bg-transparent border-2 dark:bg-darkPrimary_grays dark:border-footer_text_light dark:border-opacity-50 p-1vw rounded-3xl cursor-pointer ${type=="horizontal" || "flex-col gap-4"} ${loader?"dark:bg-opacity-50 ":""}
+    ${classNameBlogCardCont}`}>
 
       {coverImage || loader ? (
-        <div id={`postCard-img-cont-${ID.unique()}`} 
+        <div id={`BlogCard-img-cont-${uniqueId}`} 
         className={`w-19vw h-12vw rounded-xl overflow-hidden relative
         ${loader?"bg-slate-200  dark:bg-darkPrimary postCardLoader rounded-xl":""}
-        ${classNamepostCardImgCont}`}>
+        ${classNameBlogCardImgCont}`}>
 
-         { !loader?
-         <>
+         {!loader
+         ? <>
           <img ref={fallbackImgRef} id="fallback-img" className='absolute h-100p w-100p object-cover bg-white dark:bg-darkPrimary_grays' src="/fallback img/thumbnailFallback.webp" />
           <img 
           onLoad={()=>{fallbackImgRef.current.classList.add("hidden")}}
-          className='h-100p w-100p object-cover' src={coverImage} /></>:null }   
+          className='h-100p w-100p object-cover' src={coverImage} />
+          </>
+          :null }   
 
         </div>
       ) : null}
-      <div id="postCard-content-wrapper">
+      <div id="BlogCard-content-wrapper">
 
       
-      <div id={`postCard-tag-cont-${ID.unique()}`} 
+      <div id={`BlogCard-tag-cont-${uniqueId}`} 
       className={`w-19vw h-2vw  overflow-scroll hideScrollbar text-0.9vw flex items-center justify-start gap-3 
       ${loader?"bg-slate-200 postCardLoader dark:bg-darkPrimary rounded-xl":""}
-      ${classNamePostCardTagCont}`} >
+      ${classNameBlogCardTagCont}`} >
         
         {!loader?tags.map((tag,idx) => (
           idx<=2?<div  className={`dark:${getClass(tag,true)} ${getClass(tag)} text-white px-0.5vw py-0.2vw rounded-md`} key={ID.unique()}>
@@ -94,21 +99,21 @@ function PostCard({
         )):null}
       </div>
 
-      <div  id={`postCard-heading-cont-${ID.unique()}`} 
+      <div  id={`BlogCard-heading-cont-${uniqueId}`} 
         className={`w-19vw h-6vw overflow-hidden text-1.3vw mt-0.8vw 
         ${loader?"bg-slate-200 postCardLoader dark:bg-darkPrimary rounded-xl":""} 
-        ${classNamePostCardHeadingCont}`} ref={headingRef}>
+        ${classNameBlogCardHeadingCont}`} ref={headingRef}>
 
-       { !loader? <p className='font-semibold' id={`postCard-heading-${ID.unique()}`}>{truncatedTitle}</p>:null}
+       { !loader? <p className='font-semibold' id={`BlogCard-heading-${uniqueId}`}>{truncatedTitle}</p>:null}
 
       </div>
 
       {
         author || loader?
-      <div id={`postCard-author-date-cont-${ID.unique()}`} 
+      <div id={`BlogCard-author-date-cont-${uniqueId}`} 
       className={`w-19vw   text-footer_text_light dark:text-footer_text flex-shrink-0 flex items-center justify-between gap-1 text-1vw overflow-hidden 
         ${loader?"bg-slate-200 postCardLoader dark:bg-darkPrimary rounded-xl h-2vw":"h-4vw"} 
-        ${classNamePostCardAuthorDateCont}`}
+        ${classNameBlogCardAuthorDateCont}`}
        >
         {!loader?<>
         <div className='flex items-center gap-2' ref={authorRef}>
@@ -118,7 +123,7 @@ function PostCard({
            {truncatedAuthor}
           </span>
           </div>
-          <div id={`postCard-date-cont ${ID.unique()}`}
+          <div id={`BlogCard-date-cont ${uniqueId}`}
            className='whitespace-nowrap'>   
             {trimTime(createdAt)}
         </div>
@@ -126,11 +131,11 @@ function PostCard({
 
       </div>:null
       }
-</div>
+     </div>
     </div>
   );
 }
 
-export default PostCard;
+export default BlogCard;
 
 

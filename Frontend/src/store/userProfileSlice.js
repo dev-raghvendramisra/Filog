@@ -9,6 +9,7 @@ const initialState = {
     followers:[],
     blogs:[],
     userAvatarId:"",
+    blogsLiked:[]
 }
 
 const userProfileSlice = createSlice({

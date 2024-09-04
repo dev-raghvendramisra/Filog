@@ -1,7 +1,6 @@
 import {   Navigate, Route, createBrowserRouter, createRoutesFromElements } from "react-router-dom";
 import App from "../App";
-import {Write,About, SearchResult, Dashboard, Login, SignUp, UserProfile,Profile, Home, Post, FeaturedPosts, FollowingPosts, UnknownRoute, EmailVerification}  from "../components";
-import Playground from "../pages/Playground";
+import {Write,About, SearchResult, Dashboard, Login, SignUp, UserProfile,Profile, Home, Blog, FeaturedPosts, FollowingPosts, UnknownRoute, EmailVerification}  from "../components";
 import PlaygroundProtection from "../pages/PlaygroundProtection";
 
 const router = createBrowserRouter(createRoutesFromElements(
@@ -18,7 +17,7 @@ const router = createBrowserRouter(createRoutesFromElements(
     <Route path="/login" element={<Login />}></Route>
     <Route path="/signup" element={<SignUp />}></Route>
     <Route path="/about" element={<About />}></Route>
-    <Route path="/post/:postID" element={<Post />}></Route>
+    <Route path="/post/:postID" element={<Blog />}></Route>
     <Route path="/search/:query" element={<SearchResult />}></Route>
     <Route path="/verify-email" element={<EmailVerification />}></Route>
     <Route path="/playground" element={<PlaygroundProtection />}></Route>{/* This is a test route */}

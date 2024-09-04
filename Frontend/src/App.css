@@ -272,6 +272,22 @@ box-shadow: 0px 38px 75px -1px rgba(0,0,0,0.07);
         @apply text-blue-600 text-opacity-100 dark:text-blue-200;
     }
 
+    .postReactionLoader{
+        position:relative;
+        overflow: hidden;
+        @apply bg-opacity-60 dark:bg-opacity-50;
+        @apply bg-gray-300 dark:bg-darkPrimary_grays_darker;
+    }
+    .postReactionLoader::before{
+        content: '';
+        position:absolute;
+        @apply bg-white dark:bg-darkPrimary_grays w-100p h-100p bg-opacity-100 dark:bg-opacity-100;
+        transform: rotate(125deg);
+        top:20%;
+        left:-90%;
+        animation: loader 0.8s ease 0s infinite forwards ;
+        @apply blur-md;
+    }
     .postCardLoader{
         position:relative;
         overflow: hidden;

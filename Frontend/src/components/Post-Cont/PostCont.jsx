@@ -1,7 +1,9 @@
 import React from 'react';
 import { ID } from 'appwrite';
-import { PostCard, ErrorPlaceHolderImage } from '../../components';
+import { BlogCard, ErrorPlaceHolderImage, BlogInteraction } from '..';
 import { NavLink } from 'react-router-dom';
+import { useSelector } from 'react-redux';
+import { useEmailAlertModal } from '../../hooks';
 
 function PostCont({
   type = "dashboard",
@@ -14,44 +16,53 @@ function PostCont({
   id = "main-dashboard-posts-cont",
 }) {
 
+  const {blogsLiked} = useSelector(state=>state.userProfile)
+  const {userData} = useSelector(state=>state.auth)
+  const openModal = useEmailAlertModal()
 
   return (
     <div id={id} className="h-fit w-fit py-1vw relative">
-      <div id="main-post-cont" className="flex-col flex gap-8">
+      <div id="main-post-cont" className="flex-col flex gap-4vw">
         {dashboardErr ? (
           <ErrorPlaceHolderImage customErrMsg={customErrMsg} type={dashboardErr} />
         ) : initLoading || postLoading ? (
           Array.from({ length: 8 }).map((_, i) => (
-            <PostCard
+            <BlogCard
               key={i}
-              classNamePostCardCont="flex-row w-fit gap-8"
-              classNamePostCardAuthorDateCont="mt-1vw"
+              classNameBlogCardCont="flex-row w-fit gap-8"
+              classNameBlogCardAuthorDateCont="mt-1vw"
               loader
             />
           ))
         ) : (
           posts.map((post) => (
-            <NavLink key={post.postID || ID.unique()} id={`postLink-${post.postID}`} to={`/post/${post.postID}`}>
-              <PostCard
-                classNamePostCardCont="flex-row w-fit gap-8"
-                classNamePostCardAuthorDateCont="h-fit mt-1vw"
+            <div className='relative' key={post.postID && ID.unique()}>
+            <NavLink id={`postLink-${post.postID}`} to={`/post/${post.postID}`}>
+              <BlogCard
+                classNameBlogCardCont="flex-row w-fit gap-8"
+                classNameBlogCardAuthorDateCont="h-fit mt-1vw"
                 title={post.title}
                 tags={post.tags}
                 coverImage={post.coverImageUrl}
                 author={post.authorName}
                 authorImg={post.authorAvatar}
                 createdAt={post.createdAt}
+                userData={userData}
+                blogsLiked={blogsLiked}
+                blogId={post.postID}
               />
             </NavLink>
+            <BlogInteraction userData={userData} blogId={post.postID} blogsLiked={blogsLiked} id={`postReaction-${post.postID}`} />
+            </div>
           ))
         )}
         
         {!initLoading && !postLoading && !dashboardErr && posts.length > 4 && (
           paginationLoad ? (
-            <PostCard
+            <BlogCard
               key={"paginationLoader"}
-              classNamePostCardCont="flex-row w-fit gap-8"
-              classNamePostCardAuthorDateCont="mt-1vw"
+              classNameBlogCardCont="flex-row w-fit gap-8"
+              classNameBlogCardAuthorDateCont="mt-1vw"
               loader
             />
           ) : (
