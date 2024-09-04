@@ -262,7 +262,7 @@ box-shadow: 0px 38px 75px -1px rgba(0,0,0,0.07);
         display: grid;
         grid-template-columns: repeat(3,auto);
         grid-auto-rows:auto;
-        row-gap: 4vw;
+        row-gap: 6vw;
         column-gap: 4vw;
     }
     
@@ -275,8 +275,8 @@ box-shadow: 0px 38px 75px -1px rgba(0,0,0,0.07);
     .postReactionLoader{
         position:relative;
         overflow: hidden;
-        @apply bg-opacity-60 dark:bg-opacity-50;
         @apply bg-gray-300 dark:bg-darkPrimary_grays_darker;
+        @apply bg-opacity-60 dark:bg-opacity-80;
     }
     .postReactionLoader::before{
         content: '';
