@@ -16,7 +16,7 @@ function PostCont({
   id = "main-dashboard-posts-cont",
 }) {
 
-  const {blogsLiked} = useSelector(state=>state.userProfile)
+  const userProfile = useSelector(state=>state.userProfile)
   const {userData} = useSelector(state=>state.auth)
   const openModal = useEmailAlertModal()
 
@@ -47,12 +47,9 @@ function PostCont({
                 author={post.authorName}
                 authorImg={post.authorAvatar}
                 createdAt={post.createdAt}
-                userData={userData}
-                blogsLiked={blogsLiked}
-                blogId={post.postID}
               />
             </NavLink>
-            <BlogInteraction userData={userData} blogId={post.postID} blogsLiked={blogsLiked} id={`postReaction-${post.postID}`} />
+            <BlogInteraction openModal={openModal} authorName={post.authorName} userData={userData} blogId={post.postID} userProfile={userProfile} id={`postReaction-${post.postID}`} />
             </div>
           ))
         )}

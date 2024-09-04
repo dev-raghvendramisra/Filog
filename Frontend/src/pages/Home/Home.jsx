@@ -13,7 +13,7 @@ import { useEmailAlertModal } from '../../hooks';
 function Home() {
   const posts = useSelector((state)=>state.blogs)
   const {isUserLoggedIn, userData} = useSelector((state)=>state.auth)
-  const {blogsLiked} = useSelector(state=>state.userProfile)
+  const userProfile = useSelector(state=>state.userProfile)
   const dispatch = useDispatch()
   const openModal = useEmailAlertModal()
 
@@ -49,7 +49,7 @@ function Home() {
           createdAt={post.createdAt}
           />
         </NavLink>
-        <BlogInteraction openModal={openModal} blogId={post.postID} userData={userData} blogsLiked={blogsLiked} /> 
+        <BlogInteraction openModal={openModal} authorName={post.authorName} blogId={post.postID} userData={userData} userProfile={userProfile} /> 
       </div> 
          ))
         }

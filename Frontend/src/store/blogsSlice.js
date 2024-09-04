@@ -12,7 +12,8 @@ const initialState =[
      subImageId:[],
      authorId:"",
      authorImg:"",
-     tags:[]
+     tags:[],
+     likes:null
     }
 ]
 
@@ -35,7 +36,8 @@ const blogsSlice = createSlice({
                   subImageUrl:blogData.subImageUrl,
                   coverImageId:blogData.coverImageId,
                   subImageId:blogData.subImageId,
-                  tags:blogData.tags
+                  tags:blogData.tags,
+                  likes:blogData.likes
               }
               state.push(newBlog)
           });
@@ -43,10 +45,18 @@ const blogsSlice = createSlice({
 
         clearBlogs:(state,action)=>{
             return []
+        },
+        likeBlog:(state,{payload})=>{
+            const blogIndex = state.findIndex(blog=>blog.postID === payload.blogId)
+            state[blogIndex].likes+1
+        },
+        unlikeBlog:(state,{payload})=>{
+            const blogIndex = state.findIndex(blog=>blog.postID === payload.blogId)
+            state[blogIndex].likes-1
         }
     }
 })
 
 
 export default blogsSlice.reducer
-export const{clearBlogs,setBlogs} = blogsSlice.actions
+export const{clearBlogs,setBlogs,likeBlog,unlikeBlog} = blogsSlice.actions

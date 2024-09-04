@@ -40,6 +40,7 @@ export class DatabaseService {
             tags:tags,
             authorName:authorName,
             authorAvatar:authorAvatar,
+            likes:0
             // randomIndex:100000000
         }
         try {
@@ -55,7 +56,7 @@ export class DatabaseService {
                 ]  //permission array
             );
             
-
+            //will remove the below code because we will be using cloud functions to like and comment on blogs
             if (res.$databaseId) {
                 const likesDoc = await this.createBlogLikesDocument(res.$id,userId)
                 if(likesDoc.$id){
@@ -314,17 +315,13 @@ export class DatabaseService {
         }
     }  
     
-    async like_unlikeBlog(blogId,profileId,newLikes,blogsLiked){
+    async like_unlikeBlog(blogId,profileId,type){
       try {
-        const res = await this.database.updateDocument(conf.dbId,conf.userProfilesCollectionID,profileId,{blogsLiked})
+        const res = await this.database.updateDocument(conf.dbId,conf.userProfilesCollectionID,profileId,{
+            stagedAction:type="like" ? action.like(blogId) :  action.unlike(blogId)
+        })
         if(res.$id){
-            const res = await this.database.updateDocument(conf.dbId,conf.blogLikesCollectionID,blogId,{
-                likes:newLikes
-            })
-            if(res.$id){
-                return res
-            }
-            else throw {err:"dbService error failed to update likes",res}
+            return res
         }
         else throw {err:"dbService error failed to update profile document",res}
       } catch (error) {
@@ -357,6 +354,18 @@ class Action {
             type: "unfollowing",
             value: userId
         });
+    }
+    like(blogId){
+       return this.stagedAction = JSON.stringify({
+              type:"like",
+              value:blogId
+       })
+    }
+    unlike(blogId){
+        return this.stagedAction = JSON.stringify({
+            type:"unlike",
+            value:blogId
+        })
     }
 }
 

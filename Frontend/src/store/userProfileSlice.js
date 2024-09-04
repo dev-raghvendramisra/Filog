@@ -29,10 +29,13 @@ const userProfileSlice = createSlice({
 
         updateFollowing:(state,{payload:{type,val}})=>{
              type==="add"?state.following.push(val):state.following=state.following.filter(id=>id!==val)
+        },
+        updateLikes:(state,{payload:{type,val}})=>{
+            type==="add"?state.blogsLiked.push(val):state.blogsLiked=state.blogsLiked.filter(id=>id!==val)
         }
 
     }
 })
 
 export default userProfileSlice.reducer
-export const{clearProfile, setProfile, updateFollowing} = userProfileSlice.actions
+export const{clearProfile, setProfile, updateFollowing, updateLikes} = userProfileSlice.actions
