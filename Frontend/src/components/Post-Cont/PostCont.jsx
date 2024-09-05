@@ -3,7 +3,9 @@ import { ID } from 'appwrite';
 import { BlogCard, BlogInteraction, ErrorPlaceHolderImage } from '../../components';
 import { NavLink } from 'react-router-dom';
 import { useEmailAlertModal } from '../../hooks';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import { updateLikes } from '../../store/userProfileSlice';
+import { likeBlog, unlikeBlog } from '../../store/blogsSlice';
 
 function PostCont({
   type = "dashboard",
@@ -20,6 +22,7 @@ function PostCont({
   const {userData} = useSelector((state) => state.auth)
   const userProfileId = useSelector((state) => state.userProfile.$id, (prev, next) => prev === next)
   const openModal = useEmailAlertModal()
+  const dispatch = useDispatch()
 
   console.log("blog cont rerendered");
   
@@ -58,7 +61,11 @@ function PostCont({
             userProfileId={userProfileId} 
             blogId={post.postID} 
             openModal={openModal} 
-            authorName={post.authorName}  />
+            authorName={post.authorName}
+            updateLikes={(type,blogId)=>{
+              dispatch(updateLikes({type,blogId}))
+              dispatch(type==="like"?likeBlog(blogId):unlikeBlog(blogId))
+            }}  />
            </div>
           ))
         )}

@@ -3,10 +3,9 @@ import {AnimatedHeartIcon, CommentIcon, GenToast, ShareIcon} from '..'
 import { dbServices } from '../../services'
 import toast from 'react-hot-toast'
 import { useDispatch } from 'react-redux'
-import { updateLikes } from '../../store/userProfileSlice'
 import { likeBlog, unlikeBlog } from '../../store/blogsSlice'
 
-function BlogInteraction({userProfileId,authorName,blogId,userData,openModal,likes=0, comments=0, height=1.7, width=1.7,loader=false}) {
+function BlogInteraction({userProfileId,authorName,blogId,userData,openModal,likes=0, comments=0, height=1.7, width=1.7,loader=false,updateLikes}) {
     const [isLiked, setIsLiked] = React.useState(false)
     const [loading, setLoading] = React.useState(false)
     const [disabled, setDisabled] = React.useState(false)
@@ -27,8 +26,7 @@ function BlogInteraction({userProfileId,authorName,blogId,userData,openModal,lik
            //handel unlike
            const res = await dbServices.like_unlikeBlog(blogId,userProfileId,"unlike")
            setIsLiked(false)
-           dispatch(updateLikes({type:"unlike",val:blogId}))
-           dispatch(unlikeBlog(blogId))
+           updateLikes("unlike",blogId)
            if(res.$id){
                toast.custom(<GenToast type='success'>Unliked {authorName}'s blog</GenToast>)
            }
@@ -40,8 +38,7 @@ function BlogInteraction({userProfileId,authorName,blogId,userData,openModal,lik
             //handle like
             const res = await dbServices.like_unlikeBlog(blogId,userProfileId,"like")
             setIsLiked(true)
-            dispatch(updateLikes({type:"like",val:blogId}))
-            dispatch(likeBlog(blogId))
+            updateLikes("like",blogId)
             if(res.$id){
                 toast.custom(<GenToast type='success'>Liked {authorName}'s blog</GenToast>)
             }
