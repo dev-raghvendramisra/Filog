@@ -46,7 +46,7 @@ export default async function handler({ req, res, log }) {
 
                     log("Update Likes Response:", updationRes);
                     if (updationRes.ok) {
-                        log(`${req.body.userName} (${req.body.userId}) ${stagedAction.type}ed ${stagedAction.value}`);
+                        log(`${req.body.userName} (${req.body.userId}) ${stagedAction.type}d ${stagedAction.value}`);
                     } else {
                         log("Failed to update likes");
                     }

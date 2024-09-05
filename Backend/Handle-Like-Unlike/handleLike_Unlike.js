@@ -1,5 +1,5 @@
 import dbServices from "../Services/dbService.js";
-import { abortDuplicateAction,handleBlogNotFound } from "../utils/index.js";
+import { abortDuplicateAction, handleBlogNotFound } from "../utils/index.js";
 
 export default async function handleLike_Unlike({ blogId, userId, type, log, currentUserProfileVersion, currentUserProfile }) {
     log("Fetching target blog...");
@@ -7,7 +7,7 @@ export default async function handleLike_Unlike({ blogId, userId, type, log, cur
     if (!targetBlog.$id) {
         return handleBlogNotFound(blogId, userId, log);
     }
-    let targetBlogVersion = targetBlog.version == null || targetBlog.version==0 ? 1 : targetBlog.version;
+    let targetBlogVersion = targetBlog.version == null || targetBlog.version == 0 ? 1 : targetBlog.version;
 
     log("Target Blog found successfully:", targetBlog);
 
@@ -57,7 +57,7 @@ export default async function handleLike_Unlike({ blogId, userId, type, log, cur
     const updateStagedActionRes = await dbServices.updateProfileDocument({
         profileId: initiatingUserProfile.$id,
         stagedAction: null,
-        blogsLiked:updatedLikeArray,
+        blogsLiked: updatedLikeArray,
         version: initiatingUserProfile.version + 1,
         log
     });
@@ -65,45 +65,42 @@ export default async function handleLike_Unlike({ blogId, userId, type, log, cur
     if (!updateStagedActionRes.$id) {
         log("Failed to update initiating user profile");
         return { ok: false, res: updateStagedActionRes };
-    } 
+    }
     log("Marked staged Action as null and initiating user profile likes list updated successfully:", updateStagedActionRes);
     log("Fetching target blog again to check version...");
+    targetBlog = await dbServices.getBlog(blogId, log);
+    if (!targetBlog.$id) {
+        log("Target blog not found");
+        return { ok: false, res: targetBlog };
+    }
+    log("Target Blog found successfully:", targetBlog);
 
-        // Fetch target blog again to check version
-        log("Fetching target blog again to check version...");
-        targetBlog = await dbServices.getBlog(blogId, log);
-        if (!targetBlog.$id) {
-            log("Target blog not found");
-            return { ok: false, res: targetBlog };
-        }
-        log("Target Blog found successfully:", targetBlog);
-        
-        if(targetBlog.version !== targetBlogVersion){
-            log("Blog version mismatch - aborting current operation...");
-            log("Previous Blog version:", targetBlogVersion);
-            log("Current Blog version:", targetBlog.version);
+    if (targetBlog.version !== targetBlogVersion) {
+        log("Blog version mismatch - aborting current operation...");
+        log("Previous Blog version:", targetBlogVersion);
+        log("Current Blog version:", targetBlog.version);
 
-          if(JSON.stringify(targetBlog.likeCount) === JSON.stringify(updatedLikeArray)){
+        if (JSON.stringify(targetBlog.likeCount) === JSON.stringify(updatedLikeArray)) {
             log("Duplicate stagedAction detected, aborting current operation...");
             return await abortDuplicateAction(targetBlog, log);
-          }
-          updatedLikeCount = targetBlog.likeCount+1;
-          log("Recreated like count :", updatedLikeCount);
+        }
+        updatedLikeCount = targetBlog.likeCount + 1;
+        log("Recreated like count :", updatedLikeCount);
 
-        }
-        const updateBlogRes = await dbServices.updateBlogDocument({
-            blogId: targetBlog.$id,
-            likes: updatedLikeArray,
-            version: targetBlog.version + 1,
-            updatedLikeCount: updatedLikeCount,
-            log
-        });
-        if (updateBlogRes.$id) {
-            log("Target blog likes count updated successfully:", updateBlogRes);
-            return { ok: true, res: updateBlogRes };
-        }
-        else{
-            log("Failed to update target blog likes count");
-            return { ok: false, res: updateBlogRes };
-        }
+    }
+    const updateBlogRes = await dbServices.updateBlogDocument({
+        blogId: targetBlog.$id,
+        likes: updatedLikeArray,
+        version: targetBlog.version + 1,
+        updatedLikeCount: updatedLikeCount,
+        log
+    });
+    if (updateBlogRes.$id) {
+        log("Target blog likes count updated successfully:", updateBlogRes);
+        return { ok: true, res: updateBlogRes };
+    }
+    else {
+        log("Failed to update target blog likes count");
+        return { ok: false, res: updateBlogRes };
+    }
 }

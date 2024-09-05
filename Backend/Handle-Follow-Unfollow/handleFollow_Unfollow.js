@@ -1,7 +1,7 @@
 import dbServices from "../Services/dbService.js";
 import { abortDuplicateAction, handleProfileNotFound } from "../utils/index.js";
 
-export default async function handleFollow_Unfollow({ targetUserId, userId, type, log, currentUserProfile,currentUserProfileVersion }) {
+export default async function handleFollow_Unfollow({ targetUserId, userId, type, log, currentUserProfile, currentUserProfileVersion }) {
     log("Fetching target user profile...");
     let targetUserProfile = await dbServices.getUserProfile(targetUserId, log);
 
@@ -85,7 +85,7 @@ export default async function handleFollow_Unfollow({ targetUserId, userId, type
         }
         updatedFollowers = [...targetUserProfile.followers, ...updatedFollowers];
         log("Recreated Followers array:", updatedFollowers);
-        
+
     }
     // Update the target user profile
     const updateRes = await dbServices.updateProfileDocument({
