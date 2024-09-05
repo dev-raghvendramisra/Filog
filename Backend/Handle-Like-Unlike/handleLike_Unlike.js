@@ -43,12 +43,12 @@ export default async function handleLike_Unlike({ blogId, userId, type, log, cur
         log("Previous version:", currentUserProfileVersion);
         log("Current version:", initiatingUserProfile.version);
 
-        if (JSON.stringify(initiatingUserProfile.likes) === JSON.stringify(updatedLikeArray)) {
+        if (JSON.stringify(initiatingUserProfile.blogsLiked) === JSON.stringify(updatedLikeArray)) {
             log("Duplicate stagedAction detected, aborting current operation...");
             return await abortDuplicateAction(initiatingUserProfile, log);
         }
 
-        updatedLikeArray = [...initiatingUserProfile.likes, ...updatedLikeArray];
+        updatedLikeArray = [...initiatingUserProfile.blogsLiked, ...updatedLikeArray];
         log("Recreated Likes array:", updatedLikeArray);
     }
 
