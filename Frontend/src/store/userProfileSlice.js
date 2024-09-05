@@ -5,11 +5,11 @@ const initialState = {
     userId:"",
     userName:"",
     userAvatar:"",
-    following:[],
+    following:null,
     followers:[],
     blogs:[],
     userAvatarId:"",
-    blogsLiked:[]
+    blogsLiked:null
 }
 
 const userProfileSlice = createSlice({

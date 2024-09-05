@@ -47,9 +47,12 @@ function PostCont({
                 author={post.authorName}
                 authorImg={post.authorAvatar}
                 createdAt={post.createdAt}
+                userData={userData}
+                userProfile={userProfile}
+                blogId={post.postID}
               />
             </NavLink>
-            <BlogInteraction openModal={openModal} authorName={post.authorName} userData={userData} blogId={post.postID} userProfile={userProfile} id={`postReaction-${post.postID}`} />
+            <BlogInteraction userData={userData} blogId={post.postID} userProfile={userProfile} authorName={post.authorName} id={`postReaction-${post.postID}`} />
             </div>
           ))
         )}

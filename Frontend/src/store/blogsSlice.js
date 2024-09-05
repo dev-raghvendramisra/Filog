@@ -45,14 +45,6 @@ const blogsSlice = createSlice({
 
         clearBlogs:(state,action)=>{
             return []
-        },
-        likeBlog:(state,{payload})=>{
-            const blogIndex = state.findIndex(blog=>blog.postID === payload.blogId)
-            state[blogIndex].likes+1
-        },
-        unlikeBlog:(state,{payload})=>{
-            const blogIndex = state.findIndex(blog=>blog.postID === payload.blogId)
-            state[blogIndex].likes-1
         }
     }
 })

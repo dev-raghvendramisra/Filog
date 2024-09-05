@@ -9,9 +9,7 @@ function FollowSuggestionsCard({
   type="dashboard",
   loader,
   suggestedUser,
-  setFollowing,
   userProfileId,
-  following,
   navigate,
   suggestionCont,
   classNameAvatar = "",
@@ -26,29 +24,31 @@ function FollowSuggestionsCard({
   const [rerender, setRerender] = React.useState(false);
   const [isFollowing, setIsFollowing] = React.useState(false);
 
+  
+  
+
   const handleFollow_Unfollow = async () => {
     if(userData.emailVerification===false){
       return openAlert();
     }
     setLoading(true);
-    if (isFollowing === false) {
+    if (!isFollowing) {
       const res = await dbServices.follow_unfollowUser(userProfileId,suggestedUser.userId,type="following");
       if (res.$id) {
         toast.custom(<FollowToast avatar={suggestedUser.userAvatar} following>{suggestedUser.userName}</FollowToast>)
         setIsFollowing(true);
-        setFollowing({type:"add",val:suggestedUser.userId})
       }
       else{
         toast.custom(<GenToast type='err'>Failed to follow user, Internal server error</GenToast>)
       }
     }
-    else if (isFollowing === true) {
+    else if (isFollowing) {
       const res = await dbServices.follow_unfollowUser(userProfileId,suggestedUser.userId,type="unfollowing");
       if (res.$id) {
       setIsFollowing(false);
-      setFollowing({type:"remove",val:suggestedUser.userId})
       toast.custom(<FollowToast avatar={suggestedUser.userAvatar}>{suggestedUser.userName}</FollowToast>)
-      }else {
+      }
+      else {
         toast.custom(<GenToast type='err'>Failed to unfollow user, Internal server error</GenToast>)
       }
     }

@@ -25,7 +25,11 @@ function SideBarDash({ contRef }) {
 
   
   // Redux state and dispatch
-  const userProfile = useSelector(state => state.userProfile);
+  const { following, userProfileId } = useSelector(state => ({
+    following: state.userProfile.following,
+    userProfileId: state.userProfile.$id
+  }), (prev, next) => prev.following === next.following && prev.userProfileId === next.userProfileId);
+  
   const suggestedUsers = useSelector(state => state.users);
   const {userData} = useSelector(state => state.auth);
   const dispatch = useDispatch();
@@ -50,12 +54,12 @@ function SideBarDash({ contRef }) {
 
   // Update query for fetching users
   useEffect(() => {
-    if (userProfile.$id !== "") {
+    if (following!==null) {
       setInitLoading(false);
-      const queries = userProfile.following.map(user => Query.notEqual("userId", [user]));
-      setQuery([...queries, Query.notEqual("userId", [userProfile.userId])]);
+      const queries = following.map(user => Query.notEqual("userId", [user]));
+      setQuery([...queries, Query.notEqual("userId", [userData.$id])]);
     }
-  }, [userProfile.$id]);
+  }, [following]);
 
 
   // Add scroll event listener for pagination
@@ -69,7 +73,7 @@ function SideBarDash({ contRef }) {
   }, [handlePagination]);
 
 
-
+  console.log("follow card rererndered");
 
   return (
     <>
@@ -100,10 +104,9 @@ function SideBarDash({ contRef }) {
                 <FollowSuggestionsCard
                   key={user.profileId}
                   navigate={navigate}
-                  userId={userProfile.userId}
-                  userProfileId={userProfile.$id}
+                  userId={userData.$id}
+                  userProfileId={userProfileId}
                   suggestedUser={user}
-                  following={userProfile.following}
                   setFollowing={(type,val) => { dispatch(updateFollowing({type,val})) }}
                   openAlert={()=>{
                     toast.custom(<GenToast type='err'>Please verify your email to follow users</GenToast>)

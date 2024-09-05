@@ -3,7 +3,7 @@ import {AnimatedHeartIcon, CommentIcon, GenToast, ShareIcon} from '..'
 import { dbServices } from '../../services'
 import toast from 'react-hot-toast'
 import { useDispatch } from 'react-redux'
-import { likeBlog, unlikeBlog } from '../../store/blogsSlice'
+import { updateLikes } from '../../store/userProfileSlice'
 
 function BlogInteraction({userProfile,authorName,blogId,userData,openModal,likes=0, comments=0, height=1.7, width=1.7,loader=false}) {
     const [isLiked, setIsLiked] = React.useState(false)
@@ -25,9 +25,9 @@ function BlogInteraction({userProfile,authorName,blogId,userData,openModal,likes
         setLoading(true)
         if(isLiked){
            //handel unlike
-           dispatch(unlikeBlog({blogId}))
-           dispatch(updateLikes({type:"remove",val:blogId}))
            const res = await dbServices.like_unlikeBlog(blogId,userProfile.$id,"unlike")
+           setIsLiked(false)
+           dispatch(updateLikes({type:"unlike",val:blogId}))
            if(res.$id){
                toast.custom(<GenToast type='success'>Unliked {authorName}'s blog</GenToast>)
            }
@@ -37,9 +37,9 @@ function BlogInteraction({userProfile,authorName,blogId,userData,openModal,likes
         }
         else{
             //handle like
-            dispatch(likeBlog({blogId}))
-            dispatch(updateLikes({type:"add",val:blogId}))
             const res = await dbServices.like_unlikeBlog(blogId,userProfile.$id,"like")
+            setIsLiked(true)
+            dispatch(updateLikes({type:"like",val:blogId}))
             if(res.$id){
                 toast.custom(<GenToast type='success'>Liked {authorName}'s blog</GenToast>)
             }
@@ -53,13 +53,8 @@ function BlogInteraction({userProfile,authorName,blogId,userData,openModal,likes
     const handleComment = () => { }
     const handleShare = () => { }
 
-    React.useEffect(()=>{
-        if(userProfile.blogsLiked.includes(blogId)){
-            setIsLiked(true)
-        }else{
-            setIsLiked(false)
-        }
-    },[userProfile])
+ 
+
 
   return (
     <div className={`flex gap-3 justify-center absolute  top-[99.5%] items-center border-2 dark:border-footer_text_light dark:border-opacity-50   dark:bg-darkPrimary_grays bg-opacity-60 py-0.5vw px-1vw rounded-full`}>
