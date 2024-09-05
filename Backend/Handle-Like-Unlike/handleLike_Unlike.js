@@ -29,6 +29,7 @@ export default async function handleLike_Unlike({ blogId, userId, type, log, cur
 
     log("Updated Likes:", updatedLikeArray);
     // Fetch initiating user profile again to check version
+    log("Fetching initiating user profile again to check version...");
     const initiatingUserProfile = await dbServices.getUserProfile(userId, log);
     if (!initiatingUserProfile.$id) {
         log("Initiating user profile not found");
@@ -69,11 +70,14 @@ export default async function handleLike_Unlike({ blogId, userId, type, log, cur
     log("Fetching target blog again to check version...");
 
         // Fetch target blog again to check version
+        log("Fetching target blog again to check version...");
         targetBlog = await dbServices.getBlog(blogId, log);
         if (!targetBlog.$id) {
             log("Target blog not found");
             return { ok: false, res: targetBlog };
         }
+        log("Target Blog found successfully:", targetBlog);
+        
         if(targetBlog.version !== targetBlogVersion){
             log("Blog version mismatch - aborting current operation...");
             log("Previous Blog version:", targetBlogVersion);

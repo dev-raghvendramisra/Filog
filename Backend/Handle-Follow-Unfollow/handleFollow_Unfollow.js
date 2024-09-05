@@ -67,12 +67,13 @@ export default async function handleFollow_Unfollow({ targetUserId, userId, type
     }
 
     log("Marked stagedAction as null and updated initiating user profile following list successfully:", updateStagedActionRes);
-    
+    log("Fetching target user profile again to check version...");
     targetUserProfile = await dbServices.getUserProfile(targetUserId, log);
     if (!targetUserProfile.$id) {
         log("Target user profile not found");
         return { ok: false, res: targetUserProfile };
     }
+    log("Target User Profile found successfully:", targetUserProfile);
     if (targetUserProfileVersion !== targetUserProfileVersion) {
         log("Profile version mismatch - aborting current operation...");
         log("Previous Profile version:", targetUserProfile.version);
