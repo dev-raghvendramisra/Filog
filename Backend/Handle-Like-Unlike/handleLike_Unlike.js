@@ -5,7 +5,7 @@ export default async function handleLike_Unlike({ blogId, userId, type, log, cur
     log("Fetching target blog...");
     let targetBlog = await dbServices.getBlog(blogId, log);
     if (!targetBlog.$id) {
-        return handleBlogNotFound(userId, blogId, log);
+        return handleBlogNotFound(blogId, userId, log);
     }
     let targetBlogVersion = targetBlog.version==null?1:targetBlog.version;
 

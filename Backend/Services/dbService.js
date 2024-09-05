@@ -55,7 +55,7 @@ class DatabaseService {
       const res = await this.database.listDocuments(
         conf.dbId,
         conf.blogCollectionID,
-        [Query.equal("blogId", [blogId])]
+        [Query.equal("$id", [blogId])]
       );
       return res.documents.length > 0 ? res.documents[0] : { ok: false };
     } catch (error) {

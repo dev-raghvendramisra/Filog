@@ -1,6 +1,6 @@
 import dbServices from "../Services/dbService.js";
 
-export default async function handleBlogNotFound(blogId,userId, log) {
+export default async function handleBlogNotFound(blogId, userId, log) {
 
     log("Target Blog not found:", blogId);
     log("Fetching initiating user profile to reset stagedAction...");
