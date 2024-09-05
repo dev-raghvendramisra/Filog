@@ -1,13 +1,13 @@
 import dbServices from "../Services/dbService.js";
 import { abortDuplicateAction,handleBlogNotFound } from "../utils/index.js";
 
-export default async function handleLike_Unlike({ blogId, userId, type, log, currentUserProfileVersion,currentUserProfile }) {
+export default async function handleLike_Unlike({ blogId, userId, type, log, currentUserProfileVersion, currentUserProfile }) {
     log("Fetching target blog...");
     let targetBlog = await dbServices.getBlog(blogId, log);
     if (!targetBlog.$id) {
         return handleBlogNotFound(blogId, userId, log);
     }
-    let targetBlogVersion = targetBlog.version==null?1:targetBlog.version;
+    let targetBlogVersion = targetBlog.version == null ? 1 : targetBlog.version;
 
     log("Target Blog found successfully:", targetBlog);
 
@@ -57,7 +57,7 @@ export default async function handleLike_Unlike({ blogId, userId, type, log, cur
         profileId: initiatingUserProfile.$id,
         stagedAction: null,
         blogsLiked:updatedLikeArray,
-        version: version + 1,
+        version: initiatingUserProfile.version + 1,
         log
     });
 
@@ -79,7 +79,7 @@ export default async function handleLike_Unlike({ blogId, userId, type, log, cur
             log("Previous Blog version:", targetBlogVersion);
             log("Current Blog version:", targetBlog.version);
 
-          if(JSON.stringify(targetBlog.likes) === JSON.stringify(updatedLikeArray)){
+          if(JSON.stringify(targetBlog.likeCount) === JSON.stringify(updatedLikeArray)){
             log("Duplicate stagedAction detected, aborting current operation...");
             return await abortDuplicateAction(targetBlog, log);
           }
@@ -90,7 +90,8 @@ export default async function handleLike_Unlike({ blogId, userId, type, log, cur
         const updateBlogRes = await dbServices.updateBlogDocument({
             blogId: targetBlog.$id,
             likes: updatedLikeArray,
-            likesCount: updatedLikeCount,
+            version: targetBlog.version + 1,
+            likeCount: updatedLikeCount,
             log
         });
         if (updateBlogRes.$id) {

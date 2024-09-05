@@ -57,7 +57,7 @@ export default async function handleFollow_Unfollow({ targetUserId, userId, type
         profileId: initiatingUserProfile.$id,
         stagedAction: null,
         updatedFollowing,
-        version: version + 1,
+        version: initiatingUserProfile.version + 1,
         log
     });
 
@@ -90,6 +90,7 @@ export default async function handleFollow_Unfollow({ targetUserId, userId, type
     const updateRes = await dbServices.updateProfileDocument({
         profileId: targetUserProfile.$id,
         updatedFollowers,
+        version: targetUserProfile.version + 1,
         log
     });
 
