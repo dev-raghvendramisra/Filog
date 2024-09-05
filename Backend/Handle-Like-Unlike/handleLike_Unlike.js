@@ -12,7 +12,7 @@ export default async function handleLike_Unlike({ blogId, userId, type, log, cur
     log("Target Blog found successfully:", targetBlog);
 
     const existingLikeArray = currentUserProfile.blogsLiked || [];
-    const existingLikeCount = targetBlog.likes || 0;
+    const existingLikeCount = targetBlog.likeCount || 0;
     let updatedLikeArray;
     let updatedLikeCount;
 
@@ -95,7 +95,7 @@ export default async function handleLike_Unlike({ blogId, userId, type, log, cur
             blogId: targetBlog.$id,
             likes: updatedLikeArray,
             version: targetBlog.version + 1,
-            likeCount: updatedLikeCount,
+            updatedLikeCount: updatedLikeCount,
             log
         });
         if (updateBlogRes.$id) {

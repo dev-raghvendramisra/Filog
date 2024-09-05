@@ -64,13 +64,17 @@ class DatabaseService {
     }
   }
 
-  async updateBlogDocument({ blogId, updatedLikes, log, version }) {
+  async updateBlogDocument({ blogId, updatedLikeCount, log, version }) {
     try {
       const res = await this.database.updateDocument(
         conf.dbId,
         conf.blogCollectionID,
         blogId,
-        { likeCount: updatedLikes , version:version, content:"temperoy content"}//will remove content later
+        { 
+          ...(updatedLikeCount!==undefined && {likeCount:updatedLikeCount}) , 
+          ...(version!==undefined && {version:version}), 
+          content:"temperoy content"
+        }//will remove content later
       );
       log("Document Updated in database:", res);
       return res.$id ? res : { ok: false };
