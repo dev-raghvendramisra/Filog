@@ -8,8 +8,7 @@ export default async function handleFollow_Unfollow({ targetUserId, userId, type
     if (!targetUserProfile.$id) {
         return handleProfileNotFound(userId, targetUserId, log);
     }
-    let targetUserProfileVersion;
-    targetUserProfileVersion = targetUserProfile.version==null?1:targetUserProfile.version;
+    let targetUserProfileVersion = targetUserProfile.version==null?1:targetUserProfile.version;
     log("Target User Profile found successfully:", targetUserProfile);
 
     const existingFollowers = targetUserProfile.followers || [];
