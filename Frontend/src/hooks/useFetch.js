@@ -12,6 +12,8 @@ const useFetch = ({type="user",initLoading,offset,limit,query,container,id,setEr
    const dispatch = useDispatch()
 
    const fetchUsers = async () => {
+    console.log("fetching...");
+    
     if(userProfile && !userProfile.following.length){
       setErr("user")
       setPaginationLoad(false)
