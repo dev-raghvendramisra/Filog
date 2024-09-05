@@ -41,7 +41,7 @@ export default async function handler({ req, res, log }) {
                         type: stagedAction.type,
                         log,
                         currentUserProfile: req.body,
-                        currentUserProfileVersion:req.body.version!==null ? 1 : req.body.version,
+                        currentUserProfileVersion:req.body.version==null || req.body.version ==0 ? 1 : req.body.version,
                     });
 
                     log("Update Likes Response:", updationRes);
@@ -58,7 +58,7 @@ export default async function handler({ req, res, log }) {
                         type: stagedAction.type,
                         log: log,
                         currentUserProfile: req.body,
-                        currentUserProfileVersion:req.body.version!==null ? 1 : req.body.version,
+                        currentUserProfileVersion:req.body.version==null || req.body.version ==0 ? 1 : req.body.version,
                     });
     
                     log("Update Followers Response:", updationRes);

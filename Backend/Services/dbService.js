@@ -70,7 +70,7 @@ class DatabaseService {
         conf.dbId,
         conf.blogCollectionID,
         blogId,
-        { likeCount: updatedLikes , version:version}
+        { likeCount: updatedLikes , version:version, content:"temperoy content"}//will remove content later
       );
       log("Document Updated in database:", res);
       return res.$id ? res : { ok: false };
