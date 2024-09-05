@@ -28,8 +28,7 @@ function BlogCard({
   const uniqueId = ID.unique();
  
   
-  // console.log("blog card rerendered");
-  
+
 
   useEffect(() => {
     if(!loader){

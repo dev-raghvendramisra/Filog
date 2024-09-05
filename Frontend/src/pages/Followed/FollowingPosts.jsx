@@ -10,7 +10,8 @@ function FollowedPosts() {
     const [limit,setLimit] = React.useState(5);
     const [query,setQuery] = React.useState([]);
     const [err, setErr] = React.useState(null);
-    const userProfile = useSelector(state=>state.userProfile);
+
+    const following = useSelector(state=>state.userProfile.following);
     const posts = useSelector(state=>state.blogs);
     let container;
   
@@ -20,7 +21,7 @@ function FollowedPosts() {
       limit,
       query,
       setErr,
-      userProfile,
+      following,
       id:"main-dashboard-cont"
     })
 
@@ -35,11 +36,11 @@ function FollowedPosts() {
   })
 
    React.useEffect(()=>{
-      if(userProfile.$id!==""){
+      if(following!==null){
         setInitLoading(false);
-        setQuery([Query.equal("userId",userProfile.following)])
+        setQuery([Query.equal("userId",following)])
      }
-   },[userProfile.$id])
+   },[following])
 
 
    React.useEffect(()=>{

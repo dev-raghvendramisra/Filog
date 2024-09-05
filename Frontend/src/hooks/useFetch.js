@@ -4,7 +4,7 @@ import {clearUsers, setUsers} from '../store/usersSlice'
 import {setBlogs, clearBlogs} from '../store/blogsSlice'
 import { useDispatch } from 'react-redux'
 
-const useFetch = ({type="user",initLoading,offset,limit,query,container,id,setErr,userProfile}) =>{
+const useFetch = ({type="user",initLoading,offset,limit,query,container,id,setErr,following}) =>{
    const [containerLoading, setContainerLoading] = React.useState(true)
    const [paginationLoad, setPaginationLoad] = React.useState(true)
    const [isFetching, setIsFetching] = React.useState(false)
@@ -14,7 +14,7 @@ const useFetch = ({type="user",initLoading,offset,limit,query,container,id,setEr
    const fetchUsers = async () => {
     console.log("fetching...");
     
-    if(userProfile && !userProfile.following.length){
+    if(following && !following.length){
       setErr("user")
       setPaginationLoad(false)
       return;

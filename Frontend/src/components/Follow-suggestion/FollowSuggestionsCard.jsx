@@ -11,6 +11,7 @@ function FollowSuggestionsCard({
   suggestedUser,
   userProfileId,
   navigate,
+  setFollowing,
   suggestionCont,
   classNameAvatar = "",
   classNameBtn = "",
@@ -37,6 +38,7 @@ function FollowSuggestionsCard({
       if (res.$id) {
         toast.custom(<FollowToast avatar={suggestedUser.userAvatar} following>{suggestedUser.userName}</FollowToast>)
         setIsFollowing(true);
+        setFollowing("add",suggestedUser.userId)
       }
       else{
         toast.custom(<GenToast type='err'>Failed to follow user, Internal server error</GenToast>)
@@ -46,6 +48,7 @@ function FollowSuggestionsCard({
       const res = await dbServices.follow_unfollowUser(userProfileId,suggestedUser.userId,type="unfollowing");
       if (res.$id) {
       setIsFollowing(false);
+      setFollowing("remove",suggestedUser.userId)
       toast.custom(<FollowToast avatar={suggestedUser.userAvatar}>{suggestedUser.userName}</FollowToast>)
       }
       else {

@@ -1,23 +1,28 @@
 import React from 'react';
 import { ID } from 'appwrite';
-import { BlogCard, ErrorPlaceHolderImage, BlogInteraction } from '..';
+import { BlogCard, BlogInteraction, ErrorPlaceHolderImage } from '../../components';
 import { NavLink } from 'react-router-dom';
-import { useSelector } from 'react-redux';
 import { useEmailAlertModal } from '../../hooks';
+import { useSelector } from 'react-redux';
 
 function PostCont({
   type = "dashboard",
   paginationLoad,
-  initLoading=false,
+  initLoading = false,
   posts,
   dashboardErr,
   postLoading,
-  customErrMsg="",
+  customErrMsg = "",
   id = "main-dashboard-posts-cont",
 }) {
 
-  const {userData} = useSelector(state=>state.auth)
+   
+  const {userData} = useSelector((state) => state.auth)
+  const userProfileId = useSelector((state) => state.userProfile.$id, (prev, next) => prev === next)
   const openModal = useEmailAlertModal()
+
+  console.log("blog cont rerendered");
+  
 
   return (
     <div id={id} className="h-fit w-fit py-1vw relative">
@@ -35,8 +40,8 @@ function PostCont({
           ))
         ) : (
           posts.map((post) => (
-            <div className='relative' key={post.postID && ID.unique()}>
-            <NavLink id={`postLink-${post.postID}`} to={`/post/${post.postID}`}>
+           <div key={post.postID || ID.unique()} className='relative'>
+             <NavLink id={`postLink-${post.postID}`} to={`/post/${post.postID}`}>
               <BlogCard
                 classNameBlogCardCont="flex-row w-fit gap-8"
                 classNameBlogCardAuthorDateCont="h-fit mt-1vw"
@@ -46,11 +51,15 @@ function PostCont({
                 author={post.authorName}
                 authorImg={post.authorAvatar}
                 createdAt={post.createdAt}
-                userData={userData}
               />
             </NavLink>
-            {/* <BlogInteraction userData={userData} blogId={post.postID} userProfile={userProfile} authorName={post.authorName} id={`postReaction-${post.postID}`} /> */}
-            </div>
+            <BlogInteraction  
+            userData={userData} 
+            userProfileId={userProfileId} 
+            blogId={post.postID} 
+            openModal={openModal} 
+            authorName={post.authorName}  />
+           </div>
           ))
         )}
         

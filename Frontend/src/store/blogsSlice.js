@@ -42,12 +42,18 @@ const blogsSlice = createSlice({
               state.push(newBlog)
           });
         },
-
         clearBlogs:(state,action)=>{
             return []
-        }
-    }
-})
+        },
+        likeBlog:(state,{payload})=>{
+            const blog = state.find(blog=>blog.postID===payload)
+            blog.likes+=1
+        },  
+        unlikeBlog:(state,{payload})=>{
+            const blog = state.find(blog=>blog.postID===payload)
+            blog.likes-=1
+      }
+}})
 
 
 export default blogsSlice.reducer

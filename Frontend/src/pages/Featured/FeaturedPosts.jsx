@@ -7,7 +7,7 @@ import {useFetch as useFetchPosts, usePagination} from '../../hooks';
 
 function FeaturedPosts() {
     const posts = useSelector(state => state.blogs);
-    const userProfile = useSelector(state => state.userProfile);
+    const userId = useSelector(state => state.userProfile.userId)
     const [offset, setOffset] = React.useState(0);
     const [limit, setLimit] = React.useState(5);
     const [initLoading, setInitLoading] = React.useState(true);
@@ -45,11 +45,11 @@ function FeaturedPosts() {
     
                     
     React.useEffect(() => {
-        if (userProfile.$id !== "") {
+        if (userId !== "") {
             setInitLoading(false);
-            setQuery([Query.notEqual("userId", [userProfile.userId])]);
+            setQuery([Query.notEqual("userId", [userId])]);
         }
-    }, [userProfile.$id]);
+    }, [userId]);
 
 
 
