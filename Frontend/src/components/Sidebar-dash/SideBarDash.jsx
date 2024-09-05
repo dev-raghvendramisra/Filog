@@ -107,7 +107,7 @@ function SideBarDash({ contRef }) {
                   userId={userData.$id}
                   userProfileId={userProfileId}
                   suggestedUser={user}
-                  setFollowing={(type,val) => { dispatch(updateFollowing({type,val})) }}
+                  setFollowing={(type) => { dispatch(updateFollowing({type,val:user.userId})) }}
                   openAlert={()=>{
                     toast.custom(<GenToast type='err'>Please verify your email to follow users</GenToast>)
                     return setOpenAlert(true)

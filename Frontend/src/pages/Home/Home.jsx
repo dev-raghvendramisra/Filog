@@ -4,8 +4,9 @@ import {BlogCard} from '../../components';
 import { useSelector } from 'react-redux';
 import { getBlogPosts } from '../../utils';
 import { clearBlogs, setBlogs } from '../../store/blogsSlice';
+import { updateLikes } from '../../store/userProfileSlice';
+import { likeBlog, unlikeBlog } from '../../store/blogsSlice';
 import { useDispatch } from 'react-redux';
-import { ID } from 'appwrite';
 import { NavLink } from 'react-router-dom';
 import {Navigate} from 'react-router-dom'
 import { useEmailAlertModal } from '../../hooks';
@@ -49,7 +50,16 @@ function Home() {
           createdAt={post.createdAt}
           />
         </NavLink>
-        <BlogInteraction openModal={openModal} authorName={post.authorName} blogId={post.postID} userData={userData} userProfile={userProfile} /> 
+        <BlogInteraction 
+        openModal={openModal}
+        authorName={post.authorName} 
+        blogId={post.postID} 
+        userData={userData} 
+        userProfileId={userProfile.$id}
+        updateLikes={(type)=>{
+          dispatch(updateLikes({type,val:post.postID}))
+          dispatch(type==="like"?likeBlog(post.postId):unlikeBlog(post.postId))
+        }} /> 
       </div> 
          ))
         }

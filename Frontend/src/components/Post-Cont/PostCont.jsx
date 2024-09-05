@@ -62,9 +62,9 @@ function PostCont({
             blogId={post.postID} 
             openModal={openModal} 
             authorName={post.authorName}
-            updateLikes={(type,blogId)=>{
-              dispatch(updateLikes({type,blogId}))
-              dispatch(type==="like"?likeBlog(blogId):unlikeBlog(blogId))
+            updateLikes={(type)=>{
+              dispatch(updateLikes({type,val:post.postID}))
+              dispatch(type==="like"?likeBlog(post.postID):unlikeBlog(post.postID))
             }}  />
            </div>
           ))
