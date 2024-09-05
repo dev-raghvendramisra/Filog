@@ -52,7 +52,7 @@ function PostCont({
                 blogId={post.postID}
               />
             </NavLink>
-            <BlogInteraction userData={userData} blogId={post.postID} userProfile={userProfile} authorName={post.authorName} id={`postReaction-${post.postID}`} />
+            {/* <BlogInteraction userData={userData} blogId={post.postID} userProfile={userProfile} authorName={post.authorName} id={`postReaction-${post.postID}`} /> */}
             </div>
           ))
         )}
