@@ -7,7 +7,7 @@ export default async function handleLike_Unlike({ blogId, userId, type, log, cur
     if (!targetBlog.$id) {
         return handleBlogNotFound(blogId, userId, log);
     }
-    let targetBlogVersion = targetBlog.version == null ? 1 : targetBlog.version;
+    let targetBlogVersion = targetBlog.version == null || targetBlog.version==0 ? 1 : targetBlog.version;
 
     log("Target Blog found successfully:", targetBlog);
 

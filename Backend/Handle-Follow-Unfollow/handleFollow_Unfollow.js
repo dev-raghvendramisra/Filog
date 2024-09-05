@@ -8,7 +8,7 @@ export default async function handleFollow_Unfollow({ targetUserId, userId, type
     if (!targetUserProfile.$id) {
         return handleProfileNotFound(userId, targetUserId, log);
     }
-    let targetUserProfileVersion = targetUserProfile.version==null?1:targetUserProfile.version;
+    let targetUserProfileVersion = targetUserProfile.version == null || targetUserProfile.version == 0 ? 1 : targetUserProfile.version;
     log("Target User Profile found successfully:", targetUserProfile);
 
     const existingFollowers = targetUserProfile.followers || [];
@@ -28,7 +28,7 @@ export default async function handleFollow_Unfollow({ targetUserId, userId, type
 
     log("Updated Followers:", updatedFollowers);
     log("Updated Following:", updatedFollowing);
-
+    log("Fetching initiating user profile again to check version...");
     const initiatingUserProfile = await dbServices.getUserProfile(userId, log);
     if (!initiatingUserProfile.$id) {
         log("Initiating user profile not found");
