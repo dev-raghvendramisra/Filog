@@ -40,7 +40,7 @@ export default async function handleLike_Unlike({ blogId, userId, type, log, cur
     // Handle profile version mismatch
     if (currentUserProfileVersion !== initiatingUserProfile.version) {
         log("Profile version mismatch - recreating likes array");
-        log("Previous version:", version);
+        log("Previous version:", currentUserProfileVersion);
         log("Current version:", initiatingUserProfile.version);
 
         if (JSON.stringify(initiatingUserProfile.likes) === JSON.stringify(updatedLikeArray)) {
