@@ -58,6 +58,7 @@ function Home() {
         userProfileId={userProfile.$id}
         likeCount={post.likeCount}
         commentCount={post.commentCount}
+        blogImg={post.coverImageUrl}
         updateLikes={(type)=>{
           dispatch(updateLikes({type,val:post.postID}))
           dispatch(type==="like"?likeBlog(post.postId):unlikeBlog(post.postId))

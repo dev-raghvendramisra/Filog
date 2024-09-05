@@ -49,11 +49,11 @@ const blogsSlice = createSlice({
         },
         likeBlog:(state,{payload})=>{
             const blog = state.find(blog=>blog.postID===payload)
-            blog.likeCount+=1
+            blog.likeCount++
         },  
         unlikeBlog:(state,{payload})=>{
             const blog = state.find(blog=>blog.postID===payload)
-            blog.likeCount-=1
+            blog.likeCount>0 && blog.likeCount--
       }
 }})
 

@@ -1,13 +1,14 @@
 import React from 'react'
-import {AnimatedHeartIcon, CommentIcon, GenToast, ShareIcon} from '..'
+import {AnimatedHeartIcon, CommentIcon, CustomToast, GenToast, ShareIcon} from '..'
 import { dbServices } from '../../services'
 import toast from 'react-hot-toast'
 import {getFormattedNumber} from '../../utils'
 
-function BlogInteraction({userProfileId,authorName,blogId,userData,openModal,updateLikes,likeCount=0, commentCount=0, height=1.7, width=1.7,loader=false}) {
+function BlogInteraction({userProfileId,blogImg,authorName,blogId,userData,openModal,updateLikes,likeCount=0, commentCount=0, height=1.7, width=1.7,loader=false}) {
     const [isLiked, setIsLiked] = React.useState(false)
     const [loading, setLoading] = React.useState(false)
     const [disabled, setDisabled] = React.useState(false)
+    const msg = (type,author) => type === "liked" ? `Liked ${author}'s blog` : `Unliked ${author}'s blog`
     
   
     const handleLike = async() => {
@@ -27,7 +28,7 @@ function BlogInteraction({userProfileId,authorName,blogId,userData,openModal,upd
            setIsLiked(false)
            updateLikes("unlike")
            if(res.$id){
-               toast.custom(<GenToast type='success'>Unliked {authorName}'s blog</GenToast>)
+               toast.custom(<CustomToast imgW='4vw' roundedPic="xl" img={blogImg}  secondaryText={msg("unliked",authorName)}>Unliked</CustomToast>)
            }
             else{
                 toast.custom(<GenToast type='err'>Failed to unlike {authorName}'s blog, internal server error</GenToast>)
@@ -39,7 +40,7 @@ function BlogInteraction({userProfileId,authorName,blogId,userData,openModal,upd
             setIsLiked(true)
             updateLikes("like")
             if(res.$id){
-                toast.custom(<GenToast type='success'>Liked {authorName}'s blog</GenToast>)
+                toast.custom(<CustomToast imgW='4vw' roundedPic="xl" img={blogImg} secondaryText={msg("liked",authorName)}>Liked</CustomToast>)
             }
             else{
                 toast.custom(<GenToast type='err'>Failed to like {authorName}'s blog, internal server error</GenToast>)

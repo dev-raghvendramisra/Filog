@@ -2,7 +2,7 @@ import React from 'react';
 import { dbServices } from '../../services';
 import toast from 'react-hot-toast';
 import { ColorRing } from 'react-loader-spinner'
-import {FollowToast, GenToast, ProfilePic} from '../../components'
+import {CustomToast, GenToast, ProfilePic} from '../../components'
 
 
 function FollowSuggestionsCard({
@@ -24,7 +24,8 @@ function FollowSuggestionsCard({
   const [loading, setLoading] = React.useState(false);
   const [rerender, setRerender] = React.useState(false);
   const [isFollowing, setIsFollowing] = React.useState(false);
-
+  const followingMsg = "You started following";
+  const unfollowingMsg = "You just unfollowed";
   
   
 
@@ -36,7 +37,8 @@ function FollowSuggestionsCard({
     if (!isFollowing) {
       const res = await dbServices.follow_unfollowUser(userProfileId,suggestedUser.userId,type="following");
       if (res.$id) {
-        toast.custom(<FollowToast avatar={suggestedUser.userAvatar} following>{suggestedUser.userName}</FollowToast>)
+        //followed user
+        toast.custom(<CustomToast secondaryText={followingMsg} img={suggestedUser.userAvatar}>{suggestedUser.userName}</CustomToast>)
         setIsFollowing(true);
         setFollowing("add")
       }
@@ -45,11 +47,12 @@ function FollowSuggestionsCard({
       }
     }
     else if (isFollowing) {
+      //unfollowed user
       const res = await dbServices.follow_unfollowUser(userProfileId,suggestedUser.userId,type="unfollowing");
       if (res.$id) {
       setIsFollowing(false);
       setFollowing("remove")
-      toast.custom(<FollowToast avatar={suggestedUser.userAvatar}>{suggestedUser.userName}</FollowToast>)
+      toast.custom(<CustomToast secondaryText={unfollowingMsg} img={suggestedUser.userAvatar}>{suggestedUser.userName}</CustomToast>)
       }
       else {
         toast.custom(<GenToast type='err'>Failed to unfollow user, Internal server error</GenToast>)

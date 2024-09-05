@@ -19,7 +19,7 @@ import ErrorPlaceHolderImage from './Error-message/ErrorPlaceHolderImage'
 import SideBarDash from "./Sidebar-dash/SideBarDash";
 import FollowSuggestionsCard from "./Follow-suggestion/FollowSuggestionsCard";
 import ProfileNavlink from "./Profile-navlink/ProfileNavlink";
-import FollowToast from "./Toast/FollowToast";
+import CustomToast from "./Toast/CustomToast";
 import GenToast from './Toast/GenToast';
 import AlertModal from "./Modal/AlertModal";
 import FormModal from "./Modal/FormModal";
@@ -53,7 +53,7 @@ export {
   SideBarDash,
   FollowSuggestionsCard,
   ProfileNavlink,
-  FollowToast,
+  CustomToast,
   GenToast,
   AlertModal,
   FormModal,

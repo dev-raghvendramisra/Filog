@@ -62,6 +62,7 @@ function PostCont({
             authorName={post.authorName}
             likeCount={post.likeCount}
             commentCount={post.commentCount}
+            blogImg={post.coverImageUrl}
             updateLikes={(type)=>{
               dispatch(updateLikes({type,val:post.postID}))
               dispatch(type==="like"?likeBlog(post.postID):unlikeBlog(post.postID))
