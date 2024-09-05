@@ -347,13 +347,13 @@ class Action {
     }
     follow(userId) {
         return this.stagedAction = JSON.stringify({
-            type: "following",
+            type: "follow",
             value: userId
         });
     }
     unfollow(userId) {
         return this.stagedAction = JSON.stringify({
-            type: "unfollowing",
+            type: "unfollow",
             value: userId
         });
     }
