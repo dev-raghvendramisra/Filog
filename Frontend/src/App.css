@@ -123,7 +123,8 @@ box-shadow: 0px 38px 75px -1px rgba(0,0,0,0.07);
         top: 0;
         left: 0;
         z-index: -11;
-        @apply bg-primary bg-opacity-10 dark:bg-opacity-40;
+        @apply  dark:bg-opacity-40;
+        background-color: #36374f;
         animation: shake 0.1s cubic-bezier(1, 0.02, 0, 1) 4 alternate forwards;
     }
 
