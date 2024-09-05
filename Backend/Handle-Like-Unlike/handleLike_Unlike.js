@@ -21,7 +21,7 @@ export default async function handleLike_Unlike({ blogId, userId, type, log, cur
         updatedLikeArray = [...existingLikeArray, blogId];
         updatedLikeCount = existingLikeCount + 1;
     } else if (type === "unlike") {
-        updatedLikeArray = existingArray.filter(blogID => blogID !== blogId);
+        updatedLikeArray = existingLikeArray.filter(blogID => blogID !== blogId);
         updatedLikeCount = existingLikeCount - 1;
     } else {
         throw new Error("Invalid type");
