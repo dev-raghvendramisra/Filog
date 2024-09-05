@@ -12,14 +12,14 @@ class DatabaseService {
     this.database = new Databases(this.client);
   }
 
-  async updateProfileDocument({ profileId, updatedFollowers, stagedAction, version, updatedFollowing, log, likes }) {
+  async updateProfileDocument({ profileId, updatedFollowers, stagedAction, version, updatedFollowing, log, blogsLiked }) {
     try {
       const updatedAttr = {
         ...(updatedFollowers !==undefined && { followers: updatedFollowers }),
         ...(stagedAction !==undefined && { stagedAction:stagedAction }),
         ...(version !==undefined && { version:version }),
         ...(updatedFollowing !==undefined && { following:updatedFollowing }),
-        ...(likes !==undefined && { likes:likes })
+        ...(blogsLiked !==undefined && { blogsLiked:blogsLiked })
       };
     //  log(updatedAttr)
       const res = await this.database.updateDocument(

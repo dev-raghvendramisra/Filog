@@ -1,28 +1,29 @@
-import dbServices from "../Services/dbService";
-import { abortDuplicateAction,handleBlogNotFound } from "../utils";
+import dbServices from "../Services/dbService.js";
+import { abortDuplicateAction,handleBlogNotFound } from "../utils/index.js";
 
-export default async function handleLike_Unlike({ blogId, userId, type, log, currentUserProfile, userProfileVersion }) {
+export default async function handleLike_Unlike({ blogId, userId, type, log, currentUserProfileVersion,currentUserProfile }) {
     log("Fetching target blog...");
     let targetBlog = await dbServices.getBlog(blogId, log);
-    let targetBlogVersion;
     if (!targetBlog.$id) {
         return handleBlogNotFound(userId, blogId, log);
     }
+    let targetBlogVersion;
     targetBlogVersion = targetBlog.version==null?1:targetBlog.version;
 
     log("Target Blog found successfully:", targetBlog);
 
-    const existingLikes = targetBlog.likes || [];
+    const existingLikeArray = currentUserProfile.blogsLiked || [];
+    const existingLikeCount = targetBlog.likes || 0;
     let updatedLikeArray;
     let updatedLikeCount;
 
     // Update the likes list
     if (type === "like") {
-        updatedLikeArray = [...existingLikes, userId];
-        updatedLikeCount = targetBlog.likeCount + 1;
+        updatedLikeArray = [...existingLikeArray, userId];
+        updatedLikeCount = existingLikeCount + 1;
     } else if (type === "unlike") {
         updatedLikeArray = existingLikes.filter(user => user !== userId);
-        updatedLikeCount = targetBlog.likeCount - 1;
+        updatedLikeCount = existingLikeCount - 1;
     } else {
         throw new Error("Invalid type");
     }
@@ -38,7 +39,7 @@ export default async function handleLike_Unlike({ blogId, userId, type, log, cur
     log("Initiating User Profile found successfully:", initiatingUserProfile);
 
     // Handle profile version mismatch
-    if (userProfileVersion !== initiatingUserProfile.version) {
+    if (currentUserProfileVersion !== initiatingUserProfile.version) {
         log("Profile version mismatch - recreating likes array");
         log("Previous version:", version);
         log("Current version:", initiatingUserProfile.version);
@@ -56,7 +57,7 @@ export default async function handleLike_Unlike({ blogId, userId, type, log, cur
     const updateStagedActionRes = await dbServices.updateProfileDocument({
         profileId: initiatingUserProfile.$id,
         stagedAction: null,
-        likes:updatedLikeArray,
+        blogsLiked:updatedLikeArray,
         version: version + 1,
         log
     });

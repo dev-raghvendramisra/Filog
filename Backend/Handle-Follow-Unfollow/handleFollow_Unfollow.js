@@ -1,14 +1,15 @@
 import dbServices from "../Services/dbService.js";
-import { abortDuplicateAction, handleProfileNotFound } from "../utils";
+import { abortDuplicateAction, handleProfileNotFound } from "../utils/index.js";
 
-export default async function handleFollow_Unfollow({ targetUserId, userId, type, log, currentUserProfile, version }) {
+export default async function handleFollow_Unfollow({ targetUserId, userId, type, log, currentUserProfile,currentUserProfileVersion }) {
     log("Fetching target user profile...");
     let targetUserProfile = await dbServices.getUserProfile(targetUserId, log);
 
     if (!targetUserProfile.$id) {
         return handleProfileNotFound(userId, targetUserId, log);
     }
-
+    let targetUserProfileVersion;
+    targetUserProfileVersion = targetUserProfile.version==null?1:targetUserProfile.version;
     log("Target User Profile found successfully:", targetUserProfile);
 
     const existingFollowers = targetUserProfile.followers || [];
@@ -38,7 +39,7 @@ export default async function handleFollow_Unfollow({ targetUserId, userId, type
     log("Initiating User Profile found successfully:", initiatingUserProfile);
 
     // Handle profile version mismatch
-    if (version !== initiatingUserProfile.version) {
+    if (currentUserProfileVersion !== initiatingUserProfile.version) {
         log("Profile version mismatch - recreating following array");
         log("Previous version:", version);
         log("Current version:", initiatingUserProfile.version);
@@ -73,7 +74,7 @@ export default async function handleFollow_Unfollow({ targetUserId, userId, type
         log("Target user profile not found");
         return { ok: false, res: targetUserProfile };
     }
-    if (targetUserProfile.version !== targetUserProfile.version) {
+    if (targetUserProfileVersion !== targetUserProfileVersion) {
         log("Profile version mismatch - aborting current operation...");
         log("Previous Profile version:", targetUserProfile.version);
         log("Current Profile version:", targetUserProfile.version);

@@ -1,4 +1,4 @@
-import dbServices from "../Services/dbService";
+import dbServices from "../Services/dbService.js";
 
 export default async function handleProfileNotFound(userId, targetUserId, log) {
     log("Target Profile not found:", targetUserId);

@@ -1,4 +1,4 @@
-import dbServices from "../Services/dbService";
+import dbServices from "../Services/dbService.js";
 
 export default async function abortDuplicateAction(initiatingUserProfile, log) {
     const res = await dbServices.updateProfileDocument({
