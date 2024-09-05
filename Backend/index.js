@@ -1,7 +1,10 @@
 import conf from "./conf/conf.js";
-import updateFollowers from './Update-Followers/updateFollowers.js';
+import handleFollow_Unfollow from './Handle-Follow-Unfollow/handleFollow_Unfollow.js';
 
 export default async function handler({ req, res, log }) {
+     const stagableActions = ["follow", "unfollow", "like","unlike"];
+
+
     // Log the request body for debugging
     log(req.body);
 
@@ -27,28 +30,46 @@ export default async function handler({ req, res, log }) {
             log("Updated Attribute:", stagedAction);
 
             // Process the update if it's a follow or unfollow event
-            if (stagedAction.type === "following" || stagedAction.type === "unfollowing") {
+            if(stagableActions.includes(stagedAction.type)){
                 log("Processing update for:", stagedAction);
 
-                // Call the function to update followers
-                const updationRes = await updateFollowers({
-                    targetUserId: stagedAction.value,
-                    userId: req.body.userId,
-                    type: stagedAction.type,
-                    log: log,
-                    currentUserProfile: req.body,
-                    version
-                });
+                if(stagedAction.type === "like" || stagedAction.type === "unlike"){
+                    const updationRes = await handleLike_Unlike({
+                        blogId: stagedAction.value,
+                        userId: req.body.userId,
+                        type: stagedAction.type,
+                        log,
+                        currentUserProfile: req.body,
+                        version
+                    });
 
-                log("Update Followers Response:", updationRes);
-
-                // Log the result of the update operation
-                if (updationRes.ok) {
-                    log(`${req.body.userName} (${req.body.userId}) ${stagedAction.type} ${stagedAction.value}`);
-                } else {
-                    log("Failed to update followers");
+                    log("Update Likes Response:", updationRes);
+                    if (updationRes.ok) {
+                        log(`${req.body.userName} (${req.body.userId}) ${stagedAction.type}ed ${stagedAction.value}`);
+                    } else {
+                        log("Failed to update likes");
+                    }
                 }
-            } else {
+                else if(stagedAction.type === "follow" || stagedAction.type === "unfollow"){
+                    const updationRes = await handleFollow_Unfollow({
+                        targetUserId: stagedAction.value,
+                        userId: req.body.userId,
+                        type: stagedAction.type,
+                        log: log,
+                        currentUserProfile: req.body,
+                        version
+                    });
+    
+                    log("Update Followers Response:", updationRes);
+                    if (updationRes.ok) {
+                        log(`${req.body.userName} (${req.body.userId}) ${stagedAction.type}ed ${stagedAction.value}`);
+                    } else {
+                        log("Failed to update followers");
+                    }
+                }
+                
+            } 
+            else {
                 log("Invalid update type:", stagedAction.type);
             }
         } else {
