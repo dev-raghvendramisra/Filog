@@ -56,6 +56,8 @@ function Home() {
         blogId={post.postID} 
         userData={userData} 
         userProfileId={userProfile.$id}
+        likeCount={post.likeCount}
+        commentCount={post.commentCount}
         updateLikes={(type)=>{
           dispatch(updateLikes({type,val:post.postID}))
           dispatch(type==="like"?likeBlog(post.postId):unlikeBlog(post.postId))

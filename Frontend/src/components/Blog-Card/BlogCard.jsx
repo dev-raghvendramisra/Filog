@@ -112,7 +112,7 @@ function BlogCard({
         author || loader?
       <div id={`BlogCard-author-date-cont-${uniqueId}`} 
       className={`w-19vw   text-footer_text_light dark:text-footer_text flex-shrink-0 flex items-center justify-between gap-1 text-1vw overflow-hidden 
-        ${type=="horizontal" && "h-fit mt-1vw"}
+        ${type=="horizontal" && loader ? "h-2vw" : "h-fit mt-1vw"}
         ${loader?"bg-slate-200 postCardLoader dark:bg-darkPrimary rounded-xl h-2vw":"h-4vw"} 
         ${classNameBlogCardAuthorDateCont}`}
        >

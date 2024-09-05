@@ -29,7 +29,7 @@ function PostCont({
 
   return (
     <div id={id} className="h-fit w-fit py-1vw relative">
-      <div id="main-post-cont" className="flex-col flex gap-4vw">
+      <div id="main-post-cont" className="flex-col flex" style={{gap:"4.8vw"}}>
         {dashboardErr ? (
           <ErrorPlaceHolderImage customErrMsg={customErrMsg} type={dashboardErr} />
         ) : initLoading || postLoading ? (
@@ -60,6 +60,8 @@ function PostCont({
             blogId={post.postID} 
             openModal={openModal} 
             authorName={post.authorName}
+            likeCount={post.likeCount}
+            commentCount={post.commentCount}
             updateLikes={(type)=>{
               dispatch(updateLikes({type,val:post.postID}))
               dispatch(type==="like"?likeBlog(post.postID):unlikeBlog(post.postID))

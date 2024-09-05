@@ -1,5 +1,6 @@
 import { Client, ID, Databases, Storage, Query, Permission, Role } from "appwrite";
 import conf from "../../conf/conf";
+import { comment } from "postcss";
 
 export class DatabaseService {
     client = new Client()
@@ -40,7 +41,8 @@ export class DatabaseService {
             tags:tags,
             authorName:authorName,
             authorAvatar:authorAvatar,
-            likes:0
+            likeCount:0,
+            commentCount:0,
             // randomIndex:100000000
         }
         try {

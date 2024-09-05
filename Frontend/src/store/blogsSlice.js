@@ -13,7 +13,8 @@ const initialState =[
      authorId:"",
      authorImg:"",
      tags:[],
-     likes:null
+     likeCount:null,
+     commentCount:null
     }
 ]
 
@@ -37,7 +38,8 @@ const blogsSlice = createSlice({
                   coverImageId:blogData.coverImageId,
                   subImageId:blogData.subImageId,
                   tags:blogData.tags,
-                  likes:blogData.likes
+                  likeCount:blogData.likeCount==null ? 0 : blogData.likeCount,
+                  commentsCount:blogData.commentCount==null ? 0 : blogData.commentCount
               }
               state.push(newBlog)
           });
@@ -47,11 +49,11 @@ const blogsSlice = createSlice({
         },
         likeBlog:(state,{payload})=>{
             const blog = state.find(blog=>blog.postID===payload)
-            blog.likes+=1
+            blog.likeCount+=1
         },  
         unlikeBlog:(state,{payload})=>{
             const blog = state.find(blog=>blog.postID===payload)
-            blog.likes-=1
+            blog.likeCount-=1
       }
 }})
 

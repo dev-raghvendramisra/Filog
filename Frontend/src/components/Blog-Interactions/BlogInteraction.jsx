@@ -2,14 +2,13 @@ import React from 'react'
 import {AnimatedHeartIcon, CommentIcon, GenToast, ShareIcon} from '..'
 import { dbServices } from '../../services'
 import toast from 'react-hot-toast'
-import { useDispatch } from 'react-redux'
-import { likeBlog, unlikeBlog } from '../../store/blogsSlice'
+import {getFormattedNumber} from '../../utils'
 
-function BlogInteraction({userProfileId,authorName,blogId,userData,openModal,updateLikes,likes=0, comments=0, height=1.7, width=1.7,loader=false}) {
+function BlogInteraction({userProfileId,authorName,blogId,userData,openModal,updateLikes,likeCount=0, commentCount=0, height=1.7, width=1.7,loader=false}) {
     const [isLiked, setIsLiked] = React.useState(false)
     const [loading, setLoading] = React.useState(false)
     const [disabled, setDisabled] = React.useState(false)
-    const dispatch = useDispatch()
+    
   
     const handleLike = async() => {
         if(disabled) return
@@ -62,13 +61,13 @@ function BlogInteraction({userProfileId,authorName,blogId,userData,openModal,upd
         <button className={`flex items-center justify-center gap-2 rounded-full overflow-hidden relative hover:iconsHoverAnim ${loader && "postReactionLoader"}`} style={{height:`${height + 0.5}vw`,width:`${width + 0.5}vw`}} onClick={handleLike}>
           {loader || <AnimatedHeartIcon height={height+"vw"} width={width+"vw"} loading={loading} liked={isLiked} />}
         </button>
-          {loader || <span className='text-1.1vw'>{likes}</span>}
+          {loader || <span className='text-1.1vw'>{getFormattedNumber(likeCount)}</span>}
      </div>
      <div className='flex justify-center items-center'>
         <button className={`flex items-center justify-center gap-2 rounded-full p-0.1vw overflow-hidden relative hover:iconsHoverAnim ${loader && "postReactionLoader"}`} style={{height:`${height + 0.5}vw`,width:`${width + 0.5}vw`}} onClick={handleComment}>
           {loader || <CommentIcon height={height+"vw"} width={width+"vw"} />}
         </button>
-          {loader || <span className='text-1.1vw'>{comments}</span>}
+          {loader || <span className='text-1.1vw'>{getFormattedNumber(commentCount)}</span>}
      </div>
      <div className='flex justify-center items-center'>
         <button className={`flex items-center justify-center rounded-full p-0.1vw overflow-hidden relative hover:iconsHoverAnim ${loader && "postReactionLoader"}`} style={{height:`${height + 0.5}vw`,width:`${width + 0.5}vw`}}  onClick={handleShare}>
