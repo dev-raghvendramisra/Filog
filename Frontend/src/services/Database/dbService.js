@@ -320,7 +320,7 @@ export class DatabaseService {
     async like_unlikeBlog(blogId,profileId,type){
       try {
         const res = await this.database.updateDocument(conf.dbId,conf.userProfilesCollectionID,profileId,{
-            stagedAction:type="like" ? action.like(blogId) :  action.unlike(blogId)
+            stagedAction:type=="like" ? action.like(blogId) :  action.unlike(blogId)
         })
         if(res.$id){
             return res
