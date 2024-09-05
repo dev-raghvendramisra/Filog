@@ -43,7 +43,6 @@ export class DatabaseService {
             authorAvatar:authorAvatar,
             likeCount:0,
             commentCount:0,
-            // randomIndex:100000000
         }
         try {
             const res = await this.database.createDocument(
