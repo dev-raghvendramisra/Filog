@@ -64,7 +64,7 @@ function BlogCard({
   return (
     <div id={`BlogCard-${uniqueId}`} 
     onClick={onClick}
-    className={`flex relative bg-transparent border-2 dark:bg-darkPrimary_grays dark:border-footer_text_light dark:border-opacity-50 p-1vw rounded-3xl cursor-pointer ${type=="horizontal" || "flex-col gap-4"} ${loader?"dark:bg-opacity-50 ":""}
+    className={`flex relative bg-transparent border-2 dark:bg-darkPrimary_grays dark:border-footer_text_light dark:border-opacity-50 p-1vw rounded-3xl cursor-pointer ${type=="horizontal" ? "w-fit gap-8":"flex-col gap-4"} ${loader?"dark:bg-opacity-50 ":""}
     ${classNameBlogCardCont}`}>
 
       {coverImage || loader ? (
@@ -112,6 +112,7 @@ function BlogCard({
         author || loader?
       <div id={`BlogCard-author-date-cont-${uniqueId}`} 
       className={`w-19vw   text-footer_text_light dark:text-footer_text flex-shrink-0 flex items-center justify-between gap-1 text-1vw overflow-hidden 
+        ${type=="horizontal" && "h-fit mt-1vw"}
         ${loader?"bg-slate-200 postCardLoader dark:bg-darkPrimary rounded-xl h-2vw":"h-4vw"} 
         ${classNameBlogCardAuthorDateCont}`}
        >

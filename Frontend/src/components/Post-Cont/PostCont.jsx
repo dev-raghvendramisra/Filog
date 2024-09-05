@@ -46,8 +46,6 @@ function PostCont({
            <div key={post.postID || ID.unique()} className='relative'>
              <NavLink id={`postLink-${post.postID}`} to={`/post/${post.postID}`}>
               <BlogCard
-                classNameBlogCardCont="flex-row w-fit gap-8"
-                classNameBlogCardAuthorDateCont="h-fit mt-1vw"
                 title={post.title}
                 tags={post.tags}
                 coverImage={post.coverImageUrl}
