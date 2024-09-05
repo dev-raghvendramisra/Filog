@@ -20,12 +20,19 @@ function PostCont({
 
    
   const {userData} = useSelector((state) => state.auth)
-  const userProfileId = useSelector((state) => state.userProfile.$id, (prev, next) => prev === next)
+  const {userProfileId,blogsLiked} = useSelector((state) => {
+    return {
+      userProfileId: state.userProfile.$id,
+      blogsLiked: state.userProfile.blogsLiked
+    }
+  }, (prev, next) =>{
+     return prev.userProfileId==next.userProfileId && JSON.stringify(prev.blogsLiked)===JSON.stringify(next.blogsLiked)
+    })
   const openModal = useEmailAlertModal()
   const dispatch = useDispatch()
 
   console.log("blog cont rerendered");
-  
+
 
   return (
     <div id={id} className="h-fit w-fit py-1vw relative">
@@ -43,7 +50,7 @@ function PostCont({
           ))
         ) : (
           posts.map((post) => (
-           <div key={post.postID || ID.unique()} className='relative'>
+           <div key={post.postID} className='relative'>
              <NavLink id={`postLink-${post.postID}`} to={`/post/${post.postID}`}>
               <BlogCard
                 title={post.title}
@@ -63,6 +70,7 @@ function PostCont({
             likeCount={post.likeCount}
             commentCount={post.commentCount}
             blogImg={post.coverImageUrl}
+            liked = {blogsLiked.includes(post.postID)}
             updateLikes={(type)=>{
               dispatch(updateLikes({type,val:post.postID}))
               dispatch(type==="like"?likeBlog(post.postID):unlikeBlog(post.postID))

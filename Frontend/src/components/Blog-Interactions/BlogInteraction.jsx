@@ -4,11 +4,12 @@ import { dbServices } from '../../services'
 import toast from 'react-hot-toast'
 import {getFormattedNumber} from '../../utils'
 
-function BlogInteraction({userProfileId,blogImg,authorName,blogId,userData,openModal,updateLikes,likeCount=0, commentCount=0, height=1.7, width=1.7,loader=false}) {
-    const [isLiked, setIsLiked] = React.useState(false)
+function BlogInteraction({userProfileId,blogImg,authorName,blogId,userData,openModal,updateLikes,liked, likeCount=0, commentCount=0, height=1.7, width=1.7,loader=false}) {
+    const [isLiked, setIsLiked] = React.useState(liked)
     const [loading, setLoading] = React.useState(false)
     const [disabled, setDisabled] = React.useState(false)
     const msg = (type,author) => type === "liked" ? `Liked ${author}'s blog` : `Unliked ${author}'s blog`
+  
     
   
     const handleLike = async() => {

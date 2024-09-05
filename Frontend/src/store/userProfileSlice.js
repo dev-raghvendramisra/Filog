@@ -9,7 +9,7 @@ const initialState = {
     followers:[],
     blogs:[],
     userAvatarId:"",
-    blogsLiked:null
+    blogsLiked:[]
 }
 
 const userProfileSlice = createSlice({
@@ -31,7 +31,7 @@ const userProfileSlice = createSlice({
              type==="add"?state.following.push(val):state.following=state.following.filter(id=>id!==val)
         },
         updateLikes:(state,{payload:{type,val}})=>{
-            type==="add"?state.blogsLiked.push(val):state.blogsLiked=state.blogsLiked.filter(id=>id!==val)
+            type==="like"?state.blogsLiked.push(val):state.blogsLiked=state.blogsLiked.filter(id=>id!==val)
         }
 
     }
