@@ -51,7 +51,7 @@ function PostCont({
         ) : (
           posts.map((post) => (
            <div key={post.postID} className='relative'>
-             <NavLink id={`postLink-${post.postID}`} to={`/post/${post.postID}`}>
+             <NavLink id={`postLink-${post.postID}`} to={`/blog/${post.postID}`}>
               <BlogCard
                 title={post.title}
                 tags={post.tags}

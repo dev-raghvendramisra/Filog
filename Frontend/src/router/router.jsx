@@ -17,7 +17,7 @@ const router = createBrowserRouter(createRoutesFromElements(
     <Route path="/login" element={<Login />}></Route>
     <Route path="/signup" element={<SignUp />}></Route>
     <Route path="/about" element={<About />}></Route>
-    <Route path="/post/:postID" element={<Blog />}></Route>
+    <Route path="/blog/:blogID" element={<Blog />}></Route>
     <Route path="/search/:query" element={<SearchResult />}></Route>
     <Route path="/verify-email" element={<EmailVerification />}></Route>
     <Route path="/playground" element={<PlaygroundProtection />}></Route>{/* This is a test route */}

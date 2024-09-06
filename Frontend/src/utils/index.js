@@ -7,5 +7,6 @@ import handleAuthObject from './handleAuthObject'
 import getNewVerificationEmail from './getNewVerificationEmail'
 import getAlertModel from "./getAlertModel";
 import getFormattedNumber from './getFormattedNumber'
+import getSharableLink from "./getSharableLink";
 
-export {getBlogPosts,getFormattedNumber, startAuthentication, authErrHandler, getUserProfile, getUsersUtil, handleAuthObject, getNewVerificationEmail, getAlertModel }
+export {getBlogPosts,getFormattedNumber, startAuthentication, authErrHandler, getUserProfile, getUsersUtil, handleAuthObject, getNewVerificationEmail, getAlertModel, getSharableLink }

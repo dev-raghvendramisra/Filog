@@ -1,7 +1,6 @@
 import React from 'react'
 import { authServices, dbServices } from '../services'
 import { useSelector } from 'react-redux'
-import { BlogInteraction } from '../components'
 function Playground() {
  const {userName,userId, userAvatar,$id, blogsLiked} = useSelector(state=>state.userProfile)
  const {userData} = useSelector(state=>state.auth)
@@ -18,8 +17,7 @@ function Playground() {
         <button onClick={()=>{
         authServices.logout()
      }}>Logout</button>
-     <BlogInteraction blogsLiked={blogsLiked} blogId={"lll"} userData={userData}  />
-
+     
     </div>
   )
 }

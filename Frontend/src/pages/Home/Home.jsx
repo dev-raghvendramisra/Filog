@@ -39,7 +39,7 @@ function Home() {
         {posts[0].title!==""
         && posts.map((post)=>(
          <div className='relative' key={post.postID}>
-        <NavLink to={`/post/${post.postID}`} id={`post-${post.postID}`}>
+        <NavLink to={`/blog/${post.postID}`} id={`post-${post.postID}`}>
           <BlogCard 
           type='vertical'
           title={post.title} 
