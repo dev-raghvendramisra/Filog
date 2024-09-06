@@ -30,6 +30,7 @@ import AnimatedHeartIcon from "./Icons/AnimatedHeartIcon";
 import ShareIcon from "./Icons/ShareIcon";
 import BlogInteraction from "./Blog-Interactions/BlogInteraction";
 import PostCont from "./Post-Cont/PostCont";
+import BlogCardInteractionContainer from "./Blog-Card-Interaction-Cont/BlogCardInteractionContainer";
 
 export {
   Navbar,
@@ -63,6 +64,7 @@ export {
   CommentIcon,
   ShareIcon,
   BlogInteraction,
-  PostCont
+  PostCont,
+  BlogCardInteractionContainer
 };
 export * from "../pages"

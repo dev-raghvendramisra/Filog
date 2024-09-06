@@ -1,6 +1,5 @@
 import React from 'react';
-import { ID } from 'appwrite';
-import { BlogCard, BlogInteraction, ErrorPlaceHolderImage } from '../../components';
+import { BlogCard, BlogCardInteractionContainer, BlogInteraction, ErrorPlaceHolderImage } from '../../components';
 import { NavLink } from 'react-router-dom';
 import { useEmailAlertModal } from '../../hooks';
 import { useDispatch, useSelector } from 'react-redux';
@@ -50,32 +49,26 @@ function PostCont({
           ))
         ) : (
           posts.map((post) => (
-           <div key={post.postID} className='relative'>
-             <NavLink id={`postLink-${post.postID}`} to={`/blog/${post.postID}`}>
-              <BlogCard
-                title={post.title}
-                tags={post.tags}
-                coverImage={post.coverImageUrl}
-                author={post.authorName}
-                authorImg={post.authorAvatar}
-                createdAt={post.createdAt}
-              />
-            </NavLink>
-            <BlogInteraction  
-            userData={userData} 
-            userProfileId={userProfileId} 
-            blogId={post.postID} 
-            openModal={openModal} 
-            authorName={post.authorName}
-            likeCount={post.likeCount}
-            commentCount={post.commentCount}
-            blogImg={post.coverImageUrl}
-            liked = {blogsLiked.includes(post.postID)}
-            updateLikes={(type)=>{
-              dispatch(updateLikes({type,val:post.postID}))
-              dispatch(type==="like"?likeBlog(post.postID):unlikeBlog(post.postID))
-            }}  />
-           </div>
+          <BlogCardInteractionContainer 
+          blogId={post.postID} 
+          key={post.postID}
+          authorName={post.authorName}
+          userData={userData}
+          userProfileId={userProfileId}
+          likeCount={post.likeCount}
+          commentCount={post.commentCount}
+          blogTitle={post.title}
+          blogTags={post.tags}
+          authorAvatar={post.authorAvatar}
+          createdAt={post.createdAt}
+          blogImg={post.coverImageUrl}
+          blogsLiked={blogsLiked}
+          openModal={openModal}
+          updateLikes={(type) => {
+                    dispatch(updateLikes({ type, val: post.postID }))
+                    dispatch(type === "like" ? likeBlog(post.postID) : unlikeBlog(post.postID))
+                }}
+           />
           ))
         )}
         

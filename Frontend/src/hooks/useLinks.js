@@ -1,5 +1,5 @@
 import React from "react";
-import linkConfig from '../conf/linkConf';
+import linkConfig from '../conf/navLinkConf';
 import { useSelector } from "react-redux";
 
 export default function useLinks() {

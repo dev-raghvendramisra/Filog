@@ -1,6 +1,9 @@
 import React from 'react'
 import { authServices, dbServices } from '../services'
 import { useSelector } from 'react-redux'
+import {getSharableLink} from '../utils'
+import toast from 'react-hot-toast'
+import { GenToast } from '../components'
 function Playground() {
  const {userName,userId, userAvatar,$id, blogsLiked} = useSelector(state=>state.userProfile)
  const {userData} = useSelector(state=>state.auth)
@@ -17,7 +20,7 @@ function Playground() {
         <button onClick={()=>{
         authServices.logout()
      }}>Logout</button>
-     
+     <button onClick={()=>{}}>Test link</button>
     </div>
   )
 }

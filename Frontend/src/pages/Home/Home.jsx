@@ -1,13 +1,11 @@
 import React from 'react'
-import { BlogInteraction, HomeHero, HomeUpper } from '../../components'
-import {BlogCard} from '../../components';
+import { BlogCardInteractionContainer, HomeHero, HomeUpper } from '../../components'
 import { useSelector } from 'react-redux';
 import { getBlogPosts } from '../../utils';
 import { clearBlogs, setBlogs } from '../../store/blogsSlice';
 import { updateLikes } from '../../store/userProfileSlice';
 import { likeBlog, unlikeBlog } from '../../store/blogsSlice';
 import { useDispatch } from 'react-redux';
-import { NavLink } from 'react-router-dom';
 import {Navigate} from 'react-router-dom'
 import { useEmailAlertModal } from '../../hooks';
 
@@ -38,32 +36,27 @@ function Home() {
       <div  className='homeGrid'>
         {posts[0].title!==""
         && posts.map((post)=>(
-         <div className='relative' key={post.postID}>
-        <NavLink to={`/blog/${post.postID}`} id={`post-${post.postID}`}>
-          <BlogCard 
-          type='vertical'
-          title={post.title} 
-          tags={post.tags}
-          coverImage={post.coverImageUrl}
-          author={post.authorName}
-          authorImg={post.authorAvatar}
+          <BlogCardInteractionContainer 
+          blogId={post.postID} 
+          key={post.postID}
+          blogCardType="vertical"
+          authorName={post.authorName}
+          userData={userData}
+          userProfileId={userProfile.$id}
+          likeCount={post.likeCount}
+          commentCount={post.commentCount}
+          blogTitle={post.title}
+          blogTags={post.tags}
+          authorAvatar={post.authorAvatar}
           createdAt={post.createdAt}
-          />
-        </NavLink>
-        <BlogInteraction 
-        openModal={openModal}
-        authorName={post.authorName} 
-        blogId={post.postID} 
-        userData={userData} 
-        userProfileId={userProfile.$id}
-        likeCount={post.likeCount}
-        commentCount={post.commentCount}
-        blogImg={post.coverImageUrl}
-        updateLikes={(type)=>{
-          dispatch(updateLikes({type,val:post.postID}))
-          dispatch(type==="like"?likeBlog(post.postId):unlikeBlog(post.postId))
-        }} /> 
-      </div> 
+          blogImg={post.coverImageUrl}
+          blogsLiked={userProfile.blogsLiked}
+          updateLikes={(type) => {
+                    dispatch(updateLikes({ type, val: post.postID }))
+                    dispatch(type === "like" ? likeBlog(post.postID) : unlikeBlog(post.postID))
+                }}
+          openModal={openModal}
+           />
          ))
         }
       </div>
