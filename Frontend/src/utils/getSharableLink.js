@@ -2,7 +2,8 @@ import conf from '../conf/conf'
 
 
 export default  function getSharableLink({platform,blogId,blogTitle,blogAuthor,clipboard=false}) {
-  const encodedUrl = encodeURIComponent(`${conf.productionEndpoint}/blog/${blogId}`);
+  const baseUrl = `${conf.productionEndpoint}/blog/${blogId}`;
+  const encodedUrl = encodeURIComponent(baseUrl);
   const encodedTitle = encodeURIComponent(blogTitle + `\nCheck out this amazing blog on Filog by ${blogAuthor}` );
 
   if(platform=="twitter") return  ()=> window.open(`https://x.com/intent/post?url=${encodedUrl}&text=${encodedTitle}`) ;
@@ -16,7 +17,7 @@ export default  function getSharableLink({platform,blogId,blogTitle,blogAuthor,c
   
   if(clipboard) return (onErr,onSuccess)=>{
      try {
-      navigator.clipboard.writeText(encodedUrl)
+      navigator.clipboard.writeText(baseUrl)
       .then(onSuccess)
      } catch {
       onErr()

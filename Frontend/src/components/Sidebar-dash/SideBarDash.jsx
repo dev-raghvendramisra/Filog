@@ -73,8 +73,6 @@ function SideBarDash({ contRef }) {
   }, [handlePagination]);
 
 
-  console.log("follow card rererndered");
-
   return (
     <>
     <div

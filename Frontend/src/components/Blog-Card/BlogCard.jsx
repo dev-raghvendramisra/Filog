@@ -17,6 +17,7 @@ function BlogCard({
   classNameBlogCardTagCont="",
   classNameBlogCardHeadingCont="",
   classNameBlogCardAuthorDateCont="",
+  uniqueId,
   onClick=()=>{} }) {
     
   const headingRef = useRef();
@@ -25,7 +26,7 @@ function BlogCard({
   const [truncatedTitle, setTruncatedTitle] = useState(title);
   const [truncatedAuthor, setTruncatedAuthor] = useState(author);
   const [rerender, forceRerender]  = React.useState(false);
-  const uniqueId = ID.unique();
+ 
  
   
 
@@ -66,7 +67,6 @@ function BlogCard({
     onClick={onClick}
     className={`flex relative bg-transparent border-2 dark:bg-darkPrimary_grays dark:border-footer_text_light dark:border-opacity-50 p-1vw rounded-3xl cursor-pointer ${type=="horizontal" ? "w-fit gap-8":"flex-col gap-4"} ${loader?"dark:bg-opacity-50 ":""}
     ${classNameBlogCardCont}`}>
-
       {coverImage || loader ? (
         <div id={`BlogCard-img-cont-${uniqueId}`} 
         className={`w-19vw h-12vw rounded-xl overflow-hidden relative

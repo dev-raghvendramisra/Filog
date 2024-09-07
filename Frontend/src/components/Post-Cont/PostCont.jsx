@@ -30,12 +30,11 @@ function PostCont({
   const openModal = useEmailAlertModal()
   const dispatch = useDispatch()
 
-  console.log("blog cont rerendered");
 
 
   return (
-    <div id={id} className="h-fit w-fit py-1vw relative">
-      <div id="main-post-cont" className="flex-col flex" style={{gap:"4.8vw"}}>
+    <div id={id} className="h-fit w-fit py-1vw relative transition-all">
+      <div id="main-post-cont" className="flex-col flex gap-8 transition-all">
         {dashboardErr ? (
           <ErrorPlaceHolderImage customErrMsg={customErrMsg} type={dashboardErr} />
         ) : initLoading || postLoading ? (

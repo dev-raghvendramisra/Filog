@@ -4,7 +4,7 @@ import { dbServices } from '../../services'
 import toast from 'react-hot-toast'
 import {getFormattedNumber} from '../../utils'
 
-function BlogInteraction({userProfileId,blogImg,authorName,blogId,userData,openModal,updateLikes,liked, likeCount=0, commentCount=0, height=1.7, width=1.7,loader=false}) {
+function BlogInteraction({userProfileId,blogImg,authorName,blogId,userData,openModal,updateLikes,liked, likeCount=0, commentCount=0, height=1.7, width=1.7,loader=false, setOpenDropdown, uniqueId}) {
     const [isLiked, setIsLiked] = React.useState(liked)
     const [loading, setLoading] = React.useState(false)
     const [disabled, setDisabled] = React.useState(false)
@@ -51,13 +51,15 @@ function BlogInteraction({userProfileId,blogImg,authorName,blogId,userData,openM
         setDisabled(false)
     }
     const handleComment = () => { }
-    const handleShare = () => { }
+    const handleShare = () => {
+      setOpenDropdown(prev => !prev)
+     }
 
  
 
 
   return (
-    <div className={`flex gap-3 justify-center absolute  top-[99.5%] items-center border-2 dark:border-footer_text_light dark:border-opacity-50   dark:bg-darkPrimary_grays bg-opacity-60 py-0.5vw px-1vw rounded-full`}>
+    <div className={`flex gap-3 justify-center h-fit w-fit items-center border-2 dark:border-footer_text_light dark:border-opacity-50   dark:bg-darkPrimary_grays bg-opacity-60 py-0.5vw px-1vw rounded-full`} id={`BlogCard-interactions-${uniqueId}`}>
         
      <div className='flex justify-center items-center'>
         <button className={`flex items-center justify-center gap-2 rounded-full overflow-hidden relative hover:iconsHoverAnim ${loader && "postReactionLoader"}`} style={{height:`${height + 0.5}vw`,width:`${width + 0.5}vw`}} onClick={handleLike}>
