@@ -4,7 +4,7 @@ import conf from '../conf/conf'
 export default  function getSharableLink({platform,blogId,blogTitle,blogAuthor,clipboard=false}) {
   const baseUrl = `${conf.productionEndpoint}/blog/${blogId}`;
   const encodedUrl = encodeURIComponent(baseUrl);
-  const encodedTitle = encodeURIComponent(blogTitle + `\nCheck out this amazing blog on Filog by ${blogAuthor}` );
+  const encodedTitle = encodeURIComponent(`Check out this amazing blog on Filog by ${blogAuthor}\n`+blogTitle);
 
   if(platform=="twitter") return  ()=> window.open(`https://x.com/intent/post?url=${encodedUrl}&text=${encodedTitle}`) ;
 
