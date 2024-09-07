@@ -5,7 +5,7 @@
       "destination": "/api/metatags/:id"
     },
     {
-      "source": "/*",
+      "source": "/:path*",
       "destination": "/index.html"
     }
   ],
