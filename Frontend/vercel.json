@@ -2,10 +2,10 @@
   "rewrites": [
     {
       "source": "/blog/:id",
-      "destination": "/api/metatags/:id"
+      "destination": "/api/metatags/handleBlogTagsReq"
     },
     {
-      "source": "/:path*",
+      "source": "/(.*)",
       "destination": "/index.html"
     }
   ],
