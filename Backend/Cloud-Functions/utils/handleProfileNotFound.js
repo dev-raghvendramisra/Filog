@@ -1,4 +1,4 @@
-import dbServices from "../Cloud-Functions/Services/dbService.js";
+import dbServices from "../Services/dbService.js";
 
 export default async function handleProfileNotFound(userId, targetUserId, log) {
     log("Target Profile not found:", targetUserId);
