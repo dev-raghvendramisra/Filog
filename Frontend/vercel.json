@@ -1,9 +1,14 @@
 {
-  
+  "builds": [
+    {
+      "src": "api/**/*.js",
+      "use": "@vercel/node"
+    }
+  ],
   "rewrites": [
     {
       "source": "/blog/:id",
-      "destination": "/vercel-functions/meta-tags?id=:id"
+      "destination": "/api/meta-tags?id=:id"
     },
     {
       "source": "/(.*)",
@@ -11,7 +16,7 @@
     }
   ],
   "functions": {
-    "vercel-functions/**/*.js": {
+    "api/**/*.js": {
       "memory": 1024,
       "maxDuration": 10
     }
