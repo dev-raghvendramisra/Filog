@@ -3,10 +3,6 @@
     {
       "source": "/blog/:id",
       "destination": "/api/metatags.js/:id"
-    },
-    {
-      "source": "/(.*)",
-      "destination": "/index.html"
     }
   ],
   "functions": {
