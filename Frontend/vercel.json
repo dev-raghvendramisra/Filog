@@ -1,5 +1,32 @@
 {
-    "rewrites": [
-      { "source": "/(.*)", "destination": "/index.html" }
-    ]
+  "version": 2,
+  "builds": [
+    {
+      "src": "dist/**/*",
+      "use": "@vercel/static-build",
+      "config": {
+        "distDir": "dist"
+      }
+    },
+    {
+      "src": "vercel-functions/**/*.js",
+      "use": "@vercel/node"
+    }
+  ],
+  "rewrites": [
+    {
+      "source": "/blog/:id",
+      "destination": "/vercel-functions/meta-tags?id=:id"
+    },
+    {
+      "source": "/(.*)",
+      "destination": "/index.html"
+    }
+  ],
+  "functions": {
+    "vercel-functions/**/*.js": {
+      "memory": 1024,
+      "maxDuration": 10
+    }
   }
+}
