@@ -2,7 +2,7 @@
   "rewrites": [
     {
       "source": "/blog/:id",
-      "destination": "/api/meta-tags/:id"
+      "destination": "/api/metatags/:id"
     },
     {
       "source": "/(.*)",
