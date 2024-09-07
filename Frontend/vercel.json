@@ -8,7 +8,7 @@
   "rewrites": [
     {
       "source": "/blog/:id",
-      "destination": "/api/meta-tags?id=:id"
+      "destination": "/api/meta-tags/:id"
     },
     {
       "source": "/(.*)",
