@@ -1,8 +1,8 @@
 {
   "rewrites": [
     {
-      "source": "/blog/:id",
-      "destination": "/api/metatags.js/:id"
+      "source": "/(.*)",
+      "destination": "/api/metatags"
     }
   ],
   "functions": {
