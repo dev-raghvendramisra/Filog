@@ -1,10 +1,5 @@
 {
-  "builds": [
-    {
-      "src": "vercel-functions/**/*.js",
-      "use": "@vercel/node"
-    }
-  ],
+  
   "rewrites": [
     {
       "source": "/blog/:id",
