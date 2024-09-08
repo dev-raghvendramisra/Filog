@@ -20,9 +20,10 @@ export default async function handleBlogTagsReq(req, res) {
       .setKey(conf.appwriteApiKey);
       
       const database = new Databases(client)
-
+     
       try{
         const blog = await database.getDocument(conf.appwriteDbId,conf.appwriteBlogCollectionId,id);
+        console.log('Blog data:', blog);
         if(blog.$id){
           blogData.imgUrl = blog['coverImageUrl'];
           blogData.title = blog['title'];
