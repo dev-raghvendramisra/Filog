@@ -1,4 +1,4 @@
-import {Client, Databases} from 'appwrite'
+import {Client, Databases} from 'node-appwrite'
 import conf from '../conf/conf.js';
 import {getBlogMetatags} from '../utils/index.js';
 
