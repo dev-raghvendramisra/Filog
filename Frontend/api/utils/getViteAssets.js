@@ -2,7 +2,7 @@ import {promises as fs} from 'fs';
 import path from 'path';
 
 export default async function getViteAssets() {
-   const manifestPath  = path.resolve(process.cwd(),'.vite','manifest.json');
+    const manifestPath = path.join(__dirname, '../../.vite/manifest.json');
    try {
 
     const data = await fs.readFile(manifestPath, 'utf-8');
