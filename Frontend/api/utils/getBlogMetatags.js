@@ -3,7 +3,7 @@ export default async function getBlogMetatags(blogData) {
     const {jsFile, cssFile} = (()=>({jsFile:"/assets/index.js",cssFile:"/assets/index.css"}))()
     if(blogData, jsFile, cssFile){
         return (
-            `<!doctype html>
+`<!doctype html>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
@@ -12,17 +12,17 @@ export default async function getBlogMetatags(blogData) {
 
     <!-- Open Graph / Facebook Meta Tags -->
     <meta property="og:type" content="website">
-    <meta property="og:url" content=${blogData.siteUrl}>
-    <meta property="og:title" content=${blogData.title}>
+    <meta property="og:url" content="${blogData.siteUrl}">
+    <meta property="og:title" content="${blogData.title}">
     <meta property="og:description" content="Filog is a blogging platform where users can create accounts, write articles, and share their blogs with the world. Join Filog and start blogging today! Crafting Narratives, Lighting the Way Forward.">
-    <meta property="og:image" content=${blogData.imgUrl}>
+    <meta property="og:image" content="${blogData.imgUrl}">
 
     <!-- Twitter Meta Tags -->
     <meta property="twitter:card" content="summary_large_image">
-    <meta property="twitter:url" content=${blogData.siteUrl}>
-    <meta property="twitter:title" content=${blogData.title}>
+    <meta property="twitter:url" content="${blogData.siteUrl}">
+    <meta property="twitter:title" content="${blogData.title}">
     <meta property="twitter:description" content="Filog is a blogging platform where users can create accounts, write articles, and share their blogs with the world. Join Filog and start blogging today! Crafting Narratives, Lighting the Way Forward.">
-    <meta property="twitter:image" content=${blogData.imgUrl}>
+    <meta property="twitter:image" content="${blogData.imgUrl}">
 
     <!-- Additional Meta Tags -->
     <meta name="keywords" content="blogging, articles, write blogs, share blogs, create account, Filog, blogging platform">
@@ -41,8 +41,8 @@ export default async function getBlogMetatags(blogData) {
     <meta name="theme-color" content="#ffffff">
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Filog | Crafting Narratives, Lighting the Way Forward </title>
-    <script type="module" crossorigin src=${jsFile}></script>
-    <link rel="stylesheet" crossorigin href=${cssFile}>
+    <script type="module" crossorigin src="${jsFile}"></script>
+    <link rel="stylesheet" crossorigin href="${cssFile}">
   </head>
   <body class="dark:bg-darkPrimary min-h-screen">
     <div id="root" ></div>
