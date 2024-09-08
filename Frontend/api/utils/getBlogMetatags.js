@@ -1,7 +1,6 @@
-import {getViteAssets} from "../utils/index.js";
 
 export default async function getBlogMetatags(blogData) {
-    const {jsFile, cssFile} = await getViteAssets();
+    const {jsFile, cssFile} = (()=>({jsFile:"/assets/index.js",cssFile:"/assets/index.css"}))()
     if(blogData, jsFile, cssFile){
         return (
             `<!doctype html>
