@@ -7,7 +7,7 @@ export default async function getViteAssets() {
     const __filename = fileURLToPath(import.meta.url);
     const __dirname = dirname(__filename)
 
-    const manifestPath = join(__dirname, '../../.vite/manifest.json');
+    const manifestPath = join(__dirname, '.vite/manifest.json');
    try {
 
     const data = await fs.readFile(manifestPath, 'utf-8');
