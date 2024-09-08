@@ -45,8 +45,8 @@
     <meta name="theme-color" content="#ffffff">
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Filog | Crafting Narratives, Lighting the Way Forward </title>
-    <script type="module" crossorigin src="/assets/index.Dn2rEhhr.js"></script>
-    <link rel="stylesheet" crossorigin href="/assets/index.Ba6qc1VE.css">
+    <script type="module" crossorigin src="/assets/index.js"></script>
+    <link rel="stylesheet" crossorigin href="/assets/index.css">
   </head>
   <body class="dark:bg-darkPrimary min-h-screen">
     <div id="root" ></div>
