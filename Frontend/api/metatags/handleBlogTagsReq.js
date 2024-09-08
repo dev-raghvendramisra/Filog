@@ -46,9 +46,9 @@ export default async function handleBlogTagsReq(req, res) {
         }
         
       }catch(error){
-        console.error('Error fetching blog data:', error);
+        console.log('Error fetching blog data:', error);
         res.setHeader('Content-Type', 'text/html');
-        res.status(200).send(defaultBody);
+        res.status(200).send(conf.defaultBody);
       }
         
     }
