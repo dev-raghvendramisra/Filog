@@ -6,7 +6,7 @@
   "scripts": {
     "dev": "vite",
     "build": "vite build",
-    "postbuild": "mv dist/.vite/manifest.json api/ && echo 'Moved manifest.json to api/' && ls -l api/manifest.json && cat api/manifest.json",
+    "postbuild": "cp -R .dist/.vite api/ && echo 'Files moved to api/' && ls -l api/ && cat api/manifest.json",
     "lint": "eslint . --ext js,jsx --report-unused-disable-directives --max-warnings 0",
     "preview": "vite preview"
   },
