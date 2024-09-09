@@ -2,7 +2,7 @@ import React from 'react';
 import { dbServices } from '../../services';
 import toast from 'react-hot-toast';
 import { ColorRing } from 'react-loader-spinner'
-import {CustomToast, GenToast, ProfilePic} from '../../components'
+import {CustomToast, GenToast, ProfilePic, VerificationIcon} from '../../components'
 
 
 function FollowSuggestionsCard({
@@ -11,6 +11,7 @@ function FollowSuggestionsCard({
   suggestedUser,
   userProfileId,
   navigate,
+  isSuggestedUserFilogVerified,
   setFollowing,
   suggestionCont,
   classNameAvatar = "",
@@ -101,13 +102,17 @@ function FollowSuggestionsCard({
         </div>
         <div
           id="name-wrapper"
-          className={`${loader ? "bg-slate-200 h-2vw w-8vw rounded-2xl dark:bg-darkPrimary postCardLoader" : ""}`}
+          className={`${loader ? "bg-slate-200 h-2vw w-8vw  gap-2 rounded-2xl dark:bg-darkPrimary postCardLoader" : ""} flex justify-start gap-2 items-center`}
         >
-          {loader ? null : (
-            <p id="user-name" className={`${classNameUserName}`}>
+            {!loader && <p id="user-name" className={`${classNameUserName}`}>
               {suggestedUser.userName}
-            </p>
-          )}
+            </p>}
+            {
+              !loader && isSuggestedUserFilogVerified 
+              && <div className='relative'>
+              <VerificationIcon height='1vw' width='1vw' />
+            </div>
+            }
         </div>
       </div>
       {loader ? null : (

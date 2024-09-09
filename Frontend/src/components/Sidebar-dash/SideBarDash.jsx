@@ -111,6 +111,7 @@ function SideBarDash({ contRef }) {
                     return setOpenAlert(true)
                   }}
                   userData={userData}
+                  isSuggestedUserFilogVerified={user.isFilogVerified}
                 />
               ))
         }

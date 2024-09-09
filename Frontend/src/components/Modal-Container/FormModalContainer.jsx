@@ -22,7 +22,7 @@ function FormModalContainer() {
    
   const uniqueId = React.useRef(ID.unique())
 
-    // if(modals.length <= 1) return null; 
+    if(modals.length <= 1) return null; 
 
 
   return (

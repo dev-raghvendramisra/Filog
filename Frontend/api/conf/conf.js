@@ -19,7 +19,7 @@
     <meta property="og:url" content="https://fiilog.vercel.app">
     <meta property="og:title" content="Filog - Create and Share Your Blog Articles | Crafting Narratives, Lighting the Way Forward">
     <meta property="og:description" content="Filog is a blogging platform where users can create accounts, write articles, and share their blogs with the world. Join Filog and start blogging today! Crafting Narratives, Lighting the Way Forward.">
-    <meta property="og:image" content="https://fiilog.vercel.app/meta/tb.png">
+    <meta property="og:image" content="https://fiilog.vercel.app/meta/tb.webp">
 
     <!-- Twitter Meta Tags -->
     <meta property="twitter:card" content="summary_large_image">

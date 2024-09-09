@@ -33,6 +33,7 @@ import BlogInteraction from "./Blog-Interactions/BlogInteraction";
 import PostCont from "./Post-Cont/PostCont";
 import BlogCardInteractionContainer from "./Blog-Card-Interaction-Cont/BlogCardInteractionContainer";
 import Dropdown from "./Dropdown/Dropdown";
+import VerificationIcon from "./Icons/VerifiedIcon";
 
 export {
   Navbar,
@@ -69,6 +70,7 @@ export {
   PostCont,
   BlogCardInteractionContainer,
   Dropdown,
-  FormModalContainer
+  FormModalContainer,
+  VerificationIcon
 };
 export * from "../pages"

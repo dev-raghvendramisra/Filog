@@ -3,11 +3,13 @@ import { dbServices } from "../services";
 
 
 export default async function getUsersUtil({userId="#",offset=0,limit=10,dispatch,clearUsers,setUsers,query=[]}){
-    let queries=[]
+    let queries=[
+        Query.orderDesc("priority")
+    ]
     if(query.length==0){
-        queries=[Query.notEqual("userId",[userId])]
+        queries.push(Query.notEqual("userId",[userId]))
     }
-    else queries=[...query]
+    else queries=[...queries,...query]
 
     const res =  await dbServices.getUsers([...queries,Query.offset(offset),Query.limit(limit)])
 
