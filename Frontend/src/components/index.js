@@ -23,7 +23,8 @@ import CustomToast from "./Toast/CustomToast";
 import GenToast from './Toast/GenToast';
 import AlertModal from "./Modal/AlertModal";
 import FormModal from "./Modal/FormModal";
-import ModalContainer from "./Modal-Container/ModalContainer";
+import AlertModalContainer from "./Modal-Container/AlertModalContainer";
+import FormModalContainer from "./Modal-Container/FormModalContainer";
 import WorkInProgress from "./Error-message/WorkInProgress";
 import CommentIcon from "./Icons/CommentIcon";
 import AnimatedHeartIcon from "./Icons/AnimatedHeartIcon";
@@ -59,7 +60,7 @@ export {
   GenToast,
   AlertModal,
   FormModal,
-  ModalContainer,
+  AlertModalContainer,
   WorkInProgress,
   AnimatedHeartIcon,
   CommentIcon,
@@ -67,6 +68,7 @@ export {
   BlogInteraction,
   PostCont,
   BlogCardInteractionContainer,
-  Dropdown
+  Dropdown,
+  FormModalContainer
 };
 export * from "../pages"

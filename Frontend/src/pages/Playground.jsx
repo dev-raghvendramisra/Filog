@@ -1,10 +1,13 @@
 import React from 'react'
 import { authServices, dbServices } from '../services'
 import { useSelector } from 'react-redux'
+import { Input } from '../components'
 
 function Playground() {
  const {userName,userId, userAvatar,$id, blogsLiked} = useSelector(state=>state.userProfile)
  const {userData} = useSelector(state=>state.auth)
+ const [val, setVal] = React.useState("")
+ const ref = React.useRef(null)
 
   return (
     <div className='h-100vh w-full flex flex-col justify-start items-center'>
@@ -18,6 +21,8 @@ function Playground() {
         <button onClick={()=>{
         authServices.logout()
      }}>Logout</button>
+     <Input value={val} ref={ref} onChange={({target})=>{setVal(target.value)}} className_container="w-20vw px-1.5vw py-1vw" style={{width:"100%"}} type="Add comment" text_area icon={false} />
+     <Input value={val} ref={ref} onChange={({target})=>{setVal(target.value)}} className_container="w-20vw px-1.5vw py-1vw" style={{width:"100%"}} type="email" icon={false} />
      <button onClick={()=>{}}>Test link</button>
     </div>
   )

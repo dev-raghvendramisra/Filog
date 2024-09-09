@@ -1,10 +1,10 @@
 import React from 'react';
-import { Footer, InfinitePogressbar, Navbar, GenToast, ModalContainer } from './components';
+import { Footer, InfinitePogressbar, Navbar, GenToast, AlertModalContainer, FormModalContainer } from './components';
 import './App.css';
 import '@fortawesome/fontawesome-free/css/all.min.css';
 
 
-import { Outlet, useLocation } from 'react-router-dom';
+import { Form, Outlet, useLocation } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import { login, logout, setFetching } from './store/authSlice';
 import { useNavigate } from 'react-router-dom';
@@ -52,7 +52,8 @@ function App() {
   return (
     <>
       {fetching? pathname=="/login" || pathname=="/signup"? <InfinitePogressbar className={`${pathname==""?"bg-opacity-0 dark:bg-opacity-0":""}`} /> : null:null}
-      <ModalContainer />
+      <AlertModalContainer />
+      <FormModalContainer />
       { <Navbar /> }
       {/* //pathname=="/verify-email" && */}
       <Toaster toastOptions={{duration: 7000,}} containerStyle={{marginTop:`${pathname=="/verify-email"?"5%":"5%"}`}} />

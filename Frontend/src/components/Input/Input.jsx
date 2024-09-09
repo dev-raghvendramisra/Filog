@@ -15,7 +15,10 @@ const Input=React.forwardRef(({
    className_icon_cont="",
    errMsg="",
    fill=false,
-   errClassName=""
+   errClassName="",
+   text_area=false,
+   icon=true,
+   ...inputContStyle
      },ref)=> {
 
      
@@ -32,7 +35,7 @@ const Input=React.forwardRef(({
           case "name":
             return "fa-regular fa-circle-user";
           default:
-            return "";
+            return "fa-regular fa-comment";
         }
       };
 
@@ -44,26 +47,31 @@ const Input=React.forwardRef(({
         className={` w-26vw rounded-2xl  flex relative
         ${fill?"h-3vw bg-gray-100 dark:bg-darkPrimary_grays":"h-3.5vw bg-transparent border-2 dark:border-1"}
         ${errMsg?"border-red-500 border-2 dark:border-1":"border-blackColor dark:border-white"}
+        ${text_area?"h-8vw":""}
         ${className_container}`}>
         
          <label id="label-as-placeholder-for-outlined-input" htmlFor={id} 
-         className={`transition-inset absolute z-30  bg-white pl-0.5vw pr-0.5vw dark:bg-darkPrimary
+         className={`transition-inset absolute z-30  bg-white pl-0.5vw pr-0.5vw dark:bg-darkPrimary text-0.8vw
           ${fill?"hidden":""}
-          ${value!=""?("left-10p -top-20p text-0.8vw"):(ref.current!=document.activeElement?("left-12p text-1vw top-28p"):("left-10p -top-20p text-0.8vw"))}`}  >
+          ${value!=""?(text_area ?"left-6p -top-8p":"left-10p -top-20p"):(ref.current!=document.activeElement?(text_area ?"left-8p top-12p text-1vw":"left-12p text-1vw top-28p"):(text_area ?"":"left-10p -top-20p "))}`}  >
           {type.substring(0,1).toLocaleUpperCase()+type.substring(1)}
           </label>
          
-         <div  id="icon-cont" className={` w-10p h-100p  text-1.5vw flex justify-center items-center 
+         {icon && <div  id="icon-cont" className={` w-10p h-100p  text-1.5vw flex justify-center items-center
           ${fill?("text-darkPrimary_grays_darker text-opacity-70 dark:text-opacity-100 dark:text-footer_text"):("text-darkPrimary_grays_darker text-opacity-70 dark:text-opacity-80 dark:text-white")} ${className_icon_cont}`}>
            <span id="input-icon" 
           className={`inline  ${getIconClass()} ${className_icon}`}>
           </span>
-         </div>
+         </div>}
 
           <div id="pass-protection-wrapper" 
-          className={`h-100p w-80p relative overflow-hidden ${className_input_prot_el_wrapper}`}>
-            <input id={id} ref={ref} type={isTypePass?"password":"text"} value={value} onChange={onChange} placeholder={fill?placeholder:""}
-            className={`bg-transparent h-100p w-100p outline-none ${className_input}`} autoComplete='off'/>
+          className={`h-100p w-80p relative overflow-hidden ${className_input_prot_el_wrapper}`} {...inputContStyle}>
+            {text_area 
+            ?<textarea rows="6" cols="50" value={value} onChange={onChange} placeholder={fill?placeholder:""}
+            className={`bg-transparent h-100p w-100p resize-none outline-none hideScrollbar ${className_input}`} autoComplete='off'></textarea>
+            :<input id={id} ref={ref} type={isTypePass?"password":"text"} value={value} onChange={onChange} placeholder={fill?placeholder:""}
+            className={`bg-transparent h-100p w-100p outline-none ${icon || "pl-1vw"}${className_input}`} autoComplete='off'/>
+            }
           </div>
 
           {/* {conditional rendering between replacement and icon of pass} */}
@@ -79,8 +87,8 @@ const Input=React.forwardRef(({
           </div>
 
 
-          :<div id="passIconReplacement" 
-          className={` h-100p w-10p ${className_pass_icon_replacement}`}></div>
+          :(icon && <div id="passIconReplacement" 
+          className={` h-100p w-10p ${className_pass_icon_replacement}`}></div>)
         }
           
 

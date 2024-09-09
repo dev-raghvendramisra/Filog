@@ -1,9 +1,9 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
-import { AlertModal } from '../';
+import { AlertModal } from '..';
 import useModalActionsContext from '../../context/modalActionsContext';
 
-function ModalContainer() {
+function AlertModalContainer() {
   const modals = useSelector((state) => state.alertModals);
   const { modalActions } = useModalActionsContext();
   
@@ -39,4 +39,4 @@ function ModalContainer() {
   );
 }
 
-export default ModalContainer;
+export default AlertModalContainer;
