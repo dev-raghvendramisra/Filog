@@ -19,14 +19,17 @@ function FormModalContainer() {
     type:"Add your comment",
     text_area:true,
   }]
+   
+  const uniqueId = React.useRef(ID.unique())
 
     // if(modals.length <= 1) return null; 
+
 
   return (
     <div className=' flex items-center justify-center h-100vh w-full bg-black bg-opacity-70 dark:bg-opacity-80 fixed' style={{ zIndex: "60" }}>
         {modals.map((modal, index) => {
             return (
-                <FormModal modalId={ID.unique()} 
+                <FormModal modalId={uniqueId.current} 
                 inputFeildSpecs={inputFeildSpecs}
                 primaryBtnText="Comment" 
                 iconClass='fa regular fa-comments' 

@@ -28,7 +28,8 @@ const Input=React.forwardRef(({
     const [chars, setChars] = React.useState(0)
     
     const handleChange = ({target}) =>{
-      setChars(target.value.length)
+      console.log(target.value)
+      text_area && setChars(target.value.length)
        onChange({target})
     }
 

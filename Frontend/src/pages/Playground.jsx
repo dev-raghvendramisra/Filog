@@ -15,8 +15,20 @@ function Playground() {
 
  const inputFeildSpecs=[
   {
-    type:"Add your comment",
+    type:"Add comment",
     text_area:true,
+  },
+  {
+    type:"email",
+    text_area:false,
+  },
+  {
+    type:"email",
+    text_area:false,
+  },
+  {
+    type:"name",
+    text_area:false,
   }]
 
   return (
@@ -27,10 +39,7 @@ function Playground() {
         authServices.logout()
      }}>Logout</button>
          <button onClick={()=>{}}>Test link</button>
-
-
-
-      <FormModal modalId={ID.unique()} 
+      <FormModal modalId={"kkkkkk"} 
       inputFeildSpecs={inputFeildSpecs}
       primaryBtnText="Comment" 
       iconClass='fa regular fa-comments' 
@@ -39,14 +48,12 @@ function Playground() {
       inputFeild_2Value={val2} 
       inputFeild_3Value={val3} 
       ctaDanger={false}
-      message="Be clear, kind, and stay on topic with your feedback."
+      message="Contribute thoughtfully—focus on the topic and be respectful."
       ctaDisabled={false}
       charLimit={500}
       onChange_1={({target})=>setVal1(target.value)}
       onChange_2={({target})=>setVal2(target.value)}
       onChange_3={({target})=>setVal3(target.value)} />
-
-      
     </div>
   )
 }
