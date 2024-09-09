@@ -11,6 +11,8 @@ const initialState = [
         ctaLoading:false,
         ctaDanger:false,
         isValidated:false,
+        iconClass:null,
+        charLimit:null,
         feedbackMessage:{type:null,message:null},
         inputFeildSpecs:[],
         inputFeild_1Value:null,
@@ -27,17 +29,7 @@ const formModalSlice = createSlice({
     initialState,
     reducers:{
         setModal:(state,{payload})=>{
-            const newModal = {
-                id:payload.id,
-                heading:payload.heading,
-                message:payload.message,
-                primaryBtnText:payload.primaryBtnText,
-                secondaryBtnText:payload.secondaryBtnText,
-                ctaDisabled:payload.ctaDisabled,
-                ctaLoading:payload.ctaLoading,
-                ctaDanger:payload.ctaDanger,
-            }
-            state.push(newModal);
+           state.push(payload)
         },
         clearModal:(state,{payload})=>{
             return state.filter((modal)=>modal.id !== payload)
