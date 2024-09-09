@@ -2,7 +2,7 @@ import React, { useId } from 'react'
 import { FeedbackMessage as Error} from '../../components'
 const Input=React.forwardRef(({ 
    value="",
-   onChange = () => { },
+   onChange,
    type="email",
    placeholder="set your placeholder !",
    className_container = '',
@@ -18,13 +18,19 @@ const Input=React.forwardRef(({
    errClassName="",
    text_area=false,
    icon=true,
+   charLimit,
    ...inputContStyle
      },ref)=> {
 
      
     const id = useId()
     const [isTypePass, setIsTypePass] = React.useState(false)
+    const [chars, setChars] = React.useState(0)
     
+    const handleChange = ({target}) =>{
+      setChars(target.value.length)
+       onChange({target})
+    }
 
     const getIconClass = () => {
         switch(type) {
@@ -41,7 +47,7 @@ const Input=React.forwardRef(({
 
 
     return (
-       <div id="input-errMsg-wrapper" className={`mb-4p transition-all ${className_wrapper}`}>
+       <div id="input-errMsg-wrapper" className={`mb-4p transition-all ${className_wrapper} relative`}>
         
         <div id="input-container" 
         className={` w-26vw rounded-2xl  flex relative
@@ -53,7 +59,7 @@ const Input=React.forwardRef(({
          <label id="label-as-placeholder-for-outlined-input" htmlFor={id} 
          className={`transition-inset absolute z-30  bg-white pl-0.5vw pr-0.5vw dark:bg-darkPrimary text-0.8vw
           ${fill?"hidden":""}
-          ${value!=""?(text_area ?"left-6p -top-8p":"left-10p -top-20p"):(ref.current!=document.activeElement?(text_area ?"left-8p top-12p text-1vw":"left-12p text-1vw top-28p"):(text_area ?"":"left-10p -top-20p "))}`}  >
+          ${value!=""?(text_area ?"left-6p -top-8p":icon ?"left-10p -top-20p":"left-6p -top-20p"):(ref.current!=document.activeElement?(text_area ?"left-8p top-12p text-1vw":icon ?"left-12p text-1vw top-28p":"left-8p text-1vw top-28p"):(text_area ?"":"left-10p -top-20p "))}`}  >
           {type.substring(0,1).toLocaleUpperCase()+type.substring(1)}
           </label>
          
@@ -67,9 +73,9 @@ const Input=React.forwardRef(({
           <div id="pass-protection-wrapper" 
           className={`h-100p w-80p relative overflow-hidden ${className_input_prot_el_wrapper}`} {...inputContStyle}>
             {text_area 
-            ?<textarea rows="6" cols="50" value={value} onChange={onChange} placeholder={fill?placeholder:""}
+            ?<textarea rows="6" cols="50" value={value} onChange={handleChange} placeholder={fill?placeholder:""}
             className={`bg-transparent h-100p w-100p resize-none outline-none hideScrollbar ${className_input}`} autoComplete='off'></textarea>
-            :<input id={id} ref={ref} type={isTypePass?"password":"text"} value={value} onChange={onChange} placeholder={fill?placeholder:""}
+            :<input id={id} ref={ref} type={isTypePass?"password":"text"} value={value} onChange={handleChange} placeholder={fill?placeholder:""}
             className={`bg-transparent h-100p w-100p outline-none ${icon || "pl-1vw"}${className_input}`} autoComplete='off'/>
             }
           </div>
@@ -91,11 +97,14 @@ const Input=React.forwardRef(({
           className={` h-100p w-10p ${className_pass_icon_replacement}`}></div>)
         }
           
-
+       
         </div>
         <Error className={`transition-all ${errClassName}`}>
           {errMsg}
         </Error>
+        {text_area && <div id="char-counter" className={`text-0.8vw mt-1 ${chars>charLimit || chars==0 ? "text-danger":"text-green-500"}`}>
+        {chars+`/`+charLimit} Chars
+        </div>}
       </div>
 
     )
