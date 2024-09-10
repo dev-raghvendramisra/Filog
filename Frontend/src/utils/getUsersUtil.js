@@ -29,7 +29,6 @@ export default async function getUsersUtil({userId="#",offset=0,limit=10,dispatc
             return {ok:true,res:res}
          }
          else{
-            console.log(res.documents);
             return {ok:false,pagination:true,res:res,message:"Nothing to show here !"}
          }
     }

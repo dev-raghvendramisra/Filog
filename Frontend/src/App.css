@@ -7,15 +7,12 @@
 @layer base {
     body {
         @apply font-sans;
-        @apply dark:text-white;
+        @apply dark:text-gray-200;
         @apply transition-all;
     }
 }
 
 @layer utilities {
-
-    
-
     .brandP-Color {
         background-color: #194FE6;
     }
@@ -389,8 +386,6 @@ box-shadow: 2px 39px 99px -20px rgba(0,0,0,0.7);
             transform: translateY(0%);
         }
     }
-
-
     
     /* Dark Mode Background Color Utilities */
     .bg-technology-dark { background-color: rgba(30, 144, 255, 0.1); color: #1E90FF; }

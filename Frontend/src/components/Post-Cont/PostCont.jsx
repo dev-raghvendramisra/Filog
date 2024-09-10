@@ -1,10 +1,10 @@
 import React from 'react';
-import { BlogCard, BlogCardInteractionContainer, BlogInteraction, ErrorPlaceHolderImage } from '../../components';
-import { NavLink } from 'react-router-dom';
+import { BlogCard, BlogCardInteractionContainer, ErrorPlaceHolderImage } from '../../components';
 import { useEmailAlertModal } from '../../hooks';
 import { useDispatch, useSelector } from 'react-redux';
 import { updateLikes } from '../../store/userProfileSlice';
-import { likeBlog, unlikeBlog } from '../../store/blogsSlice';
+import { likeBlog, unlikeBlog, deleteComment, commentOnBlog } from '../../store/blogsSlice';
+import {useCommentFormModal} from '../../hooks';
 
 function PostCont({
   type = "dashboard",
@@ -27,7 +27,8 @@ function PostCont({
   }, (prev, next) =>{
      return prev.userProfileId==next.userProfileId && JSON.stringify(prev.blogsLiked)===JSON.stringify(next.blogsLiked)
     })
-  const openModal = useEmailAlertModal()
+  const openAlertModal = useEmailAlertModal()
+  const openCommentModal = useCommentFormModal(userData.$id)
   const dispatch = useDispatch()
 
 
@@ -59,14 +60,19 @@ function PostCont({
           blogTitle={post.title}
           blogTags={post.tags}
           authorAvatar={post.authorAvatar}
+          authorId={post.authorId}
           createdAt={post.createdAt}
           blogImg={post.coverImageUrl}
           blogsLiked={blogsLiked}
-          openModal={openModal}
+          openAlertModal={openAlertModal}
+          openCommentModal={openCommentModal}
           updateLikes={(type) => {
                     dispatch(updateLikes({ type, val: post.postID }))
                     dispatch(type === "like" ? likeBlog(post.postID) : unlikeBlog(post.postID))
                 }}
+          updateComments={(type) => {
+            dispatch(type === "add" ? commentOnBlog(post.postID) : deleteComment(post.postID))
+          }}
            />
           ))
         )}

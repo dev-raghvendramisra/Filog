@@ -8,5 +8,6 @@ import getNewVerificationEmail from './getNewVerificationEmail'
 import getAlertModel from "./getAlertModel";
 import getFormattedNumber from './getFormattedNumber'
 import getSharableLink from "./getSharableLink";
+import getFormModal from "./getFormModal.js";
 
-export {getBlogPosts,getFormattedNumber, startAuthentication, authErrHandler, getUserProfile, getUsersUtil, handleAuthObject, getNewVerificationEmail, getAlertModel, getSharableLink }
+export {getBlogPosts,getFormattedNumber, startAuthentication, authErrHandler, getUserProfile, getUsersUtil, handleAuthObject, getNewVerificationEmail, getAlertModel, getSharableLink, getFormModal }

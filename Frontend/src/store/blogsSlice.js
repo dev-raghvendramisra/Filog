@@ -54,9 +54,17 @@ const blogsSlice = createSlice({
         unlikeBlog:(state,{payload})=>{
             const blog = state.find(blog=>blog.postID===payload)
             blog.likeCount>0 && blog.likeCount--
-      }
+        },
+        commentOnBlog:(state,{payload})=>{
+            const blog = state.find(blog=>blog.postID===payload)
+            blog.commentCount++
+        },
+        deleteComment:(state,{payload})=>{
+            const blog = state.find(blog=>blog.postID===payload)
+            blog.commentCount>0 && blog.commentCount--
+        }
 }})
 
 
 export default blogsSlice.reducer
-export const{clearBlogs,setBlogs,likeBlog,unlikeBlog} = blogsSlice.actions
+export const{clearBlogs,setBlogs,likeBlog,unlikeBlog, commentOnBlog, deleteComment} = blogsSlice.actions

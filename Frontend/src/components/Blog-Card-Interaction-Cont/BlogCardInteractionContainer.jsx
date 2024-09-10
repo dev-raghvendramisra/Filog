@@ -19,8 +19,10 @@ function BlogCardInteractionContainer({
   createdAt, 
   blogImg, 
   updateLikes, 
-  openModal, 
-  blogsLiked 
+  openAlertModal, 
+  openCommentModal,
+  blogsLiked ,
+  authorId
 }) {
   const [openDropdown, setOpenDropdown] = React.useState(false);
 
@@ -117,7 +119,8 @@ function BlogCardInteractionContainer({
         userData={userData}
         userProfileId={userProfileId}
         blogId={blogId}
-        openModal={openModal}
+        openAlertModal={openAlertModal}
+        openCommentModal={openCommentModal}
         authorName={authorName}
         likeCount={likeCount}
         commentCount={commentCount}
@@ -126,6 +129,7 @@ function BlogCardInteractionContainer({
         updateLikes={updateLikes}
         setOpenDropdown={setOpenDropdown}
         uniqueId={uniqueId}
+        authorId={authorId}
       />
     </div>
   );

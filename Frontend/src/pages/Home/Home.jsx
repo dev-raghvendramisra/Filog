@@ -4,17 +4,19 @@ import { useSelector } from 'react-redux';
 import { getBlogPosts } from '../../utils';
 import { clearBlogs, setBlogs } from '../../store/blogsSlice';
 import { updateLikes } from '../../store/userProfileSlice';
-import { likeBlog, unlikeBlog } from '../../store/blogsSlice';
+import { likeBlog, unlikeBlog,commentOnBlog, deleteComment } from '../../store/blogsSlice';
 import { useDispatch } from 'react-redux';
 import {Navigate} from 'react-router-dom'
 import { useEmailAlertModal } from '../../hooks';
+import {useCommentFormModal} from '../../hooks';
 
 function Home() {
   const posts = useSelector((state)=>state.blogs)
   const {isUserLoggedIn, userData} = useSelector((state)=>state.auth)
   const userProfile = useSelector(state=>state.userProfile)
   const dispatch = useDispatch()
-  const openModal = useEmailAlertModal()
+  const openAlertModal = useEmailAlertModal()
+  const openCommentModal = useCommentFormModal(userData?.$id)
 
   React.useEffect(()=>{
     getBlogPosts({ 
@@ -50,12 +52,17 @@ function Home() {
           authorAvatar={post.authorAvatar}
           createdAt={post.createdAt}
           blogImg={post.coverImageUrl}
+          authorId={post.userId}
           blogsLiked={userProfile.blogsLiked}
+          openAlertModal={openAlertModal}
+          openCommentModal={openCommentModal}
           updateLikes={(type) => {
                     dispatch(updateLikes({ type, val: post.postID }))
                     dispatch(type === "like" ? likeBlog(post.postID) : unlikeBlog(post.postID))
                 }}
-          openModal={openModal}
+          updateComments={(type) => {
+            dispatch(type === "add" ? commentOnBlog(post.postID) : deleteComment(post.postID))
+          }}
            />
          ))
         }

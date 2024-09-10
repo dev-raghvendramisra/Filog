@@ -1,33 +1,25 @@
 import React from 'react'
 import { authServices, dbServices } from '../services'
-import { useSelector } from 'react-redux'
-import { FormModal } from '../components'
+import { useDispatch, useSelector } from 'react-redux'
+import useModalActionsContext from '../context/modalActionsContext'
 import { ID } from 'appwrite'
+import { getFormModal } from '../utils'
 
 function Playground() {
  const {userName,userId, userAvatar,$id, blogsLiked} = useSelector(state=>state.userProfile)
  const {userData} = useSelector(state=>state.auth)
- const [val1, setVal1] = React.useState("")
- const [val2, setVal2] = React.useState("")
- const [val3, setVal3] = React.useState("")
+ const dispatch = useDispatch()
+ const {addModalActionHandlers} = useModalActionsContext()
 
 
 
  const inputFeildSpecs=[
   {
-    type:"Add comment",
+    type:"Add comment",//type will be used as placeholder in the input feilds without fill
     text_area:true,
   },
   {
     type:"email",
-    text_area:false,
-  },
-  {
-    type:"email",
-    text_area:false,
-  },
-  {
-    type:"name",
     text_area:false,
   }]
 
@@ -39,21 +31,28 @@ function Playground() {
         authServices.logout()
      }}>Logout</button>
          <button onClick={()=>{}}>Test link</button>
-      <FormModal modalId={"kkkkkk"} 
-      inputFeildSpecs={inputFeildSpecs}
-      primaryBtnText="Comment" 
-      iconClass='fa regular fa-comments' 
-      secondaryBtnText="Cancel" heading="Comment on " 
-      inputFeild_1Value={val1} 
-      inputFeild_2Value={val2} 
-      inputFeild_3Value={val3} 
-      ctaDanger={false}
-      message="Contribute thoughtfully—focus on the topic and be respectful."
-      ctaDisabled={false}
-      charLimit={500}
-      onChange_1={({target})=>setVal1(target.value)}
-      onChange_2={({target})=>setVal2(target.value)}
-      onChange_3={({target})=>setVal3(target.value)} />
+         <button onClick={()=>{
+          getFormModal({modalId:ID.unique(),
+            heading:"Test Modal",
+            message:"This is a test modal",
+            ctaDanger:false,
+            ctaDisabled:false,
+            ctaLoading:false,
+            primaryBtnText:"Primary",
+            secondaryBtnText:"Secondary",
+            iconClass:"fa-solid fa-lock",
+            inputFeildSpecs,
+            charLimitForTextArea:100,
+            primaryOnClick:()=>{
+              console.log("Primary clicked")
+            },
+            secondaryOnClick:()=>{
+              console.log("Secondary clicked")
+            },
+            dispatch,
+            addModalActionHandlers
+            })
+         }}>Test Modal</button>
     </div>
   )
 }

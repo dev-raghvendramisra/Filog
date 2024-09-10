@@ -12,7 +12,7 @@ const useFetch = ({type="user",initLoading,offset,limit,query,container,id,setEr
    const dispatch = useDispatch()
 
    const fetchUsers = async () => {
-    console.log("fetching...");
+    console.log(type=="user"?"Fetching Users...":"Fetching Blogs...");
     
     if(following && !following.length){
       setErr("user")

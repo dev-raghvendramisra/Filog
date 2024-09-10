@@ -4,7 +4,7 @@ import { createContext,useState, useContext } from "react";
 const modalActionsContext = createContext(
     {
         addModalActionHandlers: () => {},
-        clearModalActionHandlers: () => {},
+        removeModalActionHandlers: () => {},
         modalActions:{}
     }
 );

@@ -4,7 +4,7 @@ import { dbServices } from '../../services'
 import toast from 'react-hot-toast'
 import {getFormattedNumber} from '../../utils'
 
-function BlogInteraction({userProfileId,blogImg,authorName,blogId,userData,openModal,updateLikes,liked, likeCount=0, commentCount=0, height=1.7, width=1.7,loader=false, setOpenDropdown, uniqueId}) {
+function BlogInteraction({userProfileId,blogImg,authorId, authorName,blogId,userData,openAlertModal,updateLikes,liked, likeCount=0, commentCount=0, height=1.7, width=1.7,loader=false, setOpenDropdown, uniqueId, openCommentModal}) {
     const [isLiked, setIsLiked] = React.useState(liked)
     const [loading, setLoading] = React.useState(false)
     const [disabled, setDisabled] = React.useState(false)
@@ -18,7 +18,7 @@ function BlogInteraction({userProfileId,blogImg,authorName,blogId,userData,openM
             return toast.custom(<GenToast type='err'>Login first to like blogs</GenToast>)
         }
         if(userData.emailVerification === false){
-            openModal(true)
+            openAlertModal(true)
             return toast.custom(<GenToast type='err'>Verify your email address to like blogs</GenToast>)
         }
         setDisabled(true)
@@ -50,7 +50,19 @@ function BlogInteraction({userProfileId,blogImg,authorName,blogId,userData,openM
         setLoading(false)
         setDisabled(false)
     }
-    const handleComment = () => { }
+    const handleComment = () => {
+      if(!userData){
+          return toast.custom(<GenToast type='err'>Login first to comment on blogs</GenToast>)
+      }
+      if(userData.emailVerification === false){
+          openAlertModal(true)
+          return toast.custom(<GenToast type='err'>Verify your email address to comment on blogs</GenToast>)
+      }
+      console.log("blog id from blog interaction",blogId);
+      console.log("author id from blog interaction",authorId);
+      
+      openCommentModal(true,blogId,authorId)
+     }
     const handleShare = () => {
       setOpenDropdown(prev => !prev)
      }

@@ -264,14 +264,11 @@ export class DatabaseService {
         }
     }
 
-    async commentOnBlog(blogId,userId,comment,blogsCommentedOn,isFirstComment,authorId){
+    async commentOnBlog(blogId,userId,comment,userProfileId,authorId){
+       console.log("userId",userId,"authorId",authorId);
+       
        try {
-          const res = isFirstComment ? await this.database.updateDocument(conf.dbId,conf.userProfilesCollectionID,profileId,{
-            blogsCommentedOn
-          }) : {$id:"#"}
-
-          if(res.$id){
-            const res = await this.database.createDocument(conf.dbId,conf.blogCommentsCollectionID,blogId,{
+            const res = await this.database.createDocument(conf.dbId,conf.blogCommentsCollectionID,ID.unique(),{
                 blogId,
                 userId,
                 comment
@@ -279,15 +276,19 @@ export class DatabaseService {
             [
                 Permission.read(Role.any()),
                 Permission.update(Role.user(userId)),
-                Permission.delete(Role.user(userId)),
-                Permission.delete(Role.user(authorId))
+                Permission.delete(Role.user(userId),Role.user(authorId)),
             ])
             if(res.$id){
-                return res;
+                const stageAction = await this.database.updateDocument(conf.dbId,conf.userProfilesCollectionID,userProfileId,{
+                    stagedAction:action.addComment(blogId)
+                })
+                if(stageAction.$id){
+                    return res
+                }
+                else throw {err:"dbService error :: failed to stage profile document", res:res}
             } else throw {err:"dbService error :: failed to comment", res:res}
           }
-          throw {err:"dbService error :: failed to update profile document", res:res}
-       } catch (error) {
+        catch (error) {
            console.log(error)
            return error
        }
@@ -367,6 +368,19 @@ class Action {
             value:blogId
         })
     }
+    addComment(blogId){
+        return this.stagedAction = JSON.stringify({
+            type:"addComment",
+            value:blogId
+        })
+    }
+    deleteComment(blogId){
+        return this.stagedAction = JSON.stringify({
+            type:"deleteComment",
+            value:blogId
+        })
+    }
+
 }
 
 
