@@ -13,7 +13,7 @@ export default async function getProfileMetatags(profileData) {
     <!-- Open Graph / Facebook Meta Tags -->
     <meta property="og:type" content="website">
     <meta property="og:url" content="${profileData.siteUrl}">
-    <meta property="og:title" content="${profileData.title}">
+    <meta property="og:title" content="${profileData.title} • Filogger">
     <meta property="og:description" content="${profileData.description}">
     <meta property="og:image" content="${profileData.imgUrl}">
     <meta property="og:site_name" content="Filog">
@@ -21,7 +21,7 @@ export default async function getProfileMetatags(profileData) {
     <!-- Twitter Meta Tags -->
     <meta property="twitter:card" content="summary_large_image">
     <meta property="twitter:url" content="${profileData.siteUrl}">
-    <meta property="twitter:title" content="${profileData.title}">
+    <meta property="twitter:title" content="${profileData.title} • Filogger">
     <meta property="twitter:description" content="${profileData.description}">
     <meta property="twitter:image" content="${profileData.imgUrl}">
 
