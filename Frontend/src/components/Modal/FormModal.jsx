@@ -53,7 +53,7 @@ function FormModal({
         <p>{message}</p>
         <FeedbackMessage
           id={`${modalId}-formModal-feedback`}
-          err={feedbackMessage.type === "err"}
+          err={feedbackMessage.type}
           className='pl-none mt-1vw text-1vw'
           iconType='solid'
         >
