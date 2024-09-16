@@ -25,7 +25,7 @@ export default async function handleUserProfileTagsReq(req, res) {
     if(profile.userId){
         profileData.imgUrl = profile['userAvatar'];
         profileData.title = profile['userName'];
-        profileData.description = `Followers: ${profile['followers']} | Following: ${profile['following']} | Blogs: ${profile['blogsWritten']}`;
+        profileData.description = `Followers: ${profile['followers'].length} | Following: ${profile['following'].length} | Blogs: ${profile['blogsWritten']}`;
         profileData.siteUrl = `https://fiilog.vercel.app/user/${id}`;
 
         const newBody = await getProfileMetatags(profileData);
