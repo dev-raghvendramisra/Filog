@@ -39,7 +39,7 @@ const blogsSlice = createSlice({
                   subImageId:blogData.subImageId,
                   tags:blogData.tags,
                   likeCount:blogData.likeCount==null ? 0 : blogData.likeCount,
-                  commentsCount:blogData.commentCount==null ? 0 : blogData.commentCount
+                  commentCount:blogData.commentCount==null ? 0 : blogData.commentCount
               }
               state.push(newBlog)
           });
