@@ -14,12 +14,12 @@ function FormModalContainer() {
     (id,val)=>{
       dispatch(setInputFeild_1Error({id,val:null}))
       dispatch(setInputFeild_1Value({id,val}))
-      dispath(setFeedbackMessage({type:null,message:null}))
+      dispatch(setFeedbackMessage({type:null,message:null}))
     },
     (id,val)=>{
       dispatch(setInputFeild_2Error({id,val:null}))
       dispatch(setInputFeild_2Value({id,val}))
-      dispath(setFeedbackMessage({type:null,message:null}))
+      dispatch(setFeedbackMessage({type:null,message:null}))
     },
     (id,val)=>{
       dispatch(setInputFeild_3Error({id,val:null}))

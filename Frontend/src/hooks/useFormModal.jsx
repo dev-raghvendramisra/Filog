@@ -74,7 +74,7 @@ export function useCommentFormModal(userId, argHeading = "", argMessage = "", ar
         const res = await dbServices.commentOnBlog(blogId, userId, comment, userProfileId, authorId)
         if (res.$id) {
             setLocalFeedbackMessage({ type: "success", message: "Commented posted successfully" })
-            const newTimer = setTimeout(() => setOpenFormModal(false), 7000)
+            const newTimer = setTimeout(() => setOpenFormModal(false), 3000)
             setTimer(newTimer)
             dispatch(commentOnBlog(blogId))
         }
