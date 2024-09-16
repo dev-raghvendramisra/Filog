@@ -124,7 +124,7 @@ export function useCommentFormModal(userId, argHeading = "", argMessage = "", ar
     React.useEffect(() => {
         if (localFeedbackMessage) {
             toast.custom(<GenToast type={localFeedbackMessage.type}>{localFeedbackMessage.message}</GenToast>)
-            dispatch(setFeedbackMessage({ id: modalId, feedbackMessage: localFeedbackMessage }))
+            dispatch(setFeedbackMessage({ id: modalId, feedbackMessage: localFeedbackMessage, type: localFeedbackMessage.type }))
         }
 
     }, [localFeedbackMessage])
