@@ -1,7 +1,7 @@
 import dbServices from "../Services/dbService.js";
 import { handleBlogNotFound } from "../utils/index.js";
 
-export default async function handleBlogComments({blogId,userId,type,log,currentUserProfileVersion}){
+export default async function handleBlogComments({blogId,currentUserProfile,userId,type,log,currentUserProfileVersion}){
    log("Fetching target blog...");
    let targetBlog =  await dbServices.getBlog(blogId,log);
    if(!targetBlog.$id){
@@ -39,7 +39,7 @@ export default async function handleBlogComments({blogId,userId,type,log,current
         log("Updating initiating user profile...");
         log("Marking staged action as null...");
         const updateProfileRes = await dbServices.updateProfileDocument({
-            profileId:userId,
+            profileId:currentUserProfile.$id,
             version: initiatingUserProfile.version + 1,
             stagedAction:null,
             log

@@ -75,6 +75,7 @@ export default async function handler({ req, res, log }) {
                         userId: req.body.userId,
                         type: stagedAction.type,
                         log,
+                        currentUserProfile: req.body,
                         currentUserProfileVersion:req.body.version==null ? 1 : req.body.version ==0 ? 1 : req.body.version,
                     });
 
