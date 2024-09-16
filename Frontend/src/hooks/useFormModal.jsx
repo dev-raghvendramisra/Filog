@@ -50,7 +50,7 @@ export function useCommentFormModal(userId, argHeading = "", argMessage = "", ar
     const [comment, setComment] = React.useState(null);
     const [localFeedbackMessage, setLocalFeedbackMessage] = React.useState(null);
     const [timer, setTimer] = React.useState(null);
-    const minCharLength = 10;
+    const minCharLength = 1;
     const maxCharLength = 500;
     const dispatch = useDispatch();
     const formModals = useSelector(state => state.formModals)
