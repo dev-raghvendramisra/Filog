@@ -34,8 +34,13 @@ const formModalSlice = createSlice({
         clearModal:(state,{payload})=>{
             return state.filter((modal)=>modal.id !== payload)
         },
-        setFeedbackMessage:(state,{payload:{id,feedbackMessage}})=>{
-            state.forEach((modal)=>modal.id == id?modal.feedbackMessage = feedbackMessage:null)
+        setFeedbackMessage:(state,{payload:{id,feedbackMessage,type}})=>{
+            state.forEach((modal)=>{
+                if(modal.id == id){
+                    modal.feedbackMessage.message = feedbackMessage
+                    modal.feedbackMessage.type = type
+                }
+            })
         },
         setCtaLoading:(state,{payload:{id,val}})=>{
             state.forEach((modal)=>modal.id == id?modal.ctaLoading = val:null)
