@@ -80,7 +80,7 @@ export default async function handleLike_Unlike({ blogId, userId, type, log, cur
         log("Previous Blog version:", targetBlogVersion);
         log("Current Blog version:", targetBlog.version);
 
-        if (JSON.stringify(targetBlog.likeCount) === JSON.stringify(updatedLikeArray)) {
+        if (targetBlog.likeCount === updatedLikeCount) {
             log("Duplicate stagedAction detected, aborting current operation...");
             return await abortDuplicateAction(targetBlog, log);
         }
