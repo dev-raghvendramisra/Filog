@@ -45,7 +45,7 @@ export default async function handleBlogComments({blogId,currentUserProfile,user
             log
         });
         log("Update Profile Response:",updateProfileRes);
-        if(!updateProfileRes.ok){
+        if(!updateProfileRes.$id){
             log("Failed to update profile");
             return {ok:false,res:updateProfileRes};
         }
