@@ -109,6 +109,7 @@ export class DatabaseService {
     }
 
     async getBlogs(query) {
+        console.log("here are envs:",import.meta.env.VITE_CDN_ENDPOINT)
         try {
             const res = await this.database.listDocuments(
                 conf.dbId,
