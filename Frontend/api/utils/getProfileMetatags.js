@@ -7,7 +7,7 @@ export default async function getProfileMetatags(profileData) {
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <meta name="title" content="Filog - Create and Share Your Blog Articles | Crafting Narratives, Lighting the Way Forward">
+    <meta name="title" content="${profileData.title}">
     <meta name="description" content="Filog is a blogging platform where users can create accounts, write articles, and share their blogs with the world. Join Filog and start blogging today! Crafting Narratives, Lighting the Way Forward.">
 
     <!-- Open Graph / Facebook Meta Tags -->
@@ -41,7 +41,7 @@ export default async function getProfileMetatags(profileData) {
     <meta name="msapplication-TileColor" content="#da532c">
     <meta name="theme-color" content="#ffffff">
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>${profileData.title}</title>
+    <title>${profileData.title} • Filogger</title>
     <script type="module" crossorigin src="${jsFile}"></script>
     <link rel="stylesheet" crossorigin href="${cssFile}">
   </head>
