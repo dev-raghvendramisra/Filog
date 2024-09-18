@@ -19,7 +19,7 @@ export default async function getBlogMetatags(blogData) {
     <meta property="og:site_name" content="Filog">
 
     <!-- Twitter Meta Tags -->
-    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:card" property="twitter:card" content="summary_large_image">
     <meta property="twitter:url" content="${blogData.siteUrl}">
     <meta name="twitter:title" property="twitter:title" content="${blogData.title}">
     <meta name="twitter:description" property="twitter:description" content="Filog is a blogging platform where users can create accounts, write articles, and share their blogs with the world. Join Filog and start blogging today! Crafting Narratives, Lighting the Way Forward.">
