@@ -41,7 +41,7 @@ export default async function getProfileMetatags(profileData) {
     <meta name="msapplication-TileColor" content="#da532c">
     <meta name="theme-color" content="#ffffff">
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Filog | Crafting Narratives, Lighting the Way Forward </title>
+    <title>${profileData.title}</title>
     <script type="module" crossorigin src="${jsFile}"></script>
     <link rel="stylesheet" crossorigin href="${cssFile}">
   </head>
