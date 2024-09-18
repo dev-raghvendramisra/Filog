@@ -39,9 +39,9 @@ export default async function getBlogMetatags(blogData) {
     <link rel="manifest" href="/meta/site.webmanifest">
     <link rel="mask-icon" href="/meta/safari-pinned-tab.svg" color="#5bbad5">
     <meta name="msapplication-TileColor" content="#da532c">
-    <meta name="theme-color" content="#ffffff">
+    <meta name="theme-color" content="#ffffff">Filog | Crafting Narratives, Lighting the Way Forward 
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Filog | Crafting Narratives, Lighting the Way Forward </title>
+    <title>${blogData.title}</title>
     <script type="module" crossorigin src="${jsFile}"></script>
     <link rel="stylesheet" crossorigin href="${cssFile}">
   </head>
