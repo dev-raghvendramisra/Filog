@@ -7,7 +7,7 @@ export default async function getBlogMetatags(blogData) {
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <meta name="title" content="Filog - Create and Share Your Blog Articles | Crafting Narratives, Lighting the Way Forward">
+    <meta name="title" content="${blogData.title}">
     <meta name="description" content="Filog is a blogging platform where users can create accounts, write articles, and share their blogs with the world. Join Filog and start blogging today! Crafting Narratives, Lighting the Way Forward.">
 
     <!-- Open Graph / Facebook Meta Tags -->
