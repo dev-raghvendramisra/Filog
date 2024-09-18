@@ -329,7 +329,7 @@ export class DatabaseService {
     }
 
     generateImgUrl(fileId) {
-        let url = `${conf.appWriteUrl}/storage/buckets/${conf.bucketId}/files/${fileId}/view?project=${conf.projectId}`
+        let url = `${conf.cdnEndpoint}${fileId}`
         return url
     }
 

@@ -12,6 +12,7 @@ const conf = {
    emailVerificationEndpoint: String(import.meta.env.VITE_EMAIL_VERIFICATION_ENDPOINT), 
    localEndpoint: String(import.meta.env.VITE_LOCAL_ENDPOINT),
    productionEndpoint: String(import.meta.env.VITE_PRODUCTION_ENDPOINT),
+   cdnEndpoint: String(import.meta.env.VITE_CDN_ENDPOINT),
    adminId:String(import.meta.env.VITE_ADMIN_ID)//temp
 }
 
