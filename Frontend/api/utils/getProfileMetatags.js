@@ -19,11 +19,11 @@ export default async function getProfileMetatags(profileData) {
     <meta property="og:site_name" content="Filog">
 
     <!-- Twitter Meta Tags -->
-    <meta property="twitter:card" content="summary_large_image">
+    <meta name="twitter:card" property="twitter:card" content="summary_large_image">
     <meta property="twitter:url" content="${profileData.siteUrl}">
-    <meta property="twitter:title" content="${profileData.title} • Filogger">
-    <meta property="twitter:description" content="${profileData.description}">
-    <meta property="twitter:image" content="${profileData.imgUrl}">
+    <meta name="twitter:title" property="twitter:title" content="${profileData.title} • Filogger">
+    <meta name="twitter:description" property="twitter:description" content="${profileData.description}">
+    <meta name="twitter:image" property="twitter:image" content="${profileData.imgUrl}">
 
     <!-- Additional Meta Tags -->
     <meta name="keywords" content="blogging, articles, write blogs, share blogs, create account, Filog, blogging platform">
