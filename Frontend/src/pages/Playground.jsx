@@ -12,7 +12,7 @@ function Playground() {
 
   return (
     <div className='h-100vh w-full flex flex-col justify-center items-center'>
-      <ImageSelectionCard />
+      <ImageSelectionCard message="Recommended cover image size is 1080x350"type='rect' height='18vw' width='56vw' />
     </div>
   )
 }
