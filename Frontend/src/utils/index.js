@@ -9,5 +9,7 @@ import getAlertModel from "./getAlertModel";
 import getFormattedNumber from './getFormattedNumber'
 import getSharableLink from "./getSharableLink";
 import getFormModal from "./getFormModal.js";
+import getWebpImage from "./getWebpImage.js";
 
-export {getBlogPosts,getFormattedNumber, startAuthentication, authErrHandler, getUserProfile, getUsersUtil, handleAuthObject, getNewVerificationEmail, getAlertModel, getSharableLink, getFormModal }
+
+export {getBlogPosts,getFormattedNumber, startAuthentication, authErrHandler, getUserProfile, getUsersUtil, handleAuthObject, getNewVerificationEmail, getAlertModel, getSharableLink, getFormModal,  getWebpImage};

@@ -290,7 +290,7 @@ export class DatabaseService {
     }
 
     //Image upload operations
-    async uploadImage(coverImage, subImages = []) {
+    async uploadBlogImages(coverImage, subImages = []) {
         const imageData = {
             coverImageId: "",
             subImageId: [],
@@ -321,16 +321,29 @@ export class DatabaseService {
                 imageData.subImageUrl = subImagesId.map((subImage) => (this.generateImgUrl(subImage.$id)))
 
             }
-            return imageIds;
+            return imageData;
         } catch (error) {
             console.log("error in dbService :: imageUpload error: ", error);
             return { err: "error in dbService :: imageUpload error: ", error };
         }
     }
 
+    async uploadImage(image,uniqueId=ID.unique()) {
+        try {
+            const res = await this.storageBucket.createFile(conf.bucketId, uniqueId, image)
+            if(res.$id){
+               return this.generateImgUrl(uniqueId)
+            }
+            else throw {err:"dbService error :: failed to upload image",res:res}
+        } catch (error) {
+            console.log("dbService error :: failed to upload image",error)
+            return error
+        }
+    }
+
     generateImgUrl(fileId) {
         let url = `${conf.cdnEndpoint}${fileId}`
-        return url
+        return {url , fileId}
     }
 
 }
