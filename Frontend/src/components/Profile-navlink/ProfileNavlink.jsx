@@ -59,7 +59,7 @@ function ProfileNavlink() {
         onMouseEnter={() => setOpenDropDown(true)}
         onMouseLeave={() => setOpenDropDown(false)} 
         setOpenDropdown={setOpenDropDown} 
-        className={`absolute top-100p mt-30p right-0 z-20 drop-shadow-2xl border-2 dark:border-footer_text rounded-2xl rounded-tr-none rounded-tl-none dark:border-t-0 dark:border-opacity-40 overflow-hidden whitespace-nowrap h-fit dark:bg-darkPrimary_grays ${openDropDown ? "opacity-100 pointer-events-all" : "opacity-0 pointer-events-none"}`} 
+        className={`absolute top-100p transition-all mt-30p right-0 z-20 drop-shadow-2xl border-2 dark:border-footer_text rounded-2xl rounded-tr-none rounded-tl-none dark:border-t-0 dark:border-opacity-40 overflow-hidden whitespace-nowrap h-fit dark:bg-darkPrimary_grays ${openDropDown ? "opacity-100 pointer-events-all" : "opacity-0 pointer-events-none"}`} 
         style={{ fontSize: "1vw" }}
         role="menu"
         aria-expanded={openDropDown}
