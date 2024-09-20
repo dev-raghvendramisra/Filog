@@ -1,6 +1,6 @@
 import React from 'react'
 
-function Dropdown({ setOpenDropdown, children, className }) {
+function Dropdown({ setOpenDropdown, children, className,...props}) {
   const [displayChevron, setDisplayChevron] = React.useState(false)
   const container = React.useRef()
 
@@ -35,15 +35,15 @@ function Dropdown({ setOpenDropdown, children, className }) {
 
 
   return (
-    <div className={`h-14vw rounded-3xl dropDownAnim ${className}`}>
+    <div className={`h-14vw rounded-3xl dropDownAnim text-1.1vw bg-white ${className.includes("dark:bg") ? "" :"dark:bg-toastDarkModeBg"}  ${className} `}{...props}>
       <div
         ref={container}
-        className={`flex flex-col items-center justify-start overflow-scroll w-fit h-14vw bg-white text-darkPrimary z-20 dark:text-gray-200 dark:bg-toastDarkModeBg p-0.7vw pb-0 gap-1`}
+        className={`flex flex-col items-center justify-start hideScrollbar overflow-scroll w-fit h-full  text-darkPrimary z-20 dark:text-gray-200  p-0.7vw gap-1`}
       >
         {children.map((child, index) => (
           <button
             key={index} 
-            className='hover:bg-blue-100 hover:dark:bg-darkPrimary_grays_darker hover:scale-x-105 transition-all text-1.1vw flex w-full rounded-xl items-center justify-start gap-3 px-0.8vw py-0.5vw'
+            className={`hover:bg-blue-100 hover:dark:bg-darkPrimary_grays_darker hover:scale-x-105 transition-all flex w-full rounded-xl items-center justify-start gap-3 px-0.8vw py-0.5vw ${child.danger && "text-danger hover:bg-red-100 hover:dark:bg-red-500 hover:dark:bg-opacity-20"}`}
             onClick={() => {
               setOpenDropdown(false)
               child.onClick()  

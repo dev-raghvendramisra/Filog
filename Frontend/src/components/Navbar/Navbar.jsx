@@ -33,6 +33,7 @@ export default function Navbar({className='',style={},...props}) {
                   {links.map((link)=>{
                     return (
                       link.status?
+                      !link.selfNavigate?
                        <NavLink to={link.path} key={link.name} id={`link_to_"${link.name}"`} 
                        className={({isActive})=>{
                          return(
@@ -57,6 +58,7 @@ export default function Navbar({className='',style={},...props}) {
                           
                       }
                        </NavLink>
+                      :link.component
                       :null
                     )
                   })}

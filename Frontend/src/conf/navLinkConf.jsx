@@ -11,7 +11,8 @@ const linkConfig = [
         activeStyling: true,
         hoverAnim: true,
         defaultStyling: true,
-        isRestricted: false
+        isRestricted: false,
+        selfNavigate: false
     },
     {
         name: "Write",
@@ -21,7 +22,8 @@ const linkConfig = [
         hoverAnim: true,
         defaultStyling: true,
         icon: <span style={{ marginRight: "0.3vw" }} className="fa-regular fa-pen-to-square"></span>,
-        isRestricted: false
+        isRestricted: false,
+        selfNavigate: false
     },
     {
         name: "About",
@@ -30,7 +32,8 @@ const linkConfig = [
         activeStyling: true,
         hoverAnim: true,
         defaultStyling: true,
-        isRestricted: false
+        isRestricted: false,
+        selfNavigate: false
     },
     {
         name: "Github",
@@ -39,7 +42,8 @@ const linkConfig = [
         activeStyling: true,
         hoverAnim: true,
         defaultStyling: true,
-        isRestricted: false
+        isRestricted: false,
+        selfNavigate: false
     },
     {
         component: <LoginBtn>Login</LoginBtn>,
@@ -51,7 +55,8 @@ const linkConfig = [
         hoverAnim: true,
         defaultStyling: true,
         isRestricted: true,
-        restrictedForAuthUsers: true
+        restrictedForAuthUsers: true,
+        selfNavigate: false
     },
     {
         component: <ProfileNavlink />,
@@ -61,7 +66,8 @@ const linkConfig = [
         activeStyling: false,
         defaultStyling: false,
         isRestricted: true,
-        restrictedForAuthUsers: false
+        restrictedForAuthUsers: false,
+        selfNavigate: true
     }
 ];
 
