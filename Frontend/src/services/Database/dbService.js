@@ -328,9 +328,9 @@ export class DatabaseService {
         }
     }
 
-    async uploadImage(image,uniqueId=ID.unique()) {
+    async uploadImage(image,userId,uniqueId=ID.unique()) {
         try {
-            const res = await this.storageBucket.createFile(conf.bucketId, uniqueId, image)
+            const res = await this.storageBucket.createFile(conf.bucketId, uniqueId, image,[Permission.read(Role.any()),Permission.update(Role.user(userId)),Permission.delete(Role.user(userId))]);
             if(res.$id){
                return this.generateImgUrl(uniqueId)
             }

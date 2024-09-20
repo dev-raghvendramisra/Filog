@@ -9,6 +9,7 @@ import { ImageSelectionCard } from '../components'
 function Playground() {
  
   const [file, setFile] = React.useState(null)
+  const {userId} = useSelector(state=>state.userProfile)
 
 
   return (
@@ -17,7 +18,7 @@ function Playground() {
       <button
        onClick={async()=>{
          if(!file) return console.log('No file selected')
-          const res = await dbServices.uploadImage(file)
+          const res = await dbServices.uploadImage(file,userId)
           if(res.fileId){
             console.log('Image uploaded successfully')
             console.log(res)
