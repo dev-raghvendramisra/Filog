@@ -24,10 +24,10 @@ export class DatabaseService {
         subImageId = [],
         subImageUrl = [],
         userId,
+        blogId=ID.unique(),
         status = true,
         tags = [],
-        authorName,
-        authorAvatar
+        authorProfileId
     }) {
         const blogAttr = {
             title: title,
@@ -40,8 +40,7 @@ export class DatabaseService {
             createdAt: getFormattedTime(),
             status: status,
             tags: tags,
-            authorName: authorName,
-            authorAvatar: authorAvatar,
+            authorData:authorProfileId,
             likeCount: 0,
             commentCount: 0,
         }
@@ -49,7 +48,7 @@ export class DatabaseService {
             const res = await this.database.createDocument(
                 conf.dbId,
                 conf.blogCollectionID,
-                ID.unique(),
+                blogId,
                 blogAttr,
                 [
                     Permission.read(Role.any()),
@@ -305,7 +304,7 @@ export class DatabaseService {
                 coverImage
             );
             imageData.coverImageId = $id;
-            imageData.coverImageUrl = this.generateImgUrl($id)
+            imageData.coverImageUrl = this.generateImgUrl($id).url;
 
 
             if (subImages.length !== 0) {
@@ -315,11 +314,11 @@ export class DatabaseService {
                             conf.bucketId,
                             ID.unique(),
                             image
-                        );
+                        ).$id;
                     })
                 );
                 imageData.subImageId = subImagesId;
-                imageData.subImageUrl = subImagesId.map((subImage) => (this.generateImgUrl(subImage.$id)))
+                imageData.subImageUrl = subImagesId.map((subImageId) => (this.generateImgUrl(subImageId).url))
 
             }
             return imageData;

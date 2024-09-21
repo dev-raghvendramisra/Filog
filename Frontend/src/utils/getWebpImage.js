@@ -4,7 +4,7 @@ import getFormattedTime from './getFormattedTime'
 export default async function getWebpImage(file,setImageSrc,name) {
      const reader = new FileReader()
         reader.onload = (e) => {
-        setImageSrc(e.target.result)
+         setImageSrc && setImageSrc(e.target.result)
         }
      reader.readAsDataURL(file)
 
