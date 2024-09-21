@@ -1,5 +1,5 @@
 import React from 'react'
-import { Input, Button, FeedbackMessage } from '..'
+import { Input, Button, FeedbackMessage, ImageSelectionCard } from '..'
 
 function FormModal({
   modalId,
@@ -15,6 +15,7 @@ function FormModal({
   ctaDisabled,
   ctaLoading,
   onChange,
+  setFile,
   charLimitForTextArea,
   inputFeildSpecs = [],
   inputFeild_1Value,
@@ -41,7 +42,7 @@ function FormModal({
     imputFeild_2Error,
     imputFeild_3Error
   ]
-  
+
 
   return (
     <div className='w-fit rounded-3xl p-1.5vw bg-white dark:bg-darkPrimary max-w-30vw absolute modalAnim '>
@@ -53,7 +54,7 @@ function FormModal({
         <p>{message}</p>
         <FeedbackMessage
           id={`${modalId}-formModal-feedback`}
-          err={feedbackMessage.type=="err"}
+          err={feedbackMessage.type == "err"}
           className='pl-none mt-1vw text-1vw'
           iconType='solid'
         >
@@ -62,12 +63,20 @@ function FormModal({
       </div>
       <div id={`formModal-inputs-${modalId}`}>
         {inputFeildSpecs.map((inputFeildSpec, idx) => {
+          if (inputFeildSpec.type == "file") {
+            return (
+              <div className='flex justify-center items-center' key={modalId + idx} id={`formModal-imageselection-container-${modalId}`}>
+                <ImageSelectionCard message={inputFeildSpec.message} height={inputFeildSpec.height} width={inputFeildSpec.width} type={inputFeildSpec.circular ? "circ" : undefined} imageName={inputFeildSpec.imageName} setFile={(file) => {
+                  setFile(modalId, file)
+                }} imgsrc={inputFeildSpec.imgsrc} />
+              </div>)
+          }
           return (
             <Input ref={idx === 0 ? refs[0] : idx === 1 ? refs[1] : refs[2]}
               value={inputValue[idx]}
-              onChange={({target})=>{
+              onChange={({ target }) => {
                 const handleChange = onChange[idx]
-                handleChange(modalId,target.value)
+                handleChange(modalId, target.value)
               }}
               key={modalId + idx}
               icon={false}

@@ -20,14 +20,25 @@ export class Auth{
             if(createdAccount){
                 const res = await this.login(email,password);
                 if(res.code!=401 || res.code!==429){
-                       const dbRes = await dbServices.createProfileDocument({userName:name,
-                        userAvatar:prefs.avatarUrl,
+                       let blob
+                       let avatar
+                       let uploadRes
+                       const avatarRes = await fetch(`https://api.dicebear.com/9.x/micah/webp?seed=${id}&scale=100&flip=true&baseColor=f9c9b6&backgroundColor=194FE6`)
+                       if(avatarRes.status==200){
+                          blob = await avatarRes.blob()
+                          avatar = new File([blob],`${name}-${id}-avatar.webp`,{type:"image/webp"})
+                          uploadRes = await dbServices.uploadImage(avatar,id)
+                       }
+                       const profileCreationRes = await dbServices.createProfileDocument({userName:name,
+                        userAvatar:uploadRes.url?uploadRes.url:"",
+                        userAvatarId:uploadRes.fileId?uploadRes.fileId:"",
                         userId:id,
                         version:1,
                         priority:0
                         },id)
-                       return dbRes
+                       return profileCreationRes
                     }
+
                 return res;
             }
             else{

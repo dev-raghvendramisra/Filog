@@ -18,6 +18,7 @@ const initialState = [
         inputFeild_1Value:"",
         inputFeild_2Value:"",
         inputFeild_3Value:"",
+        inputFeild_FileValue:null,
         inputFeild_1Error:null,
         inputFeild_2Error:null,
         inputFeild_3Error:null,
@@ -60,6 +61,9 @@ const formModalSlice = createSlice({
         setInputFeild_3Value:(state,{payload:{id,val}})=>{
             state.forEach((modal)=>modal.id == id?modal.inputFeild_3Value = val:null)
         },
+        setInputFeild_FileValue:(state,{payload:{id,val}})=>{
+            state.forEach((modal)=>modal.id == id?modal.inputFeild_FileValue = val:null)
+        },
         setInputFeild_1Error:(state,{payload:{id,val}})=>{
             state.forEach((modal)=>modal.id == id?modal.inputFeild_1Error = val:null)
         },
@@ -87,7 +91,8 @@ export const {
     setFeedbackMessage,
     setInputFeild_1Value,
     setInputFeild_2Value,
-    setInputFeild_3Value, 
+    setInputFeild_3Value,
+    setInputFeild_FileValue, 
     setInputFeild_1Error, 
     setInputFeild_2Error, 
     setInputFeild_3Error } = formModalSlice.actions;

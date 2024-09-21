@@ -58,7 +58,7 @@ export default function Navbar({className='',style={},...props}) {
                           
                       }
                        </NavLink>
-                      :link.component
+                      :<div key={link.name}>{link.component}</div>
                       :null
                     )
                   })}

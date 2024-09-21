@@ -4,7 +4,7 @@ import { NavLink, useNavigate } from 'react-router-dom'
 import { useSelector, useDispatch } from 'react-redux';
 import { setEmail, setPassword, setName, setIsValidate } from '../../store/formSlice';
 import { ID } from 'appwrite';
-import { authServices } from '../../services';
+import { authServices, dbServices } from '../../services';
 import {startAuthentication, getBlogPosts, authErrHandler, getUserProfile} from '../../utils';
 import { setBlogs, clearBlogs } from '../../store/blogsSlice';
 import { login, logout, setFetching } from '../../store/authSlice';
@@ -33,14 +33,11 @@ export default function SignUp() {
             setLoading(true)
             dispatch(setIsValidate(false))
             const userID = ID.unique() 
-            const avatarUrl = `https://api.dicebear.com/9.x/micah/svg?seed=${userID}&scale=100&flip=true&baseColor=f9c9b6&seed=raghav&backgroundColor=194FE6`
-
             const signUpRes = await authServices.createAccount({
               id:userID,
               email:email,
               password:password,
               name:name,
-              prefs:{avatarUrl:avatarUrl}
             })
 
                         

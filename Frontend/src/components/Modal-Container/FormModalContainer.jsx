@@ -3,37 +3,44 @@ import { useDispatch, useSelector } from 'react-redux';
 import useModalActionsContext from '../../context/modalActionsContext';
 import {setInputFeild_1Error, setInputFeild_1Value, setInputFeild_2Value, setInputFeild_2Error, setInputFeild_3Value, setInputFeild_3Error, setFeedbackMessage } from '../../store/formModalSlice'
 import {FormModal} from '../../components'
+import useFileObjectContext from '../../context/fileObjectContext';
 
 
 function FormModalContainer() {
   const modals = useSelector((state)=>state.formModals);
   const {modalActions} = useModalActionsContext();
+  const {setFileObject} = useFileObjectContext()
   const dispatch = useDispatch()
   
   const onChange = [
     (id,val)=>{
       dispatch(setInputFeild_1Error({id,val:null}))
       dispatch(setInputFeild_1Value({id,val}))
-      dispatch(setFeedbackMessage({type:null,message:null}))
+      dispatch(setFeedbackMessage({id,type:null,message:null}))
     },
     (id,val)=>{
       dispatch(setInputFeild_2Error({id,val:null}))
       dispatch(setInputFeild_2Value({id,val}))
-      dispatch(setFeedbackMessage({type:null,message:null}))
+      dispatch(setFeedbackMessage({id,type:null,message:null}))
     },
     (id,val)=>{
       dispatch(setInputFeild_3Error({id,val:null}))
       dispatch(setInputFeild_3Value({id,val}))
-      dispath(setFeedbackMessage({type:null,message:null}))
+      dispatch(setFeedbackMessage({id,type:null,message:null}))
     }
   ]
+
+   const setFile = (id,val)=>{
+    setFileObject(val)
+    dispatch(setFeedbackMessage({id,type:null,message:null}))
+   }
    
 
     if(modals.length <= 1) return null; 
 
 
   return (
-    <div className=' flex items-center justify-center h-100vh w-full bg-black bg-opacity-70 dark:bg-opacity-80 fixed' style={{ zIndex: "60" }}>
+    <div className=' flex items-center justify-center h-full w-full bg-black bg-opacity-70 dark:bg-opacity-80 fixed' style={{ zIndex: "60" }}>
         {modals.map((modal, idx) => {
           if (!modalActions[modal.id]?.primaryOnClick) return null;
             return (
@@ -59,6 +66,7 @@ function FormModalContainer() {
                 onChange={onChange} 
                 primaryHandler={modalActions[modal.id].primaryOnClick}
                 secondaryHandler={modalActions[modal.id].secondaryOnClick}
+                setFile={setFile}
                 />
             )})}
                 

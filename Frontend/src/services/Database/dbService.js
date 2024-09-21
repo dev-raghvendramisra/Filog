@@ -328,6 +328,26 @@ export class DatabaseService {
         }
     }
 
+    async changeAvatar(avatar, userId, userProfileId, currentAvatarId) {
+        try{
+           const res = await this.uploadImage(avatar,userId)
+           if(res.url){
+            const updatedProfile = await this.database.updateDocument(conf.dbId, conf.userProfilesCollectionID, userProfileId,{
+                userAvatar:res.url,
+                userAvatarId:res.fileId,
+                stagedAction:action.bucketCleanup(currentAvatarId)
+            })
+            if(updatedProfile.$id){
+                return updatedProfile
+            }
+            else throw {err:"dbService error :: failed to update profile document",res:updatedProfile}
+           }else throw {err:"dbService error :: failed to upload image",res:res}
+        }catch(error){
+           console.log("dbService error :: failed to change avatar",error)
+           return error
+        }
+    }
+
     async uploadImage(image,userId,uniqueId=ID.unique()) {
         try {
             const res = await this.storageBucket.createFile(conf.bucketId, uniqueId, image,[Permission.read(Role.any()),Permission.update(Role.user(userId)),Permission.delete(Role.user(userId))]);

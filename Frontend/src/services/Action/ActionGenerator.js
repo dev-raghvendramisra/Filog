@@ -39,6 +39,12 @@ export class Action {
             value:blogId
         })
     }
+    bucketCleanup(currentAvatarId){
+        return this.stagedAction = JSON.stringify({
+            type:"bucketCleanup",
+            value:currentAvatarId
+        })
+    }
 
 }
 

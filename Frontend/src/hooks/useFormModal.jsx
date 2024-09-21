@@ -8,6 +8,8 @@ import { ID } from 'appwrite';
 import { dbServices } from '../services';
 import toast from 'react-hot-toast';
 import { GenToast } from '../components';
+import { setProfile } from '../store/userProfileSlice';
+import useFileObjectContext from '../context/fileObjectContext';
 
 export default function useFormModal({
     modalId,
@@ -150,4 +152,89 @@ export function useCommentFormModal(userId, argHeading = "", argMessage = "", ar
 
     return openFormModal;
 
+}
+
+export function useAvatarFormModal(argHeading="", argMessage='', argPrimaryBtnText='', argSecondaryBtnText='') {
+
+    const heading = argHeading || "Change Avatar";
+    const message = argMessage || "Choose a new avatar from your device by clicking on your avatar below or by dragging and dropping an image!";
+    const primaryBtnText = argPrimaryBtnText || "Upload Avatar";
+    const secondaryBtnText = argSecondaryBtnText || "Cancel";
+
+    const [modalId] = React.useState(ID.unique())
+    // const [avatar, setAvatar] = React.useState(null);
+    const [localFeedbackMessage, setLocalFeedbackMessage] = React.useState(null);
+    const [timer, setTimer] = React.useState(null);
+    const { addModalActionHandlers, removeModalActionHandlers } = useModalActionsContext();
+    const {fileObject:avatar} = useFileObjectContext()
+    const dispatch = useDispatch();
+
+    const {$id:userProfileId,userName,userId,userAvatar:currentUserAvatar} = useSelector(state => state.userProfile)
+    const inputFeildSpecs = [
+        {
+            type:"file",
+            message:null,
+            height:"16vw",
+            width:"16vw",
+            circular:true,
+            imageName:`${userName}-${userId}-avatar`,
+            imgsrc:currentUserAvatar
+        }
+    ]
+
+    
+    
+    const primaryOnClick = React.useCallback(async () => {
+        if(!avatar) return setLocalFeedbackMessage({type:"err",message:"Please select an image to upload"})
+        dispatch(setCtaLoading({id:modalId,val:true}))
+        dispatch(setCtaDisabled({id:modalId,val:true}))
+        const imageUploadRes = await dbServices.changeAvatar(avatar,userId,userProfileId,currentUserAvatar)
+        if(imageUploadRes.$id){
+           setLocalFeedbackMessage({type:"success",message:"Avatar updated successfully"})
+           const newTimer = setTimeout(()=>setOpenFormModal(false),3000)
+           setTimer(newTimer)
+           return dispatch(setProfile({userAvatar:imageUploadRes.userAvatar,userAvatarId:imageUploadRes.userAvatarId}))
+        }
+        if(imageUploadRes.res.code==503) setLocalFeedbackMessage({type:"err",message:"Service unavailable, please try again later"})
+        if(imageUploadRes.res.code==500){
+            setLocalFeedbackMessage({type:"err",message:"Internal server error, please try again later"})
+            const newTimer = setTimeout(()=>setOpenFormModal(false),3000)
+            setTimer(newTimer)
+        }
+        else setLocalFeedbackMessage({type:"err",message:"Failed to update avatar, please try again later"})
+        dispatch(setCtaLoading({id:modalId,val:false}))
+        dispatch(setCtaDisabled({id:modalId,val:false}))
+    }, [avatar])
+
+    const secondaryOnClick = React.useCallback(() => {
+        setOpenFormModal(false)
+    },[])
+
+    const setOpenFormModal = useFormModal({ modalId, heading, message, primaryBtnText, secondaryBtnText, ctaDanger: false, iconClass: "fa-solid fa-image-portrait", charLimitForTextArea: null, inputFeildSpecs, primaryOnClick, secondaryOnClick })
+
+    React.useEffect(() => {
+       if(!localFeedbackMessage) return;
+       toast.custom(<GenToast type={localFeedbackMessage.type}>{localFeedbackMessage.message}</GenToast>)
+       dispatch(setFeedbackMessage({id:modalId,feedbackMessage:localFeedbackMessage.message,type:localFeedbackMessage.type}))
+    },[localFeedbackMessage])
+
+    React.useEffect(() => {
+        return () => clearTimeout(timer)
+    },[timer])
+
+
+    React.useEffect(()=>{
+        removeModalActionHandlers(modalId)
+        addModalActionHandlers({[modalId]:{primaryOnClick,secondaryOnClick}})
+    },[avatar])
+   
+
+    const openFormModal = React.useCallback((isOpen) => {
+        if (isOpen) {
+            setOpenFormModal(true)
+        }
+        else setOpenFormModal(false)
+    }, [])
+
+    return openFormModal;
 }
