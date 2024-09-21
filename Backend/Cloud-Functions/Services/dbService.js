@@ -27,8 +27,7 @@ class DatabaseService {
   async deleteAsset(assetId,log){
     try {
       const deletionRes = await this.storage.deleteFile(conf.bucketId,assetId)
-      log("deletion response from service:",deletionRes)
-      return deletionRes;
+      return {ok:true, res:deletionRes};
     } catch (error) {
        log("Error deleting asset:",error.message)
        return { ok: false, error: error.message };

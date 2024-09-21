@@ -12,7 +12,7 @@ export default async function handleBucketCleanup({ log, userId, assetId, curren
     log("Target Asset Found",targetAsset)
     log("Deleting Target Asset...")
     const assetDeletion = await dbServices.deleteAsset(assetId,log)
-    if(!assetDeletion.$id){
+    if(!assetDeletion.ok){
         log("Failed to delete asset");
     }else log("Deleted asset successfully")
 

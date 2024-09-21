@@ -2,7 +2,7 @@ import conf from "./conf/conf.js";
 import handleFollow_Unfollow from './Handle-Follow-Unfollow/handleFollow_Unfollow.js';
 import handleLike_Unlike from './Handle-Like-Unlike/handleLike_Unlike.js';
 import handleBlogComments from "./Handle-Blog-Comments/handleBlogComments.js";
-import handleBucketCleanup from "./handleBucketCleanup/handleBucketCleanup.js";
+import handleBucketCleanup from "./Handle-Bucket-Cleanup/handleBucketCleanup.js";
 
 export default async function handler({ req, res, log }) {
      const stagableActions = ["follow", "unfollow", "like","unlike","addComment","deleteComment","bucketCleanup"];
