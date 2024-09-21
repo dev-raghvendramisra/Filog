@@ -356,8 +356,6 @@ export class DatabaseService {
                 Permission.update(Role.user(userId)),
                 Permission.delete(Role.user(userId))
             ]);
-            console.log(res);
-            
             if(res.$id){
                return this.generateImgUrl(uniqueId)
             }
