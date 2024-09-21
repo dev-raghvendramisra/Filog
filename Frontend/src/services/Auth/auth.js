@@ -1,6 +1,7 @@
 import { Client,ID,Account } from "appwrite";
 import conf from "../../conf/conf";
 import {dbServices} from "../../services"
+import {getFormattedTime} from "../../utils"
 
 export class Auth{
       
@@ -26,7 +27,7 @@ export class Auth{
                        const avatarRes = await fetch(`https://api.dicebear.com/9.x/micah/webp?seed=${id}&scale=100&flip=true&baseColor=f9c9b6&backgroundColor=194FE6`)
                        if(avatarRes.status==200){
                           blob = await avatarRes.blob()
-                          avatar = new File([blob],`${name}-${id}-avatar.webp`,{type:"image/webp"})
+                          avatar = new File([blob],`${name}-avatar-${id}-${getFormattedTime(true)}.webp`,{type:"image/webp"})
                           uploadRes = await dbServices.uploadImage(avatar,id)
                        }
                        const profileCreationRes = await dbServices.createProfileDocument({userName:name,
