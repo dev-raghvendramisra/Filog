@@ -1,8 +1,8 @@
 import imageCompression from 'browser-image-compression'
 import getFormattedTime from './getFormattedTime'
 
-export default async function getWebpImage(file,setImageSrc,name, setLoading) {
-    setLoading && setLoading(true)
+export default async function getWebpImage(file,setImageSrc,name, setProcessing) {
+    setProcessing && setProcessing(true)
      const reader = new FileReader()
         reader.onload = (e) => {
          setImageSrc && setImageSrc(e.target.result)
@@ -11,6 +11,6 @@ export default async function getWebpImage(file,setImageSrc,name, setLoading) {
 
      const finalFile = await imageCompression(file,{maxSizeMB:1,useWebWorker:true, fileType:"image/webp"})
      const finalFileObject = new File([finalFile], `${name}-${getFormattedTime(true)}.webp`, { type: finalFile.type });
-    setLoading && setLoading(false)
+    setProcessing && setProcessing(false)
      return finalFileObject;
   }

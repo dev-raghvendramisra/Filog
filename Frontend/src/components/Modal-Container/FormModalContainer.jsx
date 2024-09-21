@@ -38,9 +38,9 @@ function FormModalContainer() {
     dispatch(setCtaDisabled({id,val}))
     dispatch(setCtaLoading({id,val}))
     if(val){
-      return dispatch(setPrimaryBtnText({id,val:"Processing image..."}))
+      return dispatch(setPrimaryBtnText({id,text:"Processing image..."}))
     }
-    dispatch(setPrimaryBtnText({id,val:"Upload Avatar"}))
+    dispatch(setPrimaryBtnText({id,text:"Upload Avatar"}))
    }
    
 
