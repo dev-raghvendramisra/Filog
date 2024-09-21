@@ -171,7 +171,7 @@ export function useAvatarFormModal(argHeading="", argMessage='', argPrimaryBtnTe
     const {fileObject:avatar, setFileObject} = useFileObjectContext()
     const dispatch = useDispatch();
 
-    const {$id:userProfileId,userName,userId,userAvatar:currentUserAvatar} = useSelector(state => state.userProfile)
+    const {$id:userProfileId,userName,userId,userAvatarId:currentUserAvatar} = useSelector(state => state.userProfile)
     const inputFeildSpecs = [
         {
             type:"file",

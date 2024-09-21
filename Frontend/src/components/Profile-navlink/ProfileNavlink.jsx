@@ -4,12 +4,14 @@ import ProfilePic from '../ProfilePic/ProfilePic'
 import { Dropdown } from '../../components'
 import { authServices } from '../../services'
 import { useNavigate } from 'react-router-dom'
+import { useAvatarFormModal } from '../../hooks'
 
 function ProfileNavlink() {
   const { userAvatar } = useSelector(state => state.userProfile)
   const [openDropDown, setOpenDropDown] = React.useState(false)
   const [timer, setTimer] = React.useState(null)
   const navigate = useNavigate()
+  const openAvatarModal = useAvatarFormModal()
   
   const options = [
     { 
@@ -21,7 +23,7 @@ function ProfileNavlink() {
       icon: <i className="fa-solid fa-image-portrait"></i>, 
       text: "Change Avatar", 
       onClick: () => {
-        // Implement avatar change functionality here
+        openAvatarModal(true)
       } 
     },
     { 
