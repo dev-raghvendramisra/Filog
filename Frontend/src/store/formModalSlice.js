@@ -35,6 +35,9 @@ const formModalSlice = createSlice({
         clearModal:(state,{payload})=>{
             return state.filter((modal)=>modal.id !== payload)
         },
+        setPrimaryBtnText:(state,{payload:{id,text}})=>{
+            state.forEach((modal)=>modal.id == id?modal.primaryBtnText = text:null)
+        },
         setFeedbackMessage:(state,{payload:{id,feedbackMessage,type}})=>{
             state.forEach((modal)=>{
                 if(modal.id == id){
@@ -95,4 +98,5 @@ export const {
     setInputFeild_FileValue, 
     setInputFeild_1Error, 
     setInputFeild_2Error, 
-    setInputFeild_3Error } = formModalSlice.actions;
+    setInputFeild_3Error,
+    setPrimaryBtnText } = formModalSlice.actions;

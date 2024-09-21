@@ -16,6 +16,7 @@ function FormModal({
   ctaLoading,
   onChange,
   setFile,
+  processingFile,
   charLimitForTextArea,
   inputFeildSpecs = [],
   inputFeild_1Value,
@@ -68,6 +69,8 @@ function FormModal({
               <div className='flex justify-center items-center' key={modalId + idx} id={`formModal-imageselection-container-${modalId}`}>
                 <ImageSelectionCard message={inputFeildSpec.message} height={inputFeildSpec.height} width={inputFeildSpec.width} type={inputFeildSpec.circular ? "circ" : undefined} imageName={inputFeildSpec.imageName} setFile={(file) => {
                   setFile(modalId, file)
+                }} setProcessing={(val)=>{
+                  processingFile(modalId,val)
                 }} imgsrc={inputFeildSpec.imgsrc} />
               </div>)
           }

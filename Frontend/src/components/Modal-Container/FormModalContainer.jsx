@@ -1,7 +1,7 @@
 import React from 'react'
 import { useDispatch, useSelector } from 'react-redux';
 import useModalActionsContext from '../../context/modalActionsContext';
-import {setInputFeild_1Error, setInputFeild_1Value, setInputFeild_2Value, setInputFeild_2Error, setInputFeild_3Value, setInputFeild_3Error, setFeedbackMessage } from '../../store/formModalSlice'
+import {setInputFeild_1Error, setInputFeild_1Value, setInputFeild_2Value, setInputFeild_2Error, setInputFeild_3Value, setInputFeild_3Error, setFeedbackMessage, setCtaDisabled, setCtaLoading, setPrimaryBtnText } from '../../store/formModalSlice'
 import {FormModal} from '../../components'
 import useFileObjectContext from '../../context/fileObjectContext';
 
@@ -33,6 +33,14 @@ function FormModalContainer() {
    const setFile = (id,val)=>{
     setFileObject(val)
     dispatch(setFeedbackMessage({id,type:null,message:null}))
+   }
+   const processingFile = (id,val)=>{
+    dispatch(setCtaDisabled({id,val}))
+    dispatch(setCtaLoading({id,val}))
+    if(val){
+      return dispatch(setPrimaryBtnText({id,val:"Processing image..."}))
+    }
+    dispatch(setPrimaryBtnText({id,val:"Upload Avatar"}))
    }
    
 
@@ -67,6 +75,7 @@ function FormModalContainer() {
                 primaryHandler={modalActions[modal.id].primaryOnClick}
                 secondaryHandler={modalActions[modal.id].secondaryOnClick}
                 setFile={setFile}
+                processingFile={processingFile}
                 />
             )})}
                 

@@ -10,7 +10,8 @@ function ImageSelectionCard({ message,
     type="rect",
     imageName="WebpImage",
     setFile,
-    imgsrc=null }) {
+    imgsrc=null,
+    setProcessing=null }) {
 
 
     const fileInput = React.useRef(null)
@@ -20,7 +21,7 @@ function ImageSelectionCard({ message,
 
     const handleImageChange = async(e) => {
         const file = e.target.files[0]
-        const finalFile = await getWebpImage(file,setImageSrc,imageName)
+        const finalFile = await getWebpImage(file,setImageSrc,imageName,setProcessing)
         setFile(finalFile)
     }
 
@@ -35,7 +36,7 @@ function ImageSelectionCard({ message,
         contRef?.current.addEventListener("drop", async(e) => {
             e.preventDefault()
             const file = e.dataTransfer.files[0]
-            const finalFile = await getWebpImage(file,setImageSrc,imageName)
+            const finalFile = await getWebpImage(file,setImageSrc,imageName,setProcessing)
             setFile(finalFile)
         })
      }, [contRef])
