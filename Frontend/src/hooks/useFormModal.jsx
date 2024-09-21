@@ -180,7 +180,7 @@ export function useAvatarFormModal(argHeading="", argMessage='', argPrimaryBtnTe
             width:"16vw",
             circular:true,
             imageName:`${userName}-avatar-${userId}`,
-            imgsrc:currentUserAvatar
+            imgsrc:dbServices.generateImgUrl(currentUserAvatar),
         }
     ]
 
