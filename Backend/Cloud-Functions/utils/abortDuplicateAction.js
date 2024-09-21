@@ -4,6 +4,7 @@ export default async function abortDuplicateAction(initiatingUserProfile, log) {
     const res = await dbServices.updateProfileDocument({
         profileId: initiatingUserProfile.$id,
         stagedAction: null,
+        version: initiatingUserProfile.version + 1,
         log
     });
 

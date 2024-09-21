@@ -32,7 +32,7 @@ export default async function handleBucketCleanup({ log, userId, assetId, curren
         return {ok:false, res:userProfile}
     }
     log("Marking stagedAction null...") 
-    const stagedActionResetRes = await dbServices.updateProfileDocument({profileId:userProfile.$id,stagedAction:null})
+    const stagedActionResetRes = await dbServices.updateProfileDocument({profileId:userProfile.$id,stagedAction:null,version:currentUserProfile.version+1,log})
     if(stagedActionResetRes){
         log("Marked stagedAction null successfully")
         return {ok:true, res:stagedActionResetRes}
