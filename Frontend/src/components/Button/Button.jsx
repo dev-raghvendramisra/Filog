@@ -22,7 +22,7 @@ function Button({
   `;
 
   const disabledClasses = disabled
-    ? `border-gray-300 text-gray-400 border-transparent pointer-events-none ${disabledBg}`
+    ? `border-gray-300 text-gray-400 border-transparent pointer-events-none cursor-not-allowed ${disabledBg}`
     : "";
 
   const primaryClasses = primary
