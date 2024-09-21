@@ -304,7 +304,7 @@ export class DatabaseService {
                 coverImage
             );
             imageData.coverImageId = $id;
-            imageData.coverImageUrl = this.getImgUrl($id).url;
+            imageData.coverImageUrl = getImgUrl($id).url;
 
 
             if (subImages.length !== 0) {
@@ -318,7 +318,7 @@ export class DatabaseService {
                     })
                 );
                 imageData.subImageId = subImagesId;
-                imageData.subImageUrl = subImagesId.map((subImageId) => (this.getImgUrl(subImageId).url))
+                imageData.subImageUrl = subImagesId.map((subImageId) => (getImgUrl(subImageId).url))
 
             }
             return imageData;
@@ -356,7 +356,7 @@ export class DatabaseService {
                 Permission.delete(Role.user(userId))
             ]);
             if(res.$id){
-               return this.getImgUrl(uniqueId)
+               return getImgUrl(uniqueId)
             }
             else throw {err:"dbService error :: failed to upload image",res:res}
         } catch (error) {
