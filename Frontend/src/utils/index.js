@@ -10,6 +10,7 @@ import getFormattedNumber from './getFormattedNumber'
 import getSharableLink from "./getSharableLink";
 import getFormModal from "./getFormModal.js";
 import getWebpImage from "./getWebpImage.js";
+import getFormattedTime from "./getFormattedTime.js";
 
 
-export {getBlogPosts,getFormattedNumber, startAuthentication, authErrHandler, getUserProfile, getUsersUtil, handleAuthObject, getNewVerificationEmail, getAlertModel, getSharableLink, getFormModal,  getWebpImage};
+export {getBlogPosts,getFormattedNumber, startAuthentication, authErrHandler, getUserProfile, getUsersUtil, handleAuthObject, getNewVerificationEmail, getAlertModel, getSharableLink, getFormModal,  getWebpImage, getFormattedTime};

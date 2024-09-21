@@ -32,10 +32,14 @@ const userProfileSlice = createSlice({
         },
         updateLikes:(state,{payload:{type,val}})=>{
             type==="like"?state.blogsLiked.push(val):state.blogsLiked=state.blogsLiked.filter(id=>id!==val)
+        },
+        updateAvatar:(state,{payload:{url,id}})=>{
+            state.userAvatar = url
+            state.userAvatarId = id
         }
 
     }
 })
 
 export default userProfileSlice.reducer
-export const{clearProfile, setProfile, updateFollowing, updateLikes} = userProfileSlice.actions
+export const{clearProfile, setProfile, updateFollowing, updateLikes,updateAvatar} = userProfileSlice.actions

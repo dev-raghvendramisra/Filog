@@ -8,7 +8,7 @@ import { ID } from 'appwrite';
 import { dbServices } from '../services';
 import toast from 'react-hot-toast';
 import { GenToast } from '../components';
-import { setProfile } from '../store/userProfileSlice';
+import { setProfile, updateAvatar } from '../store/userProfileSlice';
 import useFileObjectContext from '../context/fileObjectContext';
 
 export default function useFormModal({
@@ -22,7 +22,8 @@ export default function useFormModal({
     charLimitForTextArea,
     inputFeildSpecs,
     primaryOnClick,
-    secondaryOnClick }) {
+    secondaryOnClick,
+    customCleanup=()=>{} }) {
 
     const dispatch = useDispatch();
     const { addModalActionHandlers, removeModalActionHandlers } = useModalActionsContext();
@@ -34,6 +35,7 @@ export default function useFormModal({
         }
         dispatch(clearModal(modalId))
         removeModalActionHandlers(modalId)
+        customCleanup()
     }, [openForm])
 
 
@@ -166,7 +168,7 @@ export function useAvatarFormModal(argHeading="", argMessage='', argPrimaryBtnTe
     const [localFeedbackMessage, setLocalFeedbackMessage] = React.useState(null);
     const [timer, setTimer] = React.useState(null);
     const { addModalActionHandlers, removeModalActionHandlers } = useModalActionsContext();
-    const {fileObject:avatar} = useFileObjectContext()
+    const {fileObject:avatar, setFileObject} = useFileObjectContext()
     const dispatch = useDispatch();
 
     const {$id:userProfileId,userName,userId,userAvatar:currentUserAvatar} = useSelector(state => state.userProfile)
@@ -177,7 +179,7 @@ export function useAvatarFormModal(argHeading="", argMessage='', argPrimaryBtnTe
             height:"16vw",
             width:"16vw",
             circular:true,
-            imageName:`${userName}-${userId}-avatar`,
+            imageName:`${userName}-avatar-${userId}`,
             imgsrc:currentUserAvatar
         }
     ]
@@ -193,7 +195,8 @@ export function useAvatarFormModal(argHeading="", argMessage='', argPrimaryBtnTe
            setLocalFeedbackMessage({type:"success",message:"Avatar updated successfully"})
            const newTimer = setTimeout(()=>setOpenFormModal(false),3000)
            setTimer(newTimer)
-           return dispatch(setProfile({userAvatar:imageUploadRes.userAvatar,userAvatarId:imageUploadRes.userAvatarId}))
+           dispatch(updateAvatar({url:imageUploadRes.userAvatar,id:imageUploadRes.userAvatarId}))
+           return dispatch(setCtaLoading({id:modalId,val:false}))
         }
         if(imageUploadRes.res.code==503) setLocalFeedbackMessage({type:"err",message:"Service unavailable, please try again later"})
         if(imageUploadRes.res.code==500){
@@ -210,7 +213,7 @@ export function useAvatarFormModal(argHeading="", argMessage='', argPrimaryBtnTe
         setOpenFormModal(false)
     },[])
 
-    const setOpenFormModal = useFormModal({ modalId, heading, message, primaryBtnText, secondaryBtnText, ctaDanger: false, iconClass: "fa-solid fa-image-portrait", charLimitForTextArea: null, inputFeildSpecs, primaryOnClick, secondaryOnClick })
+    const setOpenFormModal = useFormModal({ modalId, heading, message, primaryBtnText, secondaryBtnText, ctaDanger: false, iconClass: "fa-solid fa-image-portrait", charLimitForTextArea: null, inputFeildSpecs, primaryOnClick, secondaryOnClick,customCleanup:()=>setFileObject(null) })
 
     React.useEffect(() => {
        if(!localFeedbackMessage) return;
@@ -219,9 +222,9 @@ export function useAvatarFormModal(argHeading="", argMessage='', argPrimaryBtnTe
     },[localFeedbackMessage])
 
     React.useEffect(() => {
-        return () => clearTimeout(timer)
+        return () => {clearTimeout(timer)}
     },[timer])
-
+    
 
     React.useEffect(()=>{
         removeModalActionHandlers(modalId)

@@ -1,4 +1,5 @@
 import { Client, ID, Databases, Storage, Query, Permission, Role } from "appwrite";
+import {getFormattedTime} from "../../utils";
 import action from "../Action/ActionGenerator";
 import conf from "../../conf/conf";
 
@@ -36,7 +37,7 @@ export class DatabaseService {
             subImageId: subImageId,
             subImageUrl: subImageUrl,
             userId: userId,
-            createdAt: createdAt(),
+            createdAt: getFormattedTime(),
             status: status,
             tags: tags,
             authorName: authorName,
@@ -350,7 +351,13 @@ export class DatabaseService {
 
     async uploadImage(image,userId,uniqueId=ID.unique()) {
         try {
-            const res = await this.storageBucket.createFile(conf.bucketId, uniqueId, image,[Permission.read(Role.any()),Permission.update(Role.user(userId)),Permission.delete(Role.user(userId))]);
+            const res = await this.storageBucket.createFile(conf.bucketId, uniqueId, image, [
+                Permission.read(Role.any()),
+                Permission.update(Role.user(userId)),
+                Permission.delete(Role.user(userId))
+            ]);
+            console.log(res);
+            
             if(res.$id){
                return this.generateImgUrl(uniqueId)
             }
@@ -368,28 +375,6 @@ export class DatabaseService {
 
 }
 
-
-
-
-//helper functions
-function createdAt() {
-    const crrDate = new Date();
-    let formattedDate = crrDate.toDateString();
-    formattedDate = formattedDate.substring(
-        formattedDate.indexOf(" ") + 1,
-        formattedDate.length
-    );
-    let time = crrDate.toTimeString();
-    time = time.substring(0, time.lastIndexOf(":"));
-    if (time.substring(0, 1) <= 11) {
-        time += " AM";
-    } else {
-        time += " PM";
-    }
-
-    formattedDate += " " + time;
-    return formattedDate;
-}
 
 const dbServices = new DatabaseService();
 export default dbServices;
