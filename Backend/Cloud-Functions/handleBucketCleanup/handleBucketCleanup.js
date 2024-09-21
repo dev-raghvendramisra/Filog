@@ -12,10 +12,10 @@ export default async function handleBucketCleanup({ log, userId, assetId, curren
     const assetDeletion = await dbServices.deleteAsset(assetId,log)
     if(!assetDeletion.$id){
         log("Failed to delete asset");
-    }
-    log("Deleted asset successfully")
+    }else log("Deleted asset successfully")
+
     log("Fetching userProfile again to check version...")
-    const userProfile = dbServices.getUserProfile(userId,log)
+    const userProfile = await dbServices.getUserProfile(userId,log)
     if(!userProfile.$id){
         log("Initiating userProfile not found")
         return {ok:false, res:userProfile}
