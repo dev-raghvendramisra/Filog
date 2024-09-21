@@ -1,11 +1,13 @@
 import dbServices from "../Services/dbService.js";
-import abortDuplicateAction from "../utils/abortDuplicateAction.js";
+import {abortDuplicateAction , handleAssetNotFound} from "../utils/index.js";   
 
 export default async function handleBucketCleanup({ log, userId, assetId, currentUserProfile }) {
     log("Fetching target asset...");
     let targetAsset = await dbServices.getAsset(assetId, log);
     if (!targetAsset.$id) {
         log("Failed to fetch asset");
+        const assetNotFoundRes = await handleAssetNotFound(userId, log);
+        return assetNotFoundRes;
     }
     log("Target Asset Found",targetAsset)
     log("Deleting Target Asset...")
