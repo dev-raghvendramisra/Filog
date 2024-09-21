@@ -1,5 +1,5 @@
 import { Client, ID, Databases, Storage, Query, Permission, Role } from "appwrite";
-import {getFormattedTime} from "../../utils";
+import {getFormattedTime, getImgUrl} from "../../utils";
 import action from "../Action/ActionGenerator";
 import conf from "../../conf/conf";
 
@@ -304,7 +304,7 @@ export class DatabaseService {
                 coverImage
             );
             imageData.coverImageId = $id;
-            imageData.coverImageUrl = this.generateImgUrl($id).url;
+            imageData.coverImageUrl = this.getImgUrl($id).url;
 
 
             if (subImages.length !== 0) {
@@ -318,7 +318,7 @@ export class DatabaseService {
                     })
                 );
                 imageData.subImageId = subImagesId;
-                imageData.subImageUrl = subImagesId.map((subImageId) => (this.generateImgUrl(subImageId).url))
+                imageData.subImageUrl = subImagesId.map((subImageId) => (this.getImgUrl(subImageId).url))
 
             }
             return imageData;
@@ -356,7 +356,7 @@ export class DatabaseService {
                 Permission.delete(Role.user(userId))
             ]);
             if(res.$id){
-               return this.generateImgUrl(uniqueId)
+               return this.getImgUrl(uniqueId)
             }
             else throw {err:"dbService error :: failed to upload image",res:res}
         } catch (error) {
@@ -365,10 +365,7 @@ export class DatabaseService {
         }
     }
 
-    generateImgUrl(fileId) {
-        let url = `${conf.cdnEndpoint}${fileId}`
-        return {url , fileId}
-    }
+
 
 }
 

@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import useModalActionsContext from '../context/modalActionsContext';
 import { setInputFeild_1Error, setInputFeild_1Value, setInputFeild_2Value, setInputFeild_2Error, setInputFeild_3Value, setInputFeild_3Error, clearModal, setCtaDisabled, setCtaLoading, setFeedbackMessage } from '../store/formModalSlice'
 import { commentOnBlog } from '../store/blogsSlice'
-import { getFormModal } from '../utils';
+import { getFormModal, getImgUrl } from '../utils';
 import { ID } from 'appwrite';
 import { dbServices } from '../services';
 import toast from 'react-hot-toast';
@@ -179,7 +179,7 @@ export function useAvatarFormModal(argHeading = "", argMessage = '', argPrimaryB
             width: "16vw",
             circular: true,
             imageName: `${userName}-avatar-${userId}`,
-            imgsrc: dbServices.generateImgUrl(currentUserAvatar).url,
+            imgsrc: getImgUrl(currentUserAvatar).url,
         }
     ]
 
