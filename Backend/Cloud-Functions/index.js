@@ -2,9 +2,10 @@ import conf from "./conf/conf.js";
 import handleFollow_Unfollow from './Handle-Follow-Unfollow/handleFollow_Unfollow.js';
 import handleLike_Unlike from './Handle-Like-Unlike/handleLike_Unlike.js';
 import handleBlogComments from "./Handle-Blog-Comments/handleBlogComments.js";
+import handleBucketCleanup from "./handleBucketCleanup/handleBucketCleanup.js";
 
 export default async function handler({ req, res, log }) {
-     const stagableActions = ["follow", "unfollow", "like","unlike","addComment","deleteComment"];
+     const stagableActions = ["follow", "unfollow", "like","unlike","addComment","deleteComment","bucketCleanup"];
 
 
     // Log the request body for debugging
@@ -86,6 +87,20 @@ export default async function handler({ req, res, log }) {
                         log("Failed to update comments");
                     }
                 } 
+                else if(stagedAction.type === "bucketCleanup"){
+                    const bucketCleanupRes = await handleBucketCleanup({
+                        userId: req.body.userId,
+                        log,
+                        assetId: stagedAction.value,
+                        currentUserProfile: req.body,
+                    });
+                    log("Bucket Cleanup Response:", bucketCleanupRes);
+                    if(bucketCleanupRes.ok){
+                        log(`${req.body.userName} (${req.body.userId}) cleaned up the bucket from asset(${stagedAction.value}) `);
+                    } else {
+                        log("Failed to clean up the bucket");
+                    }
+                }
             }
             else {
                 log("Invalid update type:", stagedAction.type);

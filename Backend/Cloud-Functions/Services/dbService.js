@@ -1,4 +1,4 @@
-import {Client, Databases, Query} from 'node-appwrite'
+import {Client, Databases, Query, Storage} from 'node-appwrite'
 import conf from '../conf/conf.js';
 class DatabaseService {
   client = new Client()
@@ -7,32 +7,30 @@ class DatabaseService {
     .setKey(conf.apiKey);
 
   database;
+  storage;
 
   constructor() {
     this.database = new Databases(this.client);
+    this.storage = new Storage(this.client);
   }
 
-  async updateProfileDocument({ profileId, updatedFollowers, stagedAction, version, updatedFollowing, log, blogsLiked }) {
-    try {
-      const updatedAttr = {
-        ...(updatedFollowers !==undefined && { followers: updatedFollowers }),
-        ...(stagedAction !==undefined && { stagedAction:stagedAction }),
-        ...(version !==undefined && { version:version }),
-        ...(updatedFollowing !==undefined && { following:updatedFollowing }),
-        ...(blogsLiked !==undefined && { blogsLiked:blogsLiked })
-      };
-    //  log(updatedAttr)
-      const res = await this.database.updateDocument(
-        conf.dbId,
-        conf.userProfilesCollectionID,
-        profileId,
-        updatedAttr
-      );
-      log("Document Updated in database:", res);
-      return res.$id ? res : { ok: false };
-    } catch (error) {
-      log("Error updating document database:", error.message);
+  async getAsset(assetId,log) {
+    try{
+      const asset = await this.storage.getFile(conf.bucketId,assetId);
+      return asset;
+    }catch(error){
+      log("Error fetching asset:", error.message);
       return { ok: false, error: error.message };
+    }
+  } 
+
+  async deleteAsset(assetId,log){
+    try {
+      const deletionRes = await this.storage.deleteFile(conf.bucketId,assetId)
+      return deletionRes;
+    } catch (error) {
+       log("Error deleting asset:",error.message)
+       return { ok: false, error: error.message };
     }
   }
 
@@ -76,6 +74,29 @@ class DatabaseService {
           ...(updatedCommentCount!==undefined && {commentCount:updatedCommentCount}),
           content:"temperoy content"
         }//will remove content later
+      );
+      log("Document Updated in database:", res);
+      return res.$id ? res : { ok: false };
+    } catch (error) {
+      log("Error updating document database:", error.message);
+      return { ok: false, error: error.message };
+    }
+  }
+
+  async updateProfileDocument({ profileId, updatedFollowers, stagedAction, version, updatedFollowing, log, blogsLiked }) {
+    try {
+      const updatedAttr = {
+        ...(updatedFollowers !==undefined && { followers: updatedFollowers }),
+        ...(stagedAction !==undefined && { stagedAction:stagedAction }),
+        ...(version !==undefined && { version:version }),
+        ...(updatedFollowing !==undefined && { following:updatedFollowing }),
+        ...(blogsLiked !==undefined && { blogsLiked:blogsLiked })
+      };
+      const res = await this.database.updateDocument(
+        conf.dbId,
+        conf.userProfilesCollectionID,
+        profileId,
+        updatedAttr
       );
       log("Document Updated in database:", res);
       return res.$id ? res : { ok: false };
