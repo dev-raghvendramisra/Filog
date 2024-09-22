@@ -86,8 +86,8 @@ function EmailVerification() {
       const newTimer = setTimeout(() => navigate("/"), 1000000);
       startAuthentication({ dispatch, login, logout, navigate });
       setTimer(newTimer);
-      setDisabled(true);
-    }
+      return setDisabled(true);
+    } setDisabled(false)
   }, []);
   
   // Effect to handle the email verification process on component mount
@@ -101,6 +101,7 @@ function EmailVerification() {
     }
     
     if (userId && secret && !isVerificationExpired(expire)) {
+      setDisabled(true)
       verification(userId, secret);
     } else if (userId && secret) {
       setErr("Verification link expired");
