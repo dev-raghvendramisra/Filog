@@ -17,6 +17,7 @@ function EmailVerification() {
   const [disabled, setDisabled] = React.useState(true);
   const [resCode, setResCode] = React.useState(null);
   const [timer, setTimer] = React.useState(0);
+  const [initLoading, setInitLoading] = React.useState(true);
   
   // Redux and other hooks
   const { isUserLoggedIn, userData, fetching } = useSelector((state) => state.auth);
@@ -92,9 +93,15 @@ function EmailVerification() {
   
   // Effect to handle the email verification process on component mount
   React.useEffect(() => {
+    if(initLoading) return;
     const userId = searchParams.get('userId');
     const secret = searchParams.get('secret');
     const expire = searchParams.get('expire');
+
+    if(userData?.emailVerification){
+      setDisabled(true)
+      return setErr("Email already verified");
+    }
     
     if (userId && secret && !isVerificationExpired(expire)) {
       verification(userId, secret);
@@ -103,7 +110,7 @@ function EmailVerification() {
     } else {
       setErr("Verification link broken");
     }
-  }, [searchParams]);
+  }, [searchParams,initLoading]);
   
   // Effect to handle error messages and cleanup timer
   React.useEffect(() => {
@@ -116,8 +123,17 @@ function EmailVerification() {
   
   // Effect to handle disabling of button based on fetching state
   React.useEffect(() => {
-    setDisabled(fetching);
-  }, [fetching]);
+    setDisabled(initLoading);
+  }, [initLoading]);
+
+  React.useEffect(() => {
+    if(userData?.$id){
+      setInitLoading(false);
+    }
+    else if(!userData && !fetching){
+      setInitLoading(false); 
+    }
+  }, [userData]);
   
   return (
     <div className='h-100vh w-full flex items-center justify-center' id={id + "email-verification-wrapper"}>
