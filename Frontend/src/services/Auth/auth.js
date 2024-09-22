@@ -113,12 +113,14 @@ export class Auth{
 
     async verifyEmail(userId,secret){
         try {        
-            const res = await fetch(conf.emailVerificationApiEndpoint,{
+            const rawRes = await fetch(conf.emailVerificationApiEndpoint,{
                 method:"POST",
                 headers:{"Content-Type":"application/json"},
                 body:action.verifyEmail(userId,secret)
             })
-             return res;
+            console.log(rawRes)
+            console.log(await rawRes.json())
+            return await rawRes.json();
         } catch (error) {
             console.log("auth service error :: failed to verify email: ",error)
             return error
@@ -133,8 +135,8 @@ export class Auth{
             body:action.generateEmailVerification(userId,email)
         })
         console.log(rawRes) 
-        console.log(rawRes.json()) 
-        return rawRes.json();
+        console.log(await rawRes.json()) 
+        return await rawRes.json();
       }catch(error){
         console.log("auth service error :: failed to create email verification: ",error)
         return error;
