@@ -9,6 +9,10 @@
       "destination": "/api/metatags/handleUserProfileTagsReq"
     },
     {
+      "source":"/apis/verify-email",
+      "destination":"/api/emailverification/handleEmailVerificationReq"
+    },
+    {
       "source": "/(.*)",
       "destination": "/index.html"
     }
