@@ -118,9 +118,10 @@ export class Auth{
                 headers:{"Content-Type":"application/json"},
                 body:action.verifyEmail(userId,secret)
             })
-            console.log(rawRes)
-            console.log(await rawRes.json())
-            return await rawRes.json();
+            console.log("rawRes",rawRes)
+            const jsonRes = await rawRes.json();
+            console.log("jsonRes",jsonRes)
+            return jsonRes;
         } catch (error) {
             console.log("auth service error :: failed to verify email: ",error)
             return error
@@ -134,9 +135,10 @@ export class Auth{
             headers:{"Content-Type":"application/json"},
             body:action.generateEmailVerification(userId,email)
         })
-        console.log(rawRes) 
-        console.log(await rawRes.json()) 
-        return await rawRes.json();
+        console.log("rawRes",rawRes);
+        const jsonRes = await rawRes.json();
+        console.log("jsonRes",jsonRes);
+        return jsonRes;
       }catch(error){
         console.log("auth service error :: failed to create email verification: ",error)
         return error;
