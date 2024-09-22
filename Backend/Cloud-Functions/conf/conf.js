@@ -8,7 +8,8 @@ const conf = {
     apiKey:String(process.env.APPWRITE_API_KEY),
     oAuthClientId: String(process.env.APPWRITE_OAUTH_CLIENT_ID),
     oAuthClientSecret: String(process.env.APPWRITE_OAUTH_CLIENT_SECRET),
-    oAuthRefreshToken: String(process.env.APPWRITE_OAUTH_REFRESH_TOKEN),    
+    oAuthRefreshToken: String(process.env.APPWRITE_OAUTH_REFRESH_TOKEN),
+    googlAppPass: String(process.env.APPWRITE_GOOGLE_APP_PASS),    
 }
 
 export default conf;
