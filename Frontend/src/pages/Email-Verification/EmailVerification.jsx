@@ -83,7 +83,7 @@ function EmailVerification() {
       setSuccessMsg("Email verified successfully");
       setErr(null);
       clearTimeout(timer);
-      const newTimer = setTimeout(() => navigate("/"), 1000000);
+      const newTimer = setTimeout(() => navigate("/"), 5000);
       startAuthentication({ dispatch, login, logout, navigate });
       setTimer(newTimer);
       return setDisabled(true);
