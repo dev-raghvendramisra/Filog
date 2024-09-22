@@ -28,7 +28,7 @@ export default async function handleEmailVerificationReq(req, res) {
             if (decoded.userId != userId) {
                 return res.status(401).json({ ok: false, res: "Invalid token" })
             }
-            const verifyEmail = await authServices.verifyEmail(userId, console.log)
+            const verifyEmail = await authServices.verifyEmail(userId)
             if (verifyEmail.ok) {
                 return res.status(200).json({ ok: true, res: verifyEmail.res })
             } return res.status(500).json({ ok: false, res: verifyEmail.res })
