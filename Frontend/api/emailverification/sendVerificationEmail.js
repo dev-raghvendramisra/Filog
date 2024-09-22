@@ -1,5 +1,5 @@
 import nodemailer from 'nodemailer';
-import conf from '../../conf/conf.js';
+import conf from '../conf/conf.js';
 
 export default async function sendVerificationEmail(email, verificationUrl) {
    

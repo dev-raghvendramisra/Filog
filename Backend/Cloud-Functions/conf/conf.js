@@ -9,9 +9,6 @@ const conf = {
     oAuthClientId: String(process.env.APPWRITE_OAUTH_CLIENT_ID),
     oAuthClientSecret: String(process.env.APPWRITE_OAUTH_CLIENT_SECRET),
     oAuthRefreshToken: String(process.env.APPWRITE_OAUTH_REFRESH_TOKEN),
-    googlAppPass: String(process.env.APPWRITE_GOOGLE_APP_PASS),   
-    jwtSecret: String(process.env.APPWRITE_JWT_SECRET),
-    emailVerificationUrl: String(process.env.APPWRITE_EMAIL_VERIFICATION_URL), 
 }
 
 export default conf;

@@ -6,6 +6,9 @@
      appwriteProfileCollectionId: String(process.env.VITE_USERPROFILE_COLLECTION_ID),
      appwriteApiKey:String(process.env.APPWRITE_API_KEY),
      appwriteBucketId: String(process.env.VITE_BUCKET_ID),
+     googlAppPass: String(process.env.APPWRITE_GOOGLE_APP_PASS),   
+     jwtSecret: String(process.env.APPWRITE_JWT_SECRET),
+     emailVerificationUrl: String(process.env.APPWRITE_EMAIL_VERIFICATION_URL),
      defaultBody :`
      <!doctype html>
 <html lang="en">
