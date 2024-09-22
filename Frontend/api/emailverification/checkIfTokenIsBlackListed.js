@@ -1,4 +1,4 @@
-import dbServices from "../services/dbService";
+import dbServices from "../services/dbService.js";
 
 export default async function checkIfTokenIsBlackListed(token,userId) {
   const tokenDocument = await dbServices.getTokenDocument(userId);
