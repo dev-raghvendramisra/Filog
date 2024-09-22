@@ -41,7 +41,7 @@ function EmailVerification() {
     setDisabled(true);
     setErr(null);
     
-    if (resCode !== 401 && !isUserLoggedIn) {
+    if (resCode == 401 && !isUserLoggedIn) {
       const timer = setTimeout(() => navigate("/login"), 7000);
       setTimer(timer);
       return setErr("You need to login first");
