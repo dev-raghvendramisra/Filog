@@ -18,6 +18,8 @@ function EmailVerification() {
   const [resCode, setResCode] = React.useState(null);
   const [timer, setTimer] = React.useState(0);
   const [initLoading, setInitLoading] = React.useState(true);
+  const [btnText, setBtnText] = React.useState("Get new");  
+  const [btnLoading, setBtnLoading] = React.useState(false);
   
   // Redux and other hooks
   const { isUserLoggedIn, userData, fetching } = useSelector((state) => state.auth);
@@ -39,6 +41,8 @@ function EmailVerification() {
   // Function to handle the "Get new" button click
   const handleClick = React.useCallback(async () => {
     setDisabled(true);
+    setBtnLoading(true);
+    setBtnText("Sending...");
     setErr(null);
     
     if (resCode == 401 && !isUserLoggedIn) {
@@ -62,6 +66,8 @@ function EmailVerification() {
       setSuccessMsg("Verification email sent, click on the link to verify");
       setErr(null);
     }
+    setBtnLoading(false);
+    setBtnText("Get new");
   }, [resCode, isUserLoggedIn, userData]);
   
   // Function to verify the email using userId and secret
@@ -93,6 +99,8 @@ function EmailVerification() {
   React.useEffect(() => {
     if(initLoading) return;
     setDisabled(true);
+    setBtnLoading(true);
+    setBtnText("Verifying...");
     const userId = searchParams.get('userId');
     const secret = searchParams.get('secret');
     const expire = searchParams.get('expire');
@@ -105,9 +113,13 @@ function EmailVerification() {
     } else if (userId && secret) {
       setErr("Verification link expired");
       setDisabled(false);
+      setBtnLoading(false);
+      setBtnText("Get new");
     } else {
       setErr("Verification link broken");
       setDisabled(false);
+      setBtnLoading(false);
+      setBtnText("Get new");
     }
   }, [searchParams,initLoading]);
   
@@ -146,8 +158,8 @@ function EmailVerification() {
           }}>
             Do it later
           </Button>
-          <Button primary={!disabled} disabled={disabled} onClick={handleClick} className='text-1.2vw'>
-            Get new
+          <Button primary={!disabled} disabled={disabled} loading={btnLoading} onClick={handleClick} className='text-1.2vw'>
+            {btnText}
           </Button>
         </div>
       </div>
