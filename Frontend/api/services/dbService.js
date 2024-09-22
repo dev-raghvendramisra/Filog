@@ -47,11 +47,11 @@ class dbService{
     async blackListToken(create,userId,token,existingTokens){
       try {
         const res = create 
-                    ? await this.database.createDocument(conf.appwriteDbId,conf.appwriteBlackListedTokenCollectionId,userId,{token:[...token]})
-                    : await this.database.updateDocument(conf.appwriteDbId,conf.appwriteBlackListedTokenCollectionId,userId,{token:[...existingTokens,...token]})
+                    ? await this.database.createDocument(conf.appwriteDbId,conf.appwriteBlackListedTokenCollectionId,userId,{tokens:[...token]})
+                    : await this.database.updateDocument(conf.appwriteDbId,conf.appwriteBlackListedTokenCollectionId,userId,{tokens:[...existingTokens,...token]})
         return res;
       } catch (error) {
-        console.log("Failed to blacklist token",error);
+        console.log("Failed to blacklist token",error.type);
         return error
         
       }
