@@ -92,6 +92,7 @@ function EmailVerification() {
   // Effect to handle the email verification process on component mount
   React.useEffect(() => {
     if(initLoading) return;
+    setDisabled(true);
     const userId = searchParams.get('userId');
     const secret = searchParams.get('secret');
     const expire = searchParams.get('expire');
@@ -100,12 +101,13 @@ function EmailVerification() {
     }
     
     if (userId && secret && !isVerificationExpired(expire)) {
-      setDisabled(true)
       verification(userId, secret);
     } else if (userId && secret) {
       setErr("Verification link expired");
+      setDisabled(false);
     } else {
       setErr("Verification link broken");
+      setDisabled(false);
     }
   }, [searchParams,initLoading]);
   
@@ -121,7 +123,6 @@ function EmailVerification() {
   // Effect to handle disabling of button based on fetching state
   React.useEffect(() => {
     if(userData?.emailVerification) return setDisabled(true);
-    setDisabled(initLoading);
   }, [initLoading]);
 
   React.useEffect(() => {
