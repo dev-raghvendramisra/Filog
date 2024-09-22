@@ -78,7 +78,12 @@ const formModalSlice = createSlice({
         },
         setIsValidate:(state,{payload:{id}})=>{
            state.forEach((modal)=>modal.id == id?modal.isValidated = true:null)
-        } 
+        },
+        setProcessingFile:(state,{payload:{id,val,text}})=>{
+            state.forEach((modal)=>modal.id == id?modal.ctaDisabled = val:null)
+            state.forEach((modal)=>modal.id == id?modal.ctaLoading = val:null)
+            state.forEach((modal)=>modal.id == id?modal.primaryBtnText = text:"Upload Image")
+        }
     }
 })
 
@@ -99,4 +104,5 @@ export const {
     setInputFeild_1Error, 
     setInputFeild_2Error, 
     setInputFeild_3Error,
-    setPrimaryBtnText } = formModalSlice.actions;
+    setPrimaryBtnText,
+    setProcessingFile } = formModalSlice.actions;
