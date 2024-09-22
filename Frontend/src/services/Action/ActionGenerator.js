@@ -45,6 +45,20 @@ export class Action {
             value:currentAvatarId
         })
     }
+    verifyEmail(userId,secret){
+        return this.stagedAction = JSON.stringify({
+            userId:userId,
+            token:secret,
+            action:"verify"
+        })
+    }
+    generateEmailVerification(userId,email){
+        return this.stagedAction = JSON.stringify({
+            userId:userId,
+            email:email,
+            action:"generate"
+        })
+    }
 
 }
 

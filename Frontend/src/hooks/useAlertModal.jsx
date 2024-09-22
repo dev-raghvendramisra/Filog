@@ -3,7 +3,7 @@ import { GenToast } from '../components';
 import { getNewVerificationEmail, getAlertModel } from '../utils';
 import toast from 'react-hot-toast';
 import { useNavigate } from 'react-router-dom';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import useModalActionsContext from '../context/modalActionsContext';
 import { ID } from 'appwrite';
 import { clearModal, setFeedbackMessage, setCtaLoading, setCtaDisabled } from '../store/alertModalSlice';
@@ -29,7 +29,9 @@ export default function useAlertModal({
   message,
   primaryBtnText,
   secondaryBtnText,
-  modalId
+  modalId,
+  primaryOnClickDependencies = [],
+  secondaryOnClickDependecies = []
 }) {
   const dispatch = useDispatch();
   const { addModalActionHandlers, removeModalActionHandlers } = useModalActionsContext();
@@ -38,12 +40,12 @@ export default function useAlertModal({
   const primaryOnClick = React.useCallback(() => {
     dispatch(setCtaDisabled({ id: modalId, val: true }));
     primaryHandler();
-  }, []);
+  }, [...primaryOnClickDependencies]);
 
   const secondaryOnClick = React.useCallback(() => {
     secondaryHandler();
     setOpenAlert(false);
-  }, []);
+  }, [...secondaryOnClickDependecies]);
 
   React.useEffect(() => {
     if (openAlert) {
@@ -64,6 +66,11 @@ export default function useAlertModal({
       removeModalActionHandlers(modalId);
     }
   }, [openAlert]);
+
+  React.useEffect(() => {
+    removeModalActionHandlers(modalId);
+    addModalActionHandlers(modalId, { primaryOnClick, secondaryOnClick });
+  },[secondaryOnClick,primaryOnClick]);
 
   return setOpenAlert;
 }
@@ -88,11 +95,15 @@ export function useEmailAlertModal(argHeading = "", argMessage = "", argPrimaryB
   const [timer, setTimer] = React.useState(null);
   const [modalId] = React.useState(ID.unique());
   const [localFeedbackMessage, setLocalFeedbackMessage] = React.useState({});
+  const {userData:{email,emailVerification,$id}} = useSelector(state => state.auth);
+
   const errMsg = ["Invalid verification link", "Email already verified"];
 
   const primaryHandler = async () => {
     dispatch(setCtaLoading({ id: modalId, val: true }));
-    const res = await getNewVerificationEmail({ userData: { emailVerification: false }, setErr, navigate, errMsg, setTimer, timer });
+    console.log(email,emailVerification,$id);
+    
+    const res = await getNewVerificationEmail({ userData: {email,emailVerification,$id}, setErr, navigate, errMsg, setTimer, timer });
     if (res) {
       setLocalFeedbackMessage({ type: "success", message: "Email sent successfully" });
     } else {
@@ -125,7 +136,8 @@ export function useEmailAlertModal(argHeading = "", argMessage = "", argPrimaryB
     message,
     primaryBtnText,
     secondaryBtnText,
-    modalId
+    modalId,
+    primaryOnClickDependencies: [email,emailVerification,$id],
   });
 
   return setOpenAlert;

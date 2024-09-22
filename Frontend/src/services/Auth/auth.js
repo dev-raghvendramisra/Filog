@@ -2,6 +2,7 @@ import { Client,ID,Account } from "appwrite";
 import conf from "../../conf/conf";
 import {dbServices} from "../../services"
 import {getFormattedTime} from "../../utils"
+import action from "../Action/ActionGenerator";
 
 export class Auth{
       
@@ -112,7 +113,11 @@ export class Auth{
 
     async verifyEmail(userId,secret){
         try {        
-            const res = await this.account.updateVerification(userId, secret)
+            const res = await fetch(conf.emailVerificationApiEndpoint,{
+                method:"POST",
+                headers:{"Content-Type":"application/json"},
+                body:action.verifyEmail(userId,secret)
+            })
              return res;
         } catch (error) {
             console.log("auth service error :: failed to verify email: ",error)
@@ -120,10 +125,16 @@ export class Auth{
         }
 
     }
-    async createEmailVerification(){
+    async createEmailVerification(email,userId){
       try{
-        const res = await this.account.createVerification(conf.emailVerificationEndpoint)
-        return res
+        const rawRes = await fetch(conf.emailVerificationApiEndpoint,{
+            method:"POST",
+            headers:{"Content-Type":"application/json"},
+            body:action.generateEmailVerification(userId,email)
+        })
+        console.log(rawRes) 
+        console.log(rawRes.json()) 
+        return rawRes.json();
       }catch(error){
         console.log("auth service error :: failed to create email verification: ",error)
         return error;

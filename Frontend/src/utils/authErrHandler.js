@@ -1,5 +1,6 @@
 export default function authErrHandler({res, dispatch, navigate, setEmail, setPass, setName, setErr, errMsg = [], setResCode, verification=false, setTimer, timer}) {
     const errMsgMap = {
+        400:errMsg[0] || "Invalid request!",
         401: errMsg[0] || "Invalid credentials!",
         429: "Too many attempts. Please try again later!",
         409: errMsg[1] || "An account already exists with the same email!",
