@@ -1,4 +1,4 @@
-import sendVerificationEmail from './Send-Verification-Email/sendVerificationEmail.js'
+import sendVerificationEmail from "./Send-Verification-Email/sendVerificationEmail.js"
 
 export default async function createEmailVerification({req,res,log}) {
     const emailRes = await sendVerificationEmail('itsraghav12@gmail.com')

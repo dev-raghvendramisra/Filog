@@ -33,3 +33,4 @@ export default async function sendVerificationEmail(email, verificationUrl) {
       return {ok:false,res:error};
    }
 }
+
