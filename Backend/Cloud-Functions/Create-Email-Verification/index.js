@@ -13,7 +13,7 @@ export default async function createEmailVerification({req,res,log}) {
       const expiry = '1h';
       const token = jwt.sign({userId},conf.jwtSecret,{expiresIn:expiry})
       const verificationUrl = `${conf.emailVerificationUrl}?token=${token}`
-      res.json({ok:true,res:{token:token,expiry:expiry}})
+      res.json({ok:true,res:{token:token,expiry:expiry},code:200})
       const emailRes = await sendVerificationEmail(email,verificationUrl)
         if(emailRes.ok){
           log("Email sent successfully",emailRes.res)
