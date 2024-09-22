@@ -16,8 +16,10 @@ export default async function createEmailVerification({req,res,log}) {
       res.json({ok:true,res:{token:token,expiry:expiry}})
       const emailRes = await sendVerificationEmail(email,verificationUrl)
         if(emailRes.ok){
-             return log("Email sent successfully",emailRes.res)
-        } return log("Failed to send email",emailRes.res)
+          log("Email sent successfully",emailRes.res)
+          return res.empty()
+        } log("Failed to send email",emailRes.res)
+        return res.empty()
     }
     if(action=="verify"){
         const {token,userId} = req.body;
@@ -37,7 +39,7 @@ export default async function createEmailVerification({req,res,log}) {
             return res.json({ok:false,res:error,code:500})
         }
     }
-
+    
 
     const emailRes = await sendVerificationEmail('itsraghav12@gmail.com')
     if(emailRes.ok){
