@@ -95,15 +95,13 @@ export function useEmailAlertModal(argHeading = "", argMessage = "", argPrimaryB
   const [timer, setTimer] = React.useState(null);
   const [modalId] = React.useState(ID.unique());
   const [localFeedbackMessage, setLocalFeedbackMessage] = React.useState({});
-  const {userData:{email,emailVerification,$id}} = useSelector(state => state.auth);
+  const {userData} = useSelector(state => state.auth);
 
   const errMsg = ["Invalid verification link", "Email already verified"];
 
   const primaryHandler = async () => {
     dispatch(setCtaLoading({ id: modalId, val: true }));
-    console.log(email,emailVerification,$id);
-    
-    const res = await getNewVerificationEmail({ userData: {email,emailVerification,$id}, setErr, navigate, errMsg, setTimer, timer });
+    const res = await getNewVerificationEmail({ userData:userData, setErr, navigate, errMsg, setTimer, timer });
     if (res) {
       setLocalFeedbackMessage({ type: "success", message: "Email sent successfully" });
     } else {
@@ -137,7 +135,7 @@ export function useEmailAlertModal(argHeading = "", argMessage = "", argPrimaryB
     primaryBtnText,
     secondaryBtnText,
     modalId,
-    primaryOnClickDependencies: [email,emailVerification,$id],
+    primaryOnClickDependencies: [userData],
   });
 
   return setOpenAlert;
