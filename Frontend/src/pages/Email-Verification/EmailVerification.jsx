@@ -85,8 +85,7 @@ function EmailVerification() {
       clearTimeout(timer);
       const newTimer = setTimeout(() => navigate("/"), 5000);
       startAuthentication({ dispatch, login, logout, navigate });
-      setTimer(newTimer);
-      return setDisabled(true);
+      return setTimer(newTimer);
     } setDisabled(false)
   }, []);
   
