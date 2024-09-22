@@ -1,4 +1,4 @@
-import {Client, Databases, Query, Storage} from 'node-appwrite'
+import {Client, Databases, Query, Storage, Users} from 'node-appwrite'
 import conf from '../conf/conf.js';
 class DatabaseService {
   client = new Client()
@@ -103,6 +103,15 @@ class DatabaseService {
       return res.$id ? res : { ok: false };
     } catch (error) {
       log("Error updating document database:", error.message);
+      return { ok: false, error: error.message };
+    }
+  }
+  async verifyEmail(userId,log) {
+    try {
+      const res = await this.users.updateEmailVerification(userId,true);
+      return { ok: true, res: res };
+    } catch (error) {
+      log("Error verifying email:", error.message);
       return { ok: false, error: error.message };
     }
   }
