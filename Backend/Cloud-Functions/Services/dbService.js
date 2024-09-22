@@ -12,6 +12,7 @@ class DatabaseService {
   constructor() {
     this.database = new Databases(this.client);
     this.storage = new Storage(this.client);
+    this.users = new Users(this.client);
   }
 
   async getAsset(assetId,log) {
