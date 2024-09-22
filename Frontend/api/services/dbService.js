@@ -35,6 +35,27 @@ class dbService{
         return error;
       }
     }
+    async getTokenDocument(userId){
+      try {
+        const res = await this.database.getDocument(conf.appwriteDbId,conf.appwriteBlackListedTokenCollectionId,userId);
+        return res
+      } catch (error) {
+        console.log("Failed to retreive blackListedToken document for requestedit",error);
+        return error
+      }
+    }
+    async blackListToken(create,userId,token,existingTokens){
+      try {
+        const res = create 
+                    ? await this.database.createDocument(conf.appwriteDbId,conf.appwriteBlackListedTokenCollectionId,userId,{token:[...token]})
+                    : await this.database.updateDocument(conf.appwriteDbId,conf.appwriteBlackListedTokenCollectionId,userId,{token:[...existingTokens,...token]})
+        return res;
+      } catch (error) {
+        console.log("Failed to blacklist token",error);
+        return error
+        
+      }
+    }
 }
 const dbServices = new dbService();
 

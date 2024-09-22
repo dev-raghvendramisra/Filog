@@ -4,6 +4,7 @@
      appwriteDbId:String(process.env.VITE_DATABASE_ID),
      appwriteBlogCollectionId: String(process.env.VITE_BLOG_COLLECTION_ID),
      appwriteProfileCollectionId: String(process.env.VITE_USERPROFILE_COLLECTION_ID),
+     appwriteBlackListedTokenCollectionId: String(process.env.APPWRITE_BLACKLISTED_TOKEN_COLLECTION_ID),
      appwriteApiKey:String(process.env.APPWRITE_API_KEY),
      appwriteBucketId: String(process.env.VITE_BUCKET_ID),
      serviceEmail: String(process.env.APPWRITE_SERVICE_EMAIL),

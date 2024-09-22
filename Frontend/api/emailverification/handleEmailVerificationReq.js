@@ -2,6 +2,7 @@ import authServices from "../services/authService.js";
 import conf from "../conf/conf.js";
 import jwt from "jsonwebtoken"
 import sendVerificationEmail from "./sendVerificationEmail.js";
+import dbServices from "../services/dbService.js";
 
 export default async function handleEmailVerificationReq(req, res) {
     const { action } = req.body;
@@ -24,6 +25,26 @@ export default async function handleEmailVerificationReq(req, res) {
     if (action == "verify") {
         const { token, userId } = req.body;
         try {
+            const { isDocumentPresent, isBlackListed, tokenDocument } = await dbServices.checkIfTokenIsBlackListed(token, userId)
+            if(isBlackListed){
+                console.log("Token is blacklisted")
+                return res.status(401).json({ ok: false, res: "Token blacklisted",code:401 })
+            }
+            if(isDocumentPresent){
+                console.log("Token is not blacklisted, proceeding to blacklisting it...")
+                const blackListTokenRes = await dbServices.blackListToken(false,userId,token,tokenDocument.token)
+                if(blackListTokenRes.$id){
+                    console.log("Token blacklisted successfully")
+                }
+            }
+            if (!isDocumentPresent) {
+                console.log("Token is not blacklisted, but document is not present, proceeding to create it and blacklisting it...")
+                const blackListTokenRes = await dbServices.blackListToken(true,userId,token)
+                if(blackListTokenRes.$id){
+                    console.log("Token blacklisted successfully")
+                }
+            }
+
             const decoded = jwt.verify(token, conf.jwtSecret)
             if (decoded.userId != userId) {
                 console.log("Invalid token")
