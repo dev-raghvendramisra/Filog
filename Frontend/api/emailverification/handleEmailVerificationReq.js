@@ -33,7 +33,7 @@ export default async function handleEmailVerificationReq(req, res) {
             }
             if(isDocumentPresent){
                 console.log("Token is not blacklisted, proceeding to blacklisting it...")
-                const blackListTokenRes = await dbServices.blackListToken(false,userId,token,tokenDocument.token)
+                const blackListTokenRes = await dbServices.blackListToken(false,userId,token,tokenDocument.tokens)
                 if(blackListTokenRes.$id){
                     console.log("Token blacklisted successfully")
                 }
