@@ -51,7 +51,7 @@ class dbService{
                     : await this.database.updateDocument(conf.appwriteDbId,conf.appwriteBlackListedTokenCollectionId,userId,{tokens:[...existingTokens,token]})
         return res;
       } catch (error) {
-        console.log("Failed to blacklist token",error.type);
+        console.log("Failed to blacklist token",error);
         return error
         
       }
