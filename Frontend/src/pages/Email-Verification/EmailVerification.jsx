@@ -48,6 +48,8 @@ function EmailVerification() {
     if (resCode == 401 && !isUserLoggedIn) {
       const timer = setTimeout(() => navigate("/login"), 7000);
       setTimer(timer);
+      setBtnLoading(false);
+      setBtnText("Get new");
       return setErr("You need to login first");
     }
     
