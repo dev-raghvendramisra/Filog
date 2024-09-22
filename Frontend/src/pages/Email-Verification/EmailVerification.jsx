@@ -97,6 +97,8 @@ function EmailVerification() {
       setBtnText("Get new");
       return setTimer(newTimer);
     } setDisabled(false)
+      setBtnLoading(false);
+      setBtnText("Get new");
   }, []);
   
   // Effect to handle the email verification process on component mount
