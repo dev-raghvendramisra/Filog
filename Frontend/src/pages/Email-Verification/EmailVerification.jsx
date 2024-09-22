@@ -66,6 +66,8 @@ function EmailVerification() {
   // Function to verify the email using userId and secret
   const verification = React.useCallback(async (userId, secret) => {
     const res = await authServices.verifyEmail(userId, secret);
+    console.log(res);
+    
     const didErrOccured = authErrHandler({
       res,
       setErr,

@@ -19,7 +19,7 @@ export default async function handleEmailVerificationReq(req, res) {
             console.log("Email sent successfully", emailRes.res)
             return res.status(200).json({ ok: true, res: { userId: userId, secret: token, expiry: expiryDate } })
         } console.log("Failed to send email", emailRes.res)
-        return res.status(500).json({ ok: false, res: emailRes })
+        return res.status(500).json({ ok: false, res: emailRes,code:500 })
     }
     if (action == "verify") {
         const { token, userId } = req.body;
@@ -27,23 +27,23 @@ export default async function handleEmailVerificationReq(req, res) {
             const decoded = jwt.verify(token, conf.jwtSecret)
             if (decoded.userId != userId) {
                 console.log("Invalid token")
-                return res.status(401).json({ ok: false, res: "Invalid token" })
+                return res.status(401).json({ ok: false, res: "Invalid token",code:401 })
             }
             console.log("Token verified successfully")
             const verifyEmail = await authServices.verifyEmail(userId)
             if (verifyEmail.ok) {
                 console.log("Email verified successfully")
-                return res.status(200).json({ ok: true, res: verifyEmail.res })
+                return res.status(200).json({ ok: true, res: verifyEmail.res,code:200 })
             } 
             console.log("Failed to verify email", verifyEmail.res)
-            return res.status(500).json({ ok: false, res: verifyEmail.res })
+            return res.status(500).json({ ok: false, res: verifyEmail.res,code:500 })
         } catch (error) {
             if (error.name == "TokenExpiredError") {
-                return res.status(401).json({ ok: false, res: "Token expired" })
+                return res.status(401).json({ ok: false, res: "Token expired",code:401 })
             }
             console.log("Error verifying token:", error.message)
-            return res.status(400).json({ ok: false, res: error.message })
+            return res.status(400).json({ ok: false, res: error.message,code:400 })
         }
     }
-    return res.status(400).json({ ok: false, res: "Invalid action" })
+    return res.status(400).json({ ok: false, res: "Invalid action", code:400 })
 }
