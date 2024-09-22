@@ -93,6 +93,8 @@ function EmailVerification() {
       clearTimeout(timer);
       const newTimer = setTimeout(() => navigate("/"), 5000);
       startAuthentication({ dispatch, login, logout, navigate });
+      setBtnLoading(false);
+      setBtnText("Get new");
       return setTimer(newTimer);
     } setDisabled(false)
   }, []);
@@ -107,6 +109,8 @@ function EmailVerification() {
     const secret = searchParams.get('secret');
     const expire = searchParams.get('expire');
     if(userData?.emailVerification){
+      setBtnLoading(false);
+      setBtnText("Get new");
       return setErr("Email already verified");
     }
     
