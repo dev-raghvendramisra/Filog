@@ -1,6 +1,7 @@
 import authServices from "../services/authService.js";
 import conf from "../conf/conf.js";
 import jwt from "jsonwebtoken"
+import sendVerificationEmail from "./sendVerificationEmail.js";
 
 export default async function handleEmailVerificationReq(req, res) {
     const { action } = req.body;
