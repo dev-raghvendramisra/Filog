@@ -4,7 +4,8 @@ const initialState = {
     isUserLoggedIn:false,
     userData:null,
     isLoginInitiated:false,
-    fetching:false
+    fetching:false,
+    silentFetching:false
 }
 
 const authSlice = createSlice({
@@ -27,6 +28,9 @@ const authSlice = createSlice({
         },
         setFetching:(state,action)=>{
                 state.fetching=action.payload;
+        },
+        setSlientFetching:(state,action)=>{
+            state.silentFetching=action.payload;
         }
     }
 })

@@ -67,8 +67,7 @@ function EmailVerification() {
   // Function to verify the email using userId and secret
   const verification = React.useCallback(async (userId, secret) => {
     const res = await authServices.verifyEmail(userId, secret);
-    console.log(res);
-    
+
     const didErrOccured = authErrHandler({
       res,
       setErr,
@@ -84,7 +83,7 @@ function EmailVerification() {
       setSuccessMsg("Email verified successfully");
       setErr(null);
       clearTimeout(timer);
-      const newTimer = setTimeout(() => navigate("/"), 7000);
+      const newTimer = setTimeout(() => navigate("/"), 1000000);
       startAuthentication({ dispatch, login, logout, navigate });
       setTimer(newTimer);
       setDisabled(true);
@@ -97,9 +96,7 @@ function EmailVerification() {
     const userId = searchParams.get('userId');
     const secret = searchParams.get('secret');
     const expire = searchParams.get('expire');
-
     if(userData?.emailVerification){
-      setDisabled(true)
       return setErr("Email already verified");
     }
     
@@ -123,17 +120,13 @@ function EmailVerification() {
   
   // Effect to handle disabling of button based on fetching state
   React.useEffect(() => {
+    if(userData?.emailVerification) return setDisabled(true);
     setDisabled(initLoading);
   }, [initLoading]);
 
   React.useEffect(() => {
-    if(userData?.$id){
-      setInitLoading(false);
-    }
-    else if(!userData && !fetching){
-      setInitLoading(false); 
-    }
-  }, [userData]);
+   setInitLoading(fetching);
+  }, [fetching]);
   
   return (
     <div className='h-100vh w-full flex items-center justify-center' id={id + "email-verification-wrapper"}>
