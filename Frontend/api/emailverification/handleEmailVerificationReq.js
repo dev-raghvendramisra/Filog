@@ -26,16 +26,22 @@ export default async function handleEmailVerificationReq(req, res) {
         try {
             const decoded = jwt.verify(token, conf.jwtSecret)
             if (decoded.userId != userId) {
+                console.log("Invalid token")
                 return res.status(401).json({ ok: false, res: "Invalid token" })
             }
+            console.log("Token verified successfully")
             const verifyEmail = await authServices.verifyEmail(userId)
             if (verifyEmail.ok) {
+                console.log("Email verified successfully")
                 return res.status(200).json({ ok: true, res: verifyEmail.res })
-            } return res.status(500).json({ ok: false, res: verifyEmail.res })
+            } 
+            console.log("Failed to verify email", verifyEmail.res)
+            return res.status(500).json({ ok: false, res: verifyEmail.res })
         } catch (error) {
             if (error.name == "TokenExpiredError") {
                 return res.status(401).json({ ok: false, res: "Token expired" })
             }
+            console.log("Error verifying token:", error.message)
             return res.status(400).json({ ok: false, res: error.message })
         }
     }
