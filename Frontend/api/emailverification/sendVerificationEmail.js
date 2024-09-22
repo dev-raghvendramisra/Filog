@@ -13,7 +13,7 @@ export default async function sendVerificationEmail(email, verificationUrl) {
         }
     })
     const mailOptions = {
-        from:conf.serviceEmail,
+        from:`Filog Team <${conf.serviceEmail}>`,
         to: email,
         subject: 'Account Verification',
         text: `Welcome to Filog. Please verify your email by clicking the following link: ${verificationUrl}`,
