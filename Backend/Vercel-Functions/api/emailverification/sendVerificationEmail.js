@@ -22,12 +22,89 @@ export default async function sendVerificationEmail(email, userId, secret, expir
         from:`Filog Team <${conf.serviceEmail}>`,
         to: email,
         subject: 'Account Verification',
-        text: `Welcome to Filog. Please verify your email by clicking the following link: ${verificationUrl}`,
-        html: `<h1>Welcome to Filog</h1>
-        <p>Please verify your email by clicking the link below:</p>
-        <a href="${verificationUrl}">Verify Email</a>
-        <p>Thank you for joining us!</p>
-        <p>Team Filog</p>`,
+        html: `<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Verify Email</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        background-color: #f9f9f9;
+        margin: 0;
+        padding: 0;
+      }
+      .email-container {
+        max-width: 600px;
+        margin: 20px auto;
+        background-color: #fff;
+        padding: 20px;
+        border-radius: 8px;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+      }
+      .logo {
+        text-align: center;
+        margin-bottom: 20px;
+      }
+      .logo img {
+        width: 80px;
+      }
+      .content {
+        text-align: center;
+      }
+      .content h1 {
+        color: #333;
+        font-size: 24px;
+      }
+      .content p {
+        color: #555;
+        font-size: 16px;
+      }
+      .btn {
+        display: inline-block;
+        background-color: #194fe6; /* Updated color */
+        color: #fff;
+        padding: 12px 25px;
+        text-decoration: none;
+        border-radius: 5px;
+        font-weight: bold;
+        margin-top: 20px;
+      }
+      .btn:hover {
+        background-color: #143cb0; /* Darker blue for hover effect */
+      }
+      .footer {
+        margin-top: 30px;
+        text-align: center;
+        font-size: 12px;
+        color: #999;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="email-container">
+      <div class="logo">
+        <img src="https://cdn.fiilog.workers.dev/images/66efe6a9000f446a3ece" alt="Filog Logo" />
+      </div>
+      <div class="content">
+        <h1>Help us verify your email address</h1>
+        <p>
+          Verify your email address to help keep your account more secure and up-to-date.
+        </p>
+        <a href=${verificationUrl} class="btn">Verify email</a>
+        <p>This link will expire in 1 hour</p>
+        <p>
+          Didn't create a Filog account? <a href="https://fiilog.vercel.app">Join now</a>.
+        </p>
+      </div>
+      <div class="footer">
+        <p>The Filog team</p>
+      </div>
+    </div>
+  </body>
+</html>
+`,
     };
     const result = await transporter.sendMail(mailOptions);
     return {ok:true,res:result};
