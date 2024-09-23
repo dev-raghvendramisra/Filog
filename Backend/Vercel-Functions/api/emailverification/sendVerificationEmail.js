@@ -28,15 +28,11 @@ export default async function sendVerificationEmail(email, userId, secret, expir
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Verify Email</title>
-    <link
-      href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap"
-      rel="stylesheet"
-    />
   </head>
-  <body style="font-family: 'Poppins', sans-serif; background-color: #f9f9f9; margin: 0; padding: 0;">
+  <body style="font-family: Arial, sans-serif; background-color: #f9f9f9; margin: 0; padding: 0;">
     <div style="max-width: 600px; margin: 20px auto; background-color: #fff; padding: 20px; border-radius: 8px; box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);">
       <div style="text-align: center; margin-bottom: 20px;">
-        <img src="https://fiilog.vercel.app/meta/favicon-32x32.png" alt="Filog Logo" style="width: 80px;" />
+        <img src="https://fiilog.vercel.app/meta/android-chrome-192x192.png" alt="Filog Logo" style="width: 80px;" />
       </div>
       <div style="text-align: center;">
         <h1 style="color: #333; font-size: 24px;">Help us to verify your email address</h1>
