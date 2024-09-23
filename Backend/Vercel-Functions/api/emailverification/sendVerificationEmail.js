@@ -85,10 +85,10 @@ export default async function sendVerificationEmail(email, userId, secret, expir
   <body>
     <div class="email-container">
       <div class="logo">
-        <img src="https://cdn.fiilog.workers.dev/images/66efe6a9000f446a3ece" alt="Filog Logo" />
+        <img src="https://fiilog.vercel.app/meta/android-chrome-192x192.png" alt="Filog Logo" />
       </div>
       <div class="content">
-        <h1>Help us verify your email address</h1>
+        <h1>Help us to verify your email address</h1>
         <p>
           Verify your email address to help keep your account more secure and up-to-date.
         </p>
