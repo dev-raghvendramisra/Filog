@@ -39,14 +39,14 @@
   </head>
   <body>
     <h1>You entered something wrong!</h1>
-    <p id="redirectingText">Redirecting in</p>
+    <p id="redirectingText">Redirecting in 5 seconds...</p>
   </body>
   <script>
     let time = 5;
     let redirectingText = document.getElementById("redirectingText");
     setInterval(()=>{
     time--;
-    redirectingText.innerText = `Redirecting in ${time} seconds`;
+    redirectingText.innerText = `Redirecting in ${time} seconds...`;
     if(time === 0){
       window.location.href = "https://fiilog.vercel.app";
     }
