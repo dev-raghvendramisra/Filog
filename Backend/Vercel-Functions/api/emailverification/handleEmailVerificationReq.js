@@ -26,7 +26,7 @@ export default async function handleEmailVerificationReq(req, res) {
             }
         }
         
-        console.log(req.origin);
+        console.log(req);
         
         
         const { action } = req.body;
@@ -34,13 +34,13 @@ export default async function handleEmailVerificationReq(req, res) {
         
         if (action.toLowerCase() == "generate") {
             const { userId, email } = req.body;
-            const res = await getNewJWTVerificationEmail(userId, email)
-            return res.status(res.code).json({ ok: res.ok, res: res.res, code:res.code })
+            const emailRes = await getNewJWTVerificationEmail(userId, email)
+            return res.status(res.code).json({ ok: emailRes.ok, res: emailRes.res, code:emailRes.code })
         }
         if (action.toLowerCase() == "verify") {
             const { token, userId } = req.body;
-            const res = await getJWTVerificationStatus(token, userId)
-            return res.status(res.code).json({ ok: res.ok, res: res.res, code:res.code })
+            const statusRes = await getJWTVerificationStatus(token, userId)
+            return res.status(res.code).json({ ok: statusRes.ok, res: statusRes.res, code:statusRes.code })
             
         }
         return res.status(400).json({ ok: false, res: "Invalid action", code:400 })
