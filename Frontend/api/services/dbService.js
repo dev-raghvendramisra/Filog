@@ -40,7 +40,7 @@ class dbService{
         const res = await this.database.getDocument(conf.appwriteDbId,conf.appwriteBlackListedTokenCollectionId,userId);
         return res
       } catch (error) {
-        console.log("Failed to retreive blackListedToken document for requestedit",error);
+        console.log("Failed to retreive blackListedToken document for requested id",error);
         return error
       }
     }
