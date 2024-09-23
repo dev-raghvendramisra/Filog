@@ -5,15 +5,23 @@
 import {dbServices} from "../services/index.js"
 
 export default async function getJWTBlackListingStatus(token,userId) {
-  const tokenDocument = await dbServices.getTokenDocument(userId);
-  if(tokenDocument.$id){
-    if(tokenDocument.tokens.includes(token)){
-      console.log("Token is blacklisted");
-      return { isDocumentPresent:true, isBlackListed:true, tokenDocument};
-    } 
-    console.log("Token is not blacklisted");
-    return { isDocumentPresent:true, isBlackListed:false, tokenDocument}
-  }
-  console.log("Token is not blacklisted");
-  return { isDocumentPresent:false, isBlackListed:false, tokenDocument:null};
+   try {
+    
+     
+       const tokenDocument = await dbServices.getTokenDocument(userId);
+       if(tokenDocument.$id){
+         if(tokenDocument.tokens.includes(token)){
+           console.log("Token is blacklisted");
+           return { isDocumentPresent:true, isBlackListed:true, tokenDocument};
+         } 
+         console.log("Token is not blacklisted");
+         return { isDocumentPresent:true, isBlackListed:false, tokenDocument}
+       }
+       console.log("Token is not blacklisted");
+       return { isDocumentPresent:false, isBlackListed:false, tokenDocument:null};
+   } catch (error) {
+     console.log("Error getting blacklisting status",error);
+     return error;
+    
+   }
 }
