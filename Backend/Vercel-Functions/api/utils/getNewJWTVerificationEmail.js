@@ -2,7 +2,7 @@
 // It uses the sendVerificationEmail function from the emailverification folder to send the email.
 // It returns an object with ok, res, and code properties.
 
-import sendVerificationEmail from "../emailverification/sendVerificationEmail";
+import sendVerificationEmail from "../emailverification/sendVerificationEmail.js";
 import jwt from 'jsonwebtoken';
 import conf from '../conf/conf.js';
 
