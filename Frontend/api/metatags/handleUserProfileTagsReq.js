@@ -1,3 +1,8 @@
+// Description:  Metatags API for user profiles. This API is used to generate metatags for user profiles.
+// It receives a request with a profile ID and generates metatags for the user profile with that ID.
+// It uses the getProfileMetatags function from the utils folder to generate the metatags.
+// It returns the generated metatags in the response body.
+
 import conf from "../conf/conf.js";
 import dbServices from "../services/dbService.js";
 import {getProfileMetatags} from "../utils/index.js";

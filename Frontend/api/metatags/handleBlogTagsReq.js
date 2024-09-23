@@ -1,3 +1,8 @@
+// Description: Metatags API for blog posts. This API is used to generate metatags for blog posts.
+// It receives a request with a blog ID and generates metatags for the blog post with that ID.
+// It uses the getBlogMetatags function from the utils folder to generate the metatags.
+// It returns the generated metatags in the response body.
+
 import conf from '../conf/conf.js';
 import { getBlogMetatags } from '../utils/index.js';
 import dbServices from '../services/dbService.js';

@@ -1,3 +1,6 @@
+// description: This file contains the function that generates the meta tags for the blog page.
+// It returns a string with the meta tags for the blog page.
+
 export default async function getBlogMetatags(blogData) {
     const { jsFile, cssFile } = (() => ({ jsFile: "/assets/index.js", cssFile: "/assets/index.css" }))();
     

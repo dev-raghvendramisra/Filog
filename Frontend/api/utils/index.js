@@ -1,5 +1,7 @@
 import getBlogMetatags from "./getBlogMetatags.js";
-import getViteAssets from "./getViteAssets.js";
 import getProfileMetatags from './getProfileMetatags.js'
+import getJWTBlackListingStatus from "./getJWTBlackListingStatus.js"
+import getJWTVerificationStatus from "./getJWTVerificationStatus.js";
+import getNewJWTVerificationEmail from "./getNewJWTVerificationEmail.js"
 
-export {getBlogMetatags, getViteAssets, getProfileMetatags};
+export {getBlogMetatags, getProfileMetatags, getJWTBlackListingStatus, getJWTVerificationStatus, getNewJWTVerificationEmail};

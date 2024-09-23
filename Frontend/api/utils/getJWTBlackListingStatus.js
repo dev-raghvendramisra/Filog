@@ -1,6 +1,10 @@
-import dbServices from "../services/dbService.js";
+//description: getJWTBlackListingStatus function is used to check if the token is blacklisted or not.
+//It uses getTokenDocument function from dbServices to get the token document from the database
+//It returns an object with isDocumentPresent, isBlackListed and tokenDocument properties
 
-export default async function checkIfTokenIsBlackListed(token,userId) {
+import {dbServices} from "../services/index.js"
+
+export default async function getJWTBlackListingStatus(token,userId) {
   const tokenDocument = await dbServices.getTokenDocument(userId);
   if(tokenDocument.$id){
     if(tokenDocument.tokens.includes(token)){

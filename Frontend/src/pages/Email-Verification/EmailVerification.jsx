@@ -45,7 +45,7 @@ function EmailVerification() {
     setBtnText("Sending...");
     setErr(null);
     
-    if (resCode == 401 && !isUserLoggedIn) {
+    if (!isUserLoggedIn || resCode == 401 && !isUserLoggedIn) {
       const timer = setTimeout(() => navigate("/login"), 7000);
       setTimer(timer);
       setBtnLoading(false);
