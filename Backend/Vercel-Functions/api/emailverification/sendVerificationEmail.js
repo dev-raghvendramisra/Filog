@@ -63,8 +63,8 @@ export default async function sendVerificationEmail(email, userId, secret, expir
       }
       .btn {
         display: inline-block;
-        background-color: #194fe6; /* Updated color */
-        color: #fff;
+        background-color: #194fe6; 
+        color: #ffffff;
         padding: 12px 25px;
         text-decoration: none;
         border-radius: 5px;
@@ -72,7 +72,7 @@ export default async function sendVerificationEmail(email, userId, secret, expir
         margin-top: 20px;
       }
       .btn:hover {
-        background-color: #143cb0; /* Darker blue for hover effect */
+        background-color: #143cb0;
       }
       .footer {
         margin-top: 30px;
