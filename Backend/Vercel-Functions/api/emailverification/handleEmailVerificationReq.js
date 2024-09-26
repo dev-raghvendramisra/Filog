@@ -5,7 +5,7 @@ import { getJWTVerificationStatus, getNewJWTVerificationEmail } from "../utils/i
 
 export default async function handleEmailVerificationReq(req, res) {
      
-    res.setHeader('Access-Control-Allow-Origin', 'https://fiilog.vercel.app');
+    res.setHeader('Access-Control-Allow-Origin', 'https://filog.in');
     res.setHeader('Access-Control-Allow-Methods', 'GET,POST,OPTIONS');
     res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization');
 
