@@ -1,11 +1,11 @@
 {
   "rewrites": [
     {
-      "source": "/blog/:username",
+      "source": "/blog/:id",
       "destination": "/api/metatags/handleBlogTagsReq"
     },
     {
-      "source":"/user/:id",
+      "source":"/user/:username",
       "destination": "/api/metatags/handleUserProfileTagsReq"
     },
     {
