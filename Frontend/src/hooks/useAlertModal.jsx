@@ -43,7 +43,7 @@ export default function useAlertModal({
   }, [...primaryOnClickDependencies]);
 
   const secondaryOnClick = React.useCallback(() => {
-    secondaryHandler();
+    secondaryHandler && secondaryHandler();
     setOpenAlert(false);
   }, [...secondaryOnClickDependecies]);
 

@@ -4,14 +4,31 @@ import ProfilePic from '../ProfilePic/ProfilePic'
 import { Dropdown } from '../../components'
 import { authServices } from '../../services'
 import { useNavigate } from 'react-router-dom'
-import { useAvatarFormModal } from '../../hooks'
+import { useAlertModal, useAvatarFormModal } from '../../hooks'
+import { ID } from 'appwrite'
 
 function ProfileNavlink() {
   const { userAvatar } = useSelector(state => state.userProfile)
   const [openDropDown, setOpenDropDown] = React.useState(false)
   const [timer, setTimer] = React.useState(null)
+  const [alertId] = React.useState(ID.unique())
   const navigate = useNavigate()
   const openAvatarModal = useAvatarFormModal()
+  const openLogoutAlert = useAlertModal({
+    ctaDanger:true,
+    heading:"Logout",
+    message:"You are about to log out of your account. Any unsaved changes will be lost. Are you sure you want to proceed?",primaryBtnText:"Logout",
+    secondaryBtnText:"Cancel",
+    modalId:alertId,
+    primaryHandler:async()=>{
+      try {
+        await authServices.logout()
+        location.reload()
+      } catch (error) {
+        console.error("Logout failed:", error)
+        // Optionally show an alert to the user
+      }
+    }})
   
   const options = [
     { 
@@ -29,15 +46,7 @@ function ProfileNavlink() {
     { 
       icon: <i className="fa-solid fa-arrow-right-from-bracket"></i>, 
       text: "Logout", 
-      onClick: async () => { 
-        try {
-          await authServices.logout()
-          location.reload()
-        } catch (error) {
-          console.error("Logout failed:", error)
-          // Optionally show an alert to the user
-        }
-      }, 
+      onClick: () => openLogoutAlert(true), 
       danger: true 
     }
   ]
