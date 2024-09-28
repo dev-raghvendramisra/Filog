@@ -10,6 +10,9 @@ import {getProfileMetatags} from "../utils/index.js";
 export default async function handleUserProfileTagsReq(req, res) {
     const username = req.query.username;
     console.log('Metatags API - Username:', username);
+    if(username.includes("@")){
+        username = username.split("@")[1];
+    }
 
     const profileData = {
         imgUrl: null,
