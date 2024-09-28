@@ -26,7 +26,7 @@ class dbService{
     }
     async getProfile(id){
       try {
-        const profile = await this.database.listDocuments(conf.appwriteDbId,conf.appwriteProfileCollectionId,[Query.equal("userId",id)]);
+        const profile = await this.database.listDocuments(conf.appwriteDbId,conf.appwriteProfileCollectionId,[Query.equal("userName",username)]);
         if(profile.documents.length>0){
             return profile.documents[0];
         }

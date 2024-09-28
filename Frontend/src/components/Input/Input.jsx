@@ -41,6 +41,8 @@ const Input=React.forwardRef(({
             return "fa-solid fa-lock";
           case "name":
             return "fa-regular fa-circle-user";
+          case "username":
+            return "fa-regular fa-at";
           default:
             return "fa-regular fa-comment";
         }

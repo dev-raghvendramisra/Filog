@@ -4,6 +4,7 @@ const initialState =[ {
     profileId:"",
     userId:"",
     userName:"",
+    fullName:"",
     userAvatar:"",
     userAvatarId:"",
     blogs:[],
@@ -20,6 +21,7 @@ const usersSlice = createSlice({
                const newUser = {}
                newUser.userId = user.userId;
                newUser.userName = user.userName;
+                newUser.fullName = user.fullName;
                newUser.userAvatar = user.userAvatar;
                newUser.profileId = user.$id;
                newUser.userAvatar = user.userAvatar;

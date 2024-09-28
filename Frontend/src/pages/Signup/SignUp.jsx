@@ -14,7 +14,7 @@ import { clearProfile, setProfile } from '../../store/userProfileSlice';
 export default function SignUp() {
   const [formErr, setFormErr] = React.useState("");
   const formRef = React.useRef(null)
-  const {isValidated,email,name,password} = useSelector((state)=>state.formData)
+  const {isValidated,email,name,userName,password} = useSelector((state)=>state.formData)
   const [loading, setLoading] = React.useState(false)
   const [disabled, setDisabled] = React.useState(false)
   const dispatch = useDispatch()
@@ -30,14 +30,22 @@ export default function SignUp() {
   React.useEffect(()=>{
         const initiateSignup = async()=>{
             console.log("calling auth")
+            console.log("Checking userName availability")
             setLoading(true)
             dispatch(setIsValidate(false))
+            const isUserNameAvailable = await dbServices.checkUserNameAvailability(userName)
+            if(!isUserNameAvailable){
+              setFormErr("Username is already taken")
+              setLoading(false)
+             return setDisabled(false)
+            }
             const userID = ID.unique() 
             const signUpRes = await authServices.createAccount({
               id:userID,
               email:email,
               password:password,
               name:name,
+              userName:userName,
             })
 
                         

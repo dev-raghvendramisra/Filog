@@ -8,16 +8,16 @@ import dbServices from "../services/dbService.js";
 import {getProfileMetatags} from "../utils/index.js";
 
 export default async function handleUserProfileTagsReq(req, res) {
-    const id = req.query.id;
+    const id = req.query.username;
     const maxIdLength = 20;
-    console.log('Metatags API - ProfileID:', id);
+    console.log('Metatags API - Username:', username);
 
-    if (id.length !== maxIdLength) {
-        res.setHeader('Content-Type', 'text/html');
-        res.status(200).send(conf.defaultBody);
-        console.log('Profile ID length is not 20. Default body sent:', conf.defaultBody);
-        return;
-    }
+    // if (id.length !== maxIdLength) {
+    //     res.setHeader('Content-Type', 'text/html');
+    //     res.status(200).send(conf.defaultBody);
+    //     console.log('Profile ID length is not 20. Default body sent:', conf.defaultBody);
+    //     return;
+    // }
     const profileData = {
         imgUrl: null,
         title: null,
@@ -26,12 +26,12 @@ export default async function handleUserProfileTagsReq(req, res) {
     };
 
     console.log('Fetching profile data...');
-    const profile = await dbServices.getProfile(id);
+    const profile = await dbServices.getProfile(username);
     if(profile.userId){
         profileData.imgUrl = profile['userAvatar'];
-        profileData.title = profile['userName'];
+        profileData.title = profile['fullName'];
         profileData.description = `Followers: ${profile['followers'].length} | Following: ${profile['following'].length} | Blogs: ${profile['blogsWritten']}`;
-        profileData.siteUrl = `https://fiilog.vercel.app/user/${id}`;
+        profileData.siteUrl = `https://filog.in/user/${id}`;
 
         const newBody = await getProfileMetatags(profileData);
 

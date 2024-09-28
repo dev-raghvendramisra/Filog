@@ -39,7 +39,7 @@ function FollowSuggestionsCard({
       const res = await dbServices.follow_unfollowUser(userProfileId,suggestedUser.userId,type="following");
       if (res.$id) {
         //followed user
-        toast.custom(<CustomToast secondaryText={followingMsg} img={suggestedUser.userAvatar}>{suggestedUser.userName}</CustomToast>)
+        toast.custom(<CustomToast secondaryText={followingMsg} img={suggestedUser.userAvatar}>{suggestedUser.fullName}</CustomToast>)
         setIsFollowing(true);
         setFollowing("add")
       }
@@ -53,7 +53,7 @@ function FollowSuggestionsCard({
       if (res.$id) {
       setIsFollowing(false);
       setFollowing("remove")
-      toast.custom(<CustomToast secondaryText={unfollowingMsg} img={suggestedUser.userAvatar}>{suggestedUser.userName}</CustomToast>)
+      toast.custom(<CustomToast secondaryText={unfollowingMsg} img={suggestedUser.userAvatar}>{suggestedUser.fullName}</CustomToast>)
       }
       else {
         toast.custom(<GenToast type='err'>Failed to unfollow user, Internal server error</GenToast>)
@@ -105,7 +105,7 @@ function FollowSuggestionsCard({
           className={`${loader ? "bg-slate-200 h-2vw w-8vw  gap-2 rounded-2xl dark:bg-darkPrimary postCardLoader" : ""} flex justify-start gap-2 items-center`}
         >
             {!loader && <p id="user-name" className={`${classNameUserName}`}>
-              {suggestedUser.userName}
+              {suggestedUser.fullName}
             </p>}
             {
               !loader && isSuggestedUserFilogVerified 

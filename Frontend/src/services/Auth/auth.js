@@ -15,7 +15,7 @@ export class Auth{
          this.account = new Account(this.client)
     }
 
-    async createAccount({id=ID.unique(),email,password,name,prefs={}}){
+    async createAccount({id=ID.unique(),email,password,name,userName,prefs={}}){
          try {
             
             const createdAccount =  await this.account.create(id,email,password,name)
@@ -31,7 +31,9 @@ export class Auth{
                           avatar = new File([blob],`${name}-avatar-${id}-${getFormattedTime(true)}.webp`,{type:"image/webp"})
                           uploadRes = await dbServices.uploadImage(avatar,id)
                        }
-                       const profileCreationRes = await dbServices.createProfileDocument({userName:name,
+                       const profileCreationRes = await dbServices.createProfileDocument({
+                        userName:userName.toLowerCase(),
+                        fullName:name,
                         userAvatar:uploadRes.url?uploadRes.url:"",
                         userAvatarId:uploadRes.fileId?uploadRes.fileId:"",
                         userId:id,

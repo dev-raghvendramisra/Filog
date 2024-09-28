@@ -32,7 +32,7 @@ export default async function handleBlogTagsReq(req, res) {
   if (blog.$id) {
     blogData.imgUrl = blog['coverImageUrl'];
     blogData.title = blog['title'];
-    blogData.siteUrl = `https://fiilog.vercel.app/blog/${id}`;
+    blogData.siteUrl = `https://filog.in/blog/${id}`;
 
     const newBody = await getBlogMetatags(blogData);
 

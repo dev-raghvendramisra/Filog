@@ -2,6 +2,7 @@ import { createSlice } from "@reduxjs/toolkit";
 
 const initialState={
     name:"",
+    userName:"",
     email:"",
     password:"",
     isValidated:false
@@ -15,6 +16,9 @@ const formSlice = createSlice({
         setName:(state,action)=>{
             state.name = action.payload
         },
+        setUserName:(state,action)=>{
+            state.userName = action.payload
+        },
         setEmail:(state,action)=>{
             state.email = action.payload
         } ,
@@ -26,8 +30,7 @@ const formSlice = createSlice({
         }
     }
 })
-const {setName, setEmail, setPassword, setIsValidate} = formSlice.actions;
+export const {setName, setEmail, setPassword, setIsValidate, setUserName} = formSlice.actions;
 
-export {setName, setEmail, setPassword, setIsValidate} 
 export default formSlice.reducer
 

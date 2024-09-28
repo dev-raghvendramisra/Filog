@@ -16,17 +16,17 @@
 
     <!-- Open Graph / Facebook Meta Tags -->
     <meta property="og:type" content="website">
-    <meta property="og:url" content="https://fiilog.vercel.app">
+    <meta property="og:url" content="https://filog.in">
     <meta property="og:title" content="Filog - Create and Share Your Blog Articles | Crafting Narratives, Lighting the Way Forward">
     <meta property="og:description" content="Filog is a blogging platform where users can create accounts, write articles, and share their blogs with the world. Join Filog and start blogging today! Crafting Narratives, Lighting the Way Forward.">
-    <meta property="og:image" content="https://fiilog.vercel.app/meta/ogImage.webp">
+    <meta property="og:image" content="https://filog.in/meta/ogImage.webp">
 
     <!-- Twitter Meta Tags -->
     <meta property="twitter:card" content="summary_large_image">
-    <meta property="twitter:url" content="https://fiilog.vercel.app">
+    <meta property="twitter:url" content="https://filog.in">
     <meta property="twitter:title" content="Filog - Create and Share Your Blog Articles | Crafting Narratives, Lighting the Way Forward">
     <meta property="twitter:description" content="Filog is a blogging platform where users can create accounts, write articles, and share their blogs with the world. Join Filog and start blogging today! Crafting Narratives, Lighting the Way Forward.">
-    <meta property="twitter:image" content="https://fiilog.vercel.app/meta/ogImage.webp">
+    <meta property="twitter:image" content="https://filog.in/meta/ogImage.webp">
 
     <!-- Additional Meta Tags -->
     <meta name="keywords" content="blogging, articles, write blogs, share blogs, create account, Filog, blogging platform">

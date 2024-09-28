@@ -170,7 +170,7 @@ export function useAvatarFormModal(argHeading = "", argMessage = '', argPrimaryB
     const { fileObject: avatar, setFileObject } = useFileObjectContext()
     const dispatch = useDispatch();
 
-    const { $id: userProfileId, userName, userId, userAvatarId: currentUserAvatar } = useSelector(state => state.userProfile)
+    const { $id: userProfileId, fullName, userId, userAvatarId: currentUserAvatar } = useSelector(state => state.userProfile)
     const inputFeildSpecs = [
         {
             type: "file",
@@ -178,7 +178,7 @@ export function useAvatarFormModal(argHeading = "", argMessage = '', argPrimaryB
             height: "16vw",
             width: "16vw",
             circular: true,
-            imageName: `${userName}-avatar-${userId}`,
+            imageName: `${fullName}-avatar-${userId}`,
             imgsrc: getImgUrl(currentUserAvatar).url,
         }
     ]

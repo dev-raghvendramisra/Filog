@@ -22,7 +22,7 @@ function Form({ formRef, type, buttonComponent, heading = "Welcome back ", subHe
         </div>
 
         <div id="form-container"
-          className='flex flex-col justify-start items-center h-100p rounded-2xl bg-white dark:bg-darkPrimary  pl-8p pr-8p pt-14p formShadow'>
+          className={`flex flex-col justify-start items-center h-100p rounded-2xl bg-white dark:bg-darkPrimary  pl-8p pr-8p ${type=="signup"?"pt-10p":"pt-14p"} formShadow`}>
           <h1 id="form-heading"
             className='text-1.6vw'
             style={{ fontWeight: "700" }} > 

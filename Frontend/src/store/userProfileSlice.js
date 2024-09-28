@@ -4,6 +4,7 @@ const initialState = {
     $id:"",
     userId:"",
     userName:"",
+    fullName:"",
     userAvatar:"",
     following:null,
     followers:[],

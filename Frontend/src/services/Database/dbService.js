@@ -130,6 +130,25 @@ export class DatabaseService {
     }
 
     // User crud operations
+    async checkUserNameAvailability(userName) {
+        try{
+            const res = await this.database.listDocuments(
+                conf.dbId,
+                conf.userProfilesCollectionID,
+                [Query.equal("userName",userName.toLowerCase())]
+            )
+            if(res.documents.length===0){
+                return true
+            }
+            else{
+                return false
+            }
+        }catch(error){
+            console.log("dbService error :: failed to check username availability",error)
+            return false
+        }
+    }
+
     async createProfileDocument(docObj, userId) {
         try {
             const res = await this.database.createDocument(
