@@ -8,7 +8,7 @@ import dbServices from "../services/dbService.js";
 import {getProfileMetatags} from "../utils/index.js";
 
 export default async function handleUserProfileTagsReq(req, res) {
-    const id = req.query.username;
+    const username = req.query.username;
     console.log('Metatags API - Username:', username);
 
     const profileData = {
