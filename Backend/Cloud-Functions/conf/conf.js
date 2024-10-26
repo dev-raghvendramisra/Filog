@@ -7,6 +7,7 @@ const conf = {
     bucketId: String(process.env.APPWRITE_BUCKET_ID),
     apiKey:String(process.env.APPWRITE_API_KEY),
     notificationCollectionID: String(process.env.APPWRITE_NOTIFICATION_COLLECTION_ID),
+    userNotificationCollectionID: String(process.env.APPWRITE_USER_NOTIFICATION_COLLECTION_ID),
 }
 
 export default conf;
