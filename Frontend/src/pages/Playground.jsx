@@ -3,8 +3,8 @@ import { authServices, dbServices } from '../services'
 import { useDispatch, useSelector } from 'react-redux'
 import useModalActionsContext from '../context/modalActionsContext'
 import { ID } from 'appwrite'
-import { getFormModal, getWebpImage } from '../utils'
-import { ImageSelectionCard } from '../components'
+import { getFormModal, getWebpImage, getTimeAgo } from '../utils'
+import { ImageSelectionCard, ProfilePic } from '../components'
 import { useAvatarFormModal } from '../hooks'
 
 function Playground() {
@@ -13,6 +13,14 @@ function Playground() {
   const {userId,$id,userName,userAvatar} = useSelector(state=>state.userProfile)
 
   const openAvatarModal = useAvatarFormModal()
+  const notifications = [{
+    $id:ID.unique(),
+    content:{
+      icon:"https://cdn.fiilog.workers.dev/images/66f33997001ba179e882",
+      message:"You have a new follower",
+      time:new Date().getTime()-1000000
+    }
+  }]
 
   const blog={
     title: "How Science is Revolutionizing Food Sustainability",
@@ -56,8 +64,8 @@ function Playground() {
 
   return (
     <div className='h-100vh w-full flex flex-col justify-center items-center'>
-      <button onClick={uploadBlog}>Upload Blog</button>
-      <button onClick={updateBlog}>Update Blog</button>
+      {/* <button onClick={uploadBlog}>Upload Blog</button> */}
+     
     </div>
   )
 }

@@ -3,9 +3,10 @@ import handleFollow_Unfollow from './Handle-Follow-Unfollow/handleFollow_Unfollo
 import handleLike_Unlike from './Handle-Like-Unlike/handleLike_Unlike.js';
 import handleBlogComments from "./Handle-Blog-Comments/handleBlogComments.js";
 import handleBucketCleanup from "./Handle-Bucket-Cleanup/handleBucketCleanup.js";
+import handleReadGenNotification from "./Handle-Read-Notifications/handleReadGenNotification.js";
 
 export default async function handler({ req, res, log }) {
-     const stagableActions = ["follow", "unfollow", "like","unlike","addComment","deleteComment","bucketCleanup"];
+     const stagableActions = ["follow", "unfollow", "like","unlike","addComment","deleteComment","bucketCleanup","readGenNotification"];
 
 
     // Log the request body for debugging
@@ -101,6 +102,19 @@ export default async function handler({ req, res, log }) {
                         log("Failed to clean up the bucket");
                     }
                 }
+                else if(stagedAction.type=="readGenNotification"){
+                    const readGenNotificationRes = await handleReadGenNotification({
+                        userId: req.body.userId,
+                        log,
+                        userProfileVersion: req.body.version==null ? 1 : req.body.version ==0 ? 1 : req.body.version,
+                        notificationId: stagedAction.value,
+                    });
+                    log("Read Gen Notification Response:", readGenNotificationRes);
+                    if(readGenNotificationRes.ok){
+                        log(`${req.body.userName} (${req.body.userId}) read the general notification`);
+                    } else {
+                        log("Failed to read the general notification");
+                }}
             }
             else {
                 log("Invalid update type:", stagedAction.type);

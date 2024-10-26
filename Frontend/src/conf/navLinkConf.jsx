@@ -1,6 +1,7 @@
 import React from 'react';
 import LoginBtn from '../components/Button/LoginBtn.jsx';
 import  ProfileNavlink from '../components/Profile-navlink/ProfileNavlink.jsx';
+import Notification from '../components/Notification/Notification.jsx';
 
 // Link configuration with components directly included
 const linkConfig = [
@@ -59,9 +60,18 @@ const linkConfig = [
         selfNavigate: false
     },
     {
+        component:<Notification />,
+        name: "Notification",
+        status: false,
+        activeStyling: false,
+        defaultStyling: false,
+        isRestricted: true,
+        restrictedForAuthUsers: false,
+        selfNavigate: true
+    },
+    {
         component: <ProfileNavlink />,
         status: false,
-        path: '/profile',
         name: "profile-pic",
         activeStyling: false,
         defaultStyling: false,

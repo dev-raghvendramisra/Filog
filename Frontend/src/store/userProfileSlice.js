@@ -8,6 +8,7 @@ const initialState = {
     userAvatar:"",
     following:null,
     followers:[],
+    notifications:[],
     blogs:[],
     userAvatarId:"",
     blogsLiked:[]
@@ -37,10 +38,18 @@ const userProfileSlice = createSlice({
         updateAvatar:(state,{payload:{url,id}})=>{
             state.userAvatar = url
             state.userAvatarId = id
-        }
+        },
+        readNotification:(state,{payload:{type,notificationId,userId}})=>{
+            if(type==="gen"){
+                state.notifications = state.notifications.map(notification=>notification.$id===notificationId?{...notification,readBy:[...notification.readBy,userId]}:notification)
+            }
+            if(type==="user"){
+                state.notifications = state.notifications.map(notification=>notification.$id===notificationId?{...notification,readAt:new Date().getTime()}:notification)
+            }
+        },
 
     }
 })
 
 export default userProfileSlice.reducer
-export const{clearProfile, setProfile, updateFollowing, updateLikes,updateAvatar} = userProfileSlice.actions
+export const{clearProfile, setProfile, updateFollowing, updateLikes,updateAvatar, readNotification} = userProfileSlice.actions

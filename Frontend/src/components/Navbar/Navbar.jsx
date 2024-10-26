@@ -1,6 +1,6 @@
 import React from 'react';
 import { NavLink } from 'react-router-dom';
-import { Logo, SearchBar, ToggleBtn } from '../index'; 
+import { Logo, SearchBar } from '../index'; 
 import useLinks from '../../hooks/useLinks';
 import { useSelector } from 'react-redux';
 
@@ -62,10 +62,6 @@ export default function Navbar({className='',style={},...props}) {
                       :null
                     )
                   })}
-
-          <ToggleBtn className='ml-1vw'>
-          <i style={{fontSize:"0.5vw"}} className=" fa-solid fa-moon text-black"></i>
-          </ToggleBtn>
             </div>
 
          </nav>

@@ -173,6 +173,70 @@ export class DatabaseService {
         }
     }
 
+    async getGeneralNotifications(query){
+        try {
+            const res = await this.database.listDocuments(conf.dbId,conf.genNotificationCollectionID,[
+                ...query
+            ])
+            if(res.documents){
+                return res.documents
+            }
+            else{
+                throw {err:"dbService error :: failed to get general notifications",res:res}
+            }
+        } catch (err) {
+            console.log("dbService error :: failed to get general notifications",err)
+            return err
+        }
+    }
+    
+    async getUserNotifications(userId){
+        try{
+           const res = await this.database.listDocuments(conf.dbId,conf.userNotificationCollectionID,[
+            Query.equal("userId",userId),
+           ])
+              if(res.documents){
+                return res.documents
+              }
+              else{
+                throw {err:"dbService error :: failed to get user notifications",res:res}
+              }
+        }catch(err){
+            console.log("dbService error :: failed to get userSpecific notifications",err)
+            return err
+        }
+    }
+
+    async readGenNotification(notificationId,userProfileId){
+       try {
+        const res = await this.database.updateDocument(conf.dbId,conf.userProfilesCollectionID,userProfileId,{
+            stagedAction:action.readGenNotification(notificationId)
+        })
+        if(res.$id){
+            return res
+        }
+        else throw {err:"dbService error :: failed to update profile document",res:res}
+       } catch (error) {
+        console.log("dbService error :: failed to update profile document",error)
+        return error
+       }
+    }
+
+    async readUserNotification(notificationId){
+        try {
+            const res = await this.database.updateDocument(conf.dbId,conf.userNotificationCollectionID,notificationId,{
+                readAt:`${new Date().getTime()}/- ${getFormattedTime()}`
+            })
+            if(res.$id){
+                return res
+            }
+            else throw {err:"dbService error :: failed to update notification document",res:res}
+        } catch (error) {
+            console.log("dbService error :: failed to update notification document",error)
+            return error
+        }
+    }
+
     async getUsers(query = [Query.notEqual("userId", ["#"])]) {
         try {
             const res = await this.database.listDocuments(

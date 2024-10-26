@@ -2,7 +2,6 @@ import Navbar from "./Navbar/Navbar";
 import Logo from "./Logo/Logo";
 import SearchBar from "./Search-bar/SearchBar";
 import ProfilePic from "./ProfilePic/ProfilePic";
-import ToggleBtn from './Button/ToggleBtn';
 import Footer from "./Footer/Footer";
 import LoginBtn from "./Button/LoginBtn";
 import Input from "./Input/Input";
@@ -35,12 +34,14 @@ import BlogCardInteractionContainer from "./Blog-Card-Interaction-Cont/BlogCardI
 import Dropdown from "./Dropdown/Dropdown";
 import VerificationIcon from "./Icons/VerifiedIcon";
 import ImageSelectionCard from "./ImageSelectionCard/ImageSelectionCard";
+import Notification from "./Notification/Notification";
+import NotificationCard from "./Notification/NotificationCard";
 
 export {
   Navbar,
+  NotificationCard,
   Logo,
   SearchBar,
-  ToggleBtn,
   FeedbackMessage,
   Footer,
   Input,
@@ -73,6 +74,7 @@ export {
   Dropdown,
   FormModalContainer,
   VerificationIcon,
-  ImageSelectionCard
+  ImageSelectionCard,
+  Notification
 };
 export * from "../pages"

@@ -59,6 +59,12 @@ export class Action {
             action:"generate"
         })
     }
+    readGenNotification(notificationId){
+        return this.stagedAction = JSON.stringify({
+            type:"readGenNotification",
+            value:notificationId
+        })
+    }
 
 }
 

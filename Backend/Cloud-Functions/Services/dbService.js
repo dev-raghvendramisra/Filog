@@ -62,6 +62,19 @@ class DatabaseService {
       return { ok: false, error: error.message };
     }
   }
+  async getNotification(notificationId,log) {
+    try {
+      const res = await this.database.listDocuments(
+        conf.dbId,
+        conf.notificationCollectionID,
+        [Query.equal("$id", [notificationId])]
+      );
+      return res.documents.length > 0 ? res.documents[0] : { ok: false };
+    } catch (error) {
+      log("Error fetching notification:", error.message);
+      return { ok: false, error: error.message };
+    }
+  }
 
   async updateBlogDocument({ blogId, updatedLikeCount, log, version, updatedCommentCount }) { 
     try {
