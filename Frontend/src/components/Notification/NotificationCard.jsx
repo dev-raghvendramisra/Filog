@@ -6,7 +6,7 @@ function NotificationCard({removeNotifications,readNotifications,notification,us
   console.log(notification.readAt);
   
   return (
-    <div id={notification.$id+"-notification-content-container"} className={`${notification.readAt?"opacity-70":null}`}  >
+    <div id={notification.$id+"-notification-content-container"} className={`${notification.readAt || notification.readBy.includes(userId)?"opacity-70":null}`}  >
     <div  className={`flex justify-start items-start gap-2 hover:bg-blue-100 transition-all hover:dark:bg-darkPrimary_grays_darker p-0.7vw rounded-xl w-100p text-darkPrimary dark:text-gray-200  ${notification.type=="gen"? notification.readBy.includes(userId)  ? "bg-opacity-50" : notification.readAt && "bg-opacity-50":null}`} >
     <ProfilePic className='ml-0 ' src={notification.icon} />
     <div className=' '>
