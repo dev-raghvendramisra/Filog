@@ -8,7 +8,6 @@ export default async function handleReadGenNotification({log,notificationId,user
         return {ok:false};
     }
     log("Target notification fetched");
-    log(targetNotification)
     log("Checking if the notification is unread...");
     if(targetNotification.readBy.includes(userId)){
         log("Notification already read");
@@ -27,7 +26,7 @@ export default async function handleReadGenNotification({log,notificationId,user
     }
     log("Version matched");
     log("Updating the notification...");
-    const updationRes = await dbServices.updateNotificationDocument({log,...targetNotification});
+    const updationRes = await dbServices.updateNotificationDocument({log,updatedAttribute:{version:targetNotification.version,readBy:targetNotification.readBy}});
     if(!updationRes.$id){
         log("Failed to update notification");
         return {ok:false};

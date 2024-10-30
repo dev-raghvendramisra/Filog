@@ -120,13 +120,13 @@ class DatabaseService {
     }
   }
 
-  async updateNotificationDocument({ log, ...notification }) {
+  async updateNotificationDocument({ log, updatedAttribute }) {
     try {
       const res = await this.database.updateDocument(
         conf.dbId,
         conf.notificationCollectionID,
         notification.$id,
-        notification
+        updatedAttribute
       );
       log("Document Updated in database:", res);
       return res.$id ? res : { ok: false };
