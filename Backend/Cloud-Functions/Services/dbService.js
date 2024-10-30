@@ -69,6 +69,7 @@ class DatabaseService {
         conf.notificationCollectionID,
         [Query.equal("$id", [notificationId])]
       );
+      log("Notification fetched:", res);
       return res.documents.length > 0 ? res.documents[0] : { ok: false };
     } catch (error) {
       log("Error fetching notification:", error.message);
