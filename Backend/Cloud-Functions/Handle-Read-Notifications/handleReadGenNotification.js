@@ -18,10 +18,6 @@ export default async function handleReadGenNotification({log,notificationId,user
     targetNotification.version++;
     log("Fetching the notification to check version...");
     const notification = await dbServices.getNotification(notificationId, log);
-    if(!notification.ok){
-        log("Failed to fetch notification");
-        return {ok:false};
-    }
     log("Notification fetched");
     log("Checking version...");
     if(notification.version !== targetNotification.version){
