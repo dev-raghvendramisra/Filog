@@ -3,7 +3,7 @@ import dbServices from "../Services/dbService.js";
 export default async function handleReadGenNotification({log,notificationId,userId,userProfileVersion}){
   log("Fetching target notification...");
   let targetNotification = await dbServices.getNotification(notificationId, log);
-    if(!targetNotification.ok){
+    if(!targetNotification.$id){
         log("Failed to fetch target notification");
         return {ok:false};
     }
