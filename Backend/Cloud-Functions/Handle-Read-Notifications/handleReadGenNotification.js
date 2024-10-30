@@ -27,14 +27,14 @@ export default async function handleReadGenNotification({log,notificationId,user
     log("Version matched");
     log("Updating the notification...");
     const updationRes = await dbServices.updateNotificationDocument({log,...targetNotification});
-    if(!updationRes.ok){
+    if(!updationRes.$id){
         log("Failed to update notification");
         return {ok:false};
     }
     log("Notification read successfully");
     log("Proceeding to mark stagedAction as null...");
     const profile = await dbServices.getUserProfile(userId, log);
-    if(!profile.ok){
+    if(!profile.$id){
         log("Failed to fetch profile");
         return {ok:false};
     }
@@ -49,7 +49,7 @@ export default async function handleReadGenNotification({log,notificationId,user
     profile.stagedAction = null;
     log("Updating profile...");
     const profileUpdationRes = await dbServices.updateProfileDocument({log,...profile});
-    if(!profileUpdationRes.ok){
+    if(!profileUpdationRes.$id){
         log("Failed to update profile");
         return {ok:false};
     }

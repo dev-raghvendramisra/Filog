@@ -119,6 +119,23 @@ class DatabaseService {
       return { ok: false, error: error.message };
     }
   }
+
+  async updateNotificationDocument({ log, ...notification }) {
+    try {
+      const res = await this.database.updateDocument(
+        conf.dbId,
+        conf.notificationCollectionID,
+        notification.$id,
+        notification
+      );
+      log("Document Updated in database:", res);
+      return res.$id ? res : { ok: false };
+    } catch (error) {
+      log("Error updating document database:", error.message);
+      return { ok: false, error: error.message };
+    }
+  }
+
   async verifyEmail(userId,log) {
     try {
       const res = await this.users.updateEmailVerification(userId,true);
