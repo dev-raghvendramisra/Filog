@@ -18,8 +18,6 @@ export default async function handleReadGenNotification({log,notificationId,user
     targetNotification.version++;
     log("Fetching the notification to check version...");
     const notification = await dbServices.getNotification(notificationId, log);
-    log("Notification fetched");
-    log("Checking version...");
     if(notification.version+1 !== targetNotification.version){
         log("Version mismatch");
         return {ok:false};
@@ -38,8 +36,6 @@ export default async function handleReadGenNotification({log,notificationId,user
         log("Failed to fetch profile");
         return {ok:false};
     }
-    log("Profile fetched");
-    log("Checking version...");
     if(profile.version !== userProfileVersion){
         log("Version mismatch");
         return {ok:false};
@@ -48,7 +44,7 @@ export default async function handleReadGenNotification({log,notificationId,user
     profile.version++;
     profile.stagedAction = null;
     log("Updating profile...");
-    const profileUpdationRes = await dbServices.updateProfileDocument({log,...profile});
+    const profileUpdationRes = await dbServices.updateProfileDocument({log,profileId:profile.$id,stagedAction:null,version:profile.version});
     if(!profileUpdationRes.$id){
         log("Failed to update profile");
         return {ok:false};
