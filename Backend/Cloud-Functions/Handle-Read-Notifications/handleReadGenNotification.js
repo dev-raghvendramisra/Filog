@@ -8,6 +8,7 @@ export default async function handleReadGenNotification({log,notificationId,user
         return {ok:false};
     }
     log("Target notification fetched");
+    log(targetNotification)
     log("Checking if the notification is unread...");
     if(targetNotification.readBy.includes(userId)){
         log("Notification already read");
