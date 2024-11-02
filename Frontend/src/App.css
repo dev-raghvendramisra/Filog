@@ -21,6 +21,15 @@
         background-color: #ffffff;
     }
 
+    .notificationAvailable{
+        @apply relative;
+        
+    }
+    .notificationAvailable::before{
+        content: '';
+        @apply absolute -top-0.5 -right-0.5 w-2 h-2 rounded-full bg-red-500 text-white text-xs flex items-center justify-center;
+    }
+
     .maskLogoNav {
         /* position: absolute;
         height: 100%;

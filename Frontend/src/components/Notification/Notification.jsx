@@ -2,13 +2,13 @@ import React from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import {GenToast, NotificationCard} from '../../components'
 import { dbServices } from '../../services'
-import { readNotification } from '../../store/userProfileSlice'
+import { readNotification, removeNotification } from '../../store/userProfileSlice'
 import toast from 'react-hot-toast'
 
 function Notification() {
    const [openNotificationCont, setOpenNotificationCont] = React.useState(false)
    const [displayChevron, setDisplayChevron] = React.useState(false)
-   const [notificationCount, setNotificationCount] = React.useState(null)
+   const [notificationAvailable, setNotificationAvailable] = React.useState(null)
    const container = React.useRef()
    
    const notifications = useSelector(state=>state.userProfile.notifications)
@@ -27,7 +27,7 @@ function Notification() {
  
      if (currentContainer) {
        document.addEventListener('click',(e)=>{
-         if(e.target.id !== "notification-cont" && e.target.id !== "notification-icon-wrapper" && e.target.id !== "notification-icon-cont" && e.target.id !== "notification-icon" && e.target.id !== "notification-count"){
+         if(e.target.id !== "notification-cont" && e.target.id !== "notification-icon-wrapper" && e.target.id !== "notification-icon-cont" && e.target.id !== "notification-icon" && e.target.id !== "notification-count" && !e.target.id.includes("notification-remove") && !e.target.id.includes("notification-read")){
            setOpenNotificationCont(false)
          }
        })
@@ -46,12 +46,16 @@ function Notification() {
      }
    }, [container.current])
  
+   React.useEffect(() => {
+      if (notifications.length > 0) {
+        const unreadNotifications = notifications.filter(notification => !notification.readAt && !notification.readBy?.includes(userId))
+        setNotificationAvailable(unreadNotifications.length)
+      }
+   },[notifications])
 
    const readAllNotifications = () => {}
    const readNotifications = async({target},type,notificationId) => {
-    console.log(target);
     target.classList.add("hidden")
-
     if(type=="gen"){
       const res  = await dbServices.readGenNotification(notificationId,$id)
       if(res.$id){
@@ -68,27 +72,38 @@ function Notification() {
       return toast.custom(<GenToast type='err'>Failed to read notification</GenToast>)
     }
    }
-   const removeNotifications = (type) => {}
+   const removeNotifications = async(e,type,notificationId) => {
+    if(type=="gen"){
+      console.log("removing gen notification...");
+      const res =  await dbServices.removeGenNotification(notificationId,$id);
+      if(res.$id){
+        toast.custom(<GenToast type='success'>Notification removed</GenToast>)
+        return dispatch(removeNotification(notificationId))
+      }
+      return toast.custom(<GenToast type='err'>Failed to remove notification</GenToast>)
+    }
+    if(type=="user"){
+      console.log("removing user notification...");
+      const res =  await dbServices.removeUserNotification(notificationId);
+      if(res.$id){
+        toast.custom(<GenToast type='success'>Notification removed</GenToast>)
+        return dispatch(removeNotification(notificationId))
+      }
+      return toast.custom(<GenToast type='err'>Failed to remove notification</GenToast>)
+    }
+   }
 
- 
-   React.useEffect(()=>{
-     console.log(notifications);
-     
-   })
 
   return (
     <div id="notification-cont" className='cursor-pointer relative'>
-        <div id="notification-icon-wrapper" className='h-fit w-fit relative hover:bg-gray-100 transition-all p-0.7vw rounded-md dark:hover:bg-toastDarkModeBg'  onClick={
+        <div id="notification-icon-wrapper" className={`h-fit w-fit relative hover:bg-gray-100 transition-all p-0.7vw rounded-md dark:hover:bg-toastDarkModeBg `}  onClick={
         ()=>{
             setOpenNotificationCont(prev=>!prev)
-            setNotificationCount(null)
+            setNotificationAvailable(null)
         }
     }>
-          <div id="notification-icon-cont" className='h-fit w-fit relative' >
+          <div id="notification-icon-cont" className={`h-fit w-fit relative ${notificationAvailable ? `notificationAvailable ` : null}`} >
             <span id="notification-icon" className='fa-regular fa-bell text-1.2vw text-darkPrimary dark:text-gray-100' style=  {{fontWeight:"200"}}></span>
-           { notificationCount && <span id="notification-count" className='absolute left-40p -top-50p bg-red-600 flex justify-center items-center p-0.4vw  pb-0.1vw pt-0.1vw text-0.5vw h-fit text-white w-fit rounded-sm'>
-            {notificationCount}
-           </span>}
           </div>
         </div>
         <div id="notifications-wrapper" className='h-14vw absolute mt-38p right-0'>

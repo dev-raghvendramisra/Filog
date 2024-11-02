@@ -189,6 +189,34 @@ export class DatabaseService {
             return err
         }
     }
+    async readGenNotification(notificationId,userProfileId){
+       try {
+        const res = await this.database.updateDocument(conf.dbId,conf.userProfilesCollectionID,userProfileId,{
+            stagedAction:action.readGenNotification(notificationId)
+        })
+        if(res.$id){
+            return res
+        }
+        else throw {err:"dbService error :: failed to update profile document",res:res}
+       } catch (error) {
+        console.log("dbService error :: failed to update profile document",error)
+        return error
+       }
+    }
+    async removeGenNotification(notificationId,userProfileId){
+        try{
+            const res = await this.database.updateDocument(conf.dbId,conf.userProfilesCollectionID,userProfileId,{
+                stagedAction:action.removeGenNotification(notificationId)
+            })
+            if(res.$id){
+                return res
+            }
+            else throw {err:"dbService error :: failed to update profile document",res:res}
+        }catch(err){
+            console.log("dbService error :: failed to update profile document",err)
+            return
+        }
+    }
     
     async getUserNotifications(userId){
         try{
@@ -206,22 +234,6 @@ export class DatabaseService {
             return err
         }
     }
-
-    async readGenNotification(notificationId,userProfileId){
-       try {
-        const res = await this.database.updateDocument(conf.dbId,conf.userProfilesCollectionID,userProfileId,{
-            stagedAction:action.readGenNotification(notificationId)
-        })
-        if(res.$id){
-            return res
-        }
-        else throw {err:"dbService error :: failed to update profile document",res:res}
-       } catch (error) {
-        console.log("dbService error :: failed to update profile document",error)
-        return error
-       }
-    }
-
     async readUserNotification(notificationId){
         try {
             const res = await this.database.updateDocument(conf.dbId,conf.userNotificationCollectionID,notificationId,{
@@ -236,6 +248,20 @@ export class DatabaseService {
             return error
         }
     }
+    async removeUserNotification(notificationId){
+        try {
+            const res = await this.database.deleteDocument(conf.dbId,conf.userNotificationCollectionID,notificationId)
+            if(res.message.length==0){                             
+                res.$id=notificationId
+                return res
+            }
+            else throw {err:"dbService error :: failed to delete notification document",res:res}
+        } catch (error) {
+            console.log("dbService error :: failed to delete notification document",error)
+            return error
+        }
+    }
+
 
     async getUsers(query = [Query.notEqual("userId", ["#"])]) {
         try {

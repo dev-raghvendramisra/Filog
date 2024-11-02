@@ -47,9 +47,12 @@ const userProfileSlice = createSlice({
                 state.notifications = state.notifications.map(notification=>notification.$id===notificationId?{...notification,readAt:new Date().getTime()}:notification)
             }
         },
+        removeNotification:(state,{payload})=>{
+            state.notifications = state.notifications.filter(notification=>notification.$id!==payload)
+        }
 
     }
 })
 
 export default userProfileSlice.reducer
-export const{clearProfile, setProfile, updateFollowing, updateLikes,updateAvatar, readNotification} = userProfileSlice.actions
+export const{clearProfile, setProfile, updateFollowing, updateLikes,updateAvatar, readNotification, removeNotification } = userProfileSlice.actions

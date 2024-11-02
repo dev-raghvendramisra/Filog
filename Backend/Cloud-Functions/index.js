@@ -3,10 +3,11 @@ import handleFollow_Unfollow from './Handle-Follow-Unfollow/handleFollow_Unfollo
 import handleLike_Unlike from './Handle-Like-Unlike/handleLike_Unlike.js';
 import handleBlogComments from "./Handle-Blog-Comments/handleBlogComments.js";
 import handleBucketCleanup from "./Handle-Bucket-Cleanup/handleBucketCleanup.js";
-import handleReadGenNotification from "./Handle-Read-Notifications/handleReadGenNotification.js";
+import handleReadGenNotification from "./Handle-Notifications/handleReadGenNotification.js";
+import handleRemoveGenNotification from "./Handle-Notifications/handleRemoveNotifiication.js"
 
 export default async function handler({ req, res, log }) {
-     const stagableActions = ["follow", "unfollow", "like","unlike","addComment","deleteComment","bucketCleanup","readGenNotification"];
+     const stagableActions = ["follow", "unfollow", "like","unlike","addComment","deleteComment","bucketCleanup","readGenNotification","removeGenNotification"];
 
 
     // Log the request body for debugging
@@ -115,7 +116,22 @@ export default async function handler({ req, res, log }) {
                     } else {
                         log("Failed to read the general notification");
                 }}
+                else if(stagedAction.type=="removeGenNotification"){
+                    const removeGenNotificationRes = await handleRemoveGenNotification({
+                        userId: req.body.userId,
+                        log,
+                        userProfileVersion: req.body.version==null ? 1 : req.body.version ==0 ? 1 : req.body.version,
+                        notificationId: stagedAction.value,
+                    });
+                    log("Remove Gen Notification Response:", removeGenNotificationRes);
+                    if(removeGenNotificationRes.ok){
+                        log(`${req.body.userName} (${req.body.userId}) removed the general notification`);
+                    } else {
+                        log("Failed to remove the general notification");
+               }
             }
+        }
+              
             else {
                 log("Invalid update type:", stagedAction.type);
             }

@@ -9,7 +9,7 @@ export default async function getUserProfile({userId="#",setProfile,clearProfile
     const genNotificationsRes = await dbServices.getGeneralNotifications([Query.contains("selectedUserId",[userId])])
     const userNotificationsRes = await dbServices.getUserNotifications(userId)
     if(genNotificationsRes.length>0){
-       genNotifications = genNotificationsRes.filter((notification)=>!notification.exceptionUsers.includes(userId))
+       genNotifications = genNotificationsRes.filter((notification)=>!notification.exceptionUserId.includes(userId))
     }
     if(genNotificationAllRes.length>0){
         const moreGenNotifications = genNotificationAllRes.filter((notification)=>!notification.exceptionUserId.includes(userId))

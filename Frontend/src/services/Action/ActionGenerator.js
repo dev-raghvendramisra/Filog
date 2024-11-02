@@ -65,6 +65,12 @@ export class Action {
             value:notificationId
         })
     }
+    removeGenNotification(notificationId){
+        return this.stagedAction = JSON.stringify({
+            type:"removeGenNotification",
+            value:notificationId
+        })
+    }
 
 }
 
