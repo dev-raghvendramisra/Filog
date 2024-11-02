@@ -34,7 +34,7 @@ export default async function handleRemoveNotification({log,notificationId,userI
     userProfile.version++;
     log("Marking staged action as null...");
     const updateProfileRes = await dbServices.updateProfileDocument({
-        profileId:userId,
+        profileId:userProfile.$id,
         stagedAction:null,
         version:userProfile.version,
         log,
