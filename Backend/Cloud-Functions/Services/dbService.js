@@ -83,7 +83,8 @@ class DatabaseService {
         type:type,
         userId:userId,
         message:message,
-        icon:icon
+        icon:icon,
+        createdAt:new Date().getTime()
       })
       if(res.$id){
         return res;
