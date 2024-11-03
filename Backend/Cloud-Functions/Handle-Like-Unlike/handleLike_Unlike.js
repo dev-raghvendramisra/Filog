@@ -94,6 +94,7 @@ export default async function handleLike_Unlike({ blogId, userId, type, log, cur
         log("Recreated like count :", updatedLikeCount);
 
     }
+    // Create or delete notification
     if (type === "like") {
         const notificationRes = await handleNotificationCreation_Deletion({ log, notification });
         if(notificationRes.ok){

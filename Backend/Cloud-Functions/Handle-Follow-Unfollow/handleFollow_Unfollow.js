@@ -93,6 +93,7 @@ export default async function handleFollow_Unfollow({ targetUserId, userId, type
         log("Recreated Followers array:", updatedFollowers);
 
     }
+    //handle create and delete notification
     if(type === "follow"){
         const notificationRes = await handleNotificationCreation_Deletion({log,notification})
         if(!notificationRes.ok){
