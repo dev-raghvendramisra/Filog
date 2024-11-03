@@ -1,4 +1,4 @@
-import {Client, Databases, ID, Query, Storage, Users} from 'node-appwrite'
+import {Client, Databases, ID, Permission, Query, Role, Storage, Users} from 'node-appwrite'
 import conf from '../conf/conf.js';
 class DatabaseService {
   client = new Client()
@@ -82,8 +82,13 @@ class DatabaseService {
       const res = await this.database.createDocument(conf.dbId,type=="gen"? conf.notificationCollectionID :conf.userNotificationCollectionID,ID.unique(),{
         type:type,
         ...notification,
-        createdAt:String(new Date().getTime())
-      })
+        createdAt:String(new Date().getTime()),
+      },
+      [
+        Permission.read(type=="gen" ? Role.users() : Role.user(notification.userId)),
+        Permission.update(type=="gen" ? null : Role.user(notification.userId)),
+        Permission.delete(type=="gen" ? null : Role.user(notification.userId))
+      ])
       if(res.$id){
         return res;
       }

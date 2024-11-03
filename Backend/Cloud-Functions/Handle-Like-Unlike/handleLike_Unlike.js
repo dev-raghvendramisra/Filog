@@ -7,7 +7,7 @@ export default async function handleLike_Unlike({ blogId, userId, type, log, cur
     const notification = {
         type: "custom",
         userId: targetBlog.userId,
-        message: `${currentUserProfile.userName} has liked your blog`,
+        message: `${currentUserProfile.fullName} has liked your blog`,
         icon: currentUserProfile.userAvatar
     }
     if (!targetBlog.$id) {

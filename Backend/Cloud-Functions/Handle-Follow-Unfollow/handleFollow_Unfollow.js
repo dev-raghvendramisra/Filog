@@ -6,7 +6,7 @@ export default async function handleFollow_Unfollow({ targetUserId, userId, type
     const notification = {
         type: "custom",
         userId: targetUserId,
-        message: `${currentUserProfile.userName} has started following you`,
+        message: `${currentUserProfile.fullName} has started following you`,
         icon: currentUserProfile.userAvatar
     }
     let targetUserProfile = await dbServices.getUserProfile(targetUserId, log);
