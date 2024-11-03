@@ -1,5 +1,5 @@
 import dbServices from "../Services/dbService.js";
-import { abortDuplicateAction, handleProfileNotFound } from "../utils/index.js";
+import { abortDuplicateAction, handleNotificationCreation_Deletion, handleProfileNotFound } from "../utils/index.js";
 
 export default async function handleFollow_Unfollow({ targetUserId, userId, type, log, currentUserProfile, currentUserProfileVersion }) {
     log("Fetching target user profile...");
@@ -94,13 +94,11 @@ export default async function handleFollow_Unfollow({ targetUserId, userId, type
 
     }
     if(type === "follow"){
-        const notificationRes = await dbServices.createNotification({
-            log,
-            ...notification
-        });
-        if(!notificationRes.$id){
+        const notificationRes = await handleNotificationCreation_Deletion({log,notification})
+        if(!notificationRes.ok){
             log("Failed to create notification");
-        }else log("Notification created successfully");
+        }
+        else log("Notification created successfully");
     }
     if(type === "unfollow"){
         log("Removing notification...");
@@ -109,13 +107,11 @@ export default async function handleFollow_Unfollow({ targetUserId, userId, type
             log("Notification not found");
         }
         else{
-            const removeNotificationRes = await dbServices.deleteNotification("custom",notification.$id,log)
-            if(removeNotificationRes.message.length == 0 ){
-                log("Notification removed successfully");
-            }
-            else{
+            const removeNotificationRes = await handleNotificationCreation_Deletion({type:"delete",notificationId:notification.$id,log})
+            if(!removeNotificationRes.ok){
                 log("Failed to remove notification");
             }
+            else log("Notification removed successfully");
         }
     }
     // Update the target user profile

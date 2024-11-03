@@ -77,13 +77,11 @@ class DatabaseService {
     }
   }
 
-  async createNotification({log,type,userId,message,icon}){
+  async createNotification({log,notification,type}){
      try {
-      const res = await this.database.createDocument(conf.dbId,conf.userNotificationCollectionID,ID.unique(),{
+      const res = await this.database.createDocument(conf.dbId,type=="gen"? conf.notificationCollectionID :conf.userNotificationCollectionID,ID.unique(),{
         type:type,
-        userId:userId,
-        message:message,
-        icon:icon,
+        ...notification,
         createdAt:String(new Date().getTime())
       })
       if(res.$id){
