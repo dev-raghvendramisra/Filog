@@ -2,7 +2,7 @@ import dbServices from "../Services/dbService.js";
 
 export default async function handleReadGenNotification({log,notificationId,userId,userProfileVersion}){
   log("Fetching target notification...");
-  let targetNotification = await dbServices.getNotification(notificationId, log);
+  let targetNotification = await dbServices.getNotification("gen",notificationId, log);
     if(!targetNotification.$id){
         log("Failed to fetch target notification");
         return {ok:false};
@@ -17,7 +17,7 @@ export default async function handleReadGenNotification({log,notificationId,user
     targetNotification.readBy.push(userId);
     targetNotification.version++;
     log("Fetching the notification to check version...");
-    const notification = await dbServices.getNotification(notificationId, log);
+    const notification = await dbServices.getNotification("gen",notificationId, log);
     if(notification.version+1 !== targetNotification.version){
         log("Version mismatch");
         return {ok:false};

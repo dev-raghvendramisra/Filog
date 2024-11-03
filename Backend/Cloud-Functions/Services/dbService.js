@@ -1,4 +1,4 @@
-import {Client, Databases, Query, Storage, Users} from 'node-appwrite'
+import {Client, Databases, ID, Query, Storage, Users} from 'node-appwrite'
 import conf from '../conf/conf.js';
 class DatabaseService {
   client = new Client()
@@ -62,16 +62,49 @@ class DatabaseService {
       return { ok: false, error: error.message };
     }
   }
-  async getNotification(notificationId,log) {
+
+  async getNotification(type,notificationId,log) {
     try {
       const res = await this.database.listDocuments(
         conf.dbId,
-        conf.notificationCollectionID,
-        [Query.equal("$id", [notificationId])]
+        type=="gen"?conf.notificationCollectionID:conf.userNotificationCollectionID,
+        type=="gen"?[Query.equal("$id", [notificationId])]:[Query.equal("userId", [notificationId])]
       );
       return res.documents.length > 0 ? res.documents[0] : { ok: false };
     } catch (error) {
       log("Error fetching notification:", error.message);
+      return { ok: false, error: error.message };
+    }
+  }
+
+  async createNotification({log,type,userId,message,icon}){
+     try {
+      const res = await this.database.createDocument(conf.dbId,conf.userNotificationCollectionID,ID.unique(),{
+        type:type,
+        userId:userId,
+        message:message,
+        icon:icon
+      })
+      if(res.$id){
+        return res;
+      }
+      return {ok:false};
+     } catch (error) {
+        log("Error creating notification:",error.message);
+        return {ok:false,error:error.message};
+     }
+  }
+
+  async deleteNotification(type,notificationId,log) {
+    try {
+      const res = await this.database.deleteDocument(
+        conf.dbId,
+        type=="gen"?conf.notificationCollectionID:conf.userNotificationCollectionID,
+        notificationId
+      );
+      return res;
+    } catch (error) {
+      log("Error deleting notification:", error.message);
       return { ok: false, error: error.message };
     }
   }

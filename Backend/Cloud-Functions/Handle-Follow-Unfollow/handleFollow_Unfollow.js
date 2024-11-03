@@ -3,6 +3,12 @@ import { abortDuplicateAction, handleProfileNotFound } from "../utils/index.js";
 
 export default async function handleFollow_Unfollow({ targetUserId, userId, type, log, currentUserProfile, currentUserProfileVersion }) {
     log("Fetching target user profile...");
+    const notification = {
+        type: "custom",
+        userId: targetUserId,
+        message: `${currentUserProfile.userName} has started following you`,
+        icon: currentUserProfile.userAvatar
+    }
     let targetUserProfile = await dbServices.getUserProfile(targetUserId, log);
 
     if (!targetUserProfile.$id) {
@@ -86,6 +92,31 @@ export default async function handleFollow_Unfollow({ targetUserId, userId, type
         updatedFollowers = [...targetUserProfile.followers, ...updatedFollowers];
         log("Recreated Followers array:", updatedFollowers);
 
+    }
+    if(type === "follow"){
+        const notificationRes = await dbServices.createNotification({
+            log,
+            ...notification
+        });
+        if(!notificationRes.$id){
+            log("Failed to create notification");
+        }else log("Notification created successfully");
+    }
+    if(type === "unfollow"){
+        log("Removing notification...");
+        const notification  = await dbServices.getNotification("custom",targetUserId,log)
+        if(!notification.$id){
+            log("Notification not found");
+        }
+        else{
+            const removeNotificationRes = await dbServices.deleteNotification("custom",notification.$id,log)
+            if(removeNotificationRes.message.length == 0 ){
+                log("Notification removed successfully");
+            }
+            else{
+                log("Failed to remove notification");
+            }
+        }
     }
     // Update the target user profile
     const updateRes = await dbServices.updateProfileDocument({

@@ -2,7 +2,7 @@ import dbServices from "../Services/dbService.js";
 
 export default async function handleRemoveNotification({log,notificationId,userId,userProfileVersion}){
     log("Fetching target notification...");
-    let targetNotification = await dbServices.getNotification(notificationId, log);
+    let targetNotification = await dbServices.getNotification("gen",notificationId, log);
     if(!targetNotification.$id){
         log("Notification not found");
         return {ok:false};
