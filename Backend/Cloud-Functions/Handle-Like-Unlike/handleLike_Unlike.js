@@ -1,9 +1,15 @@
 import dbServices from "../Services/dbService.js";
-import { abortDuplicateAction, handleBlogNotFound } from "../utils/index.js";
+import { abortDuplicateAction, handleBlogNotFound, handleNotificationCreation_Deletion } from "../utils/index.js";
 
 export default async function handleLike_Unlike({ blogId, userId, type, log, currentUserProfileVersion, currentUserProfile }) {
     log("Fetching target blog...");
     let targetBlog = await dbServices.getBlog(blogId, log);
+    const notification = {
+        type: "custom",
+        userId: targetBlog.userId,
+        message: `${currentUserProfile.userName} has liked your blog`,
+        icon: currentUserProfile.userAvatar
+    }
     if (!targetBlog.$id) {
         return handleBlogNotFound(blogId, userId, log);
     }
@@ -87,6 +93,25 @@ export default async function handleLike_Unlike({ blogId, userId, type, log, cur
         updatedLikeCount = targetBlog.likeCount + 1;
         log("Recreated like count :", updatedLikeCount);
 
+    }
+    if (type === "like") {
+        const notificationRes = await handleNotificationCreation_Deletion({ log, notification });
+        if(notificationRes.ok){
+            log("Notification created successfully");
+        }
+        else log("Failed to create notification");
+    }
+    if(type === "unlike"){
+        const notification = await dbServices.getNotification("custom",targetBlog.userId,log);
+        if(!notification.$id){
+            log("Notification not found");
+        }else {
+        const notificationRes = await handleNotificationCreation_Deletion({log,notificationId:notification.$id});
+        if(notificationRes.ok){
+            log("Notification deleted successfully");
+        }
+        else log("Failed to delete notification");
+        }
     }
     const updateBlogRes = await dbServices.updateBlogDocument({
         blogId: targetBlog.$id,
