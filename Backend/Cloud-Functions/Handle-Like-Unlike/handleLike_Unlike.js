@@ -107,7 +107,7 @@ export default async function handleLike_Unlike({ blogId, userId, type, log, cur
         if(!notification.$id){
             log("Notification not found");
         }else {
-        const notificationRes = await handleNotificationCreation_Deletion({log,notificationId:notification.$id});
+        const notificationRes = await handleNotificationCreation_Deletion({type:"delete",log,notificationId:notification.$id});
         if(notificationRes.ok){
             log("Notification deleted successfully");
         }
