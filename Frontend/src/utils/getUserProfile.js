@@ -20,6 +20,17 @@ export default async function getUserProfile({userId="#",setProfile,clearProfile
     }
     if(res.documents.length>0){
         res.documents[0].notifications = [...genNotifications,...userNotifications]
+        const idxs =  []
+        res.documents[0].notifications.forEach((notification,idx) => {
+            if(notification.readBy?.includes(userId) || notification.readAt){
+                idxs.push(idx)
+            }
+        });
+        idxs.forEach(notificationReadIdx=>{
+            const [readNotification] = res.documents[0].notifications.splice(notificationReadIdx,1)
+            res.documents[0].notifications = [...res.documents[0].notifications,readNotification]
+        })
+
         dispatch(clearProfile())
         dispatch(setProfile(res.documents[0]))
         return {ok:true,res:res}

@@ -42,9 +42,15 @@ const userProfileSlice = createSlice({
         readNotification:(state,{payload:{type,notificationId,userId}})=>{
             if(type==="gen"){
                 state.notifications = state.notifications.map(notification=>notification.$id===notificationId?{...notification,readBy:[...notification.readBy,userId]}:notification)
+                const idx = state.notifications.findIndex(notification=>notification.$id===notificationId)
+                const [readNotification] = state.notifications.splice(idx,1)
+                state.notifications = [...state.notifications,readNotification]
             }
             if(type==="user"){
                 state.notifications = state.notifications.map(notification=>notification.$id===notificationId?{...notification,readAt:new Date().getTime()}:notification)
+                const idx = state.notifications.findIndex(notification=>notification.$id===notificationId)
+                const [readNotification] = state.notifications.splice(idx,1)
+                state.notifications = [...state.notifications,readNotification]
             }
         },
         removeNotification:(state,{payload})=>{

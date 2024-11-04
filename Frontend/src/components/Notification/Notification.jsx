@@ -106,12 +106,12 @@ function Notification() {
             <span id="notification-icon" className='fa-regular fa-bell text-1.2vw text-darkPrimary dark:text-gray-100' style=  {{fontWeight:"200"}}></span>
           </div>
         </div>
-        <div id="notifications-wrapper" className='h-14vw absolute mt-38p right-0'>
+        <div id="notifications-wrapper" className={`${openNotificationCont ? "h-14vw" : "h-0"} absolute mt-38p right-0`}>
 
                         
         <div
         ref={container}
-         id="notifications-cont" className={` flex flex-col bg-white p-0.5vw w-max gap-1 transition-allright-0 z-20 drop-shadow-2xl border-2 dark:border-footer_text rounded-2xl rounded-tr-none rounded-tl-none dark:border-t-0 dark:border-opacity-0 overflow-hidden dark:bg-darkPrimary_grays opacity-0 pointer-events-none  ${openNotificationCont ? "pointer-events-auto opacity-100":"pointer-events-none opacity-0"}`}>
+         id="notifications-cont" className={` flex flex-col bg-white p-0.5vw w-max gap-2 transition-allright-0 z-20 drop-shadow-2xl border-2 dark:border-footer_text rounded-2xl rounded-tr-none rounded-tl-none dark:border-t-0 dark:border-opacity-0 overflow-hidden dark:bg-darkPrimary_grays opacity-0 pointer-events-none  ${openNotificationCont ? "pointer-events-auto opacity-100":"pointer-events-none opacity-0"}`}>
           <div className='mb-0.2vw ml-1vw mt-1vw mr-1vw'>
           <p className='text-1.5vw  leading-1.1vw font-medium text-darkPrimary dark:text-gray-200'>Notifications</p>
           {notifications.length > 0 && <button className=' text-0.6vw  text-footer_text_light dark:text-footer_text  underline-offset-4 hover:underline hover:text-primary dark:hover:text-primary_darkMode' >Mark all as read</button>}
