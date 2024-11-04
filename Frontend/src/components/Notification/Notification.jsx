@@ -7,45 +7,25 @@ import toast from 'react-hot-toast'
 
 function Notification() {
    const [openNotificationCont, setOpenNotificationCont] = React.useState(false)
-   const [displayChevron, setDisplayChevron] = React.useState(false)
    const [notificationAvailable, setNotificationAvailable] = React.useState(null)
-   const container = React.useRef()
+ 
    
    const notifications = useSelector(state=>state.userProfile.notifications)
    const {userId,$id} = useSelector(state=>state.userProfile)
    const dispatch  =  useDispatch()
  
-   React.useEffect(() => {
-     const currentContainer = container.current
- 
-     const handleContainerScroll = () => {
-       if (currentContainer.scrollTop + currentContainer.clientHeight + 1 >= currentContainer.scrollHeight) {
-         return setDisplayChevron(false)
-       }
-       setDisplayChevron(true)
-     }
- 
-     if (currentContainer) {
-       document.addEventListener('click',(e)=>{
-         if(e.target.id !== "notification-cont" && e.target.id !== "notification-icon-wrapper" && e.target.id !== "notification-icon-cont" && e.target.id !== "notification-icon" && e.target.id !== "notification-count" && !e.target.id.includes("notification-remove") && !e.target.id.includes("notification-read")){
-           setOpenNotificationCont(false)
-         }
-       })
-       if (currentContainer.scrollHeight <= currentContainer.clientHeight) {
-         setDisplayChevron(false)
-       } else {
-         setDisplayChevron(true)
-         currentContainer.addEventListener('scroll', handleContainerScroll)
-       }
-     }
- 
-     return () => {
-       if (currentContainer) {
-         currentContainer.removeEventListener('scroll', handleContainerScroll)
-       }
-     }
-   }, [container.current])
- 
+   React.useEffect(()=>{
+    const handleClose= (e)=>{
+      if(e.target.id !== "notification-cont" && e.target.id !== "notification-icon-wrapper" && e.target.id !== "notification-icon-cont" && e.target.id !== "notification-icon" && e.target.id !== "notification-count" && !e.target.id.includes("notification-remove") && !e.target.id.includes("notification-read")){
+        setOpenNotificationCont(false)
+      }
+    }
+    document.addEventListener('click',handleClose)
+    return ()=>{
+      document.removeEventListener('click',handleClose)
+    }
+   },[])
+
    React.useEffect(() => {
       if (notifications.length > 0) {
         const unreadNotifications = notifications.filter(notification => !notification.readAt && !notification.readBy?.includes(userId))
@@ -106,11 +86,11 @@ function Notification() {
             <span id="notification-icon" className='fa-regular fa-bell text-1.2vw text-darkPrimary dark:text-gray-100' style=  {{fontWeight:"200"}}></span>
           </div>
         </div>
-        <div id="notifications-wrapper" className={`${openNotificationCont ? "h-14vw" : "h-0"} absolute mt-38p right-0`}>
+        <div id="notifications-wrapper" 
+         className={`${openNotificationCont ? "max-h-90vh" : "h-0"} drop-shadow-lg absolute mt-38p right-0 w-fit rounded-br-2xl rounded-bl-2xl overflow-scroll hideScrollbar `}>
 
                         
         <div
-        ref={container}
          id="notifications-cont" className={` flex flex-col bg-white p-0.5vw w-max gap-2 transition-allright-0 z-20 drop-shadow-2xl border-2 dark:border-footer_text rounded-2xl rounded-tr-none rounded-tl-none dark:border-t-0 dark:border-opacity-0 overflow-hidden dark:bg-darkPrimary_grays opacity-0 pointer-events-none  ${openNotificationCont ? "pointer-events-auto opacity-100":"pointer-events-none opacity-0"}`}>
           <div className='mb-0.2vw ml-1vw mt-1vw mr-1vw'>
           <p className='text-1.5vw  leading-1.1vw font-medium text-darkPrimary dark:text-gray-200'>Notifications</p>
@@ -126,15 +106,12 @@ function Notification() {
                 })
             }
         </div>
-        {displayChevron && (
-        <div className='text-0.5vw text-darkPrimary w-100p text-center py-0.2vw bg-white dark:text-gray-200 px-1vw dark:bg-toastDarkModeBg absolute bottom-0'>
-          <span className='fa solid fa-chevron-down animate-bounce'></span>
-        </div>
-      )}
-        </div>
+        
+        </div>      
       
     </div>
   )
 }
 
 export default Notification
+

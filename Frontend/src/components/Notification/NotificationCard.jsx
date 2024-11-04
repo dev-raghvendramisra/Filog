@@ -3,8 +3,7 @@ import { getTimeAgo } from '../../utils'
 import ProfilePic from '../ProfilePic/ProfilePic'
 
 function NotificationCard({removeNotifications,readNotifications,notification,userId}) {
-  console.log(notification.readAt);
-  
+
   return (
     <div id={notification.$id+"-notification-content-container"} className={`border-2 dark:border-footer_text dark:border-opacity-50 hover:border-primary hover:border-opacity-60 dark:hover:border-opacity-60 dark:hover:border-primary_darkMode rounded-xl ${notification.readAt || notification.readBy?.includes(userId)?"opacity-60 border-opacity-20 dark:border-opacity-20 hover:border-opacity-30 dark:hover:border-opacity-30":null}`}>
     <div  className={`flex justify-start items-start gap-2 hover:bg-blue-100 transition-all hover:dark:bg-darkPrimary_grays_darker p-0.7vw rounded-xl w-100p text-darkPrimary dark:text-gray-200  ${notification.type=="gen"? notification.readBy.includes(userId)  ? "bg-opacity-50" : notification.readAt && "bg-opacity-50":null}`} >

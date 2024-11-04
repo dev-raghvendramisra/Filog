@@ -21,6 +21,7 @@ export default async function getUserProfile({userId="#",setProfile,clearProfile
     if(res.documents.length>0){
         res.documents[0].notifications = [...genNotifications,...userNotifications]
         const idxs =  []
+        res.documents[0].notifications.sort((a,b)=>b.createdAt-a.createdAt)
         res.documents[0].notifications.forEach((notification,idx) => {
             if(notification.readBy?.includes(userId) || notification.readAt){
                 idxs.push(idx)
