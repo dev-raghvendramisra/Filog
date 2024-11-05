@@ -4,10 +4,12 @@ import {GenToast, NotificationCard} from '../../components'
 import { dbServices } from '../../services'
 import { readNotification, removeNotification } from '../../store/userProfileSlice'
 import toast from 'react-hot-toast'
+import useTheme from '../../context/themeContext'
 
 function Notification() {
    const [openNotificationCont, setOpenNotificationCont] = React.useState(false)
    const [notificationAvailable, setNotificationAvailable] = React.useState(null)
+   const {isDark} = useTheme()
  
    
    const notifications = useSelector(state=>state.userProfile.notifications)
@@ -93,10 +95,12 @@ function Notification() {
         <div
          id="notifications-cont" className={` flex flex-col bg-white p-0.5vw w-max gap-2 transition-allright-0 z-20 drop-shadow-2xl border-2 dark:border-footer_text rounded-2xl rounded-tr-none rounded-tl-none dark:border-t-0 dark:border-opacity-0 overflow-hidden dark:bg-darkPrimary_grays opacity-0 pointer-events-none  ${openNotificationCont ? "pointer-events-auto opacity-100":"pointer-events-none opacity-0"}`}>
           <div className='mb-0.2vw ml-1vw mt-1vw mr-1vw'>
-          <p className='text-1.5vw  leading-1.1vw font-medium text-darkPrimary dark:text-gray-200'>Notifications</p>
+          {notifications.length > 0 &&  <p className='text-1.5vw  leading-1.1vw font-medium text-darkPrimary dark:text-gray-200'>Notifications</p>}
           {notifications.length > 0 && <button className=' text-0.6vw  text-footer_text_light dark:text-footer_text  underline-offset-4 hover:underline hover:text-primary dark:hover:text-primary_darkMode' >Mark all as read</button>}
           </div>
-            {notifications.length === 0 && <p className='text-0.9vw text-darkPrimary dark:text-gray-200'>No new notifications</p>}
+            {notifications.length === 0 &&
+            <img src={`${isDark ? "/error-placeholders/noNewNotificationPlaceholder-dark.webp":"/error-placeholders/noNewNotificationPlaceholder-light.webp"}`} className='h-14vw p-1vw '/>
+            }
             {
                 notifications.map((notification)=>{
                     return (
