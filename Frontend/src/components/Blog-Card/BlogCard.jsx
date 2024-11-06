@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { ID } from 'appwrite';
 import ProfilePic from '../ProfilePic/ProfilePic';
+import { useNavigate } from 'react-router-dom';
 
 
 function BlogCard({ 
@@ -23,6 +24,7 @@ function BlogCard({
   const headingRef = useRef();
   const authorRef = useRef();
   const fallbackImgRef = useRef();
+  const navigate = useNavigate()
   const [truncatedTitle, setTruncatedTitle] = useState(title);
   const [truncatedAuthor, setTruncatedAuthor] = useState(author);
   const [rerender, forceRerender]  = React.useState(false);
@@ -117,10 +119,12 @@ function BlogCard({
         ${classNameBlogCardAuthorDateCont}`}
        >
         {!loader?<>
-        <div className='flex items-center gap-2' ref={authorRef}>
+        <div className='flex items-center gap-2 hover:text-primary transition-all dark:hover:text-primary_darkMode' 
+        onClick={()=>navigate(`/blog/${uniqueId}`)}
+        ref={authorRef}>
           <ProfilePic height='h-2vw' width='w-2vw' className='ml-0' src={authorImg} />
           <span 
-          className='whitespace-nowrap'>
+          className='whitespace-nowrap hover:underline hover:underline-offset-4 hover:underline-2'>
            {truncatedAuthor}
           </span>
           </div>
