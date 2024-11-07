@@ -32,6 +32,7 @@ const blogsSlice = createSlice({
                   createdAt:blogData.createdAt,
                   authorId:blogData.userId,
                   authorName:blogData.authorData.fullName,
+                  authorUserName:blogData.authorData.userName,
                   authorAvatar:blogData.authorData.userAvatar,
                   coverImageUrl:blogData.coverImageUrl,
                   subImageUrl:blogData.subImageUrl,

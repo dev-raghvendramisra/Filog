@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { ID } from 'appwrite';
 import ProfilePic from '../ProfilePic/ProfilePic';
-import { useNavigate } from 'react-router-dom';
+import { NavLink, useNavigate } from 'react-router-dom';
 
 
 function BlogCard({ 
@@ -11,6 +11,7 @@ function BlogCard({
   title, 
   author, 
   authorImg, 
+  authorUserName,
   createdAt,
   type="horizontal",
   classNameBlogCardCont="",
@@ -120,14 +121,16 @@ function BlogCard({
        >
         {!loader?<>
         <div className='flex items-center gap-2 hover:text-primary transition-all dark:hover:text-primary_darkMode' 
-        onClick={()=>navigate(`/blog/${uniqueId}`)}
+        ref={authorRef}>
+          <NavLink to={`/user/@${authorUserName}`} className='flex items-center gap-2 hover:text-primary transition-all dark:hover:text-primary_darkMode' 
         ref={authorRef}>
           <ProfilePic height='h-2vw' width='w-2vw' className='ml-0' src={authorImg} />
           <span 
           className='whitespace-nowrap hover:underline hover:underline-offset-4 hover:underline-2'>
            {truncatedAuthor}
           </span>
-          </div>
+          </NavLink>
+        </div>
           <div id={`BlogCard-date-cont ${uniqueId}`}
            className='whitespace-nowrap'>   
             {trimTime(createdAt)}

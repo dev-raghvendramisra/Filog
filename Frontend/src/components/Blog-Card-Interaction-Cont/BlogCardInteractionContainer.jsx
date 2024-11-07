@@ -10,6 +10,7 @@ function BlogCardInteractionContainer({
   authorName, 
   blogCardType, 
   userData, 
+  authorUserName,
   userProfileId, 
   likeCount, 
   commentCount, 
@@ -110,6 +111,7 @@ function BlogCardInteractionContainer({
             author={authorName}
             authorImg={authorAvatar}
             createdAt={createdAt}
+            authorUserName={authorUserName}
             uniqueId={uniqueId}
           />
         </div>

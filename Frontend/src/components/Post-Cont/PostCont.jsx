@@ -54,6 +54,7 @@ function PostCont({
           key={post.postID}
           authorName={post.authorName}
           userData={userData}
+          authorUserName={post.authorUserName}
           userProfileId={userProfileId}
           likeCount={post.likeCount}
           commentCount={post.commentCount}
