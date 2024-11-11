@@ -1,5 +1,5 @@
 import { Client, Users } from "node-appwrite";
-import conf from "../conf/conf.js";
+import conf from "../../conf/conf.js";
 
 export class AuthService{
     client = new Client()
