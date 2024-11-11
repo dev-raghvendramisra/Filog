@@ -6,6 +6,7 @@ import usersSliceReducers from "./usersSlice";
 import userProfileSliceReducers from "./userProfileSlice";
 import alertModalSliceReducers from "./alertModalSlice";
 import formModalSliceReducers from "./formModalSlice";
+import editorSliceReducers from "./editorSlice";
 
 const store = configureStore({
     reducer:{
@@ -15,7 +16,8 @@ const store = configureStore({
            users:usersSliceReducers,
            userProfile:userProfileSliceReducers,
            alertModals:alertModalSliceReducers,
-           formModals:formModalSliceReducers
+           formModals:formModalSliceReducers,
+           editor:editorSliceReducers
     }
 })
 export default store

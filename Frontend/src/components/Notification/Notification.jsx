@@ -104,7 +104,7 @@ function Notification() {
             {
                 notifications.map((notification)=>{
                     return (
-                       <NotificationCard key={notification.$id} notification={notification} userId={userId} readNotifications={readNotifications} removeNotifications={removeNotifications} />
+                       <NotificationCard  key={notification.$id} notification={notification} userId={userId} readNotifications={readNotifications} removeNotifications={removeNotifications} />
                         
                     )
                 })

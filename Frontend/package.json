@@ -10,6 +10,11 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@editorjs/editorjs": "^2.30.6",
+    "@editorjs/header": "^2.8.8",
+    "@editorjs/image": "^2.10.0",
+    "@editorjs/inline-code": "^1.5.1",
+    "@editorjs/list": "^1.10.0",
     "@emotion/react": "^11.13.0",
     "@emotion/styled": "^11.13.0",
     "@fortawesome/fontawesome-free": "^6.6.0",
