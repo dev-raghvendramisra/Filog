@@ -5,7 +5,7 @@
 
 
 import nodemailer from 'nodemailer';
-import conf from '../conf/conf.js';
+import conf from '../../conf/conf.js'
 
 export default async function sendVerificationEmail(email, userId, secret, expiry) {
    const verificationUrl = `${conf.emailVerificationUrl}?userId=${userId}&secret=${secret}&expire=${expiry}`

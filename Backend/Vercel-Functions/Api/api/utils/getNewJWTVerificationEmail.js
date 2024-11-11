@@ -4,7 +4,7 @@
 
 import sendVerificationEmail from "../emailverification/sendVerificationEmail.js";
 import jwt from 'jsonwebtoken';
-import conf from '../conf/conf.js';
+import conf from '../../conf/conf.js';
 
 export default async function getNewJWTVerificationEmail(userId, email) {
     try {

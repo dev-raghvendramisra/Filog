@@ -5,7 +5,7 @@
 
 import {getJWTBlackListingStatus} from "../utils/index.js"
 import jwt from 'jsonwebtoken';
-import conf from '../conf/conf.js';
+import conf from '../../conf/conf.js';
 import {dbServices} from "../services/index.js";
 import {authServices} from "../services/index.js";
 
