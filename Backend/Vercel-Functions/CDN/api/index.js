@@ -1,27 +1,29 @@
-import { Client, Storage } from 'node-appwrite';
-import conf from '../conf/conf.js';
 
-// Initialize Appwrite client and storage service
-const client = new Client();
-client.setEndpoint(conf.appwriteUrl).setProject(conf.projectId);
-
-const storage = new Storage(client);
+import fetch from 'node-fetch'; 
+import conf from '../conf/conf.js'
 
 export default async function handler(req, res) {
   const { imageId } = req.query;
 
   try {
-    // Get the file from Appwrite storage using the imageId
-    const file = await storage.getFile(conf.bucketId, imageId);
-    // Fetch the file as a buffer
-    const fileBuffer = file.buffer;
+  
+    const imageUrl = `${conf.appwriteUrl}/storage/buckets/${conf.bucketId}/files/${imageId}/view?project=${conf.projectId}`;
 
-    // Set Cache-Control headers for 1 month (30 days)
+  
+    const imageResponse = await fetch(imageUrl);
+    if (!imageResponse.ok) {
+      throw new Error(`Failed to fetch image from Appwrite: ${imageResponse.statusText}`);
+    }
+
+   
     res.setHeader('Cache-Control', 'public, max-age=2592000, immutable'); // 30 days in seconds
-    res.setHeader('Content-Type', file.mimeType); // Use the correct MIME type based on the file
-    res.send(fileBuffer); // Send the image data as the response
+    res.setHeader('Content-Type', imageResponse.headers.get('Content-Type'));
+    res.setHeader('Content-Length', imageResponse.headers.get('Content-Length'));
+
+    // Stream image data directly to the client
+    imageResponse.body.pipe(res);
   } catch (err) {
-    console.error('Error fetching image from Appwrite', err);
+    console.error('Error fetching image from Appwrite:', err);
     res.status(500).send('Error fetching image');
   }
 }

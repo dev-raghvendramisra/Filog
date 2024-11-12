@@ -10,6 +10,6 @@
   "license": "MIT",
   "description": "",
   "dependencies": {
-    "node-appwrite": "^14.1.0"
+    "node-fetch": "^3.3.2"
   }
 }

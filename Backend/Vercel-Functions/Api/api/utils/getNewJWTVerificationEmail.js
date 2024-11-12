@@ -15,7 +15,7 @@ export default async function getNewJWTVerificationEmail(userId, email) {
         const formattedExpiry = expiryDate.toISOString().slice(0, 19).replace('T', ' ');
         const emailRes = await sendVerificationEmail(email, userId, token, encodeURIComponent(formattedExpiry))
         if (emailRes.ok) {
-            console.log("Email sent successfully", emailRes.res)
+            console.log("Email sent successfully")
             return { ok: true, res: { userId: userId, secret: token, expiry: expiryDate }, code: 200 }
         } console.log("Failed to send email", emailRes.res)
         return { ok: false, res: emailRes.res, code: 500 }
