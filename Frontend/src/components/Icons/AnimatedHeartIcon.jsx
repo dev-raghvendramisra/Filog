@@ -19,7 +19,7 @@ defineElement(Lottie.loadAnimation)
         colors={isDark?"primary:#ffffff,secondary:#afc5ff":"primary:#121331,secondary:#194fe6"}
         style={{height,width}}>
     </lord-icon> 
-    :<img style={{height,width}} src={liked?"/icons/heartIcon-liked.svg":isDark?"/icons/heartIcon-dark.svg":"/icons/heartIcon-light.svg"} />
+    :<img  style={{height,width}} src={liked?"/icons/heartIcon-liked.svg":isDark?"/icons/heartIcon-dark.svg":"/icons/heartIcon-light.svg"} />
     }
     </>
   )

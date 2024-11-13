@@ -78,8 +78,8 @@ function BlogCard({
 
          {!loader
          ? <>
-          <img ref={fallbackImgRef} id="fallback-img" className='absolute h-100p w-100p object-cover bg-white dark:bg-darkPrimary_grays' src="/fallback img/thumbnailFallback.webp" />
-          <img 
+          <img  ref={fallbackImgRef} id="fallback-img" className='absolute h-100p w-100p object-cover bg-white dark:bg-darkPrimary_grays' src="/fallback img/thumbnailFallback.webp" />
+          <img  
           onLoad={()=>{fallbackImgRef.current.classList.add("hidden")}}
           className='h-100p w-100p object-cover' src={coverImage} />
           </>

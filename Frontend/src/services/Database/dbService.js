@@ -474,7 +474,18 @@ export class DatabaseService {
         }
     }
 
-
+    async updateProfile(profileId,updatedAttr){
+      try {
+        const res = await this.database.updateDocument(conf.dbId, conf.userProfilesCollectionID,profileId,updatedAttr)
+        if(res.$id){
+            return res;
+        }
+        else throw {err:"dbService error :: failed to update profile",res:res}
+      } catch (error) {
+        console.log("dbService error :: error in profile updation", error.res)
+        return error;
+      }
+    }
 
 }
 

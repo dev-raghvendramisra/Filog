@@ -99,7 +99,7 @@ function Notification() {
           {notifications.length > 0 && <button className=' text-0.6vw  text-footer_text_light dark:text-footer_text  underline-offset-4 hover:underline hover:text-primary dark:hover:text-primary_darkMode' >Mark all as read</button>}
           </div>
             {notifications.length === 0 &&
-            <img src={`${isDark ? "/error-placeholders/noNewNotificationPlaceholder-dark.webp":"/error-placeholders/noNewNotificationPlaceholder-light.webp"}`} className='h-14vw p-1vw '/>
+            <img  src={`${isDark ? "/error-placeholders/noNewNotificationPlaceholder-dark.webp":"/error-placeholders/noNewNotificationPlaceholder-light.webp"}`} className='h-14vw p-1vw '/>
             }
             {
                 notifications.map((notification)=>{

@@ -19,7 +19,7 @@ function ErrorPlaceHolderImage({
   
   return (
     <div className={`flex w-100p justify-center text-1.1vw mt-4vw flex-col items-center ${classNameCont}`}>
-      <img 
+      <img  
         className={`h-16vw p-1vw ${classNameImg}`}
         src={type=="post" ? getImage(type) : getImage(type)} 
         alt={type=="post" ? "No posts from followed users" : "No followed users"} 

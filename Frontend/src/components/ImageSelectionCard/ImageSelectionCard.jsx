@@ -52,8 +52,8 @@ function ImageSelectionCard({ message,
                     <span>Upload your image</span>
                 </div>
             </div>
-            {imageSrc && <img id="current-img-preview" className={`h-full w-full object-cover absolute top-0 z-10 left-0 rounded-xl`} src={imageSrc} />}
-            { imageSrc || <img id="placeholder-img" className={` h-70p opacity-50`} src={`${isDark ? darkPlaceholder : lightPlaceholder}`}/>}
+            {imageSrc && <img  id="current-img-preview" className={`h-full w-full object-cover absolute top-0 z-10 left-0 rounded-xl`} src={imageSrc} />}
+            { imageSrc || <img  id="placeholder-img" className={` h-70p opacity-50`} src={`${isDark ? darkPlaceholder : lightPlaceholder}`}/>}
             { type=="circ" || imageSrc || message && <p className='text-footer_text text-1.2vw'>{message}</p>}
             <input type="file" className='sr-only' ref={fileInput} onChange={handleImageChange} accept='image/jpeg, image/png, image/webp' />
         </div>

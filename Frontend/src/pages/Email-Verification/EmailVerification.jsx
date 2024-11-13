@@ -153,7 +153,7 @@ function EmailVerification() {
     <div className='h-100vh w-full flex items-center justify-center' id={id + "email-verification-wrapper"}>
       <div className='w-fit h-fit flex items-center justify-start p-4vw flex-col border-2 rounded-3xl border-gray-200 dark:border-footer_text_light' id={id + "email-verification-cont"}>
         <div className='flex items-center flex-col' id={id + "email-verification-header"}>
-          <img className='w-8vw' src={isDark ? "/icons/filogXgmail-dark.webp" : "/icons/filogXgmail-light.webp"} />
+          <img  className='w-8vw' src={isDark ? "/icons/filogXgmail-dark.webp" : "/icons/filogXgmail-light.webp"} />
           <p className='text-1.7vw mt-0.5vw' id={id + "email-verification-heading"}>Email verification</p>
           <p className='text-0.5vw text-footer_text'>Verifying Your Email, You can request new link if it fails</p>
           {err && <FeedbackMessage err={err} className='mt-1vw'>{err}</FeedbackMessage>} 
