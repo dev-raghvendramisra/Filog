@@ -189,6 +189,7 @@ export class DatabaseService {
             return err
         }
     }
+
     async readGenNotification(notificationId,userProfileId){
        try {
         const res = await this.database.updateDocument(conf.dbId,conf.userProfilesCollectionID,userProfileId,{
@@ -203,6 +204,7 @@ export class DatabaseService {
         return error
        }
     }
+
     async removeGenNotification(notificationId,userProfileId){
         try{
             const res = await this.database.updateDocument(conf.dbId,conf.userProfilesCollectionID,userProfileId,{
@@ -234,6 +236,7 @@ export class DatabaseService {
             return err
         }
     }
+
     async readUserNotification(notificationId){
         try {
             const res = await this.database.updateDocument(conf.dbId,conf.userNotificationCollectionID,notificationId,{
@@ -248,6 +251,7 @@ export class DatabaseService {
             return error
         }
     }
+    
     async removeUserNotification(notificationId){
         try {
             const res = await this.database.deleteDocument(conf.dbId,conf.userNotificationCollectionID,notificationId)
