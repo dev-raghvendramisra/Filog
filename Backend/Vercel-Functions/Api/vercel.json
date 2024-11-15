@@ -1,0 +1,22 @@
+{
+    "rewrites": [
+      {
+        "source":"/apis/email_service",
+        "destination":"/api/mail-service/emailService"
+      },
+      {
+        "source":"/apis/email_service",
+        "destination":"/api/mail-service/emailService"
+      },
+      {
+        "source": "/(.*)",
+        "destination": "/index.html"
+      }
+    ],
+    "functions": {
+      "api/**/*.js": {
+        "memory": 1024,
+        "maxDuration": 10
+      }
+    }
+  }

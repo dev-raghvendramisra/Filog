@@ -1,0 +1,15 @@
+{
+  "name": "filog-ssr-functions",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "type": "module",
+  "author": "",
+  "license": "MIT",
+  "description": "",
+  "dependencies": {
+    "node-appwrite": "^14.1.0"
+  }
+}

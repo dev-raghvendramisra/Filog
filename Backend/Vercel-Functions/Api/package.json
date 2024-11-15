@@ -1,0 +1,17 @@
+{
+  "name": "filog-api-functions",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "type": "module",
+  "author": "",
+  "license": "MIT",
+  "description": "",
+  "dependencies": {
+    "jsonwebtoken": "^9.0.2",
+    "node-appwrite": "^14.1.0",
+    "nodemailer": "^6.9.15"
+  }
+}
