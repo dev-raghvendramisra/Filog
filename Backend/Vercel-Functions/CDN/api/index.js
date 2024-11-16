@@ -14,10 +14,7 @@ export default async function handler(req, res) {
     if (!imageResponse.ok) {
       throw new Error(`Failed to fetch image from Appwrite: ${imageResponse.statusText}`);
     }
-
-    console.log(imageResponse);
     
-
    
     res.setHeader('Cache-Control', 'public, max-age=2592000, immutable'); // 30 days in seconds
     res.setHeader('Content-Type', imageResponse.headers.get('Content-Type'));
