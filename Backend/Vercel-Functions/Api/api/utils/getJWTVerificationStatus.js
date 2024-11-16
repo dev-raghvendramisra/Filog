@@ -36,7 +36,7 @@ export default async function getJWTVerificationStatus(token,userId,statusOnly=f
         const decoded = jwt.verify(token, conf.jwtSecret)
         if (decoded.userId != userId) {
             console.log("Invalid token")
-            return {ok:false,res:"Invalid token",code:401}
+            return {ok:false,res:"Invalid token",code:400}
         }
         
         console.log("Token verified successfully")

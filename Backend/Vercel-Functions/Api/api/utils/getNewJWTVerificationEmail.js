@@ -6,12 +6,11 @@ import sendEmail from "../mail-service/sendEmail.js";
 import jwt from 'jsonwebtoken';
 import conf from '../../conf/conf.js';
 
-export default async function getNewJWTVerificationEmail(userId, email, emailTypeKey="__email1" ,expiryDate = new Date(Date.now() + 3600000), expiry = '1h') {
+export default async function getNewJWTVerificationEmail(userId, email, emailTypeKey="__email1" ,expiryDate = new Date().getTime()+60*60*1000, expiry = '1h') {
     try {
 
         const token = jwt.sign({ userId }, conf.jwtSecret, { expiresIn: expiry }) // 1 hour from now
-        const formattedExpiry = expiryDate.toISOString().slice(0, 19).replace('T', ' ');
-        const emailRes = await sendEmail(email, userId, token, encodeURIComponent(formattedExpiry),emailTypeKey)
+        const emailRes = await sendEmail(email, userId, token, expiryDate,emailTypeKey)
         if (emailRes.ok) {
             console.log("Email sent successfully")
             return { ok: true, res: { userId: userId, secret: token, expiry: expiryDate }, code: 200 }

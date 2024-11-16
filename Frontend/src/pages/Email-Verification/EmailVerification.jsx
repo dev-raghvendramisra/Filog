@@ -33,9 +33,8 @@ function EmailVerification() {
   
   // Function to check if the verification link has expired
   const isVerificationExpired = React.useCallback((expire) => {
-    const crrDate = new Date();
-    const expireDate = new Date(expire.replace(" ", "T") + "Z");
-    return crrDate >= expireDate;
+    const crrDate = new Date().getTime();
+    return crrDate >= expire;
   }, []);
   
   // Function to handle the "Get new" button click
