@@ -3,12 +3,12 @@ import React from "react";
 import { FormValidation, InfinitePogressbar} from "../../components";
 
 
-function Form({ formRef, type, buttonComponent, heading = "Welcome back ", subHeading = "Enter your credentials to login your account" ,loading}) {
+function Form({ formRef, type,style, buttonComponent, heading = "Welcome back ", subHeading = "Enter your credentials to login your account" ,loading}) {
 
   return (
     <div id={`${type}-container`} 
     className='h-100vh w-100p  flex justify-center items-start' 
-    style={{ marginTop: "12vh" }}>
+    style={{ marginTop: "12vh",...style }}>
 
       <div id={`${type}-wrapper`}
         className='bg-blue-100 dark:bg-darkPrimary_grays  h-90p w-70p relative  justify-center flex items-center   rounded-3xl overflow-hidden '>

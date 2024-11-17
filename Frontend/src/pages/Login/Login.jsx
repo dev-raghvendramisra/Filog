@@ -10,6 +10,7 @@ import {startAuthentication} from '../../utils';
 import { authErrHandler } from '../../utils';
 import getUserProfile from '../../utils/getUserProfile';
 import { clearProfile, setProfile } from '../../store/userProfileSlice';
+import { useResetPassModal } from '../../hooks/useFormModal';
 
 
 
@@ -17,6 +18,7 @@ import { clearProfile, setProfile } from '../../store/userProfileSlice';
 export default function Login() {
   const [formErr, setFormErr] = React.useState("");
   const [loading, setLoading] = React.useState("");
+  const [isPassModalOpen, setIsPassModalOpen] = React.useState("")
   const formRef = React.useRef(null)
   const [disabled, setDisabled] = React.useState(false)
   const {isValidated,email,password} = useSelector((state)=>state.formData)
@@ -74,6 +76,12 @@ export default function Login() {
     startLoginSequence()
     },[isValidated])
 
+  const openPassModal = useResetPassModal(()=>setIsPassModalOpen(false))
+
+  const openModal = (val) =>{
+     setIsPassModalOpen(val)
+     openPassModal(val)
+  }
 
   if(isUserLoggedIn){
     return <Navigate to="/dashboard" />
@@ -83,6 +91,7 @@ export default function Login() {
 
 
     <Form type="login"
+      style={isPassModalOpen ? {marginTop:"0",paddingTop:"12vh"} : {marginTop:"12vh",paddingTop:"0"}}
       formRef={formRef}
       heading='Welcome back 👋 '
       subHeading='Enter your credentials to login your account'
@@ -96,11 +105,11 @@ export default function Login() {
             Login
           </Button >
           <Error  className="transition-all justify-center mt-4p" >{formErr}</Error>
-          <NavLink to="/" className='mt-16p w-100p text-0.8vw text-gray-600 dark:text-footer_text ' >
+          <NavLink className='mt-16p w-100p text-0.8vw text-gray-600 dark:text-footer_text ' >
             Forgot password ?
-            <span className="underline-offset-2 underline text-primary ml-2p">
+            <button onClick={()=>openModal(true)} className="underline-offset-2 underline text-primary ml-2p">
               Reset pass
-            </span>
+            </button>
           </NavLink>
           <span className='mt-1p w-100p text-0.8vw underline text-gray-600 dark:text-footer_text' >Or</span>
 

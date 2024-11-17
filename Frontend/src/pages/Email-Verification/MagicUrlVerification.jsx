@@ -12,6 +12,7 @@ import { authServices } from '../../services'
 function MagicUrlVerification() {
   const [successMsg, setSuccessMsg] = React.useState(false)
   const [err, setErr] = React.useState(false)
+  const [verified, setVerified] = React.useState(false)
   const [verifying, setVerifying] = React.useState(false)
   const dispatch = useDispatch()
   const navigate = useNavigate()
@@ -23,6 +24,7 @@ function MagicUrlVerification() {
   const [searchParams] = useSearchParams()
 
   React.useEffect(()=>{
+     if(verified) return;
      if(!isFetching){
        if(userData){
         return setErr("You are already loggedIn");
@@ -66,13 +68,15 @@ function MagicUrlVerification() {
     const session_key = await verifySecret(userId, secret)
     if(session_key)  authServices.loginWithMagicUrl(session_key);
     else{
+      setVerifying(false)
       return setErr(res.res)
     } 
     setSuccessMsg("Link verified successfully")
+    setVerified(true)
     setVerifying(false)
-    navigate("/")
     await startAuthentication({dispatch,login,logout,setFetching,navigate,read_writeAuthObj:false})
     await getUserProfile({userId,setProfile,clearProfile,dispatch})
+    setTimeout(()=>navigate("/"),1200)
   }
 
   React.useEffect(()=>{

@@ -31,7 +31,7 @@ export default async function startAuthentication({dispatch,login,logout,setFetc
     }
     else if(res.code!==401){
         dispatch(login(res))
-        if(!isAuthObjValid) handleAuthObject({write:true , name:res.name});
+        if(!isAuthObjValid && read_writeAuthObj) handleAuthObject({write:true , name:res.name});
         
         setEmail? dispatch(setEmail("")):null
         setPass? dispatch(setPass("")):null

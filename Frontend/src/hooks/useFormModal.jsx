@@ -1,11 +1,11 @@
 import React from 'react'
 import { useDispatch, useSelector } from 'react-redux';
 import useModalActionsContext from '../context/modalActionsContext';
-import { setInputFeild_1Error, setInputFeild_1Value, setInputFeild_2Value, setInputFeild_2Error, setInputFeild_3Value, setInputFeild_3Error, clearModal, setCtaDisabled, setCtaLoading, setFeedbackMessage } from '../store/formModalSlice'
+import { setInputFeild_1Error, setInputFeild_1Value, setInputFeild_2Value, setInputFeild_2Error, setInputFeild_3Value, setInputFeild_3Error, clearModal, setCtaDisabled, setCtaLoading, setFeedbackMessage, setPrimaryBtnText } from '../store/formModalSlice'
 import { commentOnBlog } from '../store/blogsSlice'
 import { getFormModal, getImgUrl } from '../utils';
 import { ID } from 'appwrite';
-import { dbServices } from '../services';
+import { dbServices, authServices } from '../services';
 import toast from 'react-hot-toast';
 import { GenToast } from '../components';
 import { updateAvatar } from '../store/userProfileSlice';
@@ -115,8 +115,8 @@ export function useCommentFormModal(userId, argHeading = "", argMessage = "", ar
     const openFormModal = React.useCallback((isOpen, blogId, authorId) => {
 
         if (isOpen) {
-            setBlogId(blogId)
-            setAuthorId(authorId)
+            blogId && setBlogId(blogId)
+            authorId && setAuthorId(authorId)
             setOpenFormModal(true)
         }
         else setOpenFormModal(false)
@@ -239,4 +239,99 @@ export function useAvatarFormModal(argHeading = "", argMessage = '', argPrimaryB
     }, [])
 
     return openFormModal;
+}
+
+export function useResetPassModal( customCleanup=()=>{},argHeading = "", argMessage = '', argPrimaryBtnText = '', argSecondaryBtnText = ''){
+    const heading = argHeading || "Secure Login";
+    const message = argMessage || "Enter the valid email associated with your account to receive a secure login link.";
+    const primaryBtnText = argPrimaryBtnText || "Request Email";
+    const secondaryBtnText = argSecondaryBtnText || "Cancel";
+
+    const [modalId] = React.useState(ID.unique())
+    const [email, setEmail] = React.useState(null);
+    const [localFeedbackMessage, setLocalFeedbackMessage] = React.useState(null);
+    const [timer, setTimer] = React.useState(null);
+    const dispatch = useDispatch();
+    const formModals = useSelector(state => state.formModals)
+    const { addModalActionHandlers, removeModalActionHandlers } = useModalActionsContext();
+
+    const inputFeildSpecs =  [
+        {
+            type:"email",
+            type2:"Enter your email"
+        }
+    ]
+
+    const validateEmail = ()=>{
+     const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+        const res = emailRegex.test(email);
+        if (res) {
+          return true;
+        } else {
+         dispatch(setInputFeild_1Error({id: modalId, val:"Please enter a valid email !"}));
+          return false;
+        }
+    }
+
+    const primaryOnClick = React.useCallback(async()=>{
+         dispatch(setCtaDisabled({id:modalId ,val:true}))
+         dispatch(setCtaLoading({id:modalId ,val:true}));
+         dispatch(setPrimaryBtnText({id:modalId, text:"Verifying ..."}))
+         const isEmailValid = validateEmail(email);
+         if(!isEmailValid) {
+            dispatch(setCtaLoading({id:modalId ,val:false}))
+            dispatch(setCtaDisabled({id:modalId ,val:false}))
+            dispatch(setPrimaryBtnText({id:modalId, text:primaryBtnText}))
+            return;
+         }
+         dispatch(setPrimaryBtnText({id:modalId, text:"Sending ..."}))
+         const res = await authServices.createMagicUrl(email);
+         dispatch(setCtaLoading({id:modalId ,val:false}))
+         dispatch(setCtaDisabled({id:modalId ,val:false}))
+         dispatch(setPrimaryBtnText({id:modalId, text:primaryBtnText}))
+
+         if(res.ok){
+            dispatch(setCtaDisabled({id:modalId,val:true}));
+            dispatch(setPrimaryBtnText({id:modalId,val:"Sent"}))
+            return setLocalFeedbackMessage({type:"success", message:"Email sent successfully"})
+         }
+         if(res.code==404) return setLocalFeedbackMessage({type:"err", message:"No account found with requested email"})
+         if(res.code==500) return setLocalFeedbackMessage({type:"err", message:"Internal server error"})
+    },[email])
+
+    const secondaryOnClick = React.useCallback(() => {
+        openFormModal(false)
+    }, [])
+
+    const openFormModal = useFormModal({modalId,heading,message,primaryBtnText,secondaryBtnText,ctaDanger:false,iconClass:"fa-solid fa-unlock",inputFeildSpecs,primaryOnClick,secondaryOnClick,customCleanup})
+   
+    React.useEffect(() => {
+        if (localFeedbackMessage) {
+            toast.custom(<GenToast type={localFeedbackMessage.type}>{localFeedbackMessage.message}</GenToast>)
+            dispatch(setFeedbackMessage({ id: modalId, feedbackMessage: localFeedbackMessage.message, type: localFeedbackMessage.type }))
+        }
+
+    }, [localFeedbackMessage])
+
+    React.useEffect(() => {
+        return () => clearTimeout(timer)
+    }, [timer])
+
+    React.useEffect(() => {
+        if (formModals) {
+            formModals.forEach((modal) => {
+                if (modal.id == modalId) {
+                    setEmail(modal.inputFeild_1Value)
+                }
+            })
+        }
+    }, [formModals])
+
+    React.useEffect(() => {
+        removeModalActionHandlers(modalId)
+        addModalActionHandlers({ [modalId]: { primaryOnClick, secondaryOnClick } })
+    }, [email])
+
+
+    return openFormModal
 }
