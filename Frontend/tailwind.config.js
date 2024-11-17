@@ -37,6 +37,9 @@ export default {
       fontFamily: {
         sans: ['Poppins', 'sans-serif'],
       },
+      animation:{
+        spin_fast: 'spin 0.7s linear infinite'
+      },
 
       inset: {
         '0p': '0%',     // 0%

@@ -82,7 +82,7 @@ function FormModal({
                 handleChange(modalId, target.value)
               }}
               key={modalId + idx}
-              icon={false}
+              icon={inputFeildSpec.icon || false}
               type={inputFeildSpec.type}
               type2={inputFeildSpec.type2}
               className_container="w-20vw px-1.5vw py-1vw"

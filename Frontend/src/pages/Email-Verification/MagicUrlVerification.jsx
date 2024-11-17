@@ -8,6 +8,7 @@ import useTheme from '../../context/themeContext'
 import { FeedbackMessage, GenToast } from '../../components'
 import toast, { LoaderIcon } from 'react-hot-toast'
 import { authServices } from '../../services'
+import { useEmailAlertModal } from '../../hooks'
 
 function MagicUrlVerification() {
   const [successMsg, setSuccessMsg] = React.useState(false)
@@ -18,10 +19,11 @@ function MagicUrlVerification() {
   const navigate = useNavigate()
 
   const errMsg = ["Invalid verification link", "Verification link expired"]
-
+  
   const {isDark} = useTheme()
   const {userData, isFetching} = useSelector(state=>state.auth)
   const [searchParams] = useSearchParams()
+  const openModal = useEmailAlertModal()
 
   React.useEffect(()=>{
      if(verified) return;
@@ -68,15 +70,16 @@ function MagicUrlVerification() {
     const session_key = await verifySecret(userId, secret)
     if(session_key)  authServices.loginWithMagicUrl(session_key);
     else{
-      setVerifying(false)
-      return setErr(res.res)
+      return setVerifying(false)
     } 
     setSuccessMsg("Link verified successfully")
-    setVerified(true)
     setVerifying(false)
+    setVerified(true)
     await startAuthentication({dispatch,login,logout,setFetching,navigate,read_writeAuthObj:false})
     await getUserProfile({userId,setProfile,clearProfile,dispatch})
-    setTimeout(()=>navigate("/"),1200)
+    setTimeout(() => {
+      navigate("/")
+    }, 1200);
   }
 
   React.useEffect(()=>{
@@ -87,6 +90,7 @@ function MagicUrlVerification() {
      if(successMsg) toast.custom(<GenToast type="success">{successMsg}</GenToast>)
   },[successMsg])
 
+
   return (
     <div className='h-100vh w-full flex items-center justify-center' id={"email-verification-wrapper"}>
       <div className='w-fit h-fit flex items-center justify-start p-4vw flex-col ' id={"email-verification-cont"}>
@@ -94,7 +98,7 @@ function MagicUrlVerification() {
           <img  className='w-8vw' src={isDark ? "/icons/filogXgmail-dark.webp" : "/icons/filogXgmail-light.webp"} />
           <p className='text-1.7vw mt-0.5vw' id={"email-verification-heading"}>Secure Login</p>
           <p className='text-1vw text-footer_text flex-col flex items-center gap-3'>Verifying Your Email, You can request new link again if it fails
-          {verifying && <LoaderIcon className='h-2vw w-2vw' />}
+          {verifying && <LoaderIcon style={{color:""}} className='h-2vw w-2vw border-transparent animate-spin_fast dark:border-r-primary_darkMode dark:border-t-primary_darkMode border-r-primary border-t-primary' />        }
           </p>
           {err && <FeedbackMessage err={err} className='mt-1vw'>{err}</FeedbackMessage>} 
           {successMsg && <FeedbackMessage err={false} className='mt-1vw'>{successMsg}</FeedbackMessage>}

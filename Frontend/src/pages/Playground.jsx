@@ -3,6 +3,7 @@ import EditorJS from '@editorjs/editorjs';
 import Header from '@editorjs/header';
 import Image from '@editorjs/image'
 import List from '@editorjs/list';
+import { LoaderIcon } from 'react-hot-toast';
 import { Button, ImageSelectionCard } from '../components';
 import { getUserProfile, getWebpImage, startAuthentication } from '../utils'; // Utility to process images to WebP format
 import InlineCode from '@editorjs/inline-code';
@@ -82,6 +83,7 @@ const Playground = () => {
         const profile = res.code!==401 && await getUserProfile({userId,setProfile,clearProfile,dispatch})
        }}
        >Login</Button>
+        <LoaderIcon className='h-2vw w-2vw border-transparent animate-spin_fast dark:border-r-primary_darkMode dark:border-t-primary_darkMode border-r-primary border-t-primary' />
     </div>
   );
 }
