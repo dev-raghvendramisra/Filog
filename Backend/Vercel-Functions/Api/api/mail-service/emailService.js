@@ -73,7 +73,7 @@ export default async function emailService(req, res) {
             else return res.status(404).json({ok:false,res:"User not found",code:404})
             const emailRes = await getNewJWTVerificationEmail(userId,email,"__email2",new Date().getTime()+15*60*1000
             ,'15m')
-          
+            emailRes.ok && delete emailRes.res.secret;
             return res.status(emailRes.code).json({ok:emailRes.ok,res:emailRes.res,code:emailRes.code})
           
         }
