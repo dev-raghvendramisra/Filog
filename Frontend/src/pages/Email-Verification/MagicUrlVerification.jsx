@@ -71,7 +71,7 @@ function MagicUrlVerification() {
     setSuccessMsg("Link verified successfully")
     setVerifying(false)
     navigate("/")
-    await startAuthentication({dispatch,login,logout,setFetching,navigate})
+    await startAuthentication({dispatch,login,logout,setFetching,navigate,read_writeAuthObj:false})
     await getUserProfile({userId,setProfile,clearProfile,dispatch})
   }
 
