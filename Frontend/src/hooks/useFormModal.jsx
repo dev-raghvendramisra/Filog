@@ -254,6 +254,7 @@ export function useResetPassModal( customCleanup=()=>{},argHeading = "", argMess
     const dispatch = useDispatch();
     const formModals = useSelector(state => state.formModals)
     const { addModalActionHandlers, removeModalActionHandlers } = useModalActionsContext();
+    const form = useSelector((state)=>state.formData)
 
     const inputFeildSpecs =  [
         {
@@ -292,7 +293,7 @@ export function useResetPassModal( customCleanup=()=>{},argHeading = "", argMess
 
          if(res.ok){
             dispatch(setCtaDisabled({id:modalId,val:true}));
-            dispatch(setPrimaryBtnText({id:modalId,val:"Sent"}))
+            dispatch(setPrimaryBtnText({id:modalId,text:"Sent"}))
             return setLocalFeedbackMessage({type:"success", message:"Email sent successfully"})
          }
          if(res.code==404) return setLocalFeedbackMessage({type:"err", message:"No account found with requested email"})
@@ -332,6 +333,9 @@ export function useResetPassModal( customCleanup=()=>{},argHeading = "", argMess
         addModalActionHandlers({ [modalId]: { primaryOnClick, secondaryOnClick } })
     }, [email])
 
+    React.useEffect(()=>{
+        formModals.forEach((modal)=>modal.id==modalId && dispatch(setInputFeild_1Value({id:modalId,val:form.email})))
+    },[])
 
     return openFormModal
 }
