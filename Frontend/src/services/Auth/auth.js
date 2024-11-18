@@ -77,6 +77,7 @@ export class Auth{
       try {
         this.client.setJWT(secret);
         this.account = new Account(this.client);
+        dbServices.updateJwt(secret)
       } catch (error) {
         console.log(error)
       }

@@ -15,6 +15,12 @@ export class DatabaseService {
         this.storageBucket = new Storage(this.client);
     }
 
+    updateJwt(secret){
+        this.client.setJWT(secret);
+        this.database = new Databases(this.client);
+        this.storageBucket = new Storage(this.client);
+    }
+
     // Blog crud operations
     async createBlog({
         title,
