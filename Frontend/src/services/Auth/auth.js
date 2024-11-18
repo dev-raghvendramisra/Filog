@@ -56,6 +56,8 @@ export class Auth{
          }
     }
 
+
+
     async login(email,password){
         try {
         console.log("calling-auth");
@@ -70,6 +72,20 @@ export class Auth{
         } catch (error) {
             console.log("auth service error :: account login error:", error)
             return error
+        }
+    }
+
+    async resetPassword(userId, newPassword){
+        try {
+            const res = await fetch(conf.authApiEndpoint,{
+                method:"POST",
+                headers:{"Content-Type":"application/json"},
+                body:action.resetPassword(userId, newPassword)
+            })
+            const rawRes = await res.json();
+            return rawRes;
+        } catch (error) {
+            console.log(error)
         }
     }
 

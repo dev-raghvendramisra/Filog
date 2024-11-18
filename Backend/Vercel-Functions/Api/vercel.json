@@ -9,6 +9,10 @@
         "destination":"/api/mail-service/emailService"
       },
       {
+        "source":"/apis/auth_service",
+        "destination":"/api/auth-service/authService"
+      },
+      {
         "source": "/(.*)",
         "destination": "/index.html"
       }

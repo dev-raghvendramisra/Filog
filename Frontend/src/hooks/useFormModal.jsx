@@ -10,6 +10,7 @@ import toast from 'react-hot-toast';
 import { GenToast } from '../components';
 import { updateAvatar } from '../store/userProfileSlice';
 import useFileObjectContext from '../context/fileObjectContext';
+import { useNavigate } from 'react-router-dom';
 
 export default function useFormModal({
     modalId,
@@ -241,7 +242,7 @@ export function useAvatarFormModal(argHeading = "", argMessage = '', argPrimaryB
     return openFormModal;
 }
 
-export function useResetPassModal( customCleanup=()=>{},argHeading = "", argMessage = '', argPrimaryBtnText = '', argSecondaryBtnText = ''){
+export function useSecureLoginModal( customCleanup=()=>{},argHeading = "", argMessage = '', argPrimaryBtnText = '', argSecondaryBtnText = ''){
     const heading = argHeading || "Secure Login";
     const message = argMessage || "Enter the valid email associated with your account to receive a secure login link.";
     const primaryBtnText = argPrimaryBtnText || "Request Email";
@@ -338,4 +339,88 @@ export function useResetPassModal( customCleanup=()=>{},argHeading = "", argMess
     },[])
 
     return openFormModal
+}
+
+export function useResetPassModal(customCleanup = ()=>{},argHeading = "", argMessage = '', argPrimaryBtnText = '', argSecondaryBtnText = '' ){
+    const heading = argHeading || "Reset Password";
+    const message = argMessage || "Enter the valid email associated with your account to receive a secure login link.";
+    const primaryBtnText = argPrimaryBtnText || "Reset Password";
+    const secondaryBtnText = argSecondaryBtnText || "Cancel";
+    const minChars = 8;
+    const maxChars = 64; 
+
+    const [modalId] = React.useState(ID.unique())
+    const [password, setPassword] = React.useState("")
+    const [localFeedbackMessage, setLocalFeedbackMessage] = React.useState(null)
+    const {userData} = useSelector(state=>state.auth)
+    const dispatch = useDispatch()
+    const navigate = useNavigate()
+    const formModals = useSelector(state => state.formModals)
+    const { addModalActionHandlers, removeModalActionHandlers } = useModalActionsContext();
+
+    const inputFeildSpecs = [
+        {
+            type:"password",
+            type2:"Enter your password"
+        }
+    ]
+    
+    function passValidation() {
+        if (password.length >= minChars && password.length <= maxChars) {
+          return true;
+        } else {
+          setLocalFeedbackMessage({type:"err",message:`Password must be between ${minChars} and ${maxChars} characters.`});
+          return false;
+        }
+      }
+
+      const secondaryOnClick = React.useCallback(() => {
+          openFormModal(false)
+      }, [])
+
+    const primaryOnClick = React.useCallback(async()=>{
+        if(!passValidation()) return
+        dispatch(secondaryBtnText({id:modalId, text:"Resetting ..."}))
+        dispatch(setCtaDisabled({id:modalId,val:true}))
+        dispatch(setCtaLoading({id:modalId,val:true}))
+        const res = await authServices.resetPassword(userData.$id,password);
+        if(res.$id){
+            dispatch(setCtaLoading({id:modalId,val:false}))
+            dispatch(secondaryBtnText({id:modalId, text:"Reset"}))
+            setTimeout(()=>navigate("/"),1200)
+            return setLocalFeedbackMessage({type:"success", message:"Password updated successfully"})
+        }
+        dispatch(setCtaLoading({id:modalId,val:false}))
+        dispatch(secondaryBtnText({id:modalId, text:primaryBtnText}))
+        if(res.code==404) return setLocalFeedbackMessage({type:"err", message:"No account found with requested email"})
+        if(res.code==500) return setLocalFeedbackMessage({type:"err", message:"Internal server error"})
+            if (res.code == 503) return setLocalFeedbackMessage({ type: "err", message: "Service unavailable, please try again later" })
+            },[password,userData])
+        
+    React.useEffect(()=>{
+        if(localFeedbackMessage){
+            toast.custom(<GenToast type={localFeedbackMessage.type}>{localFeedbackMessage.message}</GenToast>)
+            return dispatch(setFeedbackMessage({id:modalId, feedbackMessage:localFeedbackMessage.message, type:localFeedbackMessage.type}))
+        }
+    },[localFeedbackMessage])
+
+    React.useEffect(() => {
+        if (formModals) {
+            formModals.forEach((modal) => {
+                if (modal.id == modalId) {
+                    setPassword(modal.inputFeild_1Value)
+                }
+            })
+        }
+    }, [formModals])
+
+    React.useEffect(() => {
+        removeModalActionHandlers(modalId)
+        addModalActionHandlers({ [modalId]: { primaryOnClick, secondaryOnClick } })
+    }, [password])
+
+
+    const openFormModal = useFormModal({modalId,heading,message,primaryBtnText,secondaryBtnText,ctaDanger:false,iconClass:"fa-solid fa-key",inputFeildSpecs,primaryOnClick,secondaryOnClick,customCleanup})
+   
+
 }

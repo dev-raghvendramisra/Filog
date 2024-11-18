@@ -73,6 +73,14 @@ export class Action {
         })
     }
 
+    resetPassword(userId, password){
+        return this.stagedAction = JSON.stringify({
+            userId:userId,
+            password:password,
+            action:"reset-password"
+        })
+    }
+
     readGenNotification(notificationId){
         return this.stagedAction = JSON.stringify({
             type:"readGenNotification",

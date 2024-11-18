@@ -44,6 +44,16 @@ export class AuthService{
           return {ok:false, res:error, code:500}
         }
      }
+
+      async resetPassword(userId, password){
+        try {
+          const res = await this.users.updatePassword(userId, password)
+          return {ok:true, res:res, code:200}
+        } catch (error) {
+          console.log("Error resetting password:",error.message);
+          return {ok:false, res:error, code:500}
+        }
+      }
 }
 
 const authServices = new AuthService();

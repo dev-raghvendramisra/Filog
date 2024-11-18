@@ -21,6 +21,7 @@ const Playground = () => {
   // const {$id, userAvatarId, userId} = useSelector(state=>state.userProfile);
   const dispatch = useDispatch()
   const navigate = useNavigate()
+  const {userData} = useSelector(state=>state.auth)
   React.useEffect(()=>{
     const editor = new EditorJS({
       holder:'editorHolder',
@@ -83,6 +84,15 @@ const Playground = () => {
         const profile = res.code!==401 && await getUserProfile({userId,setProfile,clearProfile,dispatch})
        }}
        >Login</Button>
+        <Button primary
+         onClick={
+          async()=>{
+            const res = await authServices.resetPassword(userData.$id,"raghav12");
+            console.log(res);
+            
+          }
+         }
+         >Reset Pass</Button>
         <LoaderIcon className='h-2vw w-2vw border-transparent animate-spin_fast dark:border-r-primary_darkMode dark:border-t-primary_darkMode border-r-primary border-t-primary' />
     </div>
   );

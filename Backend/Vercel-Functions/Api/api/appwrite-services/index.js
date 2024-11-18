@@ -1,5 +1,5 @@
-import authServices from './authService.js';
-import dbServices from './dbService.js';
+import appwriteAuthService from './appwriteAuthService.js';
+import appwriteDBService from './appwriteDBService.js';
 import Email from './emailGenerator.js';
 
-export { authServices, dbServices, Email };
+export { appwriteAuthService, appwriteDBService, Email };

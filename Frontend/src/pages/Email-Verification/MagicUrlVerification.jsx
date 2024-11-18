@@ -8,7 +8,7 @@ import useTheme from '../../context/themeContext'
 import { FeedbackMessage, GenToast } from '../../components'
 import toast, { LoaderIcon } from 'react-hot-toast'
 import { authServices } from '../../services'
-import { useEmailAlertModal } from '../../hooks'
+import { useResetPassModal } from '../../hooks'
 
 function MagicUrlVerification() {
   const [successMsg, setSuccessMsg] = React.useState(false)
@@ -23,7 +23,7 @@ function MagicUrlVerification() {
   const {isDark} = useTheme()
   const {userData, isFetching} = useSelector(state=>state.auth)
   const [searchParams] = useSearchParams()
-  const openModal = useEmailAlertModal()
+  const openModal = useResetPassModal()
 
   React.useEffect(()=>{
      if(verified) return;
@@ -78,8 +78,8 @@ function MagicUrlVerification() {
     await startAuthentication({dispatch,login,logout,setFetching,navigate,read_writeAuthObj:false})
     await getUserProfile({userId,setProfile,clearProfile,dispatch})
     setTimeout(() => {
-      navigate("/")
-    }, 1200);
+      openModal(true)
+    }, 100);
   }
 
   React.useEffect(()=>{

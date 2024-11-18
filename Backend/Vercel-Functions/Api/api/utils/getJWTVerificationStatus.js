@@ -1,13 +1,13 @@
 //description: getJWTVerificationStatus function is used to verify the jwt token and check if the token is blacklisted or not
 //It uses getJWTBlackListingStatus function to check if the token is blacklisted or not
-//It also uses verifyEmail function from authServices to verify the email of the user
+//It also uses verifyEmail function from appwriteAuthService to verify the email of the user
 //It returns an object with ok, res and code properties
 
 import {getJWTBlackListingStatus} from "../utils/index.js"
 import jwt from 'jsonwebtoken';
 import conf from '../../conf/conf.js';
-import {dbServices} from "../appwrite-services/index.js";
-import {authServices} from "../appwrite-services/index.js";
+import {appwriteDBService} from "../appwrite-services/index.js";
+import {appwriteAuthService} from "../appwrite-services/index.js";
 
 
 export default async function getJWTVerificationStatus(token,userId,statusOnly=false) {
@@ -19,14 +19,14 @@ export default async function getJWTVerificationStatus(token,userId,statusOnly=f
         }
         if(isDocumentPresent){
             console.log("Blacklisting token...")
-            const blackListTokenRes = await dbServices.blackListToken(false,userId,token,tokenDocument.tokens)
+            const blackListTokenRes = await appwriteDBService.blackListToken(false,userId,token,tokenDocument.tokens)
             if(blackListTokenRes.$id){
                 console.log("Token blacklisted successfully")
             }
         }
         else {
             console.log("Token document is not present, creating it and blacklisting token...")
-            const blackListTokenRes = await dbServices.blackListToken(true,userId,token)
+            const blackListTokenRes = await appwriteDBService.blackListToken(true,userId,token)
             if(blackListTokenRes.$id){
                 console.log("Token blacklisted successfully")
             }
@@ -44,7 +44,7 @@ export default async function getJWTVerificationStatus(token,userId,statusOnly=f
             return {ok:true,res:"Token Verified Successfully", code:200}
         }
 
-        const verifyEmail = await authServices.verifyEmail(userId)
+        const verifyEmail = await appwriteAuthService.verifyEmail(userId)
         if (verifyEmail.ok) {
             console.log("Email verified successfully")
             return {ok:true,res:verifyEmail.res,code:200}

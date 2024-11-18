@@ -1,7 +1,7 @@
 // Description : Email Verification API for user email verification. This API is used to handle email verification requests. It receives a request with an action parameter and performs the corresponding action. If the action is "generate", it generates a new JWT verification email and sends it to the user. If the action is "verify", it verifies the JWT token and updates the user's email verification status in the database. The code uses functions from other files to send verification emails, verify JWT tokens, and update the database.
 
 import conf from "../../conf/conf.js";
-import authServices from "../appwrite-services/authService.js";
+import {appwriteAuthService} from "../appwrite-services/index.js";
 import { getJWTVerificationStatus, getNewJWTVerificationEmail } from "../utils/index.js"
 
 
@@ -66,7 +66,7 @@ export default async function emailService(req, res) {
         }
         else if(action.toLowerCase() == "generate-magicurl-email"){
             const {email} = req.body;
-            let userId = await authServices.getUserDetails(email);
+            let userId = await appwriteAuthService.getUserDetails(email);
             if(userId){
                 userId = userId.$id
             }
@@ -81,12 +81,14 @@ export default async function emailService(req, res) {
             const {token, userId} = req.body;
             const statusRes = await getJWTVerificationStatus(token, userId, true);
             if(statusRes.ok){
-                const appwriteSessionJwt = await authServices.getNewSessionJwt(userId);
+                const appwriteSessionJwt = await appwriteAuthService.getNewSessionJwt(userId);
                 return res.status(appwriteSessionJwt.code).json({ok:appwriteSessionJwt.ok,res:appwriteSessionJwt.res,code:appwriteSessionJwt.code})
             }
             return res.status(statusRes.code).json({ok:statusRes.ok,res:statusRes.res,code:statusRes.code});
         }
         return res.status(400).json({ ok: false, res: "Invalid action", code: 400 })
+
+
 
     } catch (error) {
         console.log("Error handling email verification request", error);

@@ -10,7 +10,7 @@ import {startAuthentication} from '../../utils';
 import { authErrHandler } from '../../utils';
 import getUserProfile from '../../utils/getUserProfile';
 import { clearProfile, setProfile } from '../../store/userProfileSlice';
-import { useResetPassModal } from '../../hooks/useFormModal';
+import { useSecureLoginModal } from '../../hooks';
 
 
 
@@ -76,7 +76,7 @@ export default function Login() {
     startLoginSequence()
     },[isValidated])
 
-  const openPassModal = useResetPassModal(()=>setIsPassModalOpen(false))
+  const openPassModal = useSecureLoginModal(()=>setIsPassModalOpen(false))
 
   const openModal = (val) =>{
      setIsPassModalOpen(val)
