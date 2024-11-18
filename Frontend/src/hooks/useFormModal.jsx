@@ -380,18 +380,18 @@ export function useResetPassModal(customCleanup = ()=>{},argHeading = "", argMes
 
     const primaryOnClick = React.useCallback(async()=>{
         if(!passValidation()) return
-        dispatch(secondaryBtnText({id:modalId, text:"Resetting ..."}))
+        dispatch(setPrimaryBtnText({id:modalId, text:"Resetting ..."}))
         dispatch(setCtaDisabled({id:modalId,val:true}))
         dispatch(setCtaLoading({id:modalId,val:true}))
         const res = await authServices.resetPassword(userData.$id,password);
         if(res.$id){
             dispatch(setCtaLoading({id:modalId,val:false}))
-            dispatch(secondaryBtnText({id:modalId, text:"Reset"}))
+            dispatch(setPrimaryBtnText({id:modalId, text:"Reset"}))
             setTimeout(()=>navigate("/"),1200)
             return setLocalFeedbackMessage({type:"success", message:"Password updated successfully"})
         }
         dispatch(setCtaLoading({id:modalId,val:false}))
-        dispatch(secondaryBtnText({id:modalId, text:primaryBtnText}))
+        dispatch(setPrimaryBtnText({id:modalId, text:primaryBtnText}))
         if(res.code==404) return setLocalFeedbackMessage({type:"err", message:"No account found with requested email"})
         if(res.code==500) return setLocalFeedbackMessage({type:"err", message:"Internal server error"})
             if (res.code == 503) return setLocalFeedbackMessage({ type: "err", message: "Service unavailable, please try again later" })
