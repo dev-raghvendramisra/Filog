@@ -422,5 +422,5 @@ export function useResetPassModal(customCleanup = ()=>{},argHeading = "", argMes
 
     const openFormModal = useFormModal({modalId,heading,message,primaryBtnText,secondaryBtnText,ctaDanger:false,iconClass:"fa-solid fa-key",inputFeildSpecs,primaryOnClick,secondaryOnClick,customCleanup})
    
-
+    return openFormModal
 }
