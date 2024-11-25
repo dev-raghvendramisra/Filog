@@ -20,7 +20,7 @@
         __email2:{
             type:"forget-pass",
             subject:"Forget Password",
-            url:"http://filog.in/reset-password"
+            url:"http://localhost:5173/reset-password"
         }
      }
 }

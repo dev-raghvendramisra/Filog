@@ -1,20 +1,9 @@
-import conf from "../../conf/conf.js";
-
-class EmailGenerator {
-    email;
-    
-    generate(type,url){
-     if(type==conf.email.__email1.type){
-        return this.verificationEmail(url)
-     }
-     else if(type==conf.email.__email2.type){
-        return this.magicUrlEmail(url)
-     }
-    }
+const {constants} = require('../config/constants')
 
 
-    verificationEmail(url){
-       return this.email=`<!DOCTYPE html>
+module.exports.getMailContent = function (type, url){
+     if(type === Object.keys(constants.EMAIL_TYPES)[0]){
+     return  `<!DOCTYPE html>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
@@ -44,12 +33,11 @@ class EmailGenerator {
   </body>
 </html>
 
-`;
-    }
+`
+     }
 
-    magicUrlEmail(url){
-    return this.email =
-     `<html lang="en">
+     if(type === Object.keys(constants.EMAIL_TYPES)[1]){
+        return `<html lang="en">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -78,8 +66,5 @@ class EmailGenerator {
   </body>
 </html>
 `
-    }
+     }
 }
-const Email = new EmailGenerator()
-
-export default Email;

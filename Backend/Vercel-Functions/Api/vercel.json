@@ -5,10 +5,6 @@
         "destination":"/api/mail-service/emailService"
       },
       {
-        "source":"/apis/email_service",
-        "destination":"/api/mail-service/emailService"
-      },
-      {
         "source":"/apis/auth_service",
         "destination":"/api/auth-service/authService"
       },

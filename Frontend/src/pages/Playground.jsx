@@ -15,6 +15,7 @@ import { Query } from 'appwrite';
 import { login, logout, setFetching } from '../store/authSlice';
 import { useNavigate } from 'react-router-dom';
 import { setProfile, clearProfile } from '../store/userProfileSlice';
+import { useResetPassModal } from '../hooks';
 
 
 const Playground = () => {
@@ -31,6 +32,8 @@ const Playground = () => {
     })
   },[])
 
+  const open = useResetPassModal()
+  
   const [secret, setSecret] = React.useState(null);
   const [userId, setUserId] = React.useState(null);
 

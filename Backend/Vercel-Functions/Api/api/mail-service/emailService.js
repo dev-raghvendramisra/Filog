@@ -8,7 +8,7 @@ import { getJWTVerificationStatus, getNewJWTVerificationEmail } from "../utils/i
 
 export default async function emailService(req, res) {
     //  conf.projectEndpoint
-    res.setHeader('Access-Control-Allow-Origin', conf.projectEndpoint); // Update with correct frontend URL
+    res.setHeader('Access-Control-Allow-Origin', "*"); // Update with correct frontend URL
     res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS'); // Allowed methods
     res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization'); // Allowed headers
     res.setHeader('Access-Control-Allow-Credentials', 'true');  

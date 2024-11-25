@@ -2,7 +2,7 @@ import { appwriteAuthService } from "../appwrite-services/index.js";
 
 export default async function authService(req,res){
      //  conf.projectEndpoint
-     res.setHeader('Access-Control-Allow-Origin', conf.projectEndpoint); // Update with correct frontend URL
+     res.setHeader('Access-Control-Allow-Origin', "*"); // Update with correct frontend URL
      res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS'); // Allowed methods
      res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization'); // Allowed headers
      res.setHeader('Access-Control-Allow-Credentials', 'true');
