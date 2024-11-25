@@ -4,7 +4,7 @@ const app = express();
 const cors = require('cors');
 const apiRoutes = require('./routes/apiRoutes');
 const { conf } = require('./config/conf');
-const logger = require('./logs/logger');
+const {logger} = require('./middlewares');
 const publicDir = path.join(__dirname, 'public');
 
 
