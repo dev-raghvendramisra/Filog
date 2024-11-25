@@ -384,7 +384,7 @@ export function useResetPassModal(customCleanup = ()=>{},argHeading = "", argMes
         dispatch(setCtaDisabled({id:modalId,val:true}))
         dispatch(setCtaLoading({id:modalId,val:true}))
         const res = await authServices.resetPassword(userData.$id,password);
-        if(res.$id){
+        if(res.ok){
             dispatch(setCtaLoading({id:modalId,val:false}))
             dispatch(setPrimaryBtnText({id:modalId, text:"Reset"}))
             setTimeout(()=>navigate("/"),1200)
