@@ -17,6 +17,10 @@ module.exports.constants = Object.freeze({
         VERIFY_MAGIC_URL:{
             MANDATORY_FIELDS:["token","userId"],
             ERROR_MESSAGE:"Request lacks token or userId"
+        },
+        RESET_PASSWORD:{
+            MANDATORY_FIELDS:["userId","password"],
+            ERROR_MESSAGE:"Request lacks password or userId"
         }
     },
     EMAIL_TYPES:{

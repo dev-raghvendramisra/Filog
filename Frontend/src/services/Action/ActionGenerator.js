@@ -77,7 +77,7 @@ export class Action {
         return this.stagedAction = JSON.stringify({
             userId:userId,
             password:password,
-            action:"reset-password"
+            action:"RESET_PASSWORD"
         })
     }
 

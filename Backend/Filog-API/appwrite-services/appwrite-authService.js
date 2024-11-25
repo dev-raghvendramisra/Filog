@@ -45,6 +45,8 @@ class AuthService{
         }
      }
 
+     
+
       async resetPassword(userId, password){
         try {
           const res = await this.users.updatePassword(userId, password)
