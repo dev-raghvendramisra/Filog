@@ -1,9 +1,9 @@
 import React from 'react'
 import { useDispatch, useSelector } from 'react-redux';
 import useModalActionsContext from '../context/modalActionsContext';
-import { setInputFeild_1Error, setInputFeild_1Value, setInputFeild_2Value, setInputFeild_2Error, setInputFeild_3Value, setInputFeild_3Error, clearModal, setCtaDisabled, setCtaLoading, setFeedbackMessage, setPrimaryBtnText } from '../store/formModalSlice'
+import { setInputFeild_1Error, setInputFeild_1Value, clearModal, setCtaDisabled, setCtaLoading, setFeedbackMessage, setPrimaryBtnText } from '../store/formModalSlice'
 import { commentOnBlog } from '../store/blogsSlice'
-import { getFormModal, getImgUrl } from '../utils';
+import { getFormModal, getImgUrl, startAuthentication } from '../utils';
 import { ID } from 'appwrite';
 import { dbServices, authServices } from '../services';
 import toast from 'react-hot-toast';
@@ -385,9 +385,12 @@ export function useResetPassModal(customCleanup = ()=>{},argHeading = "", argMes
         dispatch(setCtaLoading({id:modalId,val:true}))
         const res = await authServices.resetPassword(userData.$id,password);
         if(res.ok){
+            await authServices.logout()
+            authServices.login(userData.email,password)
             dispatch(setCtaLoading({id:modalId,val:false}))
             dispatch(setPrimaryBtnText({id:modalId, text:"Reset"}))
             setTimeout(()=>navigate("/"),1200)
+            openFormModal(false)
             return setLocalFeedbackMessage({type:"success", message:"Password updated successfully"})
         }
         dispatch(setCtaLoading({id:modalId,val:false}))
@@ -400,7 +403,7 @@ export function useResetPassModal(customCleanup = ()=>{},argHeading = "", argMes
     React.useEffect(()=>{
         if(localFeedbackMessage){
             toast.custom(<GenToast type={localFeedbackMessage.type}>{localFeedbackMessage.message}</GenToast>)
-            return dispatch(setFeedbackMessage({id:modalId, feedbackMessage:localFeedbackMessage.message, type:localFeedbackMessage.type}))
+            dispatch(setFeedbackMessage({id:modalId, feedbackMessage:localFeedbackMessage.message, type:localFeedbackMessage.type}))
         }
     },[localFeedbackMessage])
 

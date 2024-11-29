@@ -99,7 +99,14 @@ export class Auth{
       }
     }
 
+    
+
     async logout(){
+        if(this.client.config.jwt){
+            this.client.setJWT('');
+            this.account = new Account(this.client)
+            return null;
+        }
         const result  = await this.account.deleteSession("current");
         localStorage.removeItem("cookieFallback")
         localStorage.removeItem("authObj")

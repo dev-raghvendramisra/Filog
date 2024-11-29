@@ -26,14 +26,14 @@ function MagicUrlVerification() {
   const openModal = useResetPassModal()
 
   React.useEffect(()=>{
-     if(verified) return;
+     if(!verified){ 
      if(!isFetching){
        if(userData){
-        return setErr("You are already loggedIn");
+         setErr("You are already loggedIn");
        }
-       const {isValid, userId, secret} = checkLinkIntegrity()
-       if(isValid) startSequence(userId, secret);
-     }
+       else {const {isValid, userId, secret} = checkLinkIntegrity()
+       if(isValid) startSequence(userId, secret);}
+     }}
   },[isFetching,userData])
 
 

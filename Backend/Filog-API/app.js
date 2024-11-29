@@ -17,8 +17,8 @@ const corsOptions = {
 
 app.use(cors(corsOptions));
 app.use(express.static(publicDir));
-app.use(logger);
 app.use(express.json())
+app.use(logger);
 app.use('/apis',apiRoutes)
 app.use((req,res)=>{
     res.status(404).send({message: 'Invalid URL',code: 404, ok:false})

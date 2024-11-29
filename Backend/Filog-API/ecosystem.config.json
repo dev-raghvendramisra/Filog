@@ -1,0 +1,7 @@
+{
+      "name": "filog-api",
+      "script": "/home/ubuntu/Filog/Backend/Filog-API/app.js",
+      "log_file":"/home/ubuntu/Filog/Backend/Filog-API/logs/env.log",
+      "log_date_format": "YYYY-MM-DD HH:mm:ss.SSS"
+    }
+
