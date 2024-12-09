@@ -27,3 +27,5 @@ app.use((req,res)=>{
 app.listen(conf.PORT,()=>{
     console.log(`Server started on port ${conf.PORT}`)
 })
+
+// pm2 start  ecosystem.config.json

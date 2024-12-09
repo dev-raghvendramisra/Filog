@@ -12,11 +12,11 @@ const verifySignature = (data, signature, key) => {
 };
 
 export default function handleAuthObject({ read = false, write = false, clear = false, name }) {
-    const authObjAccessKey = conf.authObjKey; 
+    const authObjAccessKey = conf.AUTH_OBJ_KEY; 
     const authObj = localStorage.getItem("authObj");
     const EXPIRY_DATE_MS = 30 * 24 * 60 * 60 * 1000; // 30 days in milliseconds
     const CRR_DATE_MS = new Date().getTime();
-    const signatureKey = conf.signatureKey; // Add your signature key here
+    const SIGNATURE_KEY = conf.SIGNATURE_KEY; // Add your signature key here
 
     if (authObj && read) {
         const objectToVerify = JSON.parse(authObj);
@@ -31,7 +31,7 @@ export default function handleAuthObject({ read = false, write = false, clear = 
                 const decryptedObject = JSON.parse(decryptedBytes.toString(CryptoJS.enc.Utf8));
                 const { name: decryptedName, signature } = decryptedObject;
 
-                if (verifySignature(decryptedName, signature, signatureKey)) {
+                if (verifySignature(decryptedName, signature, SIGNATURE_KEY)) {
                     return decryptedName;
                 } else {
                     return false;
@@ -47,7 +47,7 @@ export default function handleAuthObject({ read = false, write = false, clear = 
         }
     } 
     else if (write) {
-        const signature = generateSignature(name, signatureKey);
+        const signature = generateSignature(name, SIGNATURE_KEY);
         const authObject = {
             authStatus: CryptoJS.AES.encrypt(JSON.stringify({ name, signature }), authObjAccessKey).toString(),
             expiryDateMs: CRR_DATE_MS + EXPIRY_DATE_MS

@@ -1,21 +1,21 @@
 const conf = {
-   appWriteUrl: String(import.meta.env.VITE_APPWRITE_URL),
-   projectId: String(import.meta.env.VITE_PROJECT_ID),
-   dbId: String(import.meta.env.VITE_DATABASE_ID),
-   blogCollectionID: String(import.meta.env.VITE_BLOG_COLLECTION_ID),
-   userProfilesCollectionID: String(import.meta.env.VITE_USERPROFILE_COLLECTION_ID),
-   blogCommentsCollectionID: String(import.meta.env.VITE_BLOGCOMMENTS_COLLECTION_ID),
-   genNotificationCollectionID: String(import.meta.env.VITE_GENERAL_NOTIFICATIONS_COLLECTION_ID),
-   userNotificationCollectionID: String(import.meta.env.VITE_USER_NOTIFICATIONS_COLLECTION_ID),
-   bucketId: String(import.meta.env.VITE_BUCKET_ID),
-   authObjKey: String(import.meta.env.VITE_AUTH_OBJ_KEY),
-   signatureKey: String(import.meta.env.VITE_SIGNATURE_KEY),
-   localEndpoint: String(import.meta.env.VITE_LOCAL_ENDPOINT),
-   productionEndpoint: String(import.meta.env.VITE_PRODUCTION_ENDPOINT),
-   cdnEndpoint: String(import.meta.env.VITE_CDN_ENDPOINT),
-   emailApiEndpoint: String(import.meta.env.VITE_AUTH_API_ENDPOINT),
-   authApiEndpoint: String(import.meta.env.VITE_AUTH_API_ENDPOINT),
-   adminId:String(import.meta.env.VITE_ADMIN_ID)//temp
+   APPWRITE_URL: String(import.meta.env.VITE_APPWRITE_URL),
+   PROJECT_ID: String(import.meta.env.VITE_PROJECT_ID),
+   DB_ID: String(import.meta.env.VITE_DATABASE_ID),
+   BLOG_COLLECTION_ID: String(import.meta.env.VITE_BLOG_COLLECTION_ID),
+   USERPROFILE_COLLECTION_ID: String(import.meta.env.VITE_USERPROFILE_COLLECTION_ID),
+   BLOG_COMMENTS_COLLECTION_ID: String(import.meta.env.VITE_BLOGCOMMENTS_COLLECTION_ID),
+   GEN_NOTIFICATION_COLLECTION_ID: String(import.meta.env.VITE_GENERAL_NOTIFICATIONS_COLLECTION_ID),
+   USER_NOTIFICATION_COLLECTION_ID: String(import.meta.env.VITE_USER_NOTIFICATIONS_COLLECTION_ID),
+   BUCKET_ID: String(import.meta.env.VITE_BUCKET_ID),
+   AUTH_OBJ_KEY: String(import.meta.env.VITE_AUTH_OBJ_KEY),
+   SIGNATURE_KEY: String(import.meta.env.VITE_SIGNATURE_KEY),
+   LOCAL_ENDPOINT: String(import.meta.env.VITE_LOCAL_ENDPOINT),
+   PRODUCTION_ENDPOINT: String(import.meta.env.VITE_PRODUCTION_ENDPOINT),
+   CDN_ENDPOINT: String(import.meta.env.VITE_CDN_ENDPOINT),
+   AUTH_API_ENDPOINT: String(import.meta.env.VITE_AUTH_API_ENDPOINT),
+   ADMIN_ID:String(import.meta.env.VITE_ADMIN_ID)//temp
 }
 
 export default conf;
+

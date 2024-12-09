@@ -5,8 +5,8 @@ import conf from "../../conf/conf";
 
 export class DatabaseService {
     client = new Client()
-        .setEndpoint(conf.appWriteUrl)
-        .setProject(conf.projectId);
+        .setEndpoint(conf.APPWRITE_URL)
+        .setProject(conf.PROJECT_ID);
     database;
 
     storageBucket;
@@ -52,8 +52,8 @@ export class DatabaseService {
         }
         try {
             const res = await this.database.createDocument(
-                conf.dbId,
-                conf.blogCollectionID,
+                conf.DB_ID,
+                conf.BLOG_COLLECTION_ID,
                 blogId,
                 blogAttr,
                 [
@@ -76,8 +76,8 @@ export class DatabaseService {
     async updateBlog(blogId, updatedBlogAttr) {
         try {
             const updatedBlog = await this.database.updateDocument(
-                conf.dbId,
-                conf.blogCollectionID,
+                conf.DB_ID,
+                conf.BLOG_COLLECTION_ID,
                 blogId,
                 updatedBlogAttr
 
@@ -97,8 +97,8 @@ export class DatabaseService {
     async deleteBlog(blogId) {
         try {
             const res = await this.database.deleteDocument(
-                conf.dbId,
-                conf.blogCollectionID,
+                conf.DB_ID,
+                conf.BLOG_COLLECTION_ID,
                 blogId
             )
             if (res.$id) {
@@ -117,8 +117,8 @@ export class DatabaseService {
     async getBlogs(query) {
         try {
             const res = await this.database.listDocuments(
-                conf.dbId,
-                conf.blogCollectionID,
+                conf.DB_ID,
+                conf.BLOG_COLLECTION_ID,
                 query
             );
 
@@ -139,8 +139,8 @@ export class DatabaseService {
     async checkUserNameAvailability(userName) {
         try{
             const res = await this.database.listDocuments(
-                conf.dbId,
-                conf.userProfilesCollectionID,
+                conf.DB_ID,
+                conf.USERPROFILE_COLLECTION_ID,
                 [Query.equal("userName",userName.toLowerCase())]
             )
             if(res.documents.length===0){
@@ -158,8 +158,8 @@ export class DatabaseService {
     async createProfileDocument(docObj, userId) {
         try {
             const res = await this.database.createDocument(
-                conf.dbId,
-                conf.userProfilesCollectionID,
+                conf.DB_ID,
+                conf.USERPROFILE_COLLECTION_ID,
                 ID.unique(),
                 docObj,
                 [
@@ -181,7 +181,7 @@ export class DatabaseService {
 
     async getGeneralNotifications(query){
         try {
-            const res = await this.database.listDocuments(conf.dbId,conf.genNotificationCollectionID,[
+            const res = await this.database.listDocuments(conf.DB_ID,conf.GEN_NOTIFICATION_COLLECTION_ID,[
                 ...query
             ])
             if(res.documents){
@@ -198,7 +198,7 @@ export class DatabaseService {
 
     async readGenNotification(notificationId,userProfileId){
        try {
-        const res = await this.database.updateDocument(conf.dbId,conf.userProfilesCollectionID,userProfileId,{
+        const res = await this.database.updateDocument(conf.DB_ID,conf.USERPROFILE_COLLECTION_ID,userProfileId,{
             stagedAction:action.readGenNotification(notificationId)
         })
         if(res.$id){
@@ -213,7 +213,7 @@ export class DatabaseService {
 
     async removeGenNotification(notificationId,userProfileId){
         try{
-            const res = await this.database.updateDocument(conf.dbId,conf.userProfilesCollectionID,userProfileId,{
+            const res = await this.database.updateDocument(conf.DB_ID,conf.USERPROFILE_COLLECTION_ID,userProfileId,{
                 stagedAction:action.removeGenNotification(notificationId)
             })
             if(res.$id){
@@ -228,7 +228,7 @@ export class DatabaseService {
     
     async getUserNotifications(userId){
         try{
-           const res = await this.database.listDocuments(conf.dbId,conf.userNotificationCollectionID,[
+           const res = await this.database.listDocuments(conf.DB_ID,conf.USER_NOTIFICATION_COLLECTION_ID,[
             Query.equal("userId",userId),
            ])
               if(res.documents){
@@ -245,7 +245,7 @@ export class DatabaseService {
 
     async readUserNotification(notificationId){
         try {
-            const res = await this.database.updateDocument(conf.dbId,conf.userNotificationCollectionID,notificationId,{
+            const res = await this.database.updateDocument(conf.DB_ID,conf.USER_NOTIFICATION_COLLECTION_ID,notificationId,{
                 readAt:`${new Date().getTime()}/- ${getFormattedTime()}`
             })
             if(res.$id){
@@ -260,7 +260,7 @@ export class DatabaseService {
     
     async removeUserNotification(notificationId){
         try {
-            const res = await this.database.deleteDocument(conf.dbId,conf.userNotificationCollectionID,notificationId)
+            const res = await this.database.deleteDocument(conf.DB_ID,conf.USER_NOTIFICATION_COLLECTION_ID,notificationId)
             if(res.message.length==0){                             
                 res.$id=notificationId
                 return res
@@ -276,8 +276,8 @@ export class DatabaseService {
     async getUsers(query = [Query.notEqual("userId", ["#"])]) {
         try {
             const res = await this.database.listDocuments(
-                conf.dbId,
-                conf.userProfilesCollectionID,
+                conf.DB_ID,
+                conf.USERPROFILE_COLLECTION_ID,
                 query,
             );
 
@@ -298,7 +298,7 @@ export class DatabaseService {
     async createBlogLikesDocument(docId, userId) {
         try {
             const res = await this.database.createDocument(
-                conf.dbId,
+                conf.DB_ID,
                 conf.blogLikesCollectionID,
                 docId,
                 {
@@ -325,7 +325,7 @@ export class DatabaseService {
 
     async commentOnBlog(blogId, userId, comment, userProfileId, authorId) {
         try {
-            const res = await this.database.createDocument(conf.dbId, conf.blogCommentsCollectionID, ID.unique(), {
+            const res = await this.database.createDocument(conf.DB_ID, conf.BLOG_COMMENTS_COLLECTION_ID, ID.unique(), {
                 blogId,
                 userId,
                 comment
@@ -336,7 +336,7 @@ export class DatabaseService {
                     Permission.delete(Role.user(userId), Role.user(authorId)),
                 ])
             if (res.$id) {
-                const stageAction = await this.database.updateDocument(conf.dbId, conf.userProfilesCollectionID, userProfileId, {
+                const stageAction = await this.database.updateDocument(conf.DB_ID, conf.USERPROFILE_COLLECTION_ID, userProfileId, {
                     stagedAction: action.addComment(blogId)
                 })
                 if (stageAction.$id) {
@@ -353,9 +353,9 @@ export class DatabaseService {
 
     async deleteComment(commentId, profileId) {
         try {
-            const res = await this.database.deleteDocument(conf.dbId, conf.blogCommentsCollectionID, commentId)
+            const res = await this.database.deleteDocument(conf.DB_ID, conf.BLOG_COMMENTS_COLLECTION_ID, commentId)
             if (res.$id) {
-                const stageAction = await this.database.updateDocument(conf.dbId, conf.userProfilesCollectionID, profileId, {
+                const stageAction = await this.database.updateDocument(conf.DB_ID, conf.USERPROFILE_COLLECTION_ID, profileId, {
                     stagedAction: action.deleteComment(blogId)
                 })
                 if (stageAction.$id) {
@@ -373,7 +373,7 @@ export class DatabaseService {
     //user interaction operations
     async like_unlikeBlog(blogId, profileId, type) {
         try {
-            const res = await this.database.updateDocument(conf.dbId, conf.userProfilesCollectionID, profileId, {
+            const res = await this.database.updateDocument(conf.DB_ID, conf.USERPROFILE_COLLECTION_ID, profileId, {
                 stagedAction: type == "like" ? action.like(blogId) : action.unlike(blogId)
             })
             if (res.$id) {
@@ -389,8 +389,8 @@ export class DatabaseService {
     async follow_unfollowUser(userProfileId, targetUserId, type) {
         try {
             const updatedProfile = await this.database.updateDocument(
-                conf.dbId,
-                conf.userProfilesCollectionID,
+                conf.DB_ID,
+                conf.USERPROFILE_COLLECTION_ID,
                 userProfileId,
                 {
                     stagedAction: type == "following" ? action.follow(targetUserId) : action.unfollow(targetUserId)
@@ -418,7 +418,7 @@ export class DatabaseService {
         };
         try {
             const { $id } = await this.storageBucket.createFile(
-                conf.bucketId,
+                conf.BUCKET_ID,
                 ID.unique(),
                 coverImage
             );
@@ -430,7 +430,7 @@ export class DatabaseService {
                 const subImagesId = await Promise.all(
                     subImages.map(async (image) => {
                         return await this.storageBucket.createFile(
-                            conf.bucketId,
+                            conf.BUCKET_ID,
                             ID.unique(),
                             image
                         ).$id;
@@ -451,7 +451,7 @@ export class DatabaseService {
         try{
            const res = await this.uploadImage(avatar,userId)
            if(res.url){
-            const updatedProfile = await this.database.updateDocument(conf.dbId, conf.userProfilesCollectionID, userProfileId,{
+            const updatedProfile = await this.database.updateDocument(conf.DB_ID, conf.USERPROFILE_COLLECTION_ID, userProfileId,{
                 userAvatar:res.url,
                 userAvatarId:res.fileId,
                 stagedAction:action.bucketCleanup(currentAvatarId)
@@ -469,7 +469,7 @@ export class DatabaseService {
 
     async uploadImage(image,userId,uniqueId=ID.unique()) {
         try {
-            const res = await this.storageBucket.createFile(conf.bucketId, uniqueId, image, [
+            const res = await this.storageBucket.createFile(conf.BUCKET_ID, uniqueId, image, [
                 Permission.read(Role.any()),
                 Permission.update(Role.user(userId)),
                 Permission.delete(Role.user(userId))
@@ -486,7 +486,7 @@ export class DatabaseService {
 
     async updateProfile(profileId,updatedAttr){
       try {
-        const res = await this.database.updateDocument(conf.dbId, conf.userProfilesCollectionID,profileId,updatedAttr)
+        const res = await this.database.updateDocument(conf.DB_ID, conf.USERPROFILE_COLLECTION_ID,profileId,updatedAttr)
         if(res.$id){
             return res;
         }

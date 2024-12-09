@@ -7,8 +7,8 @@ import action from "../Action/ActionGenerator";
 export class Auth{
       
     client = new Client()
-            .setEndpoint(conf.appWriteUrl)
-            .setProject(conf.projectId)
+            .setEndpoint(conf.APPWRITE_URL)
+            .setProject(conf.PROJECT_ID)
     account;
 
     constructor(){
@@ -77,7 +77,7 @@ export class Auth{
 
     async resetPassword(userId, newPassword){
         try {
-            const res = await fetch(conf.authApiEndpoint,{
+            const res = await fetch(conf.AUTH_API_ENDPOINT,{
                 method:"POST",
                 headers:{"Content-Type":"application/json"},
                 body:action.resetPassword(userId, newPassword)
@@ -149,7 +149,7 @@ export class Auth{
 
     async verifyEmail(userId,secret){
         try {        
-            const rawRes = await fetch(conf.emailApiEndpoint,{
+            const rawRes = await fetch(conf.AUTH_API_ENDPOINT,{
                 method:"POST",
                 headers:{"Content-Type":"application/json"},
                 body:action.verifyEmail(userId,secret)
@@ -164,7 +164,7 @@ export class Auth{
     }
     async createEmailVerification(email,userId){
       try{
-        const rawRes = await fetch(conf.emailApiEndpoint,{
+        const rawRes = await fetch(conf.AUTH_API_ENDPOINT,{
             method:"POST",
             headers:{"Content-Type":"application/json"},
             body:action.generateEmailVerification(userId,email)
@@ -179,7 +179,7 @@ export class Auth{
 
     async createMagicUrl(email){
         try {
-            const rawRes = await fetch(conf.emailApiEndpoint,{
+            const rawRes = await fetch(conf.AUTH_API_ENDPOINT,{
                 method:"POST",
                 headers:{"Content-Type":"application/json"},
                 body:action.generateMagicUrl(email)
@@ -195,7 +195,7 @@ export class Auth{
 
     async verifyMagicUrl(userId,secret){
         try {
-            const rawRes = await fetch(conf.emailApiEndpoint,{
+            const rawRes = await fetch(conf.AUTH_API_ENDPOINT,{
                 method:"POST",
                 headers:{"Content-Type":"application/json"},
                 body:action.verifyMagicUrl(userId,secret)
@@ -214,15 +214,5 @@ export class Auth{
  export default authServices;
 
 
- ///----test-----
 
-// (
-    // const fetchdata = async ()=>{
-    //   console.log(authServices.account)
-    //   const res =  await authServices.createAccount({email:"itsraghav12@gmail.com",password:"raghav12", name:"name"})
-    //   console.log("res:",res)
-    //   console.log("after login",authServices.account)
-     
-    // }
-// )();
 

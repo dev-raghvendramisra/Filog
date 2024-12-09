@@ -8,7 +8,7 @@ function PlaygroundProtection() {
   const {fetching,userData} = useSelector(state=>state.auth)
   const [isAdminLoggedIn, setIsAdminLoggedIn] = React.useState(false)
   React.useEffect(()=>{
-    if(userData.$id==conf.adminId){
+    if(userData.$id==conf.ADMIN_ID){
         if(isAdminLoggedIn){
             setIsAdminLoggedIn(true)
         }else {

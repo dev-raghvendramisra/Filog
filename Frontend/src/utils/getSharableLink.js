@@ -2,7 +2,7 @@ import conf from '../conf/conf'
 
 
 export default  function getSharableLink({platform,blogId,blogTitle,blogAuthor,clipboard=false}) {
-  const baseUrl = `${conf.productionEndpoint}/blog/${blogId}`;
+  const baseUrl = `${conf.PRODUCTION_ENDPOINT}/blog/${blogId}`;
   const encodedUrl = encodeURIComponent(baseUrl);
   const encodedTitle = encodeURIComponent(`Check out this amazing blog on Filog! by ${blogAuthor}\n`+blogTitle);
 

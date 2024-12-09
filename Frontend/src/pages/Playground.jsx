@@ -43,7 +43,7 @@ const Playground = () => {
        {/* <Button primary onClick={
         async()=>{
           const profileRes = await dbServices.updateProfile($id , {
-            userAvatar : conf.cdnEndpoint+userAvatarId
+            userAvatar : conf.CDN_ENDPOINT+userAvatarId
           })
           if(profileRes.$id){
             console.log("Profile updated successfully with new cdn endpoint", profileRes);
@@ -51,7 +51,7 @@ const Playground = () => {
             if(blogs.documents.length>0){
               blogs.documents.forEach(async(blog) => {
                 const res = await dbServices.updateBlog(blog.$id,{
-                  coverImageUrl: conf.cdnEndpoint+blog.coverImageId
+                  coverImageUrl: conf.CDN_ENDPOINT+blog.coverImageId
                 })
                 if(res.$id){
                   console.log("Blog updated successfully !", res)

@@ -1,7 +1,7 @@
 // description: getProfileMetatags function is used to generate the meta tags for the profile page
 // It returns a string with the meta tags for the profile page
 
-export default async function getProfileMetatags(profileData) {
+module.exports =  function (profileData) {
     const {jsFile, cssFile} = (()=>({jsFile:"/assets/index.js",cssFile:"/assets/index.css"}))()
     if(profileData, jsFile, cssFile){
         return (
