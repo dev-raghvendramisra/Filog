@@ -1,22 +1,8 @@
 {
   "rewrites": [
     {
-      "source": "/blog/:id",
-      "destination": "/api/metatags/handleBlogTagsReq"
-    },
-    {
-      "source":"/user/:username",
-      "destination": "/api/metatags/handleUserProfileTagsReq"
-    },
-    {
       "source": "/(.*)",
       "destination": "/index.html"
     }
-  ],
-  "functions": {
-    "api/**/*.js": {
-      "memory": 1024,
-      "maxDuration": 10
-    }
-  }
+  ]
 }
