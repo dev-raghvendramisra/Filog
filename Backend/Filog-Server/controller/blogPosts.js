@@ -12,7 +12,7 @@ module.exports = async function (req, res) {
             const tagsData = {
                 imgUrl: blog['coverImageUrl'],
                 title: blog['title'],
-                siteUrl: `${conf.FRONTEND_ENDPOINT}/blog/${res.$id}`
+                siteUrl: `${conf.FRONTEND_ENDPOINT}/blog/${slug}`
             }
             const body = getBlogMetaTags(tagsData);
             res.status(200).send(body);
