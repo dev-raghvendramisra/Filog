@@ -13,6 +13,7 @@ const initialState =[
      authorId:"",
      authorImg:"",
      tags:[],
+     slug:"",
      likeCount:null,
      commentCount:null
     }
@@ -39,6 +40,7 @@ const blogsSlice = createSlice({
                   coverImageId:blogData.coverImageId,
                   subImageId:blogData.subImageId,
                   tags:blogData.tags,
+                  slug:blogData.slug,
                   likeCount:blogData.likeCount==null ? 0 : blogData.likeCount,
                   commentCount:blogData.commentCount==null ? 0 : blogData.commentCount
               }

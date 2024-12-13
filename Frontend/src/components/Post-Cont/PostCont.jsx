@@ -60,6 +60,7 @@ function PostCont({
           commentCount={post.commentCount}
           blogTitle={post.title}
           blogTags={post.tags}
+          slug={post.slug}
           authorAvatar={post.authorAvatar}
           authorId={post.authorId}
           createdAt={post.createdAt}

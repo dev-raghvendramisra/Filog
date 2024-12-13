@@ -19,6 +19,7 @@ function BlogCardInteractionContainer({
   authorAvatar, 
   createdAt, 
   blogImg, 
+  slug,
   updateLikes,
   openAlertModal, 
   openCommentModal,
@@ -95,7 +96,7 @@ function BlogCardInteractionContainer({
         </Dropdown>
       )}
 
-      <NavLink id={`blogLink-${blogId}`} to={`/blog/${blogId}`}>
+      <NavLink id={`blogLink-${blogId}`} to={`/blog/${slug}`}>
         <div id={`BlogCard-scrim-card-cont-${uniqueId}`} className='relative rounded-3xl overflow-hidden'>
           {openDropdown && (
             <div 
@@ -113,6 +114,7 @@ function BlogCardInteractionContainer({
             createdAt={createdAt}
             authorUserName={authorUserName}
             uniqueId={uniqueId}
+            slug={slug}
           />
         </div>
       </NavLink>

@@ -55,6 +55,7 @@ function Home() {
           authorId={post.userId}
           blogsLiked={userProfile.blogsLiked}
           openAlertModal={openAlertModal}
+          slug={post.slug}
           openCommentModal={openCommentModal}
           updateLikes={(type) => {
                     dispatch(updateLikes({ type, val: post.postID }))

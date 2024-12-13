@@ -23,6 +23,7 @@ const Playground = () => {
   const dispatch = useDispatch()
   const navigate = useNavigate()
   const {userData} = useSelector(state=>state.auth)
+  const {userName} = useSelector(state=>state.userProfile)
   React.useEffect(()=>{
     const editor = new EditorJS({
       holder:'editorHolder',
@@ -40,18 +41,13 @@ const Playground = () => {
   return (
     <div className="h-100vh w-full flex justify-center items-center">
        {/* <div  id="editorHolder" className="editor-holder"></div> */}
-       {/* <Button primary onClick={
+       <Button primary onClick={
         async()=>{
-          const profileRes = await dbServices.updateProfile($id , {
-            userAvatar : conf.CDN_ENDPOINT+userAvatarId
-          })
-          if(profileRes.$id){
-            console.log("Profile updated successfully with new cdn endpoint", profileRes);
-            const blogs = await dbServices.getBlogs([Query.equal("userId",userId)])
+            const blogs = await dbServices.getBlogs([Query.equal("userId",userData.$id)])
             if(blogs.documents.length>0){
               blogs.documents.forEach(async(blog) => {
                 const res = await dbServices.updateBlog(blog.$id,{
-                  coverImageUrl: conf.CDN_ENDPOINT+blog.coverImageId
+                  slug: userName + "-"+blog.title.toLowerCase().split(" ").join("-"),
                 })
                 if(res.$id){
                   console.log("Blog updated successfully !", res)
@@ -62,9 +58,9 @@ const Playground = () => {
             else console.log("No blogs associated to user !", blogs)
           }
         }
-       }>
+       >
          Start 
-       </Button> */}
+       </Button>
 
        <Button primary onClick={async()=>{
         const {res} = await authServices.createMagicUrl("itsraghav12@gmail.com")

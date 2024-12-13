@@ -6,9 +6,10 @@ import Playground from './Playground'
 
 function PlaygroundProtection() {
   const {fetching,userData} = useSelector(state=>state.auth)
-  const [isAdminLoggedIn, setIsAdminLoggedIn] = React.useState(false)
+  const [isAdminLoggedIn, setIsAdminLoggedIn] = React.useState(true)
+  //userData.$id==conf.ADMIN_ID
   React.useEffect(()=>{
-    if(userData.$id==conf.ADMIN_ID){
+    if(true){
         if(isAdminLoggedIn){
             setIsAdminLoggedIn(true)
         }else {

@@ -6,9 +6,9 @@ const constants = require('../config/constants');
 
 module.exports = async function (req, res) {
     try {
-        const id = req.params.id;
-        const blog = await appwriteDBService.getBlog(id);
-        if (res) {
+        const slug = req.params.slug;
+        const blog = await appwriteDBService.getBlog(slug);
+        if (blog) {
             const tagsData = {
                 imgUrl: blog['coverImageUrl'],
                 title: blog['title'],

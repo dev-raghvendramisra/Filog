@@ -30,6 +30,7 @@ export class DatabaseService {
         subImageId = [],
         subImageUrl = [],
         userId,
+        userName,
         blogId=ID.unique(),
         status = true,
         tags = [],
@@ -48,6 +49,7 @@ export class DatabaseService {
             tags: tags,
             authorData:authorProfileId,
             likeCount: 0,
+            slug: userName + "-"+title.toLowerCase().split(" ").join("-"),
             commentCount: 0,
         }
         try {

@@ -14,13 +14,13 @@ class DBService{
       this.database = new Databases(this.client);
     }
 
-    async getBlog(id){
+    async getBlog(slug){
        try {
-        const blog = await this.database.getDocument(conf.APPWRITE_DATABASE_ID,conf.APPWRITE_BLOG_COLLECTION_ID,id);
-     
-        
-        if(blog.$id){
-            return blog;
+        const blog = await this.database.listDocuments(conf.APPWRITE_DATABASE_ID,conf.APPWRITE_BLOG_COLLECTION_ID,[
+          Query.equal("slug",slug)
+        ]);
+        if(blog.total){
+            return blog.documents[0];
         }
         throw false
        } catch (error) {
