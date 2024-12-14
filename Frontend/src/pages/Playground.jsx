@@ -92,7 +92,7 @@ const Playground = () => {
           }
          }
          >Reset Pass</Button>
-        <LoaderIcon className='h-2vw w-2vw border-transparent animate-spin_fast dark:border-r-primary_darkMode dark:border-t-primary_darkMode border-r-primary border-t-primary' />
+        <LoaderIcon id='loader'/>
     </div>
   );
 }

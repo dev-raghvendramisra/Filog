@@ -57,28 +57,28 @@ function BlogCardInteractionContainer({
     {
       text: "Share on Twitter",
       icon: <i className="fa-brands fa-x-twitter"></i>,
-      onClick:  getSharableLink({platform:"twitter", blogId, blogTitle, blogAuthor: authorName})
+      onClick:  getSharableLink({platform:"twitter", slug, blogTitle, blogAuthor: authorName})
     },
     {
       text: "Share on WhatsApp",
       icon: <i className="fa-brands fa-whatsapp"></i>,
-      onClick: getSharableLink({platform:"whatsapp", blogId, blogTitle, blogAuthor: authorName})
+      onClick: getSharableLink({platform:"whatsapp", slug, blogTitle, blogAuthor: authorName})
     },
     {
       text: "Share on Facebook",
       icon: <i className="fa-brands fa-facebook"></i>,
-      onClick: getSharableLink({platform:"facebook", blogId, blogTitle, blogAuthor: authorName})
+      onClick: getSharableLink({platform:"facebook", slug, blogTitle, blogAuthor: authorName})
     },
     {
       text: "Share on LinkedIn",
       icon: <i className="fa-brands fa-linkedin"></i>,
-      onClick: getSharableLink({platform:"linkedin", blogId, blogTitle, blogAuthor: authorName})
+      onClick: getSharableLink({platform:"linkedin", slug, blogTitle, blogAuthor: authorName})
     },
     {
       text: "Copy blog link",
       icon: <i className="fa-solid fa-link"></i>,
       onClick: () => { 
-        const clipBoardHandler = getSharableLink({clipboard: true,blogId, blogTitle, blogAuthor: authorName});
+        const clipBoardHandler = getSharableLink({clipboard: true,slug, blogTitle, blogAuthor: authorName});
         clipBoardHandler(onClipboardError,onClipboardSuccess)
        }
     }
