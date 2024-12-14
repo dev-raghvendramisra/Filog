@@ -98,7 +98,7 @@ function MagicUrlVerification() {
           <img  className='w-8vw' src={isDark ? "/icons/filogXgmail-dark.webp" : "/icons/filogXgmail-light.webp"} />
           <p className='text-1.7vw mt-0.5vw' id={"email-verification-heading"}>Secure Login</p>
           <p className='text-1vw text-footer_text flex-col flex items-center gap-3'>Verifying Your Email, You can request new link again if it fails
-          {verifying && <LoaderIcon style={{color:""}} className='h-2vw w-2vw border-transparent animate-spin_fast dark:border-r-primary_darkMode dark:border-t-primary_darkMode border-r-primary border-t-primary' />        }
+          {verifying && <LoaderIcon id="loader"/>        }
           </p>
           {err && <FeedbackMessage err={err} className='mt-1vw'>{err}</FeedbackMessage>} 
           {successMsg && <FeedbackMessage err={false} className='mt-1vw'>{successMsg}</FeedbackMessage>}
