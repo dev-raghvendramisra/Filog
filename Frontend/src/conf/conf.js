@@ -26,8 +26,6 @@ const conf = Object.freeze({
    ADMIN_API_ENDPOINT: String(import.meta.env.VITE_API_ENDPOINT)+"/admin",
    ADMIN_API_LOGIN_ENDPOINT: String(import.meta.env.VITE_API_ENDPOINT)+"/admin/login",
 
-   // Temporary admin ID (should be removed or secured in production)
-   ADMIN_ID: String(import.meta.env.VITE_ADMIN_ID)
 })
 
 export default conf;
