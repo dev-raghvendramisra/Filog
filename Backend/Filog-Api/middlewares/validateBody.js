@@ -1,39 +1,29 @@
 const { constants } = require('../config/constants');
+const logger = require("../libs").envLogger;
 
 module.exports = function validateBody(req, res, next) {
     try {
-
-        // Ensure the request body is present
-        if (!req.body) {
-            console.log("Invalid request");
-            return res.status(404).send({ ok: false, res: "Invalid request", code: 404 });
+        if(!req.body){
+            return res.status(400).send({ ok: false, res: "Request lack body", code: 400 });
         }
-        // Ensure action is provided
-        if (!req.body.action) {
-            console.log("Request lacks action parameter");
-            return res.status(404).send({ ok: false, res: "Request lacks action parameter", code: 404 });
-        }
-
-        // Check if the action exists and validate the mandatory fields
-        if (constants.ACTIONS.hasOwnProperty(req.body.action)) {
-            const action = constants.ACTIONS[req.body.action];
-
-            // Check if all mandatory fields are present in the request body
-            const allFieldsPresent = action.MANDATORY_FIELDS.every(field => req.body.hasOwnProperty(field));
-            if (allFieldsPresent) {
-                return next(); // Proceed to the next middleware/route handler
-            } else {
-                const errorMessage = action.ERROR_MESSAGE || 'Invalid action or missing fields';
-                console.log("Invalid action or missing mandatory fields");
-                return res.status(404).send({ ok: false, res: errorMessage, code: 404 });
+        const route = req.originalUrl;
+        if(constants["SERVICES"].includes(route)){
+            const bodyKeys = Object.keys(req.body);
+            let missingFields = [];
+            constants.ROUTE_CONFIG[route]["MANDATORY_FIELDS"].forEach(field => {
+                if(!bodyKeys.includes(field)){
+                    missingFields.push(field);
+                }
+            });
+            if(missingFields.length === 0){
+                return next();
             }
-        } else {
-            console.log("Action not found");
-            return res.status(404).send({ ok: false, res: 'Action not found', code: 404 });
+            return  res.status(400).send({ ok: false, res: `Request lacks ${missingFields}`, code: 400 });
         }
+        return res.status(400).send({ ok: false, res: "Invalid Endpoint", code: 400 });
 
     } catch (error) {
-        console.log(error);
+        logger.error(error);
         return res.status(500).send({ ok: false, res: "Internal server error", code: 500 });
     }
 };

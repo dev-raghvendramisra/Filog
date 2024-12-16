@@ -48,28 +48,24 @@ export class Action {
     verifyEmail(userId,secret){
         return this.stagedAction = JSON.stringify({
             userId:userId,
-            token:secret,
-            action:"VERIFY_VERIFICATION_EMAIL"
+            token:secret
         })
     }
     generateEmailVerification(userId,email){
         return this.stagedAction = JSON.stringify({
             userId:userId,
             email:email,
-            action:"GENERATE_VERIFICATION_EMAIL"
         })
     }
     generateMagicUrl(email){
         return this.stagedAction = JSON.stringify({
             email:email,
-            action:"GENERATE_MAGIC_URL"
         })
     }
     verifyMagicUrl(userId,secret){
         return this.stagedAction = JSON.stringify({
             userId:userId,
             token:secret,
-            action:"VERIFY_MAGIC_URL"
         })
     }
 
@@ -77,7 +73,6 @@ export class Action {
         return this.stagedAction = JSON.stringify({
             userId:userId,
             password:password,
-            action:"RESET_PASSWORD"
         })
     }
 
@@ -91,6 +86,12 @@ export class Action {
         return this.stagedAction = JSON.stringify({
             type:"removeGenNotification",
             value:notificationId
+        })
+    }
+    adminLogin(email,password){
+        return this.stagedAction = JSON.stringify({
+            email:email,
+            password:password
         })
     }
 

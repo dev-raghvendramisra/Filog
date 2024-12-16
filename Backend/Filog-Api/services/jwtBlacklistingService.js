@@ -1,5 +1,5 @@
 const {appwriteDBService} = require('../appwrite-services/appwrite-dbService');
-
+const logger = require("../libs").envLogger;
 
 module.exports.jwtBlacklistingService = async function (token,userId) {
     try {
@@ -8,16 +8,16 @@ module.exports.jwtBlacklistingService = async function (token,userId) {
         const tokenDocument = await appwriteDBService.getTokenDocument(userId);
         if(tokenDocument.$id){
           if(tokenDocument.tokens.includes(token)){
-            console.log("Token is blacklisted");
+            logger.info("Token is blacklisted");
             return { isDocumentPresent:true, isBlackListed:true, tokenDocument};
           } 
-          console.log("Token is not blacklisted");
+          logger.warn("Token is not blacklisted");
           return { isDocumentPresent:true, isBlackListed:false, tokenDocument}
         }
-        console.log("Token is not blacklisted");
+        logger.warn("Token is not blacklisted");
         return { isDocumentPresent:false, isBlackListed:false, tokenDocument:null};
     } catch (error) {
-      console.log("Error getting blacklisting status",error);
+      logger.error("Error getting blacklisting status",error);
       return error;
      
     }

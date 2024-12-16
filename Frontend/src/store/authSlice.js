@@ -5,7 +5,8 @@ const initialState = {
     userData:null,
     isLoginInitiated:false,
     fetching:false,
-    silentFetching:false
+    silentFetching:false,
+    isUserAdmin:null
 }
 
 const authSlice = createSlice({
@@ -31,10 +32,14 @@ const authSlice = createSlice({
         },
         setSlientFetching:(state,action)=>{
             state.silentFetching=action.payload;
+        },
+        setIsAdmin:(state,{payload})=>{
+            state.isUserAdmin = payload
         }
+
     }
 })
 
-export const {login, logout, iniateLoginSequence, setFetching} = authSlice.actions;
+export const {login, logout, iniateLoginSequence, setFetching, setIsAdmin} = authSlice.actions;
 
 export default authSlice.reducer

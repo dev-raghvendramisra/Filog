@@ -1,7 +1,7 @@
 import React from 'react'
 import { useDispatch, useSelector } from 'react-redux';
 import useModalActionsContext from '../context/modalActionsContext';
-import { setInputFeild_1Error, setInputFeild_1Value, clearModal, setCtaDisabled, setCtaLoading, setFeedbackMessage, setPrimaryBtnText } from '../store/formModalSlice'
+import { setInputFeild_1Error, setInputFeild_2Error,setInputFeild_1Value, clearModal, setCtaDisabled, setCtaLoading, setFeedbackMessage, setPrimaryBtnText } from '../store/formModalSlice'
 import { commentOnBlog } from '../store/blogsSlice'
 import { getFormModal, getImgUrl, startAuthentication } from '../utils';
 import { ID } from 'appwrite';
@@ -11,6 +11,8 @@ import { GenToast } from '../components';
 import { updateAvatar } from '../store/userProfileSlice';
 import useFileObjectContext from '../context/fileObjectContext';
 import { useNavigate } from 'react-router-dom';
+import { setIsAdmin } from '../store/authSlice';
+import { adminService } from '../services/Admin/adminService';
 
 export default function useFormModal({
     modalId,
@@ -424,6 +426,110 @@ export function useResetPassModal(customCleanup = ()=>{},argHeading = "", argMes
 
 
     const openFormModal = useFormModal({modalId,heading,message,primaryBtnText,secondaryBtnText,ctaDanger:false,iconClass:"fa-solid fa-key",inputFeildSpecs,primaryOnClick,secondaryOnClick,customCleanup})
+   
+    return openFormModal
+}
+
+export function useLoginModal(customCleanup = ()=>{},argHeading = "", argMessage = '', argPrimaryBtnText = '', argSecondaryBtnText = ''){
+    const heading = argHeading || "Admin Login";
+    const message = argMessage || "Please enter your credentials to access the admin panel.";
+    const primaryBtnText = argPrimaryBtnText || "Login as Admin";
+    const secondaryBtnText = argSecondaryBtnText || "Cancel";
+    const minChars = 8;
+    const maxChars = 64; 
+
+    const [modalId] = React.useState(ID.unique())
+    const [password, setPassword] = React.useState("")
+    const [email, setEmail] = React.useState(null);
+    const [localFeedbackMessage, setLocalFeedbackMessage] = React.useState(null)
+    const dispatch = useDispatch()
+    const navigate = useNavigate()
+    const formModals = useSelector(state => state.formModals)
+    const { addModalActionHandlers, removeModalActionHandlers } = useModalActionsContext();
+
+    const inputFeildSpecs = [
+        {
+            type:"email",
+            type2:"Enter your admin email"
+        },
+        {
+            type:"password",
+            type2:"Enter your password"
+        }
+    ]
+
+    function validatePass() {
+        if (password.length >= minChars && password.length <= maxChars) {
+          return true;
+        } else {
+          dispatch(setInputFeild_2Error({id:modalId,val:`Password must be between ${minChars} and ${maxChars} characters.`}))
+          return false;
+        }
+      }
+
+      const validateEmail = ()=>{
+        const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+           const res = emailRegex.test(email);
+           if (res) {
+             return true;
+           } else {
+            dispatch(setInputFeild_1Error({id:modalId,val:"Please enter a valid email !"}))
+             return false;
+           }
+       }
+
+       const secondaryOnClick = React.useCallback(() => {
+        openFormModal(false)
+        setTimeout(()=>navigate("/"),100)
+    }, [])
+
+    const primaryOnClick = React.useCallback(async()=>{
+        if(!validateEmail() || !validatePass()){
+           return ;
+        }
+        dispatch(setPrimaryBtnText({id:modalId,text:"Verifying ..."}))
+        dispatch(setCtaDisabled({id:modalId,val:true}));
+        dispatch(setCtaLoading({id:modalId,val:true}))
+
+        const res = await adminService.adminLogin(email,password)
+        if(res.ok){
+            dispatch(setIsAdmin(true))
+            setLocalFeedbackMessage({type:"success",message:"Logged in as admin successfully"});
+            return openFormModal(false);
+        }
+        dispatch(setCtaLoading({id:modalId,val:false}))
+        dispatch(setPrimaryBtnText({id:modalId, text:primaryBtnText}))
+        if(res.code==401) return setLocalFeedbackMessage({type:"err", message:"Invalid username or password. Please try again."})
+        if(res.code==403) return setLocalFeedbackMessage({type:"err", message:"Your account does not have admin privileges."})
+        if(res.code==500) return setLocalFeedbackMessage({type:"err", message:"Internal server error"})
+        if (res.code == 503) return setLocalFeedbackMessage({ type: "err", message: "Service unavailable, please try again later" })
+    },[password,email])
+
+    React.useEffect(()=>{
+        if(localFeedbackMessage){
+            toast.custom(<GenToast type={localFeedbackMessage.type}>{localFeedbackMessage.message}</GenToast>)
+            dispatch(setFeedbackMessage({id:modalId, feedbackMessage:localFeedbackMessage.message, type:localFeedbackMessage.type}))
+        }
+    },[localFeedbackMessage])
+
+    React.useEffect(() => {
+        if (formModals) {
+            formModals.forEach((modal) => {
+                if (modal.id == modalId) {
+                    setEmail(modal.inputFeild_1Value)
+                    setPassword(modal.inputFeild_2Value)
+                }
+            })
+        }
+    }, [formModals])
+
+    React.useEffect(() => {
+        dispatch(setCtaDisabled({id:modalId,val:false}))
+        removeModalActionHandlers(modalId)
+        addModalActionHandlers({ [modalId]: { primaryOnClick, secondaryOnClick } })
+    }, [password,email])
+
+    const openFormModal = useFormModal({modalId,heading,message,primaryBtnText,secondaryBtnText,ctaDanger:false,iconClass:"fa fa-user-shield",inputFeildSpecs,primaryOnClick,secondaryOnClick,customCleanup})
    
     return openFormModal
 }

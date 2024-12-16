@@ -57,7 +57,7 @@ function App() {
       { <Navbar /> }
       {/* //pathname=="/verify-email" && */}
       <Toaster toastOptions={{duration: 7000,}} containerStyle={{marginTop:`${pathname=="/verify-email"?"5%":"5%"}`}} />
-      <div className='min-h-56vh'>
+      <div className='min-h-52vh'>
         <Outlet />
       </div>
       {pathname!=="/dashboard/featured" && pathname!=="/dashboard/following"?

@@ -74,11 +74,13 @@ export class Auth{
             return error
         }
     }
+    
+
 
     async resetPassword(userId, newPassword){
         try {
-            const res = await fetch(conf.AUTH_API_ENDPOINT,{
-                method:"POST",
+            const res = await fetch(conf.AUTH_API_RESET_PASSWORD_ENDPOINT,{
+                method:"PATCH",
                 headers:{"Content-Type":"application/json"},
                 body:action.resetPassword(userId, newPassword)
             })
@@ -149,8 +151,8 @@ export class Auth{
 
     async verifyEmail(userId,secret){
         try {        
-            const rawRes = await fetch(conf.AUTH_API_ENDPOINT,{
-                method:"POST",
+            const rawRes = await fetch(conf.AUTH_API_EMAIL_VERIFICATION_VERIFY_ENDPOINT,{
+                method:"PATCH",
                 headers:{"Content-Type":"application/json"},
                 body:action.verifyEmail(userId,secret)
             })
@@ -164,7 +166,7 @@ export class Auth{
     }
     async createEmailVerification(email,userId){
       try{
-        const rawRes = await fetch(conf.AUTH_API_ENDPOINT,{
+        const rawRes = await fetch(conf.AUTH_API_EMAIL_VERIFICATION_GENERATE_ENDPOINT,{
             method:"POST",
             headers:{"Content-Type":"application/json"},
             body:action.generateEmailVerification(userId,email)
@@ -179,7 +181,7 @@ export class Auth{
 
     async createMagicUrl(email){
         try {
-            const rawRes = await fetch(conf.AUTH_API_ENDPOINT,{
+            const rawRes = await fetch(conf.AUTH_API_MAGIC_URL_GENERATE_ENDPOINT,{
                 method:"POST",
                 headers:{"Content-Type":"application/json"},
                 body:action.generateMagicUrl(email)
@@ -195,7 +197,7 @@ export class Auth{
 
     async verifyMagicUrl(userId,secret){
         try {
-            const rawRes = await fetch(conf.AUTH_API_ENDPOINT,{
+            const rawRes = await fetch(conf.AUTH_API_MAGIC_URL_VERIFY_ENDPOINT,{
                 method:"POST",
                 headers:{"Content-Type":"application/json"},
                 body:action.verifyMagicUrl(userId,secret)

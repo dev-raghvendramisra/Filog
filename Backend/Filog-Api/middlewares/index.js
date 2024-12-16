@@ -1,4 +1,4 @@
 const validateBody = require('./validateBody')
-const logger = require('./logger')
-
-module.exports={validateBody,logger}
+const loggerMiddleware = require('./loggerMiddleware')
+const authenticateAdmin = require('./authenticateAdmin')
+module.exports={validateBody,loggerMiddleware,authenticateAdmin}

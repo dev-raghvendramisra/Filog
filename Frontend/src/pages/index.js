@@ -14,6 +14,7 @@ import FeaturedPosts from "./Featured/FeaturedPosts";
 import FollowingPosts from "./Followed/FollowingPosts";
 import EmailVerification from "./Email-Verification/EmailVerification";
 import MagicUrlVerification from "./Email-Verification/MagicUrlVerification";
+import Admin from "./Admin/Admin";
 import UnknownRoute from "./Unknown-Route/UnknownRoute";
 export {
     Dashboard,
@@ -32,5 +33,6 @@ export {
     UserProfile,
     EmailVerification,
     UnknownRoute,
-    MagicUrlVerification
+    MagicUrlVerification,
+    Admin
   };

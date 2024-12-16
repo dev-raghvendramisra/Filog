@@ -2,6 +2,7 @@ import {   Navigate, Route, createBrowserRouter, createRoutesFromElements } from
 import App from "../App";
 import {Write,About, SearchResult, Dashboard, Login, SignUp, UserProfile,MagicUrlVerification, Profile, Home, Blog, FeaturedPosts, FollowingPosts, UnknownRoute, EmailVerification}  from "../components";
 import PlaygroundProtection from "../pages/PlaygroundProtection";
+import AdminProt from "../pages/Admin/AdminProt";
 
 const router = createBrowserRouter(createRoutesFromElements(
     <Route path="/" element={<App />}>
@@ -21,6 +22,7 @@ const router = createBrowserRouter(createRoutesFromElements(
     <Route path="/search/:query" element={<SearchResult />}></Route>
     <Route path="/verify-email" element={<EmailVerification />}></Route>
     <Route path="/reset-password" element={<MagicUrlVerification />}></Route>
+    <Route path="/admin" element={<AdminProt />}></Route>
     <Route path="/playground" element={<PlaygroundProtection />}></Route>{/* This is a test route */}
     <Route path="*" element={<UnknownRoute />}></Route>
   </Route>

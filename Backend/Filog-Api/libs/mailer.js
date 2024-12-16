@@ -2,8 +2,9 @@ const { conf } = require('../config/conf');
 const {constants} = require('../config/constants');
 const { getMailContent } = require('../utils/mailContent');
 const nodemailer = require('nodemailer')
+const logger = require('./winstonLogger').envLogger;
 
-module.exports.mailer = async function (emailType,mailData){
+module.exports = async function (emailType,mailData){
    try {
      if(!Object.keys(constants.EMAIL_TYPES).includes(emailType)){
         return {ok:false,res:"Invalid Email Type",code:400}
@@ -27,7 +28,7 @@ module.exports.mailer = async function (emailType,mailData){
     return {ok:true,res:result};
          
    } catch (error) {
-         console.log("Error sending email:",error.message)
+         logger.error("Error sending email:",error.message)
          return {ok:false,res}
    }
 }

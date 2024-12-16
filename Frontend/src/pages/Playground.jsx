@@ -16,6 +16,7 @@ import { login, logout, setFetching } from '../store/authSlice';
 import { useNavigate } from 'react-router-dom';
 import { setProfile, clearProfile } from '../store/userProfileSlice';
 import { useResetPassModal } from '../hooks';
+import { useLoginModal } from '../hooks/useFormModal';
 
 
 const Playground = () => {
@@ -37,6 +38,7 @@ const Playground = () => {
   
   const [secret, setSecret] = React.useState(null);
   const [userId, setUserId] = React.useState(null);
+  const [isSuccess,openModal] = useLoginModal()
 
   return (
     <div className="h-100vh w-full flex justify-center items-center">
@@ -92,6 +94,9 @@ const Playground = () => {
           }
          }
          >Reset Pass</Button>
+         <Button primary onClick={
+          ()=>openModal(true)
+         }>Open Modal</Button>
         <LoaderIcon id='loader'/>
     </div>
   );
