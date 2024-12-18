@@ -11,7 +11,6 @@ const publicDir = path.join(__dirname, 'public');
 
 const corsOptions = {
     origin: conf.FRONTEND_ENDPOINT,
-    origin: '*',
     methods: 'GET,POST,OPTIONS,PATCH',
     allowedHeaders: ['Content-Type', 'Authorization'], 
     credentials: true, 
