@@ -15,12 +15,10 @@ async function generateMagicUrl(req, res) {
         emailRes.ok && delete emailRes.res.secret;
         return res.status(emailRes.code).send({ ok: emailRes.ok, res: emailRes.res, code: emailRes.code })
     } catch (error) {
-        logger.error("Error handling magic url request", error);
+        logger.error(`Error handling magic url-generation request: ${error}`);
         return res.status(500).send({ ok: false, res: "Internal server error", code: 500 })
     }
 }
-
-
 
 async function verifyMagicUrl(req, res) {
     try {
@@ -32,9 +30,8 @@ async function verifyMagicUrl(req, res) {
         }
         return res.status(statusRes.code).send({ ok: statusRes.ok, res: statusRes.res, code: statusRes.code });
     } catch (error) {
-        logger.error("Error handling magic url verification request", error);
+        logger.error(`Error handling magic url verification-verification request: ${error}`);
         return res.status(500).send({ ok: false, res: "Internal server error", code: 500 })
-
     }
 }
 

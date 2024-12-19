@@ -17,10 +17,10 @@ module.exports = async function (req,res,next){
     } catch (error) {
         const isJwtError = handleJwtError(error.name);
         if(isJwtError){
-            logger.error("Error handling authenticated admin request", isJwtError.res)
+            logger.error(`Error handling authenticated admin request: ${isJwtError.res}`);
             return res.status(isJwtError.code).send({ ok: false, res: isJwtError.res, code: isJwtError.code })
         }
-        logger.error("Error handling authenticated admin request", error);
+        logger.error(`Error handling authenticated admin request: ${error}`);
         return res.status(500).send({ ok: false, res: "Internal server error", code: 500 })
         
     }

@@ -11,7 +11,7 @@ function Admin() {
       await adminService.getLogs()
      }}>Get Logs</Button>
      <Button primary onClick={async()=>{
-      await adminService.getLogs()
+      await adminService.getUsers()
      }}>Get Users</Button>
      </div>
     </div>

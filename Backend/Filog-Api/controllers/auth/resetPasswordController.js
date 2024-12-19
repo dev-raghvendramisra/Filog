@@ -9,7 +9,7 @@ module.exports = async function (req, res) {
         return res.status(passRes.code).send({ code: passRes.code, ok: passRes.ok, res: passRes.res })
 
     } catch (error) {
-        logger.error("Error handling reset password request", error);
+        logger.error(`Error handling reset password request: ${error}`);
         return res.status(500).send({ ok: false, res: "Internal server error", code: 500 })
     }
 }

@@ -11,12 +11,13 @@ module.exports = function (stream, dirPath) {
         });
 
         archive.on('error', function (err) {
-            logger.error('Error while creating archive:', err);
+            logger.error(`Error while creating archive: ${err}`);
             reject(err);
         });
 
+        
         archive.pipe(stream);
-        archive.directory(dirPath,false);
+        archive.directory(dirPath, false);
         archive.finalize();
     });
 };

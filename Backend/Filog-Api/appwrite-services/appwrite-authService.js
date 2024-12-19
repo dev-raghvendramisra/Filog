@@ -19,7 +19,7 @@ class AuthService{
           const res = await this.users.updateEmailVerification(userId,true);
           return { ok: true, res: res };
         } catch (error) {
-          logger.error("Error verifying email:", error.message);
+          logger.error(`Error verifying email: ${error.message}`);
           return { ok: false, error: error.message };
         }
       }
@@ -29,7 +29,7 @@ class AuthService{
           const res  = await this.users.list([Query.contains("email",email)]);
           return res.total > 0 && res.users[0]
          } catch (error) {
-           logger.error("Error getting user details:",error.message);
+           logger.error(`Error getting user details: ${error.message}`);
            return false;
          }
       }
@@ -51,7 +51,7 @@ class AuthService{
           const res = await this.account.createEmailPasswordSession(email,pass);
           return {ok:true, res:res, code:200}
         } catch (error) {
-          logger.error("Error verifying user credentials:",error.message);
+          logger.error(`Error verifying user credentials: ${error.message}`);
           return {ok:false, res:error, code:error.code}
         }
       }
@@ -62,7 +62,7 @@ class AuthService{
           const res = await this.users.updatePassword(userId, password)
           return {ok:true, res:res, code:200}
         } catch (error) {
-          logger.error("Error resetting password:",error.message);
+          logger.error(`Error resetting password: ${error.message}`);
           return {ok:false, res:error, code:500}
         }
       }

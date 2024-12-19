@@ -17,7 +17,7 @@ module.exports = async function (req,res){
         return res.status(admin.code).send({ ok: admin.ok, res: admin.res, code: admin.code })
         
     } catch (error) {
-        logger.error("Error handling admin login request", error);
+        logger.error(`Error handling admin login request: ${error}`);
         return res.status(500).send({ ok: false, res: "Internal server error", code: 500 })
         
     }

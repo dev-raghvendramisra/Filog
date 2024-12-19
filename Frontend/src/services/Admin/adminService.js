@@ -1,5 +1,5 @@
 import conf from "../../conf/conf";
-import downloadFiles from "../../utils/downloadFiles";
+import {downloadFiles} from "../../utils";
 import action from "../Action/ActionGenerator"
 
 class AdminService {
@@ -37,6 +37,22 @@ class AdminService {
             const file = await downloadFiles(res)
         }catch(error){
             console.log("admin service error :: getLogs error: ",error)
+            return error
+        }
+    }
+
+    async getUsers(){
+        try{
+            const res = await fetch(conf.ADMIN_API_ENDPOINT+"/users",{
+                method:"GET",
+                headers:{
+                    "Content-Type":"application/json",
+                    "Authorization":`Token ${this.adminToken}` 
+                }
+            })
+            const file = await downloadFiles(res)
+        }catch(error){
+            console.log("admin service error :: getUsers error: ",error)
             return error
         }
     }

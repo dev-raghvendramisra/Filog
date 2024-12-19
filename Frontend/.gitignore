@@ -1,3 +1,5 @@
 .vercel
 dist
 admin.js
+Playground.jsx
+PlaygroundProtection.jsx

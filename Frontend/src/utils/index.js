@@ -12,8 +12,9 @@ import getFormModal from "./getFormModal.js";
 import getWebpImage from "./getWebpImage.js";
 import getFormattedTime from "./getFormattedTime.js";
 import getImgUrl from "./getImgUrl.js";
+import downloadFiles from "./downloadFiles.js";
 import getTimeAgo from "./getTimeAgo.js";
 
 
 
-export {getBlogPosts,getFormattedNumber, startAuthentication, authErrHandler, getUserProfile, getUsersUtil, handleAuthObject, getNewVerificationEmail, getAlertModel, getSharableLink, getFormModal,  getWebpImage, getFormattedTime, getImgUrl, getTimeAgo};
+export {getBlogPosts,downloadFiles,getFormattedNumber, startAuthentication, authErrHandler, getUserProfile, getUsersUtil, handleAuthObject, getNewVerificationEmail, getAlertModel, getSharableLink, getFormModal,  getWebpImage, getFormattedTime, getImgUrl, getTimeAgo};

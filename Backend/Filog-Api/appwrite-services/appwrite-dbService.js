@@ -1,5 +1,6 @@
 const { Client, Databases, Query } = require("node-appwrite");
 const {conf} = require('../config/conf');
+const minifyAppwriteObj = require("../utils/minifyAppwriteObj");
 const logger = require('../libs').envLogger;
 
 class DBService{
@@ -42,7 +43,7 @@ class DBService{
         const res = await this.database.getDocument(conf.APPWRITE_DATABASE_ID,conf.APPWRITE_BLACKISTED_TOKENS_COLLECTION_ID,userId);
         return res
       } catch (error) {
-        logger.error("Failed to retreive blackListedToken document for requested id",userId);
+        logger.error(`Failed to retreive blackListedToken document for requested id ${userId}`,);
         return error
       }
     }
@@ -53,9 +54,23 @@ class DBService{
                     : await this.database.updateDocument(conf.APPWRITE_DATABASE_ID,conf.APPWRITE_BLACKISTED_TOKENS_COLLECTION_ID,userId,{tokens:[...existingTokens,token]})
         return res;
       } catch (error) {
-        logger.error("Failed to blacklist token",error);
+        logger.error(`Failed to blacklist token ${error}`);
         return error
         
+      }
+    }
+
+    async listUsers(){
+      try {
+        const res = await this.database.listDocuments(conf.APPWRITE_DATABASE_ID,conf.APPWRITE_USERPROFILE_COLLECTION_ID);
+        if(res.documents.length){
+          res.documents = minifyAppwriteObj(res.documents);
+          return res.documents;
+        }
+        throw false
+      } catch (error) {
+        logger.error(`Failed to list users ${error}`);
+        return error;
       }
     }
 }

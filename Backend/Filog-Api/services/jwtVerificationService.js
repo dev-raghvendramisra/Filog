@@ -27,7 +27,7 @@ module.exports.jwtVerificationService = async function(token,userId,statusOnly=f
         
         const decoded = verifyJwt(token)
         if (decoded.userId != userId) {
-            logger.error("Invalid token")
+            logger.error(`Invalid token`)
             return {ok:false,res:"Invalid token",code:400}
         }
         
@@ -41,16 +41,16 @@ module.exports.jwtVerificationService = async function(token,userId,statusOnly=f
             logger.info("Email verified successfully")
             return {ok:true,res:verifyEmail.res,code:200}
         } 
-        logger.error("Failed to verify email", verifyEmail.res)
+        logger.error(`Failed to verify email: ${verifyEmail.res}`)
         return {ok:false,res:verifyEmail.res,code:500}
         
     } catch (error) {
         const isJwtErr = handleJwtError(error.name);
         if(isJwtErr){
-            logger.error("Error verifying token:", isJwtErr.res)
+            logger.error(`Error verifying token: ${isJwtErr.res}`)
             return {ok:false,res:isJwtErr.res,code:isJwtErr.code}
         }
-        logger.error("Error verifying token:", error.message)
+        logger.error(`Error verifying token: ${error.message}`)
         return {ok:false,res:error.message,code:400}
     }
 }
