@@ -44,9 +44,15 @@ function FormModal({
     imputFeild_3Error
   ]
 
+  const primaryBtn = React.useRef(null)
+
 
   return (
-    <div className='w-fit rounded-3xl p-1.5vw bg-white dark:bg-darkPrimary max-w-30vw absolute modalAnim '>
+    <div onKeyDown={
+      (e)=>{
+       if(e.key==="Enter") return primaryBtn.current.click()
+      }
+    } className='w-fit rounded-3xl p-1.5vw bg-white dark:bg-darkPrimary max-w-30vw absolute modalAnim '>
       <div id={`formModal-header-${modalId}`} className='flex justify-start gap-4 items-center text-1.7vw font-medium'>
         <span className={`${iconClass} ${ctaDanger ? "text-danger" : "text-blue-400"} text-2vw`}></span>
         <h1 className=''>{heading}</h1>
@@ -111,6 +117,7 @@ function FormModal({
           id={`${modalId}-formModal-cta`}
           onClick={primaryHandler}
           className='text-1vw'
+          ref = {primaryBtn}
         >
           {primaryBtnText}
         </Button>

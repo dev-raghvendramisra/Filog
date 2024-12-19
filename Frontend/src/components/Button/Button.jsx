@@ -1,7 +1,7 @@
 import React from 'react';
 import { ColorRing } from 'react-loader-spinner';
 
-function Button({
+const Button = React.forwardRef(({
   children = "Button",
   onClick = () => {},
   className = '',
@@ -13,43 +13,46 @@ function Button({
   danger = false,
   outline = false,
   loading = false,
-  ...props
-}) {
+  ...props // Spread all other props
+}, ref) => {
+
   const baseClasses = `
     text-1vw flex justify-center transition-all overflow-hidden items-center gap-1 border-2 rounded-full
     ${wide ? "py-0.5vw" : "py-0.7vw"} px-2vw
     ${className}
   `;
 
-  const disabledClasses = disabled
-    ? `border-gray-300 text-gray-400 border-transparent pointer-events-none cursor-not-allowed ${disabledBg}`
-    : "";
+  const getDisabledClasses = () => {
+    return disabled
+      ? `border-gray-300 text-gray-400 border-transparent pointer-events-none cursor-not-allowed ${disabledBg}`
+      : '';
+  };
 
-  const primaryClasses = primary
-    ? "bg-primary dark:bg-primary_darkMode border-primary dark:border-primary_darkMode text-white active:bg-opacity-70 active:scale-110 active:bg-primary/60 dark:active:bg-primary_darkMode/60 hover:primaryHoverAnim"
-    : "";
+  const getPrimaryClasses = () => {
+    return primary
+      ? "bg-primary dark:bg-primary_darkMode border-primary dark:border-primary_darkMode text-white active:bg-opacity-70 active:scale-110 active:bg-primary/60 dark:active:bg-primary_darkMode/60 hover:primaryHoverAnim"
+      : '';
+  };
 
-  const dangerClasses = danger
-    ? "bg-danger border-red-500 text-white active:bg-opacity-70"
-    : "";
+  const getDangerClasses = () => {
+    return danger ? "bg-danger border-red-500 text-white active:bg-opacity-70" : '';
+  };
 
-  const outlineClasses = outline
-    ? "bg-transparent hover:hoverAnim border-gray-700 text-gray-700 dark:border-gray-400 dark:text-gray-400"
-    : "";
+  const getOutlineClasses = () => {
+    return outline ? "bg-transparent hover:hoverAnim border-gray-700 text-gray-700 dark:border-gray-400 dark:text-gray-400" : '';
+  };
 
-  const loaderColor = `#9ca3af`
+  const loaderColor = "#9ca3af"; // Assuming a predefined loader color
 
-  
-   
   return (
     <button
-      style={{ opacity: "1", transform: "translateY(0)" }}
+      ref={ref}
       type={type}
       onClick={onClick}
-      className={`${baseClasses} ${disabledClasses} ${primaryClasses} ${dangerClasses} ${outlineClasses}`}
-      {...props}
+      className={`${baseClasses} ${getDisabledClasses()} ${getPrimaryClasses()} ${getDangerClasses()} ${getOutlineClasses()}`}
+      {...props} // Pass down other props like `aria-label` or `id`
     >
-      {loading  &&
+      {loading && (
         <ColorRing
           visible={true}
           height="1.5vw"
@@ -59,10 +62,10 @@ function Button({
           wrapperClass="color-ring-wrapper"
           colors={new Array(5).fill(loaderColor)}
         />
-       }
-       {children}
+      )}
+      {children}
     </button>
   );
-}
+});
 
 export default Button;
