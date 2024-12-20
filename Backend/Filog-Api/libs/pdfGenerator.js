@@ -73,7 +73,7 @@ const generatePDF = (data, name = 'output.pdf', authenticityText = getAuthentici
             doc.fontSize(12).font('Helvetica').fill('#313233').text(docHeaders.tagline, taglineX, taglineY);
 
             const headingY = doc.page.layout === 'landscape' ? taglineY + 50 : -46;
-            doc.fontSize(20).font('Helvetica-Bold').fill('black').text(tableMeta.title, 50, headingY, { align: 'center', lineGap: 10 });
+            doc.fontSize(20).font('Helvetica-Bold').fill('black').text(tableMeta.title, 50, headingY, { align: 'center', lineGap: 10, underline:true });
 
             const startY = headingY + 30;
             const headers = data[0] ? Object.keys(data[0]) : [];
