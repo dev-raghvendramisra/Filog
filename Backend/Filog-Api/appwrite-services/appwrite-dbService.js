@@ -1,6 +1,6 @@
 const { Client, Databases, Query } = require("node-appwrite");
 const {conf} = require('../config/conf');
-const minifyAppwriteObj = require("../utils/minifyAppwriteObj");
+const {minifyAppwriteObj} = require("../utils");
 const logger = require('../libs').envLogger;
 
 class DBService{
@@ -60,7 +60,7 @@ class DBService{
       }
     }
 
-    async listUsers(){
+    async listUserProfiles(){
       try {
         const res = await this.database.listDocuments(conf.APPWRITE_DATABASE_ID,conf.APPWRITE_USERPROFILE_COLLECTION_ID);
         if(res.documents.length){
@@ -69,10 +69,34 @@ class DBService{
         }
         throw false
       } catch (error) {
-        logger.error(`Failed to list users ${error}`);
+        logger.error(`Failed to list user profiles ${error}`);
         return error;
       }
     }
+
+    async listBlogs(){
+      try {
+        const res = await this.database.listDocuments(conf.APPWRITE_DATABASE_ID,conf.APPWRITE_BLOG_COLLECTION_ID);
+        if(res.documents.length){
+          res.documents = res.documents.map(blog => {
+            blog.content = "#"; 
+            blog.authorData = {
+              userId:blog.authorData.userId,
+              userName:blog.authorData.userName
+            }
+            blog = {id : blog.$id , ...blog}
+            return blog;
+          })
+          res.documents = minifyAppwriteObj(res.documents);
+          return res.documents;
+        }
+        throw false
+      } catch (error) {
+        logger.error(`Failed to list blogs ${error}`);
+        return error;
+      }
+    }
+
 }
 
 module.exports.appwriteDBService = new DBService();

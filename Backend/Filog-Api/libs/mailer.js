@@ -1,6 +1,6 @@
 const { conf } = require('../config/conf');
 const {constants} = require('../config/constants');
-const { getMailContent } = require('../utils/mailContent');
+const { getMailContent } = require('../utils');
 const nodemailer = require('nodemailer')
 const logger = require('./winstonLogger').envLogger;
 

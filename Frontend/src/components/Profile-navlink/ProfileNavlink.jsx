@@ -1,5 +1,5 @@
 import React from 'react'
-import { useSelector } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import ProfilePic from '../ProfilePic/ProfilePic'
 import { Dropdown } from '../../components'
 import { authServices } from '../../services'
@@ -7,6 +7,7 @@ import { useNavigate } from 'react-router-dom'
 import { useAlertModal, useAvatarFormModal } from '../../hooks'
 import { ID } from 'appwrite'
 import useTheme from '../../context/themeContext'
+import { setPrimaryBtnText } from '../../store/formModalSlice'
 
 
 
@@ -20,6 +21,7 @@ function ProfileNavlink() {
   const navigate = useNavigate()
   const openAvatarModal = useAvatarFormModal()
   const { isDark, setIsDark } = useTheme()
+  const dispatch = useDispatch()
   const openLogoutAlert = useAlertModal({
     ctaDanger: true,
     heading: "Logout",

@@ -11,8 +11,11 @@ function Admin() {
       await adminService.getLogs()
      }}>Get Logs</Button>
      <Button primary onClick={async()=>{
-      await adminService.getUsers()
-     }}>Get Users</Button>
+      await adminService.getProfiles()
+     }}>Get User Profiles</Button>
+     <Button primary onClick={async()=>{
+      await adminService.getBlogs()
+     }}>Get Blogs</Button>
      </div>
     </div>
   )

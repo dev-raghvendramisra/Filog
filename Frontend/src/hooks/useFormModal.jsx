@@ -284,14 +284,12 @@ export function useSecureLoginModal( customCleanup=()=>{},argHeading = "", argMe
          const isEmailValid = validateEmail(email);
          if(!isEmailValid) {
             dispatch(setCtaLoading({id:modalId ,val:false}))
-            dispatch(setCtaDisabled({id:modalId ,val:false}))
             dispatch(setPrimaryBtnText({id:modalId, text:primaryBtnText}))
             return;
          }
          dispatch(setPrimaryBtnText({id:modalId, text:"Sending ..."}))
          const res = await authServices.createMagicUrl(email);
          dispatch(setCtaLoading({id:modalId ,val:false}))
-         dispatch(setCtaDisabled({id:modalId ,val:false}))
          dispatch(setPrimaryBtnText({id:modalId, text:primaryBtnText}))
 
          if(res.ok){
@@ -332,6 +330,7 @@ export function useSecureLoginModal( customCleanup=()=>{},argHeading = "", argMe
     }, [formModals])
 
     React.useEffect(() => {
+        dispatch(setCtaDisabled({id:modalId,val:false}))
         removeModalActionHandlers(modalId)
         addModalActionHandlers({ [modalId]: { primaryOnClick, secondaryOnClick } })
     }, [email])
@@ -420,6 +419,7 @@ export function useResetPassModal(customCleanup = ()=>{},argHeading = "", argMes
     }, [formModals])
 
     React.useEffect(() => {
+        dispatch(setCtaDisabled({id:modalId,val:false}))
         removeModalActionHandlers(modalId)
         addModalActionHandlers({ [modalId]: { primaryOnClick, secondaryOnClick } })
     }, [password])

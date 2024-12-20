@@ -4,6 +4,15 @@ import react from '@vitejs/plugin-react';
 export default defineConfig({
   plugins: [react()],
   build: {
+    minify:'terser',
+    terserOptions:{
+      compress:{
+        drop_console:true
+      },
+      output:{
+        comments:false
+      }
+    },
     rollupOptions: {
       output: {
         entryFileNames: 'assets/[name].js',  // Output file name for entry points

@@ -1,5 +1,6 @@
 const { Client, Users, Query, Account } = require("node-appwrite");
 const {conf} = require('../config/conf');
+const {minifyAppwriteObj} = require("../utils");
 const logger = require('../libs').envLogger;
 
 class AuthService{
@@ -66,6 +67,7 @@ class AuthService{
           return {ok:false, res:error, code:500}
         }
       }
+     
 }
 
 module.exports.appwriteAuthService = new AuthService();

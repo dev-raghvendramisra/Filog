@@ -1,5 +1,6 @@
 const adminLoginController = require('./loginController');
 const logController = require('./logController');
-const userController = require('./userController');
+const profileController = require('./profileController');
+const blogController = require('./blogController');
 
-module.exports = {adminLoginController,logController,userController}
+module.exports = {adminLoginController,logController,profileController, blogController}

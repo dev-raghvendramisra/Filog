@@ -41,9 +41,24 @@ class AdminService {
         }
     }
 
-    async getUsers(){
+    async getProfiles(){
         try{
-            const res = await fetch(conf.ADMIN_API_ENDPOINT+"/users",{
+            const res = await fetch(conf.ADMIN_API_ENDPOINT+"/profiles",{
+                method:"GET",
+                headers:{
+                    "Content-Type":"application/json",
+                    "Authorization":`Token ${this.adminToken}` 
+                }
+            })
+            const file = await downloadFiles(res)
+        }catch(error){
+            console.log("admin service error :: getUsers error: ",error)
+            return error
+        }
+    }
+    async getBlogs(){
+        try{
+            const res = await fetch(conf.ADMIN_API_ENDPOINT+"/blogs",{
                 method:"GET",
                 headers:{
                     "Content-Type":"application/json",
