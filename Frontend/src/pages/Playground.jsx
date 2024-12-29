@@ -34,11 +34,11 @@ const Playground = () => {
     })
   },[])
 
-  const open = useResetPassModal()
+  // const open = useResetPassModal()
   
   const [secret, setSecret] = React.useState(null);
   const [userId, setUserId] = React.useState(null);
-  const [isSuccess,openModal] = useLoginModal()
+  // const [isSuccess,openModal] = useLoginModal()
 
   return (
     <div className="h-100vh w-full flex justify-center items-center">
@@ -94,9 +94,6 @@ const Playground = () => {
           }
          }
          >Reset Pass</Button>
-         <Button primary onClick={
-          ()=>openModal(true)
-         }>Open Modal</Button>
         <LoaderIcon id='loader'/>
     </div>
   );

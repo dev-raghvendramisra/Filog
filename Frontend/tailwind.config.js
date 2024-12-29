@@ -34,12 +34,18 @@ export default {
     'dark:bg-politics-dark',],
   theme: {
     extend: {
+      screens:{
+        'sm':{
+           max: '640px'
+        }
+      },
       fontFamily: {
         sans: ['Poppins', 'sans-serif'],
       },
       animation:{
         spin_fast: 'spin 0.7s linear infinite'
       },
+      
 
       inset: {
         '0p': '0%',     // 0%
@@ -2095,6 +2101,8 @@ export default {
         '98p': '98%',   // 98%
         '100p': '100%',
         '2vw': '2vw',
+        '3vw':'3vw',
+        '3.5vw':'3.5vw',
         '4vw': '4vw',
         '6vw': '6vw',
         '8vw': '8vw',

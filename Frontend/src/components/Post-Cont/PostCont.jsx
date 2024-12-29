@@ -5,6 +5,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { updateLikes } from '../../store/userProfileSlice';
 import { likeBlog, unlikeBlog, deleteComment, commentOnBlog } from '../../store/blogsSlice';
 import {useCommentFormModal} from '../../hooks';
+import usePlatformContext from '../../context/platformContext';
 
 function PostCont({
   type = "dashboard",
@@ -19,6 +20,7 @@ function PostCont({
 
    
   const {userData} = useSelector((state) => state.auth)
+  const {mobile} = usePlatformContext()
   const {userProfileId,blogsLiked} = useSelector((state) => {
     return {
       userProfileId: state.userProfile.$id,
@@ -30,6 +32,20 @@ function PostCont({
   const openAlertModal = useEmailAlertModal()
   const openCommentModal = useCommentFormModal(userData.$id)
   const dispatch = useDispatch()
+
+  const[cardLayout, setCardLayout] = React.useState("horizontal")
+  const setLayout = ()=>{
+    console.log(mobile);
+    
+    if(mobile){
+      setCardLayout("vertical")
+    }
+    else setCardLayout("horizontal")
+  }
+  
+  React.useEffect(()=>{
+     setLayout()
+  },[mobile])
 
 
 
@@ -45,6 +61,7 @@ function PostCont({
               classNameBlogCardCont="flex-row w-fit gap-8"
               classNameBlogCardAuthorDateCont="mt-1vw"
               loader
+              mobile={mobile}
             />
           ))
         ) : (
@@ -67,7 +84,9 @@ function PostCont({
           blogImg={post.coverImageUrl}
           blogsLiked={blogsLiked}
           openAlertModal={openAlertModal}
+          blogCardType={cardLayout}
           openCommentModal={openCommentModal}
+          mobile={mobile}
           updateLikes={(type) => {
                     dispatch(updateLikes({ type, val: post.postID }))
                     dispatch(type === "like" ? likeBlog(post.postID) : unlikeBlog(post.postID))

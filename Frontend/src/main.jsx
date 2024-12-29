@@ -8,11 +8,13 @@ import SearchValueProvider from './context/searchValue.jsx'
 import { ThemeContextProvider } from './context/themeContext.jsx'
 import { ModalActionsContextProvider } from './context/modalActionsContext.jsx'
 import { FileObjectContextProvider } from './context/fileObjectContext.jsx'
+import { PlatformContextProvider } from './context/platformContext.jsx'
 
 
 ReactDOM.createRoot(document.getElementById('root')).render(
 
   <Provider store={store}>
+        <PlatformContextProvider>
         <FileObjectContextProvider>
         <ModalActionsContextProvider>
         <ThemeContextProvider>
@@ -22,6 +24,7 @@ ReactDOM.createRoot(document.getElementById('root')).render(
       </ThemeContextProvider>
       </ModalActionsContextProvider>
       </FileObjectContextProvider>
+      </PlatformContextProvider>
   </Provider>
   ,
 )

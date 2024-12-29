@@ -24,6 +24,7 @@ function BlogCardInteractionContainer({
   openAlertModal, 
   openCommentModal,
   blogsLiked ,
+  mobile,
   authorId
 }) {
   const [openDropdown, setOpenDropdown] = React.useState(false);
@@ -115,6 +116,7 @@ function BlogCardInteractionContainer({
             authorUserName={authorUserName}
             uniqueId={uniqueId}
             slug={slug}
+            mobile={mobile}
           />
         </div>
       </NavLink>

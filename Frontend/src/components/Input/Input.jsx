@@ -91,7 +91,7 @@ const Input=React.forwardRef(({
           <div id="pass-protection-wrapper" 
           className={`h-100p w-80p relative overflow-hidden ${className_input_prot_el_wrapper}`} {...inputContStyle}>
             {text_area 
-            ?<textarea id={id} rows="6" cols="50" value={value} onChange={handleChange} placeholder={fill?placeholder:""}
+            ?<textarea id={id} ref={ref} rows="6" cols="50" value={value} onChange={handleChange} placeholder={fill?placeholder:""}
             className={`bg-transparent h-100p w-100p resize-none outline-none hideScrollbar ${className_input}`} autoComplete='off'></textarea>
             :<input id={id} ref={ref} type={isTypePass?"password":"text"} value={value} onChange={handleChange} placeholder={fill?placeholder:""}
             className={`bg-transparent h-100p w-100p outline-none ${icon || "pl-1vw"}${className_input}`} autoComplete='off'/>

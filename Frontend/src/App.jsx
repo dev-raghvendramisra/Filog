@@ -12,13 +12,14 @@ import { startAuthentication } from './utils';
 import toast,{Toaster} from 'react-hot-toast'
 import { clearProfile, setProfile } from './store/userProfileSlice';
 import getUserProfile from './utils/getUserProfile';
-
+import usePlatformContext from './context/platformContext';
 
 function App() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const { isUserLoggedIn, fetching,userData } = useSelector((state) => state.auth);
   const {pathname,search} = useLocation()
+  const {setPlatformAsDesktop,setPlatformAsMobile} = usePlatformContext()
   
   
   React.useEffect(() => {
@@ -48,6 +49,22 @@ function App() {
     }
   }, [isUserLoggedIn]);
 
+  const setPlatform = ()=>{
+    if(window.innerWidth<576){
+      setPlatformAsMobile()
+      console.log("platform-mobile")
+    }
+    else setPlatformAsDesktop()
+    console.log("platform-pc");
+  }
+   
+  React.useEffect(()=>{
+    window.addEventListener('resize',setPlatform)
+    setPlatform()
+    return ()=>{
+      window.removeEventListener('resize',setPlatform)
+    }
+  },[])
 
   return (
     <>
