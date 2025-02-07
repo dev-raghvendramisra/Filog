@@ -13,13 +13,14 @@ import toast,{Toaster} from 'react-hot-toast'
 import { clearProfile, setProfile } from './store/userProfileSlice';
 import getUserProfile from './utils/getUserProfile';
 import usePlatformContext from './context/platformContext';
+import TemporaryProhib from './pages/TemporaryProhib';
 
 function App() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const { isUserLoggedIn, fetching,userData } = useSelector((state) => state.auth);
   const {pathname,search} = useLocation()
-  const {setPlatformAsDesktop,setPlatformAsMobile} = usePlatformContext()
+  const {setPlatformAsDesktop,setPlatformAsMobile,mobile} = usePlatformContext()
   
   
   React.useEffect(() => {
@@ -65,6 +66,10 @@ function App() {
       window.removeEventListener('resize',setPlatform)
     }
   },[])
+
+  if(mobile){
+    return <TemporaryProhib />
+  }
 
   return (
     <>
