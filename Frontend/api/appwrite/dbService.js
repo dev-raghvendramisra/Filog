@@ -30,7 +30,7 @@ class DBService {
        try {
          const profile = await this.database.listDocuments(conf.APPWRITE_DATABASE_ID,conf.APPWRITE_USERPROFILE_COLLECTION_ID,[Query.equal("userName",username)]);
          if(profile.documents.length>0){
-             return profile.documents[0];
+            return profile.documents[0];
          }
          throw false
        } catch (error) {

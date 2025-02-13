@@ -6,7 +6,9 @@ import getDefaultHtml from "./utils/getDefaultMetaTags.js";
 export default async function handler(req, res) {
     try {
 
-        const username = req.query.userId;
+        let username = req.query.userId;
+        if(username.includes('@')) username = username.split('@')[1];
+        else throw false
         const profile = await dbService.getProfile(username);
         if (profile) {
             const tagsData = {
