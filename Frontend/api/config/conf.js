@@ -1,4 +1,5 @@
 import dotenv from 'dotenv'
+import path from 'path'
 dotenv.config()
 
 const conf = Object.freeze({
@@ -9,7 +10,7 @@ const conf = Object.freeze({
     APPWRITE_API_KEY: String(process.env.APPWRITE_API_KEY),
     APPWRITE_USERPROFILE_COLLECTION_ID: String(process.env.APPWRITE_USERPROFILE_COLLECTION_ID),
     APPWRITE_BLOG_COLLECTION_ID: String(process.env.APPWRITE_BLOG_COLLECTION_ID),
-    DEFAULT_HTML_FILE: "../../dist/index.html"
+    DEFAULT_HTML_FILE: path.resolve(__dirname, '../..', 'index.html'),
 })
 
 export default conf
