@@ -10,7 +10,7 @@ class DBService {
            .setProject(conf.APPWRITE_PROJECT_ID)
            .setKey(conf.APPWRITE_API_KEY);
 
-        this.databse = new Databases(this.client);
+        this.database = new Databases(this.client);
     }
 
     async getBlog(slug){

@@ -17,9 +17,9 @@ export default async function handler(req, res) {
             const body = getProfileMetaTags(tagsData);
             res.status(200).send(body);
         }
-        else res.send(constants.DEFAULT_HTML_FILE);
+        else res.send(conf.DEFAULT_HTML_FILE);
     } catch (error) {
         console.log(error)
-        res.send(constants.DEFAULT_HTML_FILE);
+        res.send(conf.DEFAULT_HTML_FILE);
     }
 }

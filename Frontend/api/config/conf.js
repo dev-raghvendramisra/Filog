@@ -10,7 +10,7 @@ const conf = Object.freeze({
     APPWRITE_API_KEY: String(process.env.APPWRITE_API_KEY),
     APPWRITE_USERPROFILE_COLLECTION_ID: String(process.env.APPWRITE_USERPROFILE_COLLECTION_ID),
     APPWRITE_BLOG_COLLECTION_ID: String(process.env.APPWRITE_BLOG_COLLECTION_ID),
-    DEFAULT_HTML_FILE: path.resolve(__dirname, '../..', 'index.html'),
+    DEFAULT_HTML_FILE: path.resolve(import.meta.dirname, '../..', 'index.html'),
 })
 
 export default conf
