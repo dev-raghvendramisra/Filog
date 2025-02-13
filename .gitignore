@@ -6,3 +6,4 @@ dist
 serve.json
 .vercel
 .sh
+.env*.local

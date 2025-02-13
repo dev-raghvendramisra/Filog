@@ -1,16 +1,14 @@
 import dotenv from 'dotenv'
-import path from 'path'
 dotenv.config()
 
 const conf = Object.freeze({
-    FRONTEND_ENDPOINT: String(process.env.FRONTEND_ENDPOINT),
     APPWRITE_ENDPOINT: String(process.env.APPWRITE_URL),
     APPWRITE_PROJECT_ID: String(process.env.APPWRITE_PROJECT_ID),
     APPWRITE_DATABASE_ID: String(process.env.APPWRITE_DATABASE_ID),
     APPWRITE_API_KEY: String(process.env.APPWRITE_API_KEY),
     APPWRITE_USERPROFILE_COLLECTION_ID: String(process.env.APPWRITE_USERPROFILE_COLLECTION_ID),
     APPWRITE_BLOG_COLLECTION_ID: String(process.env.APPWRITE_BLOG_COLLECTION_ID),
-    DEFAULT_HTML_FILE: path.resolve(import.meta.dirname, '../..', 'index.html'),
+    FRONTEND_ENDPOINT: String(process.env.FRONTEND_ENDPOINT),
 })
 
 export default conf

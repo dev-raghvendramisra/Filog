@@ -16,7 +16,7 @@ export default async function handler(req, res) {
     }
     
    
-    res.setHeader('Cache-Control', 'public, max-age=2592000, immutable'); // 30 days in seconds
+    res.setHeader('Cache-Control', 'public, max-age=15000, immutable'); // 30 days in seconds
     res.setHeader('Content-Type', imageResponse.headers.get('Content-Type'));
     res.setHeader('Content-Length', imageResponse.headers.get('Content-Length'));
     res.setHeader('Content-Disposition', imageResponse.headers.get('Content-Disposition'));

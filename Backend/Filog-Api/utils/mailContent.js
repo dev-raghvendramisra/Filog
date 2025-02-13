@@ -13,7 +13,7 @@ module.exports.getMailContent = function (type, url){
   <body style="font-family: Arial, sans-serif; background-color: #f9f9f9; margin: 0; padding: 0;">
     <div style="max-width: 600px; margin: 20px auto; background-color: #fff; padding: 20px; border-radius: 8px; box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);">
       <div style="text-align: center; margin-bottom: 20px;">
-        <img src="https://filog.in/meta/android-chrome-192x192.png" alt="Filog Logo" style="width: 80px;" />
+        <img src="https://www.filog.in/meta/android-chrome-192x192.png" alt="Filog Logo" style="width: 80px;" />
       </div>
       <div style="text-align: center;">
         <h1 style="color: #333; font-size: 24px;">Help us to verify your email address</h1>
@@ -23,7 +23,7 @@ module.exports.getMailContent = function (type, url){
         <a href=${url} style="display: inline-block; background-color: #194fe6; color: #ffffff; padding: 12px 25px; text-decoration: none; border-radius: 5px; font-weight: bold; margin-top: 20px;">Verify email</a>
         <p style="color: #555; font-size: 16px;">This link will expire in 1 hour</p>
         <p style="color: #555; font-size: 16px;">
-          Didn't create a Filog account? <a href="https://filog.in/">Join now</a>.
+          Didn't create a Filog account? <a href="https://www.filog.in/">Join now</a>.
         </p>
       </div>
       <div style="margin-top: 30px; text-align: center; font-size: 12px; color: #999;">
@@ -46,7 +46,7 @@ module.exports.getMailContent = function (type, url){
   <body style="font-family: Arial, sans-serif; background-color: #f9f9f9; margin: 0; padding: 0;">
     <div style="max-width: 600px; margin: 20px auto; background-color: #fff; padding: 20px; border-radius: 8px; box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);">
       <div style="text-align: center; margin-bottom: 20px;">
-        <img src="https://filog.in/meta/android-chrome-192x192.png" alt="Filog Logo" style="width: 80px;" />
+        <img src="https://www.filog.in/meta/android-chrome-192x192.png" alt="Filog Logo" style="width: 80px;" />
       </div>
       <div style="text-align: center;">
         <h1 style="color: #333; font-size: 24px;">Forget Password Request</h1>

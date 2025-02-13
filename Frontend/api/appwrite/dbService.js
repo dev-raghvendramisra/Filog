@@ -1,4 +1,4 @@
-import {Client, Databases} from 'node-appwrite'
+import {Client, Databases, Query} from 'node-appwrite'
 import conf from '../config/conf.js';
 
 class DBService {
@@ -15,15 +15,15 @@ class DBService {
 
     async getBlog(slug){
         try {
-         const blog = await this.database.listDocuments(conf.APPWRITE_DATABASE_ID,conf.APPWRITE_BLOG_COLLECTION_ID,[
-           Query.equal("slug",slug)
-         ]);
+          const blog = await this.database.listDocuments(conf.APPWRITE_DATABASE_ID,conf.APPWRITE_BLOG_COLLECTION_ID,[
+            Query.equal("slug",slug)
+          ]);
          if(blog.total){
              return blog.documents[0];
          }
          throw false
         } catch (error) {
-           return error;
+           return null;
         }
      }
      async getProfile(username){
@@ -34,7 +34,7 @@ class DBService {
          }
          throw false
        } catch (error) {
-         return error;
+         return null;
        }
      }
 }

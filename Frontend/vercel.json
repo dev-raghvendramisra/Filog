@@ -5,7 +5,7 @@
       "destination":"/api/blogs"
     },
     {
-      "source":"/user",
+      "source":"/user/:userId",
       "destination":"/api/users"
     },
     {
