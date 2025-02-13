@@ -1,6 +1,14 @@
 {
   "rewrites": [
     {
+      "source":"/blog/:blogId",
+      "destination":"/api/blogs"
+    },
+    {
+      "source":"/user",
+      "destination":"/api/users"
+    },
+    {
       "source": "/(.*)",
       "destination": "/index.html"
     }
