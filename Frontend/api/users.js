@@ -1,10 +1,12 @@
 import conf from "./config/conf.js";
 import getProfileMetaTags from "./meta-tags/getProfileMetaTags.js";
+import dbService from "./appwrite/dbService.js"
+
 export default async function handler(req, res) {
     try {
 
         const username = req.query.userId;
-        const profile = await appwriteDBService.getProfile(username);
+        const profile = await dbService.getProfile(username);
         if (profile) {
             const tagsData = {
                 imgUrl: profile['userAvatar'],
@@ -15,9 +17,9 @@ export default async function handler(req, res) {
             const body = getProfileMetaTags(tagsData);
             res.status(200).send(body);
         }
-        else res.sendFile(constants.DEFAULT_HTML_FILE);
+        else res.send(constants.DEFAULT_HTML_FILE);
     } catch (error) {
         console.log(error)
-        res.sendFile(constants.DEFAULT_HTML_FILE);
+        res.send(constants.DEFAULT_HTML_FILE);
     }
 }
