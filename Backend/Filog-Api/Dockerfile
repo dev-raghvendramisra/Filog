@@ -21,7 +21,7 @@ COPY package*.json ./
 RUN npm install --prod
 
 # Copy the rest of the application code
-COPY . .
+COPY dist .
 
 # Expose the application port (if required, e.g., 3000)
 EXPOSE 8000
