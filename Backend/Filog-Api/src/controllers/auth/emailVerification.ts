@@ -2,8 +2,9 @@ import { EMAIL_TYPES } from "config/constants";
 import { Request, Response } from "express";
 import { envLogger as logger } from "@lib";
 import { jwtGenerationService, jwtVerificationService } from "@services";
+import { GenEVerification as GenerateBody, VerEVerfication as VerificationBody } from "@type/request";
 
- async function generateEmailVerification(req : Request, res : Response) {
+ async function generateEmailVerification(req : Request<{},{},GenerateBody>, res : Response) {
     try {
         const { userId, email } = req.body;
         const emailRes = await jwtGenerationService(userId, email, EMAIL_TYPES.VERIFICATION_EMAIL);
@@ -16,7 +17,7 @@ import { jwtGenerationService, jwtVerificationService } from "@services";
     }
 }
 
- async function verifyEmailVerification(req:Request, res:Response) {
+ async function verifyEmailVerification(req:Request<{},{},VerificationBody>, res:Response) {
     try {
         const { token, userId } = req.body;
         const emailRes = await jwtVerificationService(token, userId);

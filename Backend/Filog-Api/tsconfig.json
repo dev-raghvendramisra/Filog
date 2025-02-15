@@ -16,7 +16,8 @@
     "@utils":["utils/index"],
     "@lib":["libs/index"],
     "@appwrite":["appwrite/index"],
-    "@services":["services/index"]
+    "@services":["services/index"],
+    "@type/*":["types/*"]
     }
   },
   "include": ["src"],

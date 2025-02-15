@@ -1,12 +1,13 @@
 import { appwriteAuthService } from "@appwrite";
 import { envLogger as logger } from "@lib";
 import { jwtGenerationService, jwtVerificationService } from "@services";
+import { GenMagicUrl as GenerateBody, VerMagicUrl as VerificationBody } from "@type/request";
 import { EMAIL_TYPES } from "config/constants";
 import { Request, Response } from "express";
 import { Models } from "node-appwrite";
 
 
-async function generateMagicUrl(req:Request, res:Response) {
+async function generateMagicUrl(req:Request<{},{},GenerateBody>, res:Response) {
     try {
         const { email } = req.body;
         let userId : string | Models.User<Models.Preferences> | null= await appwriteAuthService.getUserDetails(email);
@@ -26,7 +27,7 @@ async function generateMagicUrl(req:Request, res:Response) {
     }
 }
 
-async function verifyMagicUrl(req:Request, res:Response) {
+async function verifyMagicUrl(req:Request<{},{},VerificationBody>, res:Response) {
     try {
         const { token, userId } = req.body;
         const statusRes = await jwtVerificationService(token, userId, true);
