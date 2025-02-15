@@ -79,7 +79,7 @@ Filog’s project structure is organized into cohesive modules:
 - **Services**: Organized into classes and modularized for reusability, such as authentication and interaction services.
 
 ## Tech used 
-![React](https://img.shields.io/badge/react-%2320232a.svg?style=for-the-badge&logo=react&logoColor=%2361DAFB) ![TailwindCSS](https://img.shields.io/badge/tailwindcss-%2338B2AC.svg?style=for-the-badge&logo=tailwind-css&logoColor=white) ![React Router](https://img.shields.io/badge/React_Router-CA4245?style=for-the-badge&logo=react-router&logoColor=white) ![Redux](https://img.shields.io/badge/redux-%23593d88.svg?style=for-the-badge&logo=redux&logoColor=white) ![Webpack](https://img.shields.io/badge/webpack-%238DD6F9.svg?style=for-the-badge&logo=webpack&logoColor=black).![GSAP](https://img.shields.io/badge/green%20sock-88CE02?style=for-the-badge&logo=greensock&logoColor=white)
+![auto](https://skillicons.dev/icons?i=react,redux,tailwind,appwrite,docker,express,nodejs)
 
 ## Documentation (for Contribution)
 
@@ -182,3 +182,4 @@ With VCS, Filog ensures document integrity by:
 - Providing an audit trail of changes to support transparency and debugging.
 
 This structured approach is particularly valuable in social applications like Filog, where users’ interactions with each other’s profiles need precise and reliable handling.
+
