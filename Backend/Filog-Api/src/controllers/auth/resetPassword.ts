@@ -1,14 +1,15 @@
-import { appwriteAuthService } from "@appwrite";
 import { envLogger as logger } from "@lib";
-import { ResetPass as ResetPassBody} from "@type/request";
 import { Request,Response } from "express";
+import authService from "@services/authService";
+import { AuthenticatedRequest, UserDataInCookie } from "@type/request/body";
 
-export default  async function resetPassword(req:Request<{},{},ResetPassBody>, res:Response) {
+export default  async function resetPassword(req:AuthenticatedRequest, res:Response) {
     try {
 
-        const { userId, password } = req.body
-        const passRes = await appwriteAuthService.resetPassword(userId, password);
-        res.status(passRes.code).send({ code: passRes.code, ok: passRes.ok, res: passRes.res })
+        const { password } = req.body
+        const {_id:userId} = req.userData as UserDataInCookie
+        const passRes = await authService.resetPass(userId, password);
+        res.status(passRes.code).send(passRes)
         return
 
     } catch (error) {

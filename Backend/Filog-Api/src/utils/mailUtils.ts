@@ -1,6 +1,6 @@
 import { EMAIL_TYPES } from "config/constants";
 
-const getMailContent = function (type : string, url : string){
+export const getMailContent = function (type : string, url ?: string){
      if(type === EMAIL_TYPES.VERIFICATION_EMAIL){
      return  `<!DOCTYPE html>
 <html lang="en">
@@ -68,4 +68,3 @@ const getMailContent = function (type : string, url : string){
      }
 }
 
-export default getMailContent;

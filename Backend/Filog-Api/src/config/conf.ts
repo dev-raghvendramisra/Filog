@@ -5,6 +5,7 @@ const conf = {
     FRONTEND_ENDPOINT: String(process.env.FRONTEND_ENDPOINT),
     PORT: Number(process.env.PORT),
     JWT_SECRET: String(process.env.JWT_SECRET),
+    DB_URI:String(process.env.DB_URI),
     SERVICE_EMAIL: String(process.env.SERVICE_EMAIL),
     SERVICE_EMAIL_PASSWORD: String(process.env.SERVICE_EMAIL_PASSWORD),
     APPWRITE_ENDPOINT: String(process.env.APPWRITE_URL),
@@ -14,7 +15,7 @@ const conf = {
     APPWRITE_API_KEY: String(process.env.APPWRITE_API_KEY),
     APPWRITE_USERPROFILE_COLLECTION_ID: String(process.env.APPWRITE_USERPROFILE_COLLECTION_ID),
     APPWRITE_BLOG_COLLECTION_ID: String(process.env.APPWRITE_BLOG_COLLECTION_ID),
-    APPWRITE_BLACKISTED_TOKENS_COLLECTION_ID: String(process.env.APPWRITE_BLACKISTED_TOKENS_COLLECTION_ID),
+    BLACKISTED_TOKENS_DOC_ID: String(process.env.BLACKISTED_TOKENS_DOC_ID),
 } as const
 
 export default conf;

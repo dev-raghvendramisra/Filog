@@ -3,8 +3,9 @@ import conf from 'config/conf';
 import cors from 'cors'
 import path from 'path'
 import { logger as accessLogger } from '@middleware';
-import {authRouter } from '@route';
-import { envLogger } from '@lib';
+import authRouter from '@router/auth/authRouter';
+import dbRouter from "@router/db/dbRouter"
+import cookieParser from 'cookie-parser';
 
 const app = express();
 const publicDir = path.join(__dirname, 'public');
@@ -16,13 +17,15 @@ const corsOptions = {
     credentials: true, 
 };
 
+app.use(cookieParser())
 app.use(cors(corsOptions))
 app.use(accessLogger)
 app.use(express.static(publicDir))
 app.use(express.json())
-app.use('/apis/auth',authRouter)
+app.use('/api/v1/auth',authRouter)
+app.use('/api/v1/db',dbRouter)
 app.use((req,res)=>{
     res.status(404).send({message: 'Invalid Endpoint',code: 404, ok:false})
 })
 
-app.listen(conf.PORT,()=>envLogger.info("Server listening on http://localhost:"+conf.PORT))
+export default app

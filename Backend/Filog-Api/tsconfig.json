@@ -12,12 +12,12 @@
     "paths": {
       "@controller/*":["controllers/*"],
     "@middleware":["middlewares/index"],
-    "@route":["routes/index"],
-    "@utils":["utils/index"],
+    "@router/*":["router/*"],
+    "@utils/*":["utils/*"],
     "@lib":["libs/index"],
-    "@appwrite":["appwrite/index"],
-    "@services":["services/index"],
-    "@type/*":["types/*"]
+    "@services/*":["services/*"],
+    "@type/*":["types/*"],
+    "@db/*":["db/*"]
     }
   },
   "include": ["src"],

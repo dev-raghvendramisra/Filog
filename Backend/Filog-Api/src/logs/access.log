@@ -1,0 +1,177 @@
+
+[Sat, 22 Feb 2025 17:35:25 GMT] 
+info:  21ms GET / 200 ::1 [{}] 
+
+[Sat, 22 Feb 2025 17:35:25 GMT] 
+info:  2ms GET /meta/site.webmanifest 200 ::1 [{}] 
+
+[Sat, 22 Feb 2025 17:35:25 GMT] 
+info:  3ms GET /meta/favicon-32x32.png 200 ::1 [{}] 
+
+[Sat, 22 Feb 2025 17:58:15 GMT] 
+info:  5ms GET /api/v1/db/users? 404 ::1 [{}] 
+
+[Sat, 22 Feb 2025 17:58:30 GMT] 
+info:  1ms GET /api/v1/db/users 404 ::1 [{}] 
+
+[Sat, 22 Feb 2025 17:58:45 GMT] 
+info:  1ms GET /api/v1/db/users?query 404 ::1 [{}] 
+
+[Sat, 22 Feb 2025 17:58:48 GMT] 
+info:  0ms GET /api/v1/db/users?query=%22%22 404 ::1 [{}] 
+
+[Sat, 22 Feb 2025 17:59:30 GMT] 
+info:  7ms GET /users?query=%22%22 400 ::1 [{}] 
+
+[Sat, 22 Feb 2025 18:01:20 GMT] 
+info:  8ms GET /users?query=%22%22 400 ::1 [{}] 
+
+[Sat, 22 Feb 2025 18:05:15 GMT] 
+info:  8ms GET /users?query=%7B%22age%22%3A%7B%22%24gt%22%3A18%7D%7D 400 ::1 [{}] 
+
+[Sat, 22 Feb 2025 18:06:52 GMT] 
+info:  18ms GET /users?query=%7B%22age%22%3A%7B%22%24gt%22%3A18%7D%7D 400 ::1 [{}] 
+
+[Sat, 22 Feb 2025 18:09:02 GMT] 
+info:  4ms GET /users?query=%7B%22filter%22%3A%7B%22status%22%3A%22active%22%2C%22age%22%3A%7B%22%24gt%22%3A18%2C%22%24lt%22%3A50%7D%7D%2C%22limit%22%3A10%2C%22sort%22%3A%7B%22createdAt%22%3A-1%7D%7D 400 ::1 [{}] 
+
+[Sat, 22 Feb 2025 18:09:20 GMT] 
+info:  3ms GET /api/v1/db/users?query=%7B%22filters%22%3A%7B%22status%22%3A%22active%22%2C%22age%22%3A%7B%22%24gt%22%3A18%2C%22%24lt%22%3A50%7D%7D%2C%22limit%22%3A10%2C%22sort%22%3A%7B%22createdAt%22%3A-1%7D%7D 404 ::1 [{}] 
+
+[Sat, 22 Feb 2025 18:09:36 GMT] 
+info:  1ms GET /api/v1/db/users?query=%7B%22filters%22%3A%7B%22status%22%3A%22active%22%2C%22age%22%3A%7B%22%24gt%22%3A18%2C%22%24lt%22%3A50%7D%7D%2C%22limit%22%3A10%2C%22sort%22%3A%7B%22createdAt%22%3A-1%7D%7D 404 ::1 [{}] 
+
+[Sat, 22 Feb 2025 18:21:23 GMT] 
+info:  57ms GET /users?query=%7B%22filters%22%3A%7B%22status%22%3A%22active%22%2C%22age%22%3A%7B%22%24gt%22%3A18%2C%22%24lt%22%3A50%7D%7D%2C%22limit%22%3A10%2C%22sort%22%3A%7B%22createdAt%22%3A-1%7D%7D 200 ::1 [{}] 
+
+[Sat, 22 Feb 2025 18:25:12 GMT] 
+info:  86ms PUT /create/ 500 ::1 [{"email":"user@example.com","username":"john_doe","password":"SecurePass123!","emailVerification":false}] 
+
+[Sat, 22 Feb 2025 18:26:20 GMT] 
+info:  223ms PUT /create/ 201 ::1 [{"email":"user@example.com","username":"john_doe","password":"SecurePass123!","emailVerification":false,"fullname":"John Doe"}] 
+
+[Sat, 22 Feb 2025 18:29:14 GMT] 
+info:  61ms PUT /create/ 409 ::1 [{"email":"user@example.com","username":"john_doe","password":"SecurePass123!","fullname":"John Doe"}] 
+
+[Sat, 22 Feb 2025 18:29:35 GMT] 
+info:  220ms PUT /create/ 201 ::1 [{"email":"user@example.com","username":"john_doe","password":"SecurePass123!","fullname":"John Doe"}] 
+
+[Sat, 22 Feb 2025 18:58:10 GMT] 
+info:  10ms PUT /api/v1/auth/create/ 404 ::1 [{"email":"user@example.com","username":"john_doe","password":"SecurePass123!","fullname":"John Doe"}] 
+
+[Sat, 22 Feb 2025 18:58:22 GMT] 
+info:  65ms PUT /signup 409 ::1 [{"email":"user@example.com","username":"john_doe","password":"SecurePass123!","fullname":"John Doe"}] 
+
+[Sat, 22 Feb 2025 19:05:23 GMT] 
+info:  56ms GET /users?query=%7B%22filters%22%3A%7B%22status%22%3A%22active%22%2C%22age%22%3A%7B%22%24gt%22%3A18%2C%22%24lt%22%3A50%7D%7D%2C%22limit%22%3A10%2C%22sort%22%3A%7B%22createdAt%22%3A-1%7D%7D 200 ::1 [{}] 
+
+[Sat, 22 Feb 2025 19:06:43 GMT] 
+info:  186ms POST /login 200 ::1 [{"email":"user@example.com","password":"SecurePass123!"}] 
+
+[Sat, 22 Feb 2025 19:07:34 GMT] 
+info:  168ms POST /login 200 ::1 [{"email":"user@example.com","password":"SecurePass123!"}] 
+
+[Sat, 22 Feb 2025 19:57:28 GMT] 
+info:  53ms GET /users?query=%7B%22filters%22%3A%7B%22status%22%3A%22active%22%2C%22age%22%3A%7B%22%24gt%22%3A18%2C%22%24lt%22%3A50%7D%7D%2C%22limit%22%3A10%2C%22sort%22%3A%7B%22createdAt%22%3A-1%7D%7D 200 ::1 [{}] 
+
+[Sat, 22 Feb 2025 19:57:40 GMT] 
+info:  40ms GET /users?query=%7B%22filters%22%3A%7B%22status%22%3A%22active%22%2C%22age%22%3A%7B%22%24gt%22%3A18%2C%22%24lt%22%3A50%7D%7D%2C%22limit%22%3A10%2C%22sort%22%3A%7B%22createdAt%22%3A-1%7D%7D 200 ::1 [{}] 
+
+[Sat, 22 Feb 2025 19:58:43 GMT] 
+info:  55ms GET /users?query=%7B%22filters%22%3A%7B%22status%22%3A%22active%22%2C%22age%22%3A%7B%22%24gt%22%3A18%2C%22%24lt%22%3A50%7D%7D%2C%22limit%22%3A10%2C%22sort%22%3A%7B%22createdAt%22%3A-1%7D%7D 200 ::1 [{}] 
+
+[Sat, 22 Feb 2025 20:01:04 GMT] 
+info:  2ms GET /users?query=%7B%22filters%22%3A%7B%22status%22%3A%22active%22%2C%22age%22%3A%7B%22%24gt%22%3A18%2C%22%24lt%22%3A50%7D%7D%2C%22limit%22%3A10%2C%22sort%22%3A%7B%22createdAt%22%3A-1%7D%7D 401 ::1 [{}] 
+
+[Sat, 22 Feb 2025 20:02:12 GMT] 
+info:  7ms GET /users?query=%7B%22filters%22%3A%7B%22status%22%3A%22active%22%2C%22age%22%3A%7B%22%24gt%22%3A18%2C%22%24lt%22%3A50%7D%7D%2C%22limit%22%3A10%2C%22sort%22%3A%7B%22createdAt%22%3A-1%7D%7D 401 ::1 [{}] 
+
+[Sat, 22 Feb 2025 20:02:38 GMT] 
+info:  2ms GET /users?query=%7B%22filters%22%3A%7B%22status%22%3A%22active%22%2C%22age%22%3A%7B%22%24gt%22%3A18%2C%22%24lt%22%3A50%7D%7D%2C%22limit%22%3A10%2C%22sort%22%3A%7B%22createdAt%22%3A-1%7D%7D 401 ::1 [{}] 
+
+[Sat, 22 Feb 2025 20:52:24 GMT] 
+info:  60ms GET /user 404 ::1 [{}] 
+
+[Sat, 22 Feb 2025 20:52:56 GMT] 
+info:  62ms GET /user 404 ::1 [{}] 
+
+[Sat, 22 Feb 2025 20:53:20 GMT] 
+info:  54ms GET /user 404 ::1 [{}] 
+
+[Sat, 22 Feb 2025 20:53:43 GMT] 
+info:  59ms GET /user 404 ::1 [{}] 
+
+[Sat, 22 Feb 2025 20:54:13 GMT] 
+info:  63ms GET /user 404 ::1 [{}] 
+
+[Sat, 22 Feb 2025 21:13:13 GMT] 
+info:  106ms PATCH /email-verification/verify 404 ::1 [{"token":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJyZXF1aXJlZEZlaWxkcyI6eyJ1c2VySWQiOiI2N2JhMzdjZGZlYTBiZTAwNzFiYjEzZjkiLCJlbWFpbCI6Iml0c3JhZ2hhdjEyQGdtYWlsLmNvbSJ9LCJpYXQiOjE3NDAyNTgxMDUsImV4cCI6MTc0MTk5OTI2Mzg5NX0.4V_dR08G6ydGLd1ElLaA-wdnoZTVNE6zxpvs0uyxfsg"}] 
+
+[Sat, 22 Feb 2025 21:14:11 GMT] 
+info:  107ms PATCH /email-verification/verify 404 ::1 [{"token":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJyZXF1aXJlZEZlaWxkcyI6eyJ1c2VySWQiOiI2N2JhMzdjZGZlYTBiZTAwNzFiYjEzZjkiLCJlbWFpbCI6Iml0c3JhZ2hhdjEyQGdtYWlsLmNvbSJ9LCJpYXQiOjE3NDAyNTgxMDUsImV4cCI6MTc0MTk5OTI2Mzg5NX0.4V_dR08G6ydGLd1ElLaA-wdnoZTVNE6zxpvs0uyxfsg"}] 
+
+[Sat, 22 Feb 2025 21:15:10 GMT] 
+info:  120ms PATCH /email-verification/verify 200 ::1 [{"token":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJyZXF1aXJlZEZlaWxkcyI6eyJ1c2VySWQiOiI2N2JhMzdjZGZlYTBiZTAwNzFiYjEzZjkiLCJlbWFpbCI6Iml0c3JhZ2hhdjEyQGdtYWlsLmNvbSJ9LCJpYXQiOjE3NDAyNTgxMDUsImV4cCI6MTc0MTk5OTI2Mzg5NX0.4V_dR08G6ydGLd1ElLaA-wdnoZTVNE6zxpvs0uyxfsg"}] 
+
+[Sat, 22 Feb 2025 21:18:29 GMT] 
+info:  4642ms POST /magic-url/generate 200 ::1 [{"email":"itsraghav12@gmail.com"}] 
+
+[Sat, 22 Feb 2025 21:18:43 GMT] 
+info:  40ms POST /magic-url/generate 400 ::1 [{"email":"itsraghav12@gmaicl.com"}] 
+
+[Sat, 22 Feb 2025 21:18:53 GMT] 
+info:  40ms POST /magic-url/generate 400 ::1 [{"email":"itsraghav12@gmal.com"}] 
+
+[Sat, 22 Feb 2025 21:19:08 GMT] 
+info:  4545ms POST /magic-url/generate 200 ::1 [{"email":"itsraghav12@gmail.com"}] 
+
+[Sat, 22 Feb 2025 21:21:16 GMT] 
+info:  2ms POST /magic-url/verify 400 ::1 [{"token":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJyZXF1aXJlZEZlaWxkcyI6eyJlbWFpbCI6Iml0c3JhZ2hhdjEyQGdtYWlsLmNvbSJ9LCJpYXQiOjE3NDAyNTkxNDMsImV4cCI6MTc0MjAwMDMwMzEyNH0.jiMEWXG-0MQFQjLezqabwntjcAKcYnStVL6KaWOgBUk"}] 
+
+[Sat, 22 Feb 2025 21:22:26 GMT] 
+info:  83ms POST /magic-url/verify 400 ::1 [{"token":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJyZXF1aXJlZEZlaWxkcyI6eyJlbWFpbCI6Iml0c3JhZ2hhdjEyQGdtYWlsLmNvbSJ9LCJpYXQiOjE3NDAyNTkxNDMsImV4cCI6MTc0MjAwMDMwMzEyNH0.jiMEWXG-0MQFQjLezqabwntjcAKcYnStVL6KaWOgBUk"}] 
+
+[Sat, 22 Feb 2025 21:23:29 GMT] 
+info:  56ms POST /magic-url/verify 400 ::1 [{"token":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJyZXF1aXJlZEZlaWxkcyI6eyJlbWFpbCI6Iml0c3JhZ2hhdjEyQGdtYWlsLmNvbSJ9LCJpYXQiOjE3NDAyNTkxNDMsImV4cCI6MTc0MjAwMDMwMzEyNH0.jiMEWXG-0MQFQjLezqabwntjcAKcYnStVL6KaWOgBUk"}] 
+
+[Sat, 22 Feb 2025 21:24:40 GMT] 
+info:  79ms POST /magic-url/verify 400 ::1 [{"token":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJyZXF1aXJlZEZlaWxkcyI6eyJlbWFpbCI6Iml0c3JhZ2hhdjEyQGdtYWlsLmNvbSJ9LCJpYXQiOjE3NDAyNTkxNDMsImV4cCI6MTc0MjAwMDMwMzEyNH0.jiMEWXG-0MQFQjLezqabwntjcAKcYnStVL6KaWOgBUk"}] 
+
+[Sat, 22 Feb 2025 21:25:41 GMT] 
+info:  60ms POST /magic-url/verify 400 ::1 [{"token":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJyZXF1aXJlZEZlaWxkcyI6eyJlbWFpbCI6Iml0c3JhZ2hhdjEyQGdtYWlsLmNvbSJ9LCJpYXQiOjE3NDAyNTkxNDMsImV4cCI6MTc0MjAwMDMwMzEyNH0.jiMEWXG-0MQFQjLezqabwntjcAKcYnStVL6KaWOgBUk"}] 
+
+[Sat, 22 Feb 2025 21:27:15 GMT] 
+info:  3171ms POST /magic-url/generate 200 ::1 [{"email":"itsraghav12@gmail.com"}] 
+
+[Sat, 22 Feb 2025 21:28:01 GMT] 
+info:  48ms POST /magic-url/verify 500 ::1 [{"token":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6Iml0c3JhZ2hhdjEyQGdtYWlsLmNvbSIsImlhdCI6MTc0MDI1OTYzMiwiZXhwIjoxNzQyMDAwNzkxNzU0fQ.zBpXjTQzeL4qbeqxUcz4UOO22Glf5ICVLlD3OHnlOB8"}] 
+
+[Sat, 22 Feb 2025 21:28:54 GMT] 
+info:  75ms POST /magic-url/verify 200 ::1 [{"token":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6Iml0c3JhZ2hhdjEyQGdtYWlsLmNvbSIsImlhdCI6MTc0MDI1OTYzMiwiZXhwIjoxNzQyMDAwNzkxNzU0fQ.zBpXjTQzeL4qbeqxUcz4UOO22Glf5ICVLlD3OHnlOB8"}] 
+
+[Sat, 22 Feb 2025 21:29:41 GMT] 
+info:  65ms POST /magic-url/verify 200 ::1 [{"token":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6Iml0c3JhZ2hhdjEyQGdtYWlsLmNvbSIsImlhdCI6MTc0MDI1OTYzMiwiZXhwIjoxNzQyMDAwNzkxNzU0fQ.zBpXjTQzeL4qbeqxUcz4UOO22Glf5ICVLlD3OHnlOB8"}] 
+
+[Sat, 22 Feb 2025 21:30:36 GMT] 
+info:  92ms POST /magic-url/verify 200 ::1 [{"token":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6Iml0c3JhZ2hhdjEyQGdtYWlsLmNvbSIsImlhdCI6MTc0MDI1OTYzMiwiZXhwIjoxNzQyMDAwNzkxNzU0fQ.zBpXjTQzeL4qbeqxUcz4UOO22Glf5ICVLlD3OHnlOB8"}] 
+
+[Sat, 22 Feb 2025 21:31:06 GMT] 
+info:  61ms GET /user 200 ::1 [{}] 
+
+[Sat, 22 Feb 2025 21:31:27 GMT] 
+info:  45ms GET /users?query=%7B%22filters%22%3A%7B%22status%22%3A%22active%22%2C%22age%22%3A%7B%22%24gt%22%3A18%2C%22%24lt%22%3A50%7D%7D%2C%22limit%22%3A10%2C%22sort%22%3A%7B%22createdAt%22%3A-1%7D%7D 200 ::1 [{}] 
+
+[Sat, 22 Feb 2025 21:34:04 GMT] 
+info:  3ms GET /users?query=filters%3A%7BuserId%3A%2267ba37cdfea0be0071bb13f9%22%7D 400 ::1 [{}] 
+
+[Sat, 22 Feb 2025 21:34:47 GMT] 
+info:  2ms GET /users?query=%7Bfilters%3A%7BuserId%3A%2267ba37cdfea0be0071bb13f9%22%7D%7D 400 ::1 [{}] 
+
+[Sat, 22 Feb 2025 21:36:01 GMT] 
+info:  45ms GET /users?query=%7B%22filters%22%3A%7B%22userId%3A%22%3A%2267ba37cdfea0be0071bb13f9%22%7D%7D 200 ::1 [{}] 
+
+[Sat, 22 Feb 2025 21:36:46 GMT] 
+info:  70ms GET /users?query=%7B%22filters%22%3A%7B%22userId%3A%22%3A%2267ba37cdfea0be0071bb13f9%22%7D%7D 200 ::1 [{}] 
+
+[Sat, 22 Feb 2025 21:44:30 GMT] 
+info:  62ms GET /users?query=%7B%22filters%22%3A%7B%22userId%22%3A%2267ba37cdfea0be0071bb13f9%22%7D%7D 200 ::1 [{}] 

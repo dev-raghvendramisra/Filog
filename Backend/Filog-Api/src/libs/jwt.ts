@@ -1,7 +1,7 @@
 import conf from 'config/conf';
 import jwt, {JwtPayload} from 'jsonwebtoken'
 import { envLogger as logger } from './winstonLogger';
-export const createJwt = function (payload : JwtPayload , expiry : number){
+export const createJwt = function (payload : JwtPayload , expiry = Date.now()+1000*60*15){
     return jwt.sign(payload, conf.JWT_SECRET,{expiresIn:expiry});
 }
 
@@ -13,9 +13,9 @@ export const handleJwtError = function (err : string) {
     logger.error(`${err}`);
     switch (err) {
         case 'TokenExpiredError':
-            return ({ ok: false, res: "Token expired", code: 401 });
+            return ({ res:null, message: "Token expired", code: 401 });
         case 'JsonWebTokenError':
-            return ({ ok: false, res: "Invalid token", code: 401 });
+            return ({ res:null, message: "Invalid token", code: 401 });
         default:
             return false;
     }
