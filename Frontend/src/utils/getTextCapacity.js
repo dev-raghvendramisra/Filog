@@ -28,8 +28,7 @@ const getMaxLength = (fontSize, height, width, unit, string) => {
     maxLength = testText.length;
   }
   height
-  // document.body.removeChild(elem); // Clean up the DOM
-  console.log("Max length for", string, "is", maxLength);
+  document.body.removeChild(elem); // Clean up the DOM
   return maxLength;
 };
 

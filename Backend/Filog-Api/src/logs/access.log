@@ -175,3 +175,120 @@ info:  70ms GET /users?query=%7B%22filters%22%3A%7B%22userId%3A%22%3A%2267ba37cd
 
 [Sat, 22 Feb 2025 21:44:30 GMT] 
 info:  62ms GET /users?query=%7B%22filters%22%3A%7B%22userId%22%3A%2267ba37cdfea0be0071bb13f9%22%7D%7D 200 ::1 [{}] 
+
+[Sun, 23 Feb 2025 19:20:09 GMT] 
+info:  20ms PUT /signup 400 ::1 [{}] 
+
+[Sun, 23 Feb 2025 19:20:50 GMT] 
+info:  5ms PUT /signup 400 ::1 [{}] 
+
+[Sun, 23 Feb 2025 19:22:02 GMT] 
+info:  14ms PUT /signup 400 ::1 [{"fullname":"Raghvendra Misra","email":"itsraghav12@gmail.com","password":"raghav12","extraprop":""}] 
+
+[Sun, 23 Feb 2025 19:22:10 GMT] 
+info:  2ms PUT /signup 400 ::1 [{"fullname":"Raghvendra Misra","email":"itsraghav12@gmail.com","password":"raghav12"}] 
+
+[Sun, 23 Feb 2025 19:22:56 GMT] 
+info:  3ms PUT /signup 400 ::1 [{"fullname":"Raghvendra Misra","email":"itsraghav12@gmail.com","raghav12":"username","password":"raghav12"}] 
+
+[Sun, 23 Feb 2025 19:32:08 GMT] 
+info:  12ms PUT /signup 400 ::1 [{"fullname":"Raghvendra Misra","email":"itsraghav12@gmail.com","raghav12":"username","password":"raghav12"}] 
+
+[Sun, 23 Feb 2025 19:32:33 GMT] 
+info:  190ms PUT /signup 201 ::1 [{"fullname":"Raghvendra Misra","email":"itsraghav12@gmail.com","username":"raghav12","password":"raghav12"}] 
+
+[Sun, 23 Feb 2025 19:33:23 GMT] 
+info:  42ms PUT /signup 409 ::1 [{"fullname":"Raghvendra Misra","email":"itsraghav12@gmail.com","username":"raghav12","password":"raghav12"}] 
+
+[Sun, 23 Feb 2025 19:33:50 GMT] 
+info:  1ms POST /login 400 ::1 [{"fullname":"Raghvendra Misra","email":"itsraghav12@gmail.com","username":"raghav12","password":"raghav12"}] 
+
+[Sun, 23 Feb 2025 19:34:07 GMT] 
+info:  42ms POST /login 401 ::1 [{"email":"itsraghav12@gmail.com","password":"raghav12"}] 
+
+[Sun, 23 Feb 2025 19:35:07 GMT] 
+info:  46ms POST /login 401 ::1 [{"email":"itsraghav12@gmail.com","password":"raghav12"}] 
+
+[Sun, 23 Feb 2025 19:40:26 GMT] 
+info:  236ms PUT /signup 201 ::1 [{"email":"itsraghav12@gmail.com","password":"raghav12","fullname":"Raghvendra Misra","username":"raghav12"}] 
+
+[Sun, 23 Feb 2025 19:40:33 GMT] 
+info:  45ms PUT /signup 409 ::1 [{"email":"itsraghav12@gmail.com","password":"raghav12","fullname":"Raghvendra Misra","username":"raghav12"}] 
+
+[Sun, 23 Feb 2025 20:10:55 GMT] 
+info:  111ms PATCH /email-verification/verify 404 ::1 [{"token":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2N2JiN2U0MzRmZmEzNWZiYjYxNzEyYTciLCJlbWFpbCI6Iml0c3JhZ2hhdjEyQGdtYWlsLmNvbSIsImlhdCI6MTc0MDM0MTE1NiwiZXhwIjoxNzQyMDgyMzk3NzMyfQ.1JQmBSV-8C4hnBWYYunS0Hs85CGycGLppo-lvAPX_B0"}] 
+
+[Sun, 23 Feb 2025 20:12:07 GMT] 
+info:  115ms PATCH /email-verification/verify 200 ::1 [{"token":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2N2JiN2U0MzRmZmEzNWZiYjYxNzEyYTciLCJlbWFpbCI6Iml0c3JhZ2hhdjEyQGdtYWlsLmNvbSIsImlhdCI6MTc0MDM0MTE1NiwiZXhwIjoxNzQyMDgyMzk3NzMyfQ.1JQmBSV-8C4hnBWYYunS0Hs85CGycGLppo-lvAPX_B0"}] 
+
+[Sun, 23 Feb 2025 20:12:40 GMT] 
+info:  65ms GET /user 200 ::1 [{}] 
+
+[Sun, 23 Feb 2025 20:12:46 GMT] 
+info:  57ms GET /user 200 ::1 [{}] 
+
+[Sun, 23 Feb 2025 20:13:31 GMT] 
+info:  50ms GET /user 200 ::1 [{}] 
+
+[Sun, 23 Feb 2025 20:14:09 GMT] 
+info:  41ms GET /user 200 ::1 [{}] 
+
+[Sun, 23 Feb 2025 20:14:27 GMT] 
+info:  43ms GET /user 200 ::1 [{}] 
+
+[Sun, 23 Feb 2025 20:15:26 GMT] 
+info:  70ms GET /user 200 ::1 [{}] 
+
+[Sun, 23 Feb 2025 21:10:25 GMT] 
+info:  62ms PATCH /blog/update 404 ::1 [{"_blogId":"67bb8c66ffa8a780438abcc0","updatedFeilds":{"status":false}}] 
+
+[Sun, 23 Feb 2025 21:12:19 GMT] 
+info:  64ms PATCH /blog/update 403 ::1 [{"_blogId":"67bb8c66ffa8a780438abcc0","updatedFeilds":{"status":false}}] 
+
+[Sun, 23 Feb 2025 21:13:08 GMT] 
+info:  97ms GET /user 200 ::1 [{}] 
+
+[Sun, 23 Feb 2025 21:14:23 GMT] 
+info:  4ms PUT /blog/create 400 ::1 [{"title":"Exploring the Power of JavaScript","createdAt":"2025-02-24T12:30:00Z","userId":"67bb7e434ffa35fbb61712a7","tags":["javascript","web development","coding"],"coverImageId":"65fabcde1234567890123456","subImagesId":["65faaa123456789012345678"],"status":true,"coverImageURI":"https://example.com/images/cover.jpg","subImageURI":["https://example.com/images/sub1.jpg"],"author":"67bb7e434ffa35fbb61712a7","slug":"exploring-the-power-of-javascript"}] 
+
+[Sun, 23 Feb 2025 21:14:41 GMT] 
+info:  61ms PUT /blog/create 200 ::1 [{"title":"Exploring the Power of JavaScript","content":"Test content","createdAt":"2025-02-24T12:30:00Z","userId":"67bb7e434ffa35fbb61712a7","tags":["javascript","web development","coding"],"coverImageId":"65fabcde1234567890123456","subImagesId":["65faaa123456789012345678"],"status":true,"coverImageURI":"https://example.com/images/cover.jpg","subImageURI":["https://example.com/images/sub1.jpg"],"author":"67bb7e434ffa35fbb61712a7","slug":"exploring-the-power-of-javascript"}] 
+
+[Sun, 23 Feb 2025 21:15:05 GMT] 
+info:  7ms PATCH /blog/update 400 ::1 [{}] 
+
+[Sun, 23 Feb 2025 21:15:46 GMT] 
+info:  93ms PATCH /blog/update 200 ::1 [{"_blogId":"67bb8fc13cd89f2434c828fb","updatedFeilds":{"status":false}}] 
+
+[Sun, 23 Feb 2025 21:16:12 GMT] 
+info:  45ms GET /blogs?query=%7B%22filters%22%3A%7B%22_id%22%3A%2267bb8fc13cd89f2434c828fb%22%7D%7D 200 ::1 [{}] 
+
+[Sun, 23 Feb 2025 21:16:12 GMT] 
+info:  3ms GET /favicon.ico 404 ::1 [{}] 
+
+[Sun, 23 Feb 2025 21:16:34 GMT] 
+info:  41ms GET /blogs?query=%7B%22filters%22%3A%7B%22_id%22%3A%2267bb8fc13cd89f2434c828fb%22%7D%7D 200 ::1 [{}] 
+
+[Sun, 23 Feb 2025 21:18:05 GMT] 
+info:  106ms GET /blogs?query=%7B%22filters%22%3A%7B%22_id%22%3A%2267bb8fc13cd89f2434c828fb%22%7D%7D 304 ::1 [{}] 
+
+[Sun, 23 Feb 2025 21:18:06 GMT] 
+info:  6ms GET /favicon.ico 404 ::1 [{}] 
+
+[Sun, 23 Feb 2025 21:25:14 GMT] 
+info:  57ms GET /blogs?query=%7B%22filters%22%3A%7B%22userId%22%3A%2267ba37cdfea0be0071bb13f9%22%7D%7D 200 ::1 [{}] 
+
+[Sun, 23 Feb 2025 21:29:01 GMT] 
+info:  45ms GET /blogs?query=%7B%22filters%22%3A%7B%22userId%22%3A%2267ba37cdfea0be0071bb13f9%22%7D%7D 200 ::1 [{}] 
+
+[Sun, 23 Feb 2025 21:29:38 GMT] 
+info:  42ms GET /blogs?query=%7B%22filters%22%3A%7B%22userId%22%3A%2267bb8fc13cd89f2434c828fb%22%7D%7D 200 ::1 [{}] 
+
+[Sun, 23 Feb 2025 21:30:12 GMT] 
+info:  57ms GET /blogs?query=%7B%22filters%22%3A%7B%22userId%22%3A%2267bb8fc13cd89f2434c828fb%22%7D%7D 200 ::1 [{}] 
+
+[Sun, 23 Feb 2025 21:30:38 GMT] 
+info:  53ms GET /blogs?query=%7B%22filters%22%3A%7B%22userId%22%3A%2267bb8fc13cd89f2434c828fb%22%7D%7D 200 ::1 [{}] 
+
+[Sun, 23 Feb 2025 21:31:36 GMT] 
+info:  63ms GET /blogs?query=%7B%22filters%22%3A%7B%22userId%22%3A%2267bb7e434ffa35fbb61712a7%22%7D%7D 200 ::1 [{}] 

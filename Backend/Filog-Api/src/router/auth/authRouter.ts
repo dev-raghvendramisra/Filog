@@ -2,17 +2,15 @@ import { Router } from "express";
 const router = Router()
 import { requestValidator } from "@middleware";
 import {generateEmailVerification, verifyEmailVerification} from "@controller/auth/emailVerification";
-import { signup, login, getUserDetails } from "@controller/auth/session";
-import { logoutUser } from "@controller/auth/logoutUser";
+import { signup, login, getUserDetails, logout, resetPassword } from "@controller/auth/session";
 import { generateMagicUrl, verifyMagicUrl } from "@controller/auth/magicUrl";
-import resetPassword from "@controller/auth/resetPassword";
 import authenticateUser from "middlewares/authenticateUser";
 
 
 
 router.put("/signup",requestValidator,signup)
 router.post("/login",requestValidator,login)
-router.post("/logout",authenticateUser,logoutUser)
+router.post("/logout",authenticateUser,logout)
 router.get("/user",authenticateUser,getUserDetails)
 router.get('/email-verification/generate',authenticateUser,generateEmailVerification);   
 router.patch('/email-verification/verify',authenticateUser,requestValidator, verifyEmailVerification);   

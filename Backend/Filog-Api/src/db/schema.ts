@@ -1,6 +1,5 @@
-import { envLogger } from "@lib";
-import { genSalt, hash } from "bcrypt";
 import mongoose, {Types } from "mongoose";
+import { hashPassword } from "./hooks";
 
 export const UserSchema = new mongoose.Schema({
     fullname:{type:String,required:true},
@@ -37,6 +36,7 @@ export const BlogSchema = new mongoose.Schema({
     tags:[{
         type:String,required:false,default:[]
     }],
+    content:{type:String,required:true},
     coverImageId:{type:String,required:true},
     subImagesId:[{type:String,required:false,default:[]}],
     status:{type:Boolean,required:true},
@@ -71,16 +71,5 @@ export const CommentSchema = new mongoose.Schema({
 })
 
 
-UserSchema.pre("save",async function(next){
-    if(!this.isModified("password")){
-        return next()
-    }
-    try {
-        const salt = await genSalt(10);
-        this.password = await hash(this.password,salt)
-    } catch (error) {
-       envLogger.error(`ERR_OCCURED_WHILE_HASHING_PASS ${JSON.stringify(error,null,2)}`)
-       next(error as mongoose.CallbackError)
-    }
-})
+UserSchema.pre("save",hashPassword)
 

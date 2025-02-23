@@ -28,8 +28,8 @@ export default async function mailer<K extends keyof ARGSMAP>(emailType:K, requi
         URI=requiredFeilds.URI
       }
       else if (requiredFeilds.URI!==false && typeof requiredFeilds.URI == "undefined"){
-          const expiry = Date.now()+1000*60*15
-          const token = createJwt({...requiredFeilds}) 
+          const expiry = 60*15
+          const token = createJwt({...requiredFeilds},expiry) 
           URI = `${EMAIL_MAP[EMAIL_TYPES[emailType]].FRONTEND_ENDPOINT}?secret=${token}&expire=${expiry}`
       }
        

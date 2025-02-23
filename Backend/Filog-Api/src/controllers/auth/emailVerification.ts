@@ -11,7 +11,7 @@ import authService from "@services/authService";
         res.status(emailRes.code).send(emailRes);
         return
     } catch (error) {
-        logger.error(`ERROR_HANDLING_EMAIL_VERIFICATION_GENERATION_REQUEST: ${error}`);
+        logger.error(`ERR_GENERATING_EMAIL_VERIFICATION_IN_EMAIL_VERIFICATION_CONTROLLER: ${error}`);
         res.status(500).send({ ok: false, res: "Internal server error", code: 500 });
         return
     }
@@ -27,13 +27,14 @@ import authService from "@services/authService";
 
         const verifyToken = verifyJwt(token) as {userId:string};
         const verifyEmail = await authService.verifyEmail(verifyToken.userId)
+        
         res.status(verifyEmail.code).send(verifyEmail)
     } catch (error) {
         
         const isJwtErr = handleJwtError(error as any)
         if(isJwtErr){res.status(isJwtErr.code).send(isJwtErr);return}
 
-        logger.error(`ERROR_HANDLING_EMAIL_VERIFICATION_VERIFICATION_REQUEST: ${error}`);
+        logger.error(`ERR_VERIFYING_EMAIL_VERIFICATION_IN_EMAIL_VERIFICATION_CONTROLLER: ${error}`);
          res.status(500).send({ ok: false, res: "Internal server error", code: 500 });
          return
     }

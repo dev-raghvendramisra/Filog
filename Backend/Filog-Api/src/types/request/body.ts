@@ -49,6 +49,31 @@ export const createUserProfileSchema = z.object({
     following: z.array(z.string()).optional()
 }).strict()
 
+export const updateUserProfileSchema = z.object({
+    _profileId:z.string(),
+    updatedFeilds : createUserProfileSchema.omit({userId:true}).partial()
+})
+
+export const createBlogSchema = z.object({
+    title: z.string(),
+    createdAt: z.string(),
+    content:z.string(),
+    userId: z.string(),
+    tags: z.array(z.string()).optional(),
+    coverImageId: z.string(),
+    subImagesId: z.array(z.string()).optional(),
+    status: z.boolean(),
+    coverImageURI: z.string(),
+    subImageURI: z.array(z.string()).optional(),
+    author: z.string(),
+    slug: z.string()
+}).strict()
+
+export const updateBlogSchema = z.object({
+    _blogId:z.string(),
+    updatedFeilds:createBlogSchema.omit({userId:true,author:true,createdAt:true}).partial()
+})
+
 
 export interface UserDataInCookie{
     _id:string,
@@ -56,6 +81,8 @@ export interface UserDataInCookie{
     fullname:string,
     email:string
 }
+
+
 
 export interface AuthenticatedRequest<P=ParamsDictionary,T=any,B=any> extends Request<P,T,B>{
     userData?:UserDataInCookie
@@ -70,3 +97,7 @@ export type ResetPass = z.infer<typeof resetPassSchema>
 export type SignupBody = z.infer<typeof signupSchema>
 export type UserProfileBody = z.infer<typeof createUserProfileSchema>
 export type LoginBody = z.infer<typeof loginSchema>
+export type BlogBody = z.infer<typeof createBlogSchema>
+export type UpdateBlogBody = z.infer<typeof updateBlogSchema>
+export type UpdateProfileBody = z.infer<typeof updateUserProfileSchema>
+
