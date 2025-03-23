@@ -3,11 +3,10 @@ import fetch from 'node-fetch';
 import conf from '../conf/conf.js'
 
 export default async function handler(req, res) {
-  const { imageId } = req.query;
-
+ 
   try {
-  
-    const imageUrl = `${conf.appwriteUrl}/storage/buckets/${conf.bucketId}/files/${imageId}/view?project=${conf.projectId}`;
+    
+    const imageUrl = `${conf.bucketURI}${req.url}`;
 
   
     const imageResponse = await fetch(imageUrl);
@@ -16,7 +15,7 @@ export default async function handler(req, res) {
     }
     
    
-    res.setHeader('Cache-Control', 'public, max-age=15000, immutable'); // 30 days in seconds
+    res.setHeader('Cache-Control', 'public, max-age=15000, immutable'); 
     res.setHeader('Content-Type', imageResponse.headers.get('Content-Type'));
     res.setHeader('Content-Length', imageResponse.headers.get('Content-Length'));
     res.setHeader('Content-Disposition', imageResponse.headers.get('Content-Disposition'));
