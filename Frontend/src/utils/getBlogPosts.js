@@ -1,24 +1,26 @@
-import { Query } from "appwrite";
-import { dbServices } from "../services";
+import { dbServices, Query } from "../services";
 
 
-export default async function getBlogPosts({userId="#",query=[],offset=0,limit=10,dispatch,clearBlogs,setBlogs}){
-    const queries = [
-        Query.equal("status",[true]),
-        Query.orderDesc("likeCount"), // order by like count
-        Query.limit(limit),
-        Query.offset(offset)
-    ]
-     query.length==0?
-     queries.push(Query.notEqual("userId",[userId]))
-     :queries.push(...query)
-   
-    const res =  await dbServices.getBlogs(queries)
+export default async function getBlogPosts({userId="#",query,offset=0,limit=10,dispatch,clearBlogs,setBlogs}){
+
+    let queries = new Query()
+    .$eq("status",true)
+    .$sortDesc("likeCount")
+    .$limit(limit)
+    .$skip(offset)
+
+    if(query){
+        queries = Query.$and(queries,query)
+    }
+    else queries.$ne("userId",userId)
+    
+    const res =  await dbServices.getBlogs(queries.build())
     
     if(offset==0){
-            if(res.documents && res.documents.length>0){
+            
+            if(res.res && res.res.length>0){
                dispatch(clearBlogs());
-              dispatch(setBlogs(res.documents))
+              dispatch(setBlogs(res.res))
               return {ok:true,res:res}
             }
             else{
@@ -26,8 +28,8 @@ export default async function getBlogPosts({userId="#",query=[],offset=0,limit=1
             }    
         } 
     if(offset>0){
-         if(res.documents.length>0){
-            dispatch(setBlogs(res.documents))
+         if(res.res.length>0){
+            dispatch(setBlogs(res.res))
             return {ok:true,res:res,pagination:true}
          }
          else{

@@ -1,21 +1,30 @@
 import { Router } from "express";
-const router = Router()
+const router = Router();
 import { requestValidator } from "@middleware";
-import {generateEmailVerification, verifyEmailVerification} from "@controller/auth/emailVerification";
-import { signup, login, getUserDetails, logout, resetPassword } from "@controller/auth/session";
+import { generateEmailVerification, verifyEmailVerification } from "@controller/auth/emailVerification";
+import { signup, login, getUserDetails, logout, resetPassword, launchOauth, googleOAuth } from "@controller/auth/session";
 import { generateMagicUrl, verifyMagicUrl } from "@controller/auth/magicUrl";
 import authenticateUser from "middlewares/authenticateUser";
 
+// Authentication routes
+router.put("/register", requestValidator, signup);
+router.post("/login", requestValidator, login);
+router.delete("/logout", authenticateUser, logout);
+router.get("/users/me", authenticateUser, getUserDetails);
 
+// OAuth routes
+router.get("/oauth/init/:provider", launchOauth);
+router.get("/oauth/google", googleOAuth);
 
-router.put("/signup",requestValidator,signup)
-router.post("/login",requestValidator,login)
-router.post("/logout",authenticateUser,logout)
-router.get("/user",authenticateUser,getUserDetails)
-router.get('/email-verification/generate',authenticateUser,generateEmailVerification);   
-router.patch('/email-verification/verify',authenticateUser,requestValidator, verifyEmailVerification);   
-router.post('/magic-url/generate',requestValidator, generateMagicUrl);   
-router.post('/magic-url/verify',requestValidator, verifyMagicUrl);   
-router.patch('/reset-password',authenticateUser,requestValidator, resetPassword);
+// Email verification routes
+router.get('/email-verification', authenticateUser, generateEmailVerification);
+router.patch('/email-verification', authenticateUser, requestValidator, verifyEmailVerification);
 
-export default router
+// Magic URL routes
+router.post('/magic-url', requestValidator, generateMagicUrl);
+router.patch('/magic-url', requestValidator, verifyMagicUrl);
+
+// Password reset route
+router.patch('/reset-password', authenticateUser, requestValidator, resetPassword);
+
+export default router;

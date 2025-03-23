@@ -1,6 +1,6 @@
 import getBlogMetaTags from "./meta-tags/getBlogMetaTags.js";
 import conf from "./config/conf.js";
-import dbService from "./appwrite/dbService.js"
+import dbService from "./services/dbService.js"
 import getDefaultHtml from "./utils/getDefaultMetaTags.js";
 
 export default async function handler(req,res) {
@@ -9,7 +9,7 @@ export default async function handler(req,res) {
          const blog = await dbService.getBlog(slug);
          if(blog){
             const tagsData = {
-              imgUrl: blog['coverImageUrl'],
+              imgUrl: blog['coverImageURI'],
               title: blog['title'],
               siteUrl: `${conf.FRONTEND_ENDPOINT}/blog/${slug}`
             }
@@ -20,7 +20,7 @@ export default async function handler(req,res) {
          else res.send(getDefaultHtml());
         
      } catch (error) {
-         console.log(error)
+         
          res.send(getDefaultHtml());
      }
 }

@@ -1,23 +1,20 @@
-import { Query } from "appwrite";
-import { dbServices } from "../services";
+import { dbServices,Query } from "../services";
 
 
-export default async function getUsersUtil({userId="#",offset=0,limit=10,dispatch,clearUsers,setUsers,query=[]}){
-    let queries=[
-        Query.orderDesc("version"), //we use version as the first parameter to sort the users because this will list most active users first because version gets incremented upon interactions and updates
-        Query.orderDesc("priority")//we use this parameter to sort the users because this will list the users with the highest priority first by default like the founder account or the admin account
-    ]
-    if(query.length==0){
-        queries.push(Query.notEqual("userId",[userId]))
+export default async function getUsersUtil({userId="#",offset=0,limit=10,dispatch,clearUsers,setUsers,query}){
+    let queries = new Query().$sortDesc("activeness").$skip(offset).$limit(limit)
+    if(query){
+        queries = Query.$and(queries,query)
     }
-    else queries=[...queries,...query]
+    else queries.$ne("userId",userId) 
+    const res =  await dbServices.getUsers(queries.build())
 
-    const res =  await dbServices.getUsers([...queries,Query.offset(offset),Query.limit(limit)])
+    
 
     if(offset==0){
-            if(res.documents.length>0){
+            if(res.res.length>0){
               dispatch(clearUsers());
-              dispatch(setUsers(res.documents))
+              dispatch(setUsers(res.res))
               return {ok:true,res:res}
             }
             else{
@@ -25,8 +22,8 @@ export default async function getUsersUtil({userId="#",offset=0,limit=10,dispatc
             }    
         } 
     if(offset>0){
-         if(res.documents.length>0){
-            dispatch(setUsers(res.documents))
+         if(res.res.length>0){
+            dispatch(setUsers(res.res))
             return {ok:true,res:res}
          }
          else{
@@ -34,4 +31,3 @@ export default async function getUsersUtil({userId="#",offset=0,limit=10,dispatc
          }
     }
 }
-

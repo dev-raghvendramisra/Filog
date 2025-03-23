@@ -19,24 +19,24 @@ interface ARGSMAP {
     }
 }
 
-export default async function mailer<K extends keyof ARGSMAP>(emailType:K, requiredFeilds:ARGSMAP[K]){
+export default async function mailer<K extends keyof ARGSMAP>(emailType:K, requiredFields:ARGSMAP[K]){
    try {
 
       let URI;
 
-      if(typeof requiredFeilds.URI=="string"){
-        URI=requiredFeilds.URI
+      if(typeof requiredFields.URI=="string"){
+        URI=requiredFields.URI
       }
-      else if (requiredFeilds.URI!==false && typeof requiredFeilds.URI == "undefined"){
-          const expiry = 60*15
-          const token = createJwt({...requiredFeilds},expiry) 
-          URI = `${EMAIL_MAP[EMAIL_TYPES[emailType]].FRONTEND_ENDPOINT}?secret=${token}&expire=${expiry}`
+      else if (requiredFields.URI!==false && typeof requiredFields.URI == "undefined"){
+          const expiresIn = 60*15
+          const token = createJwt("SESSION",{...requiredFields},expiresIn) 
+          URI = `${EMAIL_MAP[EMAIL_TYPES[emailType]].FRONTEND_ENDPOINT}?secret=${token}&expire=${Date.now()+expiresIn*1000}`
       }
        
   
        const mailOptions = {
            from:`Filog Team <${conf.SERVICE_EMAIL}>`,
-           to: requiredFeilds.email,
+           to: requiredFields.email,
            subject: EMAIL_MAP[emailType].SUBJECT,
            html: getMailContent(emailType,URI),
         };
@@ -48,9 +48,9 @@ export default async function mailer<K extends keyof ARGSMAP>(emailType:K, requi
                 pass:conf.SERVICE_EMAIL_PASSWORD
             }
         })
-    await transporter.sendMail(mailOptions);
-    return {code:200,res:null,message:"Email sent successfully"};
-         
+        transporter.sendMail(mailOptions).catch((err) => logger.error(`ERR_WHILE_SENDING_EMAIL ${err}`))
+        return {code:200,res:null,message:"Email sent successfully"};
+        
    } catch (error : any) {
      logger.error("Error sending email:",error.message)
      return {code:500,res:null,message:"Internal server error"}

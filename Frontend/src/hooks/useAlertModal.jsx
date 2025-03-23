@@ -1,11 +1,11 @@
 import React from 'react';
+import { nanoid } from 'nanoid';
 import { GenToast } from '../components';
 import { getNewVerificationEmail, getAlertModel } from '../utils';
 import toast from 'react-hot-toast';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import useModalActionsContext from '../context/modalActionsContext';
-import { ID } from 'appwrite';
 import { clearModal, setFeedbackMessage, setCtaLoading, setCtaDisabled } from '../store/alertModalSlice';
 
 /**
@@ -93,7 +93,7 @@ export function useEmailAlertModal(argHeading = "", argMessage = "", argPrimaryB
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const [timer, setTimer] = React.useState(null);
-  const [modalId] = React.useState(ID.unique());
+  const [modalId] = React.useState(nanoid(24));
   const [localFeedbackMessage, setLocalFeedbackMessage] = React.useState({});
   const {userData} = useSelector(state => state.auth);
 
@@ -102,11 +102,14 @@ export function useEmailAlertModal(argHeading = "", argMessage = "", argPrimaryB
   const primaryHandler = async () => {
     dispatch(setCtaLoading({ id: modalId, val: true }));
     const res = await getNewVerificationEmail({ userData:userData, setErr, navigate, errMsg, setTimer, timer });
-    if (res) {
-      setLocalFeedbackMessage({ type: "success", message: "Email sent successfully" });
-    } else {
+    if(!res){
       const newTimer = setTimeout(() => setOpenAlert(false), 7000);
       setTimer(newTimer);
+    }
+    else if (res.occured) {
+      setErr(res.errMsg);
+    } else {
+      setLocalFeedbackMessage({type:"success",message:"Email sent successfully"})
     }
     dispatch(setCtaLoading({ id: modalId, val: false }));
   };

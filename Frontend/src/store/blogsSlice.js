@@ -6,7 +6,7 @@ const initialState =[
      content:"",
      createdAt:"",
      author:"",
-     coverImageUrl:"",
+     coverImageURI:"",
      subImageUrl:[],
      coverImageId:"",
      subImageId:[],
@@ -24,18 +24,20 @@ const blogsSlice = createSlice({
     name:"blogs",
     initialState,
     reducers:{
-        setBlogs:(state,{payload})=>{         
+        setBlogs:(state,{payload})=>{     
+          ;
+              
           payload.forEach(blogData => {
               const newBlog = {
-                  postID:blogData.$id,
+                  postID:blogData._id,
                   title:blogData.title,
                   content:blogData.content,
                   createdAt:blogData.createdAt,
                   authorId:blogData.userId,
-                  authorName:blogData.authorData.fullName,
-                  authorUserName:blogData.authorData.userName,
-                  authorAvatar:blogData.authorData.userAvatar,
-                  coverImageUrl:blogData.coverImageUrl,
+                  authorName:blogData.author.fullName,
+                  authorUserName:blogData.author.userName,
+                  authorAvatar:blogData.author.userAvatar,
+                  coverImageURI:blogData.coverImageURI,
                   subImageUrl:blogData.subImageUrl,
                   coverImageId:blogData.coverImageId,
                   subImageId:blogData.subImageId,

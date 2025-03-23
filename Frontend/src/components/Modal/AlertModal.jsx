@@ -1,4 +1,4 @@
-import { ID } from 'appwrite';
+import { nanoid } from 'nanoid';
 import React from 'react';
 import { Button, FeedbackMessage } from '../../components';
 
@@ -14,7 +14,7 @@ function AlertModal({
   ctaDanger = false,
   btnLoading = false,
 }) {
-  const uniqueId = ID.unique();
+  const uniqueId = nanoid(24);
   const modalRef = React.useRef(null)
   const p_btnRef = React.useRef(null)
   const s_btnRef = React.useRef(null)

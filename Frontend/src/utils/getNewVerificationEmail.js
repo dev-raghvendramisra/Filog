@@ -6,10 +6,11 @@ export default async function getNewVerificationEmail({ userData, setErr, naviga
       timer && clearTimeout(timer);
       const newTimer = setTimeout(() => navigate("/"), 7000);
       setTimer && setTimer(newTimer)
-      return setErr("Email already verified");
+      setErr("Email already verified")
+      return ;
     }
     
-    const res = await authServices.createEmailVerification(userData.email,userData.$id);
-    const didErrOccured = authErrHandler({res,setErr,navigate,errMsg, verification:true, setTimer,timer:timer && undefined});
-    return !didErrOccured ;
+    const res = await authServices.createEmailVerification(userData.email,userData._id);
+    const didErrOccured = authErrHandler({res});
+    return didErrOccured
 }

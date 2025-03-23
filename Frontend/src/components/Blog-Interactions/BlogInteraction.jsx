@@ -4,7 +4,7 @@ import { dbServices } from '../../services'
 import toast from 'react-hot-toast'
 import {getFormattedNumber} from '../../utils'
 
-function BlogInteraction({userProfileId,blogImg,authorId, authorName,blogId,userData,openAlertModal,updateLikes,liked, likeCount=0, commentCount=0, height=1.7, width=1.7,loader=false, setOpenDropdown, uniqueId, openCommentModal}) {
+function BlogInteraction({blogImg,authorId, authorName,blogId,userData,openAlertModal,updateLikes,liked, likeCount=0, commentCount=0, height=1.7, width=1.7,loader=false, setOpenDropdown, uniqueId, openCommentModal}) {
     const [isLiked, setIsLiked] = React.useState(liked)
     const [loading, setLoading] = React.useState(false)
     const [disabled, setDisabled] = React.useState(false)
@@ -25,10 +25,10 @@ function BlogInteraction({userProfileId,blogImg,authorId, authorName,blogId,user
         setLoading(true)
         if(isLiked){
            //handel unlike
-           const res = await dbServices.like_unlikeBlog(blogId,userProfileId,"unlike")
+           const res = await dbServices.like_unlikeBlog(blogId,"unlike")
            setIsLiked(false)
            updateLikes("unlike")
-           if(res.$id){
+           if(res.code==200){
                toast.custom(<CustomToast imgW='4vw' roundedPic="xl" img={blogImg}  secondaryText={msg("unliked",authorName)}>Unliked</CustomToast>)
            }
             else{
@@ -37,10 +37,10 @@ function BlogInteraction({userProfileId,blogImg,authorId, authorName,blogId,user
         }
         else{
             //handle like
-            const res = await dbServices.like_unlikeBlog(blogId,userProfileId,"like")
+            const res = await dbServices.like_unlikeBlog(blogId,"like")
             setIsLiked(true)
             updateLikes("like")
-            if(res.$id){
+            if(res.code==200){
                 toast.custom(<CustomToast imgW='4vw' roundedPic="xl" img={blogImg} secondaryText={msg("liked",authorName)}>Liked</CustomToast>)
             }
             else{

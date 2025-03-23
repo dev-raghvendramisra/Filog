@@ -2,66 +2,66 @@ import { createBlogSchema, genEVSchema,  genMagicUrlShcema,  loginSchema,  reset
 import { ZodObject } from "zod"
 import conf from "./conf"
 
- const ROUTES = {
-    "/api/v1/auth/email-verification/generate":"/api/v1/auth/email-verification/generate",
-        "/api/v1/auth/email-verification/verify":"/api/v1/auth/email-verification/verify",
-        "/api/v1/auth/magic-url/generate":"/api/v1/auth/magic-url/generate",
-        "/api/v1/auth/magic-url/verify":"/api/v1/auth/magic-url/verify",
-        "/api/v1/auth/signup":"/api/v1/auth/signup",
-        "/api/v1/auth/login":"/api/v1/auth/login",
-        "/api/v1/auth/reset-password":"/api/v1/auth/reset-password",
-        "/api/v1/db/profile/update" : "/api/v1/db/profile/update",
-        "/api/v1/db/blog/update" : "/api/v1/db/blog/update",
-        "/api/v1/db/blog/create" : "/api/v1/db/blog/create"
- } as const
+const ROUTES = [
+  "GET /api/v1/auth/email-verification",
+  "PATCH /api/v1/auth/email-verification",
+  "POST /api/v1/auth/magic-url",
+  "PATCH /api/v1/auth/magic-url",
+  "POST /api/v1/auth/register",
+  "POST /api/v1/auth/login",
+  "PATCH /api/v1/auth/reset-password",
+  "PATCH /api/v1/db/profile",
+  "POST /api/v1/db/blogs",
+  "PATCH api/v1/db/blogs/:_blogId"
+] as const;
 
   const EMAIL_TYPES = {
     "VERIFICATION_EMAIL":"VERIFICATION_EMAIL",
     "MAGICURL_EMAIL":"MAGICURL_EMAIL"
  } as const
 
-const ROUTE_MAP : Record<keyof typeof ROUTES,{BODY_SCHEMA:ZodObject<{}>,ERROR_MESSAGE:string}> = {
-  [ROUTES["/api/v1/auth/email-verification/generate"]]:{
-     BODY_SCHEMA : genEVSchema,
-    ERROR_MESSAGE:getERRMSG(genEVSchema)
-    },
-  [ROUTES["/api/v1/auth/email-verification/verify"]]:{
-    BODY_SCHEMA:verEVShcema,
-    ERROR_MESSAGE:getERRMSG(verEVShcema)
+const ROUTE_MAP: Record<typeof ROUTES[number], { BODY_SCHEMA: ZodObject<{}>, ERROR_MESSAGE: string }> = {
+  [ROUTES[0]]: {
+    BODY_SCHEMA: genEVSchema,
+    ERROR_MESSAGE: getERRMSG(genEVSchema)
   },
-  [ROUTES["/api/v1/auth/magic-url/generate"]]:{
-   BODY_SCHEMA : genMagicUrlShcema,
-    ERROR_MESSAGE:getERRMSG(genMagicUrlShcema)
+  [ROUTES[1]]: {
+    BODY_SCHEMA: verEVShcema,
+    ERROR_MESSAGE: getERRMSG(verEVShcema)
   },
-  [ROUTES["/api/v1/auth/magic-url/verify"]]:{
-   BODY_SCHEMA:verMagicUrlSchema,
-    ERROR_MESSAGE:getERRMSG(verMagicUrlSchema)
+  [ROUTES[2]]: {
+    BODY_SCHEMA: genMagicUrlShcema,
+    ERROR_MESSAGE: getERRMSG(genMagicUrlShcema)
   },
-  [ROUTES["/api/v1/auth/reset-password"]]:{
-   BODY_SCHEMA:resetPassSchema,
-    ERROR_MESSAGE:getERRMSG(resetPassSchema)
+  [ROUTES[3]]: {
+    BODY_SCHEMA: verMagicUrlSchema,
+    ERROR_MESSAGE: getERRMSG(verMagicUrlSchema)
   },
-  [ROUTES["/api/v1/auth/signup"]]:{
-   BODY_SCHEMA:signupSchema,
-    ERROR_MESSAGE:getERRMSG(signupSchema)
+  [ROUTES[4]]: {
+    BODY_SCHEMA: signupSchema,
+    ERROR_MESSAGE: getERRMSG(signupSchema)
   },
-  [ROUTES["/api/v1/auth/login"]]:{
-    BODY_SCHEMA:loginSchema,
-    ERROR_MESSAGE:getERRMSG(loginSchema)
+  [ROUTES[5]]: {
+    BODY_SCHEMA: loginSchema,
+    ERROR_MESSAGE: getERRMSG(loginSchema)
   },
-  [ROUTES["/api/v1/db/profile/update"]]:{
-    BODY_SCHEMA:updateUserProfileSchema,
-    ERROR_MESSAGE:getERRMSG(updateBlogSchema)
+  [ROUTES[6]]: {
+    BODY_SCHEMA: resetPassSchema,
+    ERROR_MESSAGE: getERRMSG(resetPassSchema)
   },
-  [ROUTES["/api/v1/db/blog/update"]]:{
-    BODY_SCHEMA:updateBlogSchema,
-    ERROR_MESSAGE:getERRMSG(updateBlogSchema)
+  [ROUTES[7]]: {
+    BODY_SCHEMA: updateUserProfileSchema,
+    ERROR_MESSAGE: getERRMSG(updateUserProfileSchema)
   },
-  [ROUTES["/api/v1/db/blog/create"]]:{
-    BODY_SCHEMA:createBlogSchema,
-    ERROR_MESSAGE:getERRMSG(createBlogSchema)
+  [ROUTES[8]]: {
+    BODY_SCHEMA: createBlogSchema,
+    ERROR_MESSAGE: getERRMSG(createBlogSchema)
+  },
+  [ROUTES[9]]: {
+    BODY_SCHEMA: updateBlogSchema,
+    ERROR_MESSAGE: getERRMSG(updateBlogSchema)
   }
-} as const
+} as const;
 
 
 const EMAIL_MAP : Record<keyof typeof EMAIL_TYPES,{

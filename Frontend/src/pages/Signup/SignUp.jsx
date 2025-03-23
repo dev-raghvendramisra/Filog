@@ -1,14 +1,12 @@
 import React from 'react'
-import { Form, Button, FeedbackMessage as Error } from '../../components'
+import { Form, Button, FeedbackMessage as Error, GenToast } from '../../components'
 import { NavLink, useNavigate } from 'react-router-dom'
 import { useSelector, useDispatch } from 'react-redux';
 import { setEmail, setPassword, setName, setIsValidate } from '../../store/formSlice';
-import { ID } from 'appwrite';
-import { authServices, dbServices } from '../../services';
-import {startAuthentication, getBlogPosts, authErrHandler, getUserProfile} from '../../utils';
-import { setBlogs, clearBlogs } from '../../store/blogsSlice';
-import { login, logout, setFetching } from '../../store/authSlice';
-import { clearProfile, setProfile } from '../../store/userProfileSlice';
+import { authServices } from '../../services';
+import {startAuthentication, authErrHandler} from '../../utils';
+import conf from '../../conf/conf';
+
 
 
 export default function SignUp() {
@@ -29,66 +27,32 @@ export default function SignUp() {
 
   React.useEffect(()=>{
         const initiateSignup = async()=>{
-            console.log("calling auth")
-            console.log("Checking userName availability")
             setLoading(true)
             dispatch(setIsValidate(false))
-            const isUserNameAvailable = await dbServices.checkUserNameAvailability(userName)
-            if(!isUserNameAvailable){
-              setFormErr("Username is already taken")
+
+            try {
+              const signUpRes = await authServices.createAccount({email,name,userName,password})
+              const singupErr = authErrHandler({
+                res:signUpRes
+              })  
+              if(singupErr.occured){
+                throw singupErrCheck.errMsg
+              }
+              const loginRes = await authServices.login(email,password)
+              const loginErr = authErrHandler({res:loginRes})
+              if(loginErr.occured){
+                throw loginErr.message
+              }
+              const res = await startAuthentication({dispatch,navigate,setEmail,setName,setPass:setPassword})
+              if(res.code!==200){
+                throw res.message
+              }
+            } catch (error) {
+              setFormErr(error)
+            }finally{
               setLoading(false)
-             return setDisabled(false)
             }
-            const userID = ID.unique() 
-            const signUpRes = await authServices.createAccount({
-              id:userID,
-              email:email,
-              password:password,
-              name:name,
-              userName:userName,
-            })
-
-                        
-            const didErrOccured = authErrHandler({
-              res:signUpRes,
-              dispatch:dispatch,
-              navigate:navigate,
-              setEmail:setEmail,
-              setPass:setPassword,
-              setErr:setFormErr,
-              setName:setName
-             })
-  
-             if(didErrOccured){
-              console.log("An error occured") 
-             }
-
-            else if(signUpRes.$id){
-              const blogPostsRes = await getBlogPosts({ //(caching)calling the getBlogPosts util to fetch the posts before redirecting user to dashboard 
-               dispatch:dispatch,
-               setBlogs:setBlogs,
-               clearBlogs:clearBlogs
-               })
-               const authRes = await startAuthentication({//calling the strtauthentication util to verify the session and retreive the user details
-                 dispatch:dispatch,
-                 login:login,
-                 logout:logout,
-                 setFetching:setFetching
-               })
-
-               if(authRes.message){
-                 setFormErr(authRes.message)
-               }
-
-               if(authRes.$id){
-                await getUserProfile({userId:authRes.$id,dispatch,setProfile,clearProfile})
-               }
           }
-
-
-            setLoading(false)
-          }
-
      if(isValidated){
       initiateSignup()
      }     
@@ -110,6 +74,10 @@ export default function SignUp() {
           <Button primary disabled={disabled} wide className='w-70p overflow-hidden transition-all' onClick={handleSubmit}>
             Signin
           </Button >
+          <Button outline  wide className='w-70p mt-4p overflow-hidden transition-all' onClick={()=>location.href=conf.AUTH_API_OAUTH_GOOGLE_ENDPOINT}>
+          <img className='w-1.6vw pr-2' src="/icons/google-icon.webp" />
+          Signin with google
+          </Button>
           <Error  className="transition-all justify-center mt-4p" >{formErr}</Error>
           <NavLink to="/login" className='mt-4p w-100p cursor-pointer text-0.8vw text-gray-600 dark:text-white ' >
             Already have an account ?

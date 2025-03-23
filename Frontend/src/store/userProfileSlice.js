@@ -1,7 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
-    $id:"",
+    _id:"",
     userId:"",
     userName:"",
     fullName:"",
@@ -24,8 +24,8 @@ const userProfileSlice = createSlice({
             }
         },
         setProfile:(state,{payload})=>{
-            for(let key in state){
-              state[key]=payload[key]
+            for(let key in payload){
+                state[key] = payload[key]
             }
         },
 
@@ -41,20 +41,20 @@ const userProfileSlice = createSlice({
         },
         readNotification:(state,{payload:{type,notificationId,userId}})=>{
             if(type==="gen"){
-                state.notifications = state.notifications.map(notification=>notification.$id===notificationId?{...notification,readBy:[...notification.readBy,userId]}:notification)
-                const idx = state.notifications.findIndex(notification=>notification.$id===notificationId)
+                state.notifications = state.notifications.map(notification=>notification._id===notificationId?{...notification,readBy:[...notification.readBy,userId]}:notification)
+                const idx = state.notifications.findIndex(notification=>notification._id===notificationId)
                 const [readNotification] = state.notifications.splice(idx,1)
                 state.notifications = [...state.notifications,readNotification]
             }
-            if(type==="user"){
-                state.notifications = state.notifications.map(notification=>notification.$id===notificationId?{...notification,readAt:new Date().getTime()}:notification)
-                const idx = state.notifications.findIndex(notification=>notification.$id===notificationId)
+            if(type==="custom"){
+                state.notifications = state.notifications.map(notification=>notification._id===notificationId?{...notification,readAt:new Date().getTime()}:notification)
+                const idx = state.notifications.findIndex(notification=>notification._id===notificationId)
                 const [readNotification] = state.notifications.splice(idx,1)
                 state.notifications = [...state.notifications,readNotification]
             }
         },
         removeNotification:(state,{payload})=>{
-            state.notifications = state.notifications.filter(notification=>notification.$id!==payload)
+            state.notifications = state.notifications.filter(notification=>notification._id!==payload)
         }
 
     }

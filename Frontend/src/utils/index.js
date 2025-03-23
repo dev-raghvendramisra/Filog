@@ -1,7 +1,6 @@
 import getBlogPosts from "./getBlogPosts";
 import startAuthentication from './startAuthentication.jsx'
 import authErrHandler from "./authErrHandler";
-import getUserProfile from "./getUserProfile";
 import getUsersUtil from './getUsersUtil'
 import handleAuthObject from './handleAuthObject'
 import getNewVerificationEmail from './getNewVerificationEmail'
@@ -17,4 +16,4 @@ import getTimeAgo from "./getTimeAgo.js";
 
 
 
-export {getBlogPosts,downloadFiles,getFormattedNumber, startAuthentication, authErrHandler, getUserProfile, getUsersUtil, handleAuthObject, getNewVerificationEmail, getAlertModel, getSharableLink, getFormModal,  getWebpImage, getFormattedTime, getImgUrl, getTimeAgo};
+export {getBlogPosts,downloadFiles,getFormattedNumber, startAuthentication, authErrHandler, getUsersUtil, handleAuthObject, getNewVerificationEmail, getAlertModel, getSharableLink, getFormModal,  getWebpImage, getFormattedTime, getImgUrl, getTimeAgo};

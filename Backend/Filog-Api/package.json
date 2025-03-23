@@ -7,7 +7,7 @@
     "start": "node server.js",
     "dev": "nodemon --ext env,ts,json --exec ts-node -r tsconfig-paths/register ./src/server.ts",
     "build": "tsc --build && tsc-alias && cp -r ./src/public ./dist/public",
-    "dev:start":"node dist/server.js"
+    "dev:start": "node dist/server.js"
   },
   "author": "Raghvendra Misra",
   "license": "MIT",
@@ -28,16 +28,23 @@
     "typescript": "^5.7.3"
   },
   "dependencies": {
+    "@aws-sdk/client-s3": "^3.772.0",
+    "@types/multer": "^1.4.12",
+    "@types/sharp": "^0.31.1",
     "archiver": "^7.0.1",
+    "axios": "^1.8.4",
     "bcrypt": "^5.1.1",
     "cookie-parser": "^1.4.7",
     "cors": "^2.8.5",
     "dotenv": "^16.4.5",
     "express": "^4.21.1",
+    "google-auth-library": "^9.15.1",
     "jsonwebtoken": "^9.0.2",
-    "node-appwrite": "^14.1.0",
+    "multer": "^1.4.5-lts.2",
+    "node-appwrite": "^15.0.1",
     "nodemailer": "^6.9.16",
     "pdfkit": "^0.15.2",
+    "sharp": "^0.33.5",
     "winston": "^3.17.0",
     "zod": "^3.24.2"
   }

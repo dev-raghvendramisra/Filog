@@ -13,7 +13,7 @@ function Notification() {
  
    
    const notifications = useSelector(state=>state.userProfile.notifications)
-   const {userId,$id} = useSelector(state=>state.userProfile)
+   const {userId,_id} = useSelector(state=>state.userProfile)
    const dispatch  =  useDispatch()
  
    React.useEffect(()=>{
@@ -36,19 +36,21 @@ function Notification() {
    },[notifications])
 
    const readAllNotifications = () => {}
+
    const readNotifications = async({target},type,notificationId) => {
     target.classList.add("hidden")
-    if(type=="gen"){
-      const res  = await dbServices.readGenNotification(notificationId,$id)
-      if(res.$id){
+    if(type=="general"){
+      const res  = await dbServices.readGenNotification(notificationId)
+      if(res.code==200){
         toast.custom(<GenToast type='success'>Notification read</GenToast>)
         return dispatch(readNotification({type:type,notificationId:notificationId,userId:userId}))
       }
       return toast.custom(<GenToast type='err'>Failed to read notification</GenToast>)
     }
-    if(type=="user"){
-      const res  = await dbServices.readUserNotification(notificationId,$id)
-      if(res.$id){
+    if(type=="custom"){
+      const res  = await dbServices.readUserNotification(notificationId)
+      if(res.code==200){
+        toast.custom(<GenToast type='success'>Notification read</GenToast>)
         return dispatch(readNotification({type:type,notificationId:notificationId,userId:userId}))
       }
       return toast.custom(<GenToast type='err'>Failed to read notification</GenToast>)
@@ -56,18 +58,18 @@ function Notification() {
    }
    const removeNotifications = async(e,type,notificationId) => {
     if(type=="gen"){
-      console.log("removing gen notification...");
-      const res =  await dbServices.removeGenNotification(notificationId,$id);
-      if(res.$id){
+      
+      const res =  await dbServices.removeGenNotification(notificationId);
+      if(res.code==200){
         toast.custom(<GenToast type='success'>Notification removed</GenToast>)
         return dispatch(removeNotification(notificationId))
       }
       return toast.custom(<GenToast type='err'>Failed to remove notification</GenToast>)
     }
-    if(type=="user"){
-      console.log("removing user notification...");
+    if(type=="custom"){
+      ;
       const res =  await dbServices.removeUserNotification(notificationId);
-      if(res.$id){
+      if(res.code==200){
         toast.custom(<GenToast type='success'>Notification removed</GenToast>)
         return dispatch(removeNotification(notificationId))
       }
@@ -104,7 +106,7 @@ function Notification() {
             {
                 notifications.map((notification)=>{
                     return (
-                       <NotificationCard  key={notification.$id} notification={notification} userId={userId} readNotifications={readNotifications} removeNotifications={removeNotifications} />
+                       <NotificationCard  key={notification._id} notification={notification} userId={userId} readNotifications={readNotifications} removeNotifications={removeNotifications} />
                         
                     )
                 })

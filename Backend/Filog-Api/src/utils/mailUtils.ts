@@ -1,5 +1,11 @@
 import { EMAIL_TYPES } from "config/constants";
 
+/**
+ * Generates the HTML content for emails based on the email type.
+ * @param type - The type of email (e.g., verification or magic URL).
+ * @param url - Optional URL to include in the email content.
+ * @returns The HTML string for the email content.
+ */
 export const getMailContent = function (type : string, url ?: string){
      if(type === EMAIL_TYPES.VERIFICATION_EMAIL){
      return  `<!DOCTYPE html>

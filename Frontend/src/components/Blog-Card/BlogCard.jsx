@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef, useLayoutEffect } from 'react';
-import { ID } from 'appwrite';
+import { nanoid } from 'nanoid';
 import ProfilePic from '../ProfilePic/ProfilePic';
 import { NavLink } from 'react-router-dom';
 import getMaxLength from '../../utils/getTextCapacity';
@@ -83,7 +83,7 @@ function BlogCard({
         <div id={`BlogCard-tag-cont-${uniqueId}`}
           className={`w-19vw sm:w-60vw h-2vw overflow-scroll hideScrollbar text-0.9vw sm:h-8vw sm:text-3vw flex items-center justify-start gap-3 ${loader ? "bg-slate-200 postCardLoader dark:bg-darkPrimary rounded-xl" : ""} ${classNameBlogCardTagCont}`}>
           {!loader ? tags.map((tag, idx) => (
-            idx <= 2 ? <div className={`dark:${getClass(tag, true)} ${getClass(tag)} text-white px-0.5vw py-0.2vw sm:rounded-xl sm:px-2vw sm:py-1vw roundedxl-md`} key={ID.unique()}>
+            idx <= 2 ? <div className={`dark:${getClass(tag, true)} ${getClass(tag)} text-white px-0.5vw py-0.2vw sm:rounded-xl sm:px-2vw sm:py-1vw roundedxl-md`} key={nanoid(24)}>
               {tag}
             </div> : null
           )) : null}

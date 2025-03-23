@@ -3,7 +3,7 @@ import { genSalt, hash } from "bcrypt";
 import { CallbackError, CallbackWithoutResultAndOptionalError, Document } from "mongoose";
 
 interface IUser extends Document
-    {username:string,password:string,fullname:string,emailVerification:boolean,email:string}
+    {userName:string,password:string,fullName:string,emailVerification:boolean,email:string}
 
 export async function hashPassword(this :IUser ,next : CallbackWithoutResultAndOptionalError){
     if(!this.isModified("password")){

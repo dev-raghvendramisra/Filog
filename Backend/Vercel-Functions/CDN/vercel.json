@@ -1,7 +1,11 @@
 {
     "rewrites":[
         {
-            "source":"/images/:imageId",
+            "source":"/avatar/:imageId",
+            "destination":"/api/index"
+        },
+        {
+            "source":"/blog/:imageId",
             "destination":"/api/index"
         },
         {

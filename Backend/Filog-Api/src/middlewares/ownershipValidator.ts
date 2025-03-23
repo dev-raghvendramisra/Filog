@@ -2,19 +2,23 @@ import dbService from "@services/dbService";
 import { AuthenticatedRequest, UpdateBlogBody, UpdateProfileBody, UserDataInCookie } from "@type/request/body";
 import { NextFunction, Response } from "express";
 
-export async function ownershipValidator(req:AuthenticatedRequest<{},{},UpdateBlogBody | UpdateProfileBody>,res:Response,next:NextFunction){
+
+
+/**
+ * Middleware to validate ownership of a blog before allowing updates.
+ * Ensures that the user making the request is the owner of the blog being updated.
+ * 
+ * @param req - The authenticated request object containing user data and parameters.
+ * @param res - The response object to send responses to the client.
+ * @param next - The next middleware function in the stack.
+ */
+export async function blogOwnershipValidator(req:AuthenticatedRequest<{_blogId:string},{},UpdateBlogBody>,res:Response,next:NextFunction){
     const {_id:userId} = req.userData as UserDataInCookie
-    let doc;
+    const blog = await dbService.getBlogs({filters:{userId,_id:req.params._blogId}})
 
-    // Check if the userId in the document and the user's _id in cookie are present in a document
-    if("_profileId" in req.body) doc =  await dbService.getUserProfiles({filters:{userId,_id:req.body._profileId}})
-    
-    else doc = await dbService.getBlogs({filters:{userId,_id:req.body._blogId}})
-
-    if(doc.code==500){res.status(doc.code).send(doc);return}
+    if(blog.code==500){res.status(blog.code).send(blog);return}
 
     // 0 document means that userId in the document does'nt matches the user's  _id in the cookie
-    if(!doc.res?.length){res.status(403).send({res:null,message:"Request to update the decument is forbidden",code:403});return}
-
+    if(!blog.res?.length){res.status(403).send({code:403,message:"Request to update the document is forbidden",res:null});return}
     next()   
 }

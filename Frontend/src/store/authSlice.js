@@ -4,7 +4,7 @@ const initialState = {
     isUserLoggedIn:false,
     userData:null,
     isLoginInitiated:false,
-    fetching:false,
+    fetching:true,
     silentFetching:false,
     isUserAdmin:null
 }
@@ -25,7 +25,7 @@ const authSlice = createSlice({
         },
         iniateLoginSequence:(state)=>{
             state.isLoginInitiated=!state.isLoginInitiated
-            console.log(state.isLoginInitiated)
+            
         },
         setFetching:(state,action)=>{
                 state.fetching=action.payload;

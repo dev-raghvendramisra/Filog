@@ -2,11 +2,17 @@ import { Request } from "express";
 import { ParamsDictionary } from "express-serve-static-core";
 import { z } from "zod";
 
+/**
+ * Zod schema for generating email verification requests.
+ */
 export const genEVSchema  = z.object({
     email:z.string(),
     userId:z.string()
 }).strict()
 
+/**
+ * Zod schema for verifying email verification tokens.
+ */
 export const verEVShcema  = z.object({
     token:z.string()
 }).strict()
@@ -24,10 +30,11 @@ export const resetPassSchema = z.object({
 }).strict()
 
 export const signupSchema = z.object({
-    fullname:z.string(),
+    fullName:z.string(),
     email:z.string(),
-    username:z.string(),
+    userName:z.string(),
     password:z.string(),
+    userAvatar:z.string().optional(),
     emailVerification:z.boolean().optional()
 }).strict()
 
@@ -39,7 +46,8 @@ export const loginSchema = z.object({
 export const createUserProfileSchema = z.object({
     userId: z.string(),
     userAvatar: z.string(),
-    username: z.string(),
+    userName: z.string(),
+    fullName:z.string(),
     userAvatarId: z.union([z.string(),z.null()]).optional(),
     isFilogVerified: z.boolean().optional(),
     blogsWritten: z.number().optional(),
@@ -50,8 +58,8 @@ export const createUserProfileSchema = z.object({
 }).strict()
 
 export const updateUserProfileSchema = z.object({
-    _profileId:z.string(),
-    updatedFeilds : createUserProfileSchema.omit({userId:true}).partial()
+    _userId:z.string(),
+    updatedFields : createUserProfileSchema.omit({userId:true}).partial()
 })
 
 export const createBlogSchema = z.object({
@@ -66,28 +74,31 @@ export const createBlogSchema = z.object({
     coverImageURI: z.string(),
     subImageURI: z.array(z.string()).optional(),
     author: z.string(),
-    slug: z.string()
+    slug: z.string(),
+    permissions:z.array(z.string())
 }).strict()
 
 export const updateBlogSchema = z.object({
     _blogId:z.string(),
-    updatedFeilds:createBlogSchema.omit({userId:true,author:true,createdAt:true}).partial()
+    updatedFields:createBlogSchema.omit({userId:true,author:true,createdAt:true}).partial()
 })
 
-
+/**
+ * Interface for user data stored in cookies.
+ */
 export interface UserDataInCookie{
     _id:string,
-    username:string,
-    fullname:string,
+    userName:string,
+    fullName:string,
     email:string
 }
 
-
-
+/**
+ * Extended Express Request interface for authenticated requests.
+ */
 export interface AuthenticatedRequest<P=ParamsDictionary,T=any,B=any> extends Request<P,T,B>{
     userData?:UserDataInCookie
 }
-
 
 export type GenEVerification = z.infer<typeof genEVSchema>
 export type VerEVerfication = z.infer<typeof verEVShcema>

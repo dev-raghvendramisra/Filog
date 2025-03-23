@@ -16,7 +16,7 @@ function Home() {
   const userProfile = useSelector(state=>state.userProfile)
   const dispatch = useDispatch()
   const openAlertModal = useEmailAlertModal()
-  const openCommentModal = useCommentFormModal(userData?.$id)
+  const openCommentModal = useCommentFormModal(userData?._id)
 
   React.useEffect(()=>{
     getBlogPosts({ 
@@ -44,14 +44,14 @@ function Home() {
           blogCardType="vertical"
           authorName={post.authorName}
           userData={userData}
-          userProfileId={userProfile.$id}
+          userProfileId={userProfile._id}
           likeCount={post.likeCount}
           commentCount={post.commentCount}
           blogTitle={post.title}
           blogTags={post.tags}
           authorAvatar={post.authorAvatar}
           createdAt={post.createdAt}
-          blogImg={post.coverImageUrl}
+          blogImg={post.coverImageURI}
           authorId={post.userId}
           blogsLiked={userProfile.blogsLiked}
           openAlertModal={openAlertModal}

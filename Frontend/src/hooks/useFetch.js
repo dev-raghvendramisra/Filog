@@ -12,7 +12,7 @@ const useFetch = ({type="user",initLoading,offset,limit,query,container,id,setEr
    const dispatch = useDispatch()
 
    const fetchUsers = async () => {
-    console.log(type=="user"?"Fetching Users...":"Fetching Blogs...");
+    ;
     
     if(following && !following.length){
       setErr("user")
@@ -22,6 +22,8 @@ const useFetch = ({type="user",initLoading,offset,limit,query,container,id,setEr
     setIsFetching(true);
     // setErrInFetching(false);
     
+    
+
     const res = type=="user"
     ? await getUsersUtil({ offset, limit, query, dispatch, clearUsers, setUsers })
     : await getBlogPosts({offset,limit,query,dispatch,setBlogs,clearBlogs})
