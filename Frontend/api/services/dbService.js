@@ -12,6 +12,8 @@ class DBService {
               }
             }
           })));
+          console.log(blog)
+
          if(blog.code==200){
              return blog.res[0];
          }
