@@ -1,4 +1,3 @@
-import {Client, Databases, Query} from 'node-appwrite'
 import conf from '../config/conf.js';
 
 class DBService {
