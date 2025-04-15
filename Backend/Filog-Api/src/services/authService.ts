@@ -68,7 +68,7 @@ class AuthService {
         }
       
       const profile = await UserProfile.create({...data,customNotifications:[welcomeNotificationId]});
-      dbService.createCustomNotification(`Welcome ${data.fullName}, we are thrilled to have you as a Filogger!`,"https://cdn.filog.in/images/66df0d8000246519fc17",data.userId,undefined,{_id:welcomeNotificationId});
+      dbService.createCustomNotification(`Welcome ${data.fullName}, we are thrilled to have you as a Filogger!`,"https://cdn.filog.in/avatar/66df0d8000246519fc17",data.userId,undefined,{_id:welcomeNotificationId});
       return { code: 201, message: "Profile created", res: profile };
     } catch (error) {
       logger.error(`ERR_WHILE_CREATING_USER_PROFILE_IN_AUTH_SERVICE ${error}`);
