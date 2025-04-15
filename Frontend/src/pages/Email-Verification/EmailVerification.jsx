@@ -4,8 +4,8 @@ import { authServices } from '../../services';
 import useTheme from '../../context/themeContext';
 import { Button, FeedbackMessage, GenToast } from '../../components';
 import toast from 'react-hot-toast';
-;
-import { useDispatch, useSelector } from 'react-redux';
+import { nanoid } from 'nanoid';
+import {  useSelector } from 'react-redux';
 
 function EmailVerification() {
   // State hooks for handling error, success message, and various other states
