@@ -1,5 +1,6 @@
 import React from 'react'
 import ProfilePic from '../ProfilePic/ProfilePic'
+import { nanoid } from 'nanoid'
 
 function CustomToast({secondaryText, img, children, imgH='h-2.7vw' ,imgW='w-2.7vw',roundedPic, classNamePic = '', classNameContainer = '', classNameTextWrapper=''}) {
    const uniqueId = nanoid(24)
