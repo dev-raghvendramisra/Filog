@@ -48,7 +48,7 @@ function FormModal({
   const s_btnRef = React.useRef(null)
 
   React.useEffect(()=>{
-    refs[0].current.focus();
+    refs[0].current?.focus();
   },[])
 
   return (

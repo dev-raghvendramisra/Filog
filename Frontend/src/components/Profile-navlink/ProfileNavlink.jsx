@@ -5,7 +5,7 @@ import { Dropdown } from '../../components'
 import { authServices } from '../../services'
 import { useNavigate } from 'react-router-dom'
 import { useAlertModal, useAvatarFormModal } from '../../hooks'
-import { ID } from 'appwrite'
+import { nanoid } from 'nanoid'
 import useTheme from '../../context/themeContext'
 import { setPrimaryBtnText } from '../../store/formModalSlice'
 
@@ -17,7 +17,7 @@ function ProfileNavlink() {
   const { userAvatar } = useSelector(state => state.userProfile)
   const [openDropDown, setOpenDropDown] = React.useState(false)
   const [timer, setTimer] = React.useState(null)
-  const [alertId] = React.useState(ID.unique())
+  const [alertId] = React.useState(nanoid(24))
   const navigate = useNavigate()
   const openAvatarModal = useAvatarFormModal()
   const { isDark, setIsDark } = useTheme()

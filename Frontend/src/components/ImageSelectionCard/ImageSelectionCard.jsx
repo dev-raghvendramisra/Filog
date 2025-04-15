@@ -21,8 +21,13 @@ function ImageSelectionCard({ message,
 
     const handleImageChange = async(e) => {
         const file = e.target.files[0]
-        const finalFile = await getWebpImage(file,setImageSrc,imageName,setProcessing)
-        setFile(finalFile)
+        const reader = new FileReader()
+        reader.onload=(e)=>{
+            setImageSrc(e.target.result)
+        }
+        reader.readAsDataURL(file)
+        // const finalFile = await getWebpImage(file,setImageSrc,imageName,setProcessing)
+        setFile(file)
     }
 
     const dispatchEventOnInput = () => {
@@ -35,9 +40,14 @@ function ImageSelectionCard({ message,
       } )
         contRef?.current.addEventListener("drop", async(e) => {
             e.preventDefault()
-            const file = e.dataTransfer.files[0]
-            const finalFile = await getWebpImage(file,setImageSrc,imageName,setProcessing)
-            setFile(finalFile)
+            const file = e.target.files[0]
+            const reader = new FileReader()
+            reader.onload=(e)=>{
+                setImageSrc(e.target.result)
+            }
+            reader.readAsDataURL(file)
+            // const finalFile = await getWebpImage(file,setImageSrc,imageName,setProcessing)
+            setFile(file)
         })
      }, [contRef])
 

@@ -1,37 +1,22 @@
-import { Client, ID, Databases, Storage, Query, Permission, Role } from "appwrite";
-import {getFormattedTime, getImgUrl} from "../../utils";
-import action from "../Action/ActionGenerator";
+import { getFormattedTime } from "../../utils";
 import conf from "../../conf/conf";
+import axios from "axios";
 
 export class DatabaseService {
-    client = new Client()
-        .setEndpoint(conf.APPWRITE_URL)
-        .setProject(conf.PROJECT_ID);
-    database;
 
-    storageBucket;
-    constructor() {
-        this.database = new Databases(this.client);
-        this.storageBucket = new Storage(this.client);
-    }
+    database = axios.create({ withCredentials: true });
 
-    updateJwt(secret){
-        this.client.setJWT(secret);
-        this.database = new Databases(this.client);
-        this.storageBucket = new Storage(this.client);
-    }
 
-    // Blog crud operations
+    // Blog CRUD operations
     async createBlog({
         title,
         content,
         coverImageId,
-        coverImageUrl,
+        coverImageURI,
         subImageId = [],
-        subImageUrl = [],
+        subImageURI = [],
         userId,
         userName,
-        blogId=ID.unique(),
         status = true,
         tags = [],
         authorProfileId
@@ -40,468 +25,241 @@ export class DatabaseService {
             title: title,
             content: content,
             coverImageId: coverImageId,
-            coverImageUrl: coverImageUrl,
+            coverImageURI: coverImageURI,
             subImageId: subImageId,
-            subImageUrl: subImageUrl,
+            subImageURI: subImageURI,
             userId: userId,
             createdAt: getFormattedTime(),
             status: status,
             tags: tags,
-            authorData:authorProfileId,
+            authorData: authorProfileId,
             likeCount: 0,
-            slug: userName + "-"+title.toLowerCase().split(" ").join("-"),
+            slug: userName + "-" + title.toLowerCase().split(" ").join("-"),
             commentCount: 0,
-        }
+        };
         try {
-            const res = await this.database.createDocument(
-                conf.DB_ID,
-                conf.BLOG_COLLECTION_ID,
-                blogId,
-                blogAttr,
-                [
-                    Permission.read(Role.any()),
-                    Permission.update(Role.user(userId)),
-                    Permission.delete(Role.user(userId))
-                ]
-            );
-
-            if (res.$databaseId) {
-                return res;
-            }
-            throw { err: "dbService error :: failed to create blog", res: res };
+            const res = await this.database.post(conf.DB_API_BLOG_ENDPOINT, {
+                ...blogAttr,
+            });
+            return res.data;
         } catch (error) {
-            console.log("dbService error :: failed to create document", error);
-            return error
+            console.log("DB_SERVICE_ERROR :: FAILED_TO_CREATE_DOCUMENT", error);
+            return error.response;
         }
     }
 
-    async updateBlog(blogId, updatedBlogAttr) {
+    async updateBlog(_blogId, updatedFields) {
         try {
-            const updatedBlog = await this.database.updateDocument(
-                conf.DB_ID,
-                conf.BLOG_COLLECTION_ID,
-                blogId,
-                updatedBlogAttr
-
-            )
-            if (updatedBlog.title) {
-                return updatedBlog;
-            }
-            else {
-                throw { err: "dbService error :: failed to update document : ", updatedBlog: updatedBlog }
-            }
+            const updatedBlog = await this.database.patch(
+                conf.DB_API_BLOG_ENDPOINT,
+                { _blogId, updatedFields }
+            );
+            return updatedBlog.data;
         } catch (error) {
-            console.log("dbService error :: failed to update document : ", error)
-            return error
+            console.log("DB_SERVICE_ERROR :: FAILED_TO_UPDATE_DOCUMENT", error);
+            return error.response;
         }
     }
 
     async deleteBlog(blogId) {
         try {
-            const res = await this.database.deleteDocument(
-                conf.DB_ID,
-                conf.BLOG_COLLECTION_ID,
-                blogId
-            )
-            if (res.$id) {
-                return res;
-            }
-            else {
-                throw { err: "dbService error :: failed to delete document : ", res: res }
-            }
-
-        } catch (error) {
-            console.log("dbService error :: failed to delete document : ", error)
-            return error
-        }
-    }
-
-    async getBlogs(query) {
-        try {
-            const res = await this.database.listDocuments(
-                conf.DB_ID,
-                conf.BLOG_COLLECTION_ID,
-                query
-            );
-
-            if (res.documents) {
-                return res
-            }
-            else {
-                throw { err: "dbService error :: failed to retreive documents :", res: res }
-            }
-        } catch (error) {
-            console.log("dbService error :: failed to retreive documents :", error)
-            return error
-
-        }
-    }
-
-    // User crud operations
-    async checkUserNameAvailability(userName) {
-        try{
-            const res = await this.database.listDocuments(
-                conf.DB_ID,
-                conf.USERPROFILE_COLLECTION_ID,
-                [Query.equal("userName",userName.toLowerCase())]
-            )
-            if(res.documents.length===0){
-                return true
-            }
-            else{
-                return false
-            }
-        }catch(error){
-            console.log("dbService error :: failed to check username availability",error)
-            return false
-        }
-    }
-
-    async createProfileDocument(docObj, userId) {
-        try {
-            const res = await this.database.createDocument(
-                conf.DB_ID,
-                conf.USERPROFILE_COLLECTION_ID,
-                ID.unique(),
-                docObj,
-                [
-                    Permission.read(Role.any()),
-                    Permission.update(Role.user(userId)),
-                    Permission.delete(Role.user(userId))
-                ]
-            );
-
-            if (res.$databaseId) {
-                return res;
-            } else
-                throw { err: "dbService error :: failed to create document", res: res };
-        } catch (error) {
-            console.log("dbService error :: failed to create document", error);
-            return error
-        }
-    }
-
-    async getGeneralNotifications(query){
-        try {
-            const res = await this.database.listDocuments(conf.DB_ID,conf.GEN_NOTIFICATION_COLLECTION_ID,[
-                ...query
-            ])
-            if(res.documents){
-                return res.documents
-            }
-            else{
-                throw {err:"dbService error :: failed to get general notifications",res:res}
-            }
-        } catch (err) {
-            console.log("dbService error :: failed to get general notifications",err)
-            return err
-        }
-    }
-
-    async readGenNotification(notificationId,userProfileId){
-       try {
-        const res = await this.database.updateDocument(conf.DB_ID,conf.USERPROFILE_COLLECTION_ID,userProfileId,{
-            stagedAction:action.readGenNotification(notificationId)
-        })
-        if(res.$id){
-            return res
-        }
-        else throw {err:"dbService error :: failed to update profile document",res:res}
-       } catch (error) {
-        console.log("dbService error :: failed to update profile document",error)
-        return error
-       }
-    }
-
-    async removeGenNotification(notificationId,userProfileId){
-        try{
-            const res = await this.database.updateDocument(conf.DB_ID,conf.USERPROFILE_COLLECTION_ID,userProfileId,{
-                stagedAction:action.removeGenNotification(notificationId)
-            })
-            if(res.$id){
-                return res
-            }
-            else throw {err:"dbService error :: failed to update profile document",res:res}
-        }catch(err){
-            console.log("dbService error :: failed to update profile document",err)
-            return
-        }
-    }
-    
-    async getUserNotifications(userId){
-        try{
-           const res = await this.database.listDocuments(conf.DB_ID,conf.USER_NOTIFICATION_COLLECTION_ID,[
-            Query.equal("userId",userId),
-           ])
-              if(res.documents){
-                return res.documents
-              }
-              else{
-                throw {err:"dbService error :: failed to get user notifications",res:res}
-              }
-        }catch(err){
-            console.log("dbService error :: failed to get userSpecific notifications",err)
-            return err
-        }
-    }
-
-    async readUserNotification(notificationId){
-        try {
-            const res = await this.database.updateDocument(conf.DB_ID,conf.USER_NOTIFICATION_COLLECTION_ID,notificationId,{
-                readAt:`${new Date().getTime()}/- ${getFormattedTime()}`
-            })
-            if(res.$id){
-                return res
-            }
-            else throw {err:"dbService error :: failed to update notification document",res:res}
-        } catch (error) {
-            console.log("dbService error :: failed to update notification document",error)
-            return error
-        }
-    }
-    
-    async removeUserNotification(notificationId){
-        try {
-            const res = await this.database.deleteDocument(conf.DB_ID,conf.USER_NOTIFICATION_COLLECTION_ID,notificationId)
-            if(res.message.length==0){                             
-                res.$id=notificationId
-                return res
-            }
-            else throw {err:"dbService error :: failed to delete notification document",res:res}
-        } catch (error) {
-            console.log("dbService error :: failed to delete notification document",error)
-            return error
-        }
-    }
-
-
-    async getUsers(query = [Query.notEqual("userId", ["#"])]) {
-        try {
-            const res = await this.database.listDocuments(
-                conf.DB_ID,
-                conf.USERPROFILE_COLLECTION_ID,
-                query,
-            );
-
-            if (res.documents) {
-                return res
-            }
-            else {
-                throw { err: "dbService error :: failed to retreive users :", res: res }
-            }
-        } catch (error) {
-            console.log("dbService error :: failed to retreive users :", error)
-            return error
-
-        }
-    }
-
-    //Blog interaction operations
-    async createBlogLikesDocument(docId, userId) {
-        try {
-            const res = await this.database.createDocument(
-                conf.DB_ID,
-                conf.blogLikesCollectionID,
-                docId,
-                {
-                    likes: 0,
-                    blogId: docId
+            const res = await this.database.delete(conf.DB_API_BLOG_ENDPOINT, {
+                params: {
+                    blogId,
                 },
-                [
-                    Permission.read(Role.any()),
-                    Permission.update(Role.any()),
-                    Permission.delete(Role.user(userId))
-                ]
-            )
-            if (res.$id) {
-                return res;
-            }
-            else {
-                throw { err: "dbService error :: failed to create blogsLiked document", res: res }
-            }
+            });
+            return res.data;
         } catch (error) {
-            console.log(error);
-            return error
+            console.log("DB_SERVICE_ERROR :: FAILED_TO_DELETE_DOCUMENT", error);
+            return error.response;
         }
     }
 
-    async commentOnBlog(blogId, userId, comment, userProfileId, authorId) {
+    async getBlogs(query = encodeURIComponent(JSON.stringify({ userId: { $ne: "#" } }))) {
+        console.log("Query in DBService for blogs", JSON.parse(decodeURIComponent(query)));
         try {
-            const res = await this.database.createDocument(conf.DB_ID, conf.BLOG_COMMENTS_COLLECTION_ID, ID.unique(), {
-                blogId,
-                userId,
-                comment
-            },
-                [
-                    Permission.read(Role.any()),
-                    Permission.update(Role.user(userId)),
-                    Permission.delete(Role.user(userId), Role.user(authorId)),
-                ])
-            if (res.$id) {
-                const stageAction = await this.database.updateDocument(conf.DB_ID, conf.USERPROFILE_COLLECTION_ID, userProfileId, {
-                    stagedAction: action.addComment(blogId)
-                })
-                if (stageAction.$id) {
-                    return res
-                }
-                else throw { err: "dbService error :: failed to stage profile document", res: res }
-            } else throw { err: "dbService error :: failed to comment", res: res }
-        }
-        catch (error) {
-            console.log(error)
-            return error
-        }
-    }
-
-    async deleteComment(commentId, profileId) {
-        try {
-            const res = await this.database.deleteDocument(conf.DB_ID, conf.BLOG_COMMENTS_COLLECTION_ID, commentId)
-            if (res.$id) {
-                const stageAction = await this.database.updateDocument(conf.DB_ID, conf.USERPROFILE_COLLECTION_ID, profileId, {
-                    stagedAction: action.deleteComment(blogId)
-                })
-                if (stageAction.$id) {
-                    return res
-                }
-                else throw { err: "dbService error :: failed to stage profile document", res: res }
-            } else throw { err: "dbService error :: failed to delete comment", res: res }
-        }
-        catch (error) {
-            console.log(error)
-            return error
-        }
-    }
-
-    //user interaction operations
-    async like_unlikeBlog(blogId, profileId, type) {
-        try {
-            const res = await this.database.updateDocument(conf.DB_ID, conf.USERPROFILE_COLLECTION_ID, profileId, {
-                stagedAction: type == "like" ? action.like(blogId) : action.unlike(blogId)
-            })
-            if (res.$id) {
-                return res
-            }
-            else throw { err: "dbService error failed to update profile document", res }
+            const res = await this.database.get(
+                conf.DB_API_GET_BLOGS_ENDPOINT + `?query=${query}`
+            );
+            return res.data;
         } catch (error) {
-            console.log(error)
-            return error
+            console.log("DB_SERVICE_ERROR :: FAILED_TO_RETREIVE_DOCUMENTS", error);
+            return error.response.data;
         }
     }
 
-    async follow_unfollowUser(userProfileId, targetUserId, type) {
+    async readGenNotification(notificationId) {
         try {
-            const updatedProfile = await this.database.updateDocument(
-                conf.DB_ID,
-                conf.USERPROFILE_COLLECTION_ID,
-                userProfileId,
-                {
-                    stagedAction: type == "following" ? action.follow(targetUserId) : action.unfollow(targetUserId)
-                }
-            )
-            if (updatedProfile.$id) {
-                return updatedProfile;
-            }
-            else {
-                throw { err: "dbService error :: failed to update profile : ", res: updatedProfile }
-            }
+            const res = await this.database.patch(
+                `${conf.DB_API_NOTIFICATION_GENERAL_ENDPOINT}/${notificationId}`
+            );
+            return res.data;
         } catch (error) {
-            console.log("dbService error :: failed to update profile : ", error)
-            return error
+            console.log("DB_SERVICE_ERROR :: FAILED_TO_UPDATE_PROFILE_DOCUMENT", error);
+            return error.response.data;
         }
     }
 
-    //Image upload operations
+    async removeGenNotification(notificationId) {
+        try {
+            const res = await this.database.delete(
+                `${conf.DB_API_NOTIFICATION_GENERAL_ENDPOINT}/${notificationId}`
+            );
+            return res.data;
+        } catch (err) {
+            console.log("DB_SERVICE_ERROR :: FAILED_TO_UPDATE_PROFILE_DOCUMENT", err);
+            return err.response.data;
+        }
+    }
+
+    async readUserNotification(notificationId) {
+        try {
+            const res = await this.database.patch(
+                `${conf.DB_API_NOTIFICATION_CUSTOM_ENDPOINT}/${notificationId}`
+            );
+            return res.data;
+        } catch (error) {
+            console.log("DB_SERVICE_ERROR :: FAILED_TO_UPDATE_PROFILE_DOCUMENT", error);
+            return error.response.data;
+        }
+    }
+
+    async removeUserNotification(notificationId) {
+        try {
+            const res = await this.database.delete(
+                `${conf.DB_API_NOTIFICATION_CUSTOM_ENDPOINT}/${notificationId}`
+            );
+            return res.data;
+        } catch (err) {
+            console.log("DB_SERVICE_ERROR :: FAILED_TO_UPDATE_PROFILE_DOCUMENT", err);
+            return err.response.data;
+        }
+    }
+
+    async getUsers(query = JSON.stringify({ userId: { $ne: "#" } })) {
+        try {
+            const res = await this.database.get(
+                conf.DB_API_GET_USERS_ENDPOINT + `?query=${encodeURIComponent(query)}`
+            );
+
+            return res.data;
+        } catch (error) {
+            console.log("DB_SERVICE_ERROR :: FAILED_TO_RETREIVE_USERS", error);
+            return error.response.data;
+        }
+    }
+
+    // User interaction operations
+    async like_unlikeBlog(blogId, type) {
+        try {
+            const method = type == "like" ? "patch" : "delete";
+            const res = await this.database[method](
+                `${conf.DB_API_BLOG_LIKE_ENDPOINT}/${blogId}`
+            );
+            return res.data;
+        } catch (error) {
+            console.log("DB_SERVICE_ERROR :: FAILED_TO_LIKE_UNLIKE_BLOG", error);
+            return error.response;
+        }
+    }
+
+    async follow_unfollowUser(targetUserId, type) {
+        try {
+            const method = type == "follow" ? "patch" : "delete";
+            const updatedProfile = await this.database[method](
+                `${conf.DB_API_FOLLOW_USER_ENDPOINT}/${targetUserId}`
+            );
+            return updatedProfile.data;
+        } catch (error) {
+            console.log("DB_SERVICE_ERROR :: FAILED_TO_FOLLOW_UNFOLLOW_USER", error);
+            return error.response.data;
+        }
+    }
+
+    // Image upload operations
     async uploadBlogImages(coverImage, subImages = []) {
         const imageData = {
             coverImageId: "",
             subImageId: [],
-            coverImageUrl: "",
-            subImageUrl: []
+            coverImageURI: "",
+            subImageURI: [],
         };
         try {
-            const { $id } = await this.storageBucket.createFile(
-                conf.BUCKET_ID,
-                ID.unique(),
-                coverImage
-            );
-            imageData.coverImageId = $id;
-            imageData.coverImageUrl = getImgUrl($id).url;
-
+            const img = await this.uploadBlogImage(coverImage)
+            if(!img.code==200){
+                throw new Error(img.message)
+            }
+            imageData.coverImageId = img.res.imageId;
+            imageData.coverImageURI = img.res.imageURI;
 
             if (subImages.length !== 0) {
-                const subImagesId = await Promise.all(
+                const subImages = await Promise.all(
                     subImages.map(async (image) => {
-                        return await this.storageBucket.createFile(
-                            conf.BUCKET_ID,
-                            ID.unique(),
-                            image
-                        ).$id;
+                        const img =  await this.uploadBlogImage(image);
+                        if(img.code!==200){
+                            throw new Error(img.message)
+                        }
+                        return img.res.imageId;
                     })
                 );
-                imageData.subImageId = subImagesId;
-                imageData.subImageUrl = subImagesId.map((subImageId) => (getImgUrl(subImageId).url))
-
+                subImages.forEach((subImage) => {
+                    imageData.subImageId.push(subImage.res.imageId);
+                    imageData.subImageURI.push(subImage.res.imageURI);
+                })
             }
             return imageData;
         } catch (error) {
-            console.log("error in dbService :: imageUpload error: ", error);
-            return { err: "error in dbService :: imageUpload error: ", error };
+            console.log("DB_SERVICE_ERROR :: IMAGE_UPLOAD_ERROR", error);
+            return { err: "DB_SERVICE_ERROR :: IMAGE_UPLOAD_ERROR", error };
         }
     }
 
-    async changeAvatar(avatar, userId, userProfileId, currentAvatarId) {
-        try{
-           const res = await this.uploadImage(avatar,userId)
-           if(res.url){
-            const updatedProfile = await this.database.updateDocument(conf.DB_ID, conf.USERPROFILE_COLLECTION_ID, userProfileId,{
-                userAvatar:res.url,
-                userAvatarId:res.fileId,
-                stagedAction:action.bucketCleanup(currentAvatarId)
-            })
-            if(updatedProfile.$id){
-                return updatedProfile
-            }
-            else throw {err:"dbService error :: failed to update profile document",res:updatedProfile}
-           }else throw {err:"dbService error :: failed to upload image",res:res}
-        }catch(error){
-           console.log("dbService error :: failed to change avatar",error)
-           return error
-        }
-    }
 
-    async uploadImage(image,userId,uniqueId=ID.unique()) {
+    async uploadBlogImage(image) {
         try {
-            const res = await this.storageBucket.createFile(conf.BUCKET_ID, uniqueId, image, [
-                Permission.read(Role.any()),
-                Permission.update(Role.user(userId)),
-                Permission.delete(Role.user(userId))
-            ]);
-            if(res.$id){
-               return getImgUrl(uniqueId)
-            }
-            else throw {err:"dbService error :: failed to upload image",res:res}
+            const formData = new FormData()
+            formData.append("blogImage", image)
+            const res = await this.database.put(
+               conf.DB_API_ENDPOINT+"/blogs/images",
+               formData,
+               {headers:{"Content-Type":"multipart/form-data"}}
+            );
+            return res.data
         } catch (error) {
-            console.log("dbService error :: failed to upload image",error)
-            return error
+            console.log("DB_SERVICE_ERROR :: FAILED_TO_UPLOAD_BLOG_IMAGE", error);
+            return error.response.data
         }
     }
 
-    async updateProfile(profileId,updatedAttr){
+    async uploadAvatar(image){
       try {
-        const res = await this.database.updateDocument(conf.DB_ID, conf.USERPROFILE_COLLECTION_ID,profileId,updatedAttr)
-        if(res.$id){
-            return res;
+        const formData = new FormData()
+            formData.append("avatar", image)
+            const res = await this.database.put(
+               conf.DB_API_ENDPOINT+"/profile/avatar",
+               formData,
+               {headers:{"Content-Type":"multipart/form-data"}}
+            );
+            return res.data
+        } catch (error) {
+            console.log("DB_SERVICE_ERROR :: FAILED_TO_UPLOAD_AVATAR", error);
+            return error.response.data
         }
-        else throw {err:"dbService error :: failed to update profile",res:res}
-      } catch (error) {
-        console.log("dbService error :: error in profile updation", error.res)
-        return error;
-      }
     }
 
+    async updateProfile(_userId, updatedFields) {
+        try {
+            const res = await this.database.patch(conf.DB_API_UPDATE_PROFILE_ENDPOINT, {
+                _userId,
+                updatedFields,
+            });
+            return res.data;
+        } catch (error) {
+            console.log("DB_SERVICE_ERROR :: ERROR_IN_PROFILE_UPDATION", error.res);
+            return error.response;
+        }
+    }
 }
-
 
 const dbServices = new DatabaseService();
 export default dbServices;
-

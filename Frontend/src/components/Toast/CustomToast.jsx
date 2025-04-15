@@ -1,9 +1,8 @@
 import React from 'react'
 import ProfilePic from '../ProfilePic/ProfilePic'
-import { ID } from 'appwrite'
 
 function CustomToast({secondaryText, img, children, imgH='h-2.7vw' ,imgW='w-2.7vw',roundedPic, classNamePic = '', classNameContainer = '', classNameTextWrapper=''}) {
-   const uniqueId = ID.unique()
+   const uniqueId = nanoid(24)
   return (
     <div id={`toast-${uniqueId}`} 
     className={`flex gap-4 p-0.5vw pl-1vw pr-1vw rounded-xl bg-white dark:bg-toastDarkModeBg  drop-shadow-xl w-fit items-center justify-center alertAnim ${classNameContainer}`}>

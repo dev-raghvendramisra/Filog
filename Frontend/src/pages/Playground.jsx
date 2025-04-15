@@ -5,13 +5,12 @@ import Image from '@editorjs/image'
 import List from '@editorjs/list';
 import { LoaderIcon } from 'react-hot-toast';
 import { Button, ImageSelectionCard } from '../components';
-import { getUserProfile, getWebpImage, startAuthentication } from '../utils'; // Utility to process images to WebP format
+import { getWebpImage, startAuthentication } from '../utils'; // Utility to process images to WebP format
 import InlineCode from '@editorjs/inline-code';
 import editorToolConf from '../conf/editorToolConf';
 import { authServices, dbServices } from '../services';
 import conf from '../conf/conf';
 import { useDispatch, useSelector } from 'react-redux';
-import { Query } from 'appwrite';
 import { login, logout, setFetching } from '../store/authSlice';
 import { useNavigate } from 'react-router-dom';
 import { setProfile, clearProfile } from '../store/userProfileSlice';
@@ -43,7 +42,7 @@ const Playground = () => {
   return (
     <div className="h-100vh w-full flex justify-center items-center">
        {/* <div  id="editorHolder" className="editor-holder"></div> */}
-       <Button primary onClick={
+       {/* <Button primary onClick={
         async()=>{
             const blogs = await dbServices.getBlogs([Query.equal("userId",userData.$id)])
             if(blogs.documents.length>0){
@@ -82,7 +81,7 @@ const Playground = () => {
        </Button>
        <Button primary onClick={async()=>{
         const res = await startAuthentication({dispatch,login,logout,setFetching,navigate});
-        const profile = res.code!==401 && await getUserProfile({userId,setProfile,clearProfile,dispatch})
+        const profile  = res.res.userProfile
        }}
        >Login</Button>
         <Button primary
@@ -94,7 +93,7 @@ const Playground = () => {
           }
          }
          >Reset Pass</Button>
-        <LoaderIcon id='loader'/>
+        <LoaderIcon id='loader'/> */}
     </div>
   );
 }

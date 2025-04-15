@@ -1,10 +1,10 @@
 import React from 'react'
+import { nanoid } from 'nanoid';
 import { useDispatch, useSelector } from 'react-redux';
 import useModalActionsContext from '../context/modalActionsContext';
 import { setInputFeild_1Error, setInputFeild_2Error,setInputFeild_1Value, clearModal, setCtaDisabled, setCtaLoading, setFeedbackMessage, setPrimaryBtnText } from '../store/formModalSlice'
 import { commentOnBlog } from '../store/blogsSlice'
-import { getFormModal, getImgUrl, startAuthentication } from '../utils';
-import { ID } from 'appwrite';
+import { getFormModal, getImgUrl } from '../utils';
 import { dbServices, authServices } from '../services';
 import toast from 'react-hot-toast';
 import { GenToast } from '../components';
@@ -12,7 +12,7 @@ import { updateAvatar } from '../store/userProfileSlice';
 import useFileObjectContext from '../context/fileObjectContext';
 import { useNavigate } from 'react-router-dom';
 import { setIsAdmin } from '../store/authSlice';
-import { adminService } from '../services/Admin/adminService';
+// import { adminService } from '../services/Admin/adminService';
 
 export default function useFormModal({
     modalId,
@@ -51,7 +51,7 @@ export function useCommentFormModal(userId, argHeading = "", argMessage = "", ar
     const message = argMessage || "Be respectful and keep your comments relevant to the topic.";
     const primaryBtnText = argPrimaryBtnText || "Post Comment";
     const secondaryBtnText = argSecondaryBtnText || "Cancel";
-    const [modalId] = React.useState(ID.unique())
+    const [modalId] = React.useState(nanoid(24))
     const [blogId, setBlogId] = React.useState(null);
     const [authorId, setAuthorId] = React.useState(null);
     const [comment, setComment] = React.useState(null);
@@ -62,7 +62,7 @@ export function useCommentFormModal(userId, argHeading = "", argMessage = "", ar
     const dispatch = useDispatch();
     const formModals = useSelector(state => state.formModals)
     const { addModalActionHandlers, removeModalActionHandlers } = useModalActionsContext();
-    const userProfileId = useSelector(state => state.userProfile.$id)
+    const userProfileId = useSelector(state => state.userProfile._id)
     const inputFeildSpecs = [
         {
             type: "Type your comment here",//type will be used as placeholder in the input feilds without fill
@@ -79,7 +79,7 @@ export function useCommentFormModal(userId, argHeading = "", argMessage = "", ar
         dispatch(setCtaDisabled({ id: modalId, val: true }))
 
         const res = await dbServices.commentOnBlog(blogId, userId, comment, userProfileId, authorId)
-        if (res.$id) {
+        if (res._id) {
             setLocalFeedbackMessage({ type: "success", message: "Commented posted successfully" })
             const newTimer = setTimeout(() => setOpenFormModal(false), 3000)
             setTimer(newTimer)
@@ -166,14 +166,14 @@ export function useAvatarFormModal(argHeading = "", argMessage = '', argPrimaryB
     const primaryBtnText = argPrimaryBtnText || "Upload Avatar";
     const secondaryBtnText = argSecondaryBtnText || "Cancel";
 
-    const [modalId] = React.useState(ID.unique())
+    const [modalId] = React.useState(nanoid(24))
     const [localFeedbackMessage, setLocalFeedbackMessage] = React.useState(null);
     const [timer, setTimer] = React.useState(null);
     const { addModalActionHandlers, removeModalActionHandlers } = useModalActionsContext();
     const { fileObject: avatar, setFileObject } = useFileObjectContext()
     const dispatch = useDispatch();
 
-    const { $id: userProfileId, fullName, userId, userAvatarId: currentUserAvatar } = useSelector(state => state.userProfile)
+    const { fullName, userId, userAvatarId: currentUserAvatar } = useSelector(state => state.userProfile)
     const inputFeildSpecs = [
         {
             type: "file",
@@ -192,16 +192,16 @@ export function useAvatarFormModal(argHeading = "", argMessage = '', argPrimaryB
         if (!avatar) return setLocalFeedbackMessage({ type: "err", message: "Please select an image to upload" })
         dispatch(setCtaLoading({ id: modalId, val: true }))
         dispatch(setCtaDisabled({ id: modalId, val: true }))
-        const imageUploadRes = await dbServices.changeAvatar(avatar, userId, userProfileId, currentUserAvatar)
-        if (imageUploadRes.$id) {
+        const imageUploadRes = await dbServices.uploadAvatar(avatar)
+        if (imageUploadRes.code==200) {
             setLocalFeedbackMessage({ type: "success", message: "Avatar updated successfully" })
             const newTimer = setTimeout(() => setOpenFormModal(false), 3000)
             setTimer(newTimer)
-            dispatch(updateAvatar({ url: imageUploadRes.userAvatar, id: imageUploadRes.userAvatarId }))
+            dispatch(updateAvatar({ url: imageUploadRes.res.imageURI, id: imageUploadRes.res.imageId }))
             return dispatch(setCtaLoading({ id: modalId, val: false }))
         }
-        if (imageUploadRes.res.code == 503) setLocalFeedbackMessage({ type: "err", message: "Service unavailable, please try again later" })
-        if (imageUploadRes.res.code == 500) {
+        if (imageUploadRes.code == 503) setLocalFeedbackMessage({ type: "err", message: "Service unavailable, please try again later" })
+        if (imageUploadRes.code == 500) {
             setLocalFeedbackMessage({ type: "err", message: "Internal server error, please try again later" })
             const newTimer = setTimeout(() => setOpenFormModal(false), 3000)
             setTimer(newTimer)
@@ -250,7 +250,7 @@ export function useSecureLoginModal( customCleanup=()=>{},argHeading = "", argMe
     const primaryBtnText = argPrimaryBtnText || "Request Email";
     const secondaryBtnText = argSecondaryBtnText || "Cancel";
 
-    const [modalId] = React.useState(ID.unique())
+    const [modalId] = React.useState(nanoid(24))
     const [email, setEmail] = React.useState(null);
     const [localFeedbackMessage, setLocalFeedbackMessage] = React.useState(null);
     const [timer, setTimer] = React.useState(null);
@@ -292,7 +292,7 @@ export function useSecureLoginModal( customCleanup=()=>{},argHeading = "", argMe
          dispatch(setCtaLoading({id:modalId ,val:false}))
          dispatch(setPrimaryBtnText({id:modalId, text:primaryBtnText}))
 
-         if(res.ok){
+         if(res.code==200){
             dispatch(setCtaDisabled({id:modalId,val:true}));
             dispatch(setPrimaryBtnText({id:modalId,text:"Sent"}))
             return setLocalFeedbackMessage({type:"success", message:"Email sent successfully"})
@@ -350,7 +350,7 @@ export function useResetPassModal(customCleanup = ()=>{},argHeading = "", argMes
     const minChars = 8;
     const maxChars = 64; 
 
-    const [modalId] = React.useState(ID.unique())
+    const [modalId] = React.useState(nanoid(24))
     const [password, setPassword] = React.useState("")
     const [localFeedbackMessage, setLocalFeedbackMessage] = React.useState(null)
     const {userData} = useSelector(state=>state.auth)
@@ -384,8 +384,8 @@ export function useResetPassModal(customCleanup = ()=>{},argHeading = "", argMes
         dispatch(setPrimaryBtnText({id:modalId, text:"Resetting ..."}))
         dispatch(setCtaDisabled({id:modalId,val:true}))
         dispatch(setCtaLoading({id:modalId,val:true}))
-        const res = await authServices.resetPassword(userData.$id,password);
-        if(res.ok){
+        const res = await authServices.resetPassword(password);
+        if(res.code==200){
             await authServices.logout()
             authServices.login(userData.email,password)
             dispatch(setCtaLoading({id:modalId,val:false}))
@@ -438,7 +438,7 @@ export function useLoginModal(customCleanup = ()=>{},argHeading = "", argMessage
     const minChars = 8;
     const maxChars = 64; 
 
-    const [modalId] = React.useState(ID.unique())
+    const [modalId] = React.useState(nanoid(24))
     const [password, setPassword] = React.useState("")
     const [email, setEmail] = React.useState(null);
     const [localFeedbackMessage, setLocalFeedbackMessage] = React.useState(null)
@@ -499,7 +499,7 @@ export function useLoginModal(customCleanup = ()=>{},argHeading = "", argMessage
         }
         dispatch(setCtaLoading({id:modalId,val:false}))
         dispatch(setPrimaryBtnText({id:modalId, text:primaryBtnText}))
-        if(res.code==401) return setLocalFeedbackMessage({type:"err", message:"Invalid username or password. Please try again."})
+        if(res.code==401) return setLocalFeedbackMessage({type:"err", message:"Invalid userName or password. Please try again."})
         if(res.code==403) return setLocalFeedbackMessage({type:"err", message:"Your account does not have admin privileges."})
         if(res.code==500) return setLocalFeedbackMessage({type:"err", message:"Internal server error"})
         if (res.code == 503) return setLocalFeedbackMessage({ type: "err", message: "Service unavailable, please try again later" })

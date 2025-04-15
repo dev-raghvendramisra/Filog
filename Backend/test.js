@@ -1,0 +1,2 @@
+console.log(decodeURI(" https://api.example.com/users?query=%7B%22age%22%3A%7B%22%24gt%22%3A18%7D%2C%22sort%22%3A%7B%22name%22%3A1%7D%2C%22limit%22%3A10%7D"))
+console.log(decodeURIComponent(" https://api.example.com/users?query=%7B%22age%22%3A%7B%22%24gt%22%3A18%7D%2C%22sort%22%3A%7B%22name%22%3A1%7D%2C%22limit%22%3A10%7D"))

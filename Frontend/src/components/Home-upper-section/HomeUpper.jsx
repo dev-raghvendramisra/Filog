@@ -22,11 +22,11 @@ function HomeUpper() {
       
       tl.from("#cta",{
         opacity:0,
-        x:100,
-        duration:0.5,
-        delay:0,
+        delay:1,
+        duration:1,
         ease:"power2.out"
       })
+      tl.to("#cta",{opacity:1})
 
    })
 
@@ -42,7 +42,7 @@ function HomeUpper() {
           </p>
       </div>
         <p className='text-center text-1.2vw slideUp'>Unleash the power of your words 🔓</p>
-        <Button onClick={()=>{navigate("/signup")}} className='mt-4p gap-3 hover:hoverAnim pt-0.7vw pb-0.7vw text-1.3vw slideUp' primary>
+        <Button onClick={()=>{navigate("/signup")}} className='mt-4p gap-3 hover:hoverAnim pt-0.7vw pb-0.7vw text-1.3vw ' id="cta" primary>
             Let's get started
         <i className="fa-solid fa-arrow-right -rotate-45"></i>
         </Button>

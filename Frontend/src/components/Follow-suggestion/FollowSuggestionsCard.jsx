@@ -9,7 +9,6 @@ function FollowSuggestionsCard({
   type="dashboard",
   loader,
   suggestedUser,
-  userProfileId,
   navigate,
   isSuggestedUserFilogVerified,
   setFollowing,
@@ -36,8 +35,8 @@ function FollowSuggestionsCard({
     }
     setLoading(true);
     if (!isFollowing) {
-      const res = await dbServices.follow_unfollowUser(userProfileId,suggestedUser.userId,type="following");
-      if (res.$id) {
+      const res = await dbServices.follow_unfollowUser(suggestedUser.userId,type="follow");
+      if (res.code==200) {
         //followed user
         toast.custom(<CustomToast secondaryText={followingMsg} img={suggestedUser.userAvatar}>{suggestedUser.fullName}</CustomToast>)
         setIsFollowing(true);
@@ -49,8 +48,8 @@ function FollowSuggestionsCard({
     }
     else if (isFollowing) {
       //unfollowed user
-      const res = await dbServices.follow_unfollowUser(userProfileId,suggestedUser.userId,type="unfollowing");
-      if (res.$id) {
+      const res = await dbServices.follow_unfollowUser(suggestedUser.userId,type="unfollow");
+      if (res.code==200) {
       setIsFollowing(false);
       setFollowing("remove")
       toast.custom(<CustomToast secondaryText={unfollowingMsg} img={suggestedUser.userAvatar}>{suggestedUser.fullName}</CustomToast>)

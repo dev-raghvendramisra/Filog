@@ -1,8 +1,8 @@
 import React from 'react'
 import {PostCont} from '../../components'
 import { useSelector } from 'react-redux';
-import { Query } from 'appwrite';
 import { useFetch as useFetchPosts , usePagination } from '../../hooks';
+import { Query } from '../../services';
 
 function FollowedPosts() {
     const [initLoading, setInitLoading] = React.useState(true);
@@ -38,7 +38,7 @@ function FollowedPosts() {
    React.useEffect(()=>{
       if(following!==null){
         setInitLoading(false);
-        setQuery([Query.equal("userId",following)])
+        setQuery(new Query().$in("userId",following))
      }
    },[following])
 

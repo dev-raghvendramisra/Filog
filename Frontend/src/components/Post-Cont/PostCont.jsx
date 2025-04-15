@@ -21,21 +21,21 @@ function PostCont({
    
   const {userData} = useSelector((state) => state.auth)
   const {mobile} = usePlatformContext()
-  const {userProfileId,blogsLiked} = useSelector((state) => {
+  const {blogsLiked} = useSelector((state) => {
     return {
-      userProfileId: state.userProfile.$id,
+      userProfileId: state.userProfile._id,
       blogsLiked: state.userProfile.blogsLiked
     }
   }, (prev, next) =>{
      return prev.userProfileId==next.userProfileId && JSON.stringify(prev.blogsLiked)===JSON.stringify(next.blogsLiked)
     })
   const openAlertModal = useEmailAlertModal()
-  const openCommentModal = useCommentFormModal(userData.$id)
+  const openCommentModal = useCommentFormModal(userData._id)
   const dispatch = useDispatch()
 
   const[cardLayout, setCardLayout] = React.useState("horizontal")
   const setLayout = ()=>{
-    console.log(mobile);
+    ;
     
     if(mobile){
       setCardLayout("vertical")
@@ -72,7 +72,6 @@ function PostCont({
           authorName={post.authorName}
           userData={userData}
           authorUserName={post.authorUserName}
-          userProfileId={userProfileId}
           likeCount={post.likeCount}
           commentCount={post.commentCount}
           blogTitle={post.title}
@@ -81,7 +80,7 @@ function PostCont({
           authorAvatar={post.authorAvatar}
           authorId={post.authorId}
           createdAt={post.createdAt}
-          blogImg={post.coverImageUrl}
+          blogImg={post.coverImageURI}
           blogsLiked={blogsLiked}
           openAlertModal={openAlertModal}
           blogCardType={cardLayout}

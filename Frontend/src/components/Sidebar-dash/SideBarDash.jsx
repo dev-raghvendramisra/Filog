@@ -2,7 +2,7 @@ import React, {  useEffect, useRef, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { ErrorPlaceHolderImage, FollowSuggestionsCard, Footer, GenToast } from '../../components';
-import { Query } from 'appwrite';
+import { Query } from '../../services';
 import { updateFollowing } from '../../store/userProfileSlice';
 import useFetchUsers from '../../hooks/useFetch';
 import { usePagination, useEmailAlertModal } from '../../hooks';
@@ -25,9 +25,9 @@ function SideBarDash({ contRef }) {
 
   
   // Redux state and dispatch
-  const { following, userProfileId } = useSelector(state => ({
+  const { following } = useSelector(state => ({
     following: state.userProfile.following,
-    userProfileId: state.userProfile.$id
+    userProfileId: state.userProfile._id
   }), (prev, next) => prev.following === next.following && prev.userProfileId === next.userProfileId);
   
   const suggestedUsers = useSelector(state => state.users);
@@ -51,13 +51,11 @@ function SideBarDash({ contRef }) {
   }, [contRef]);
 
 
-
-  // Update query for fetching users
   useEffect(() => {
     if (following!==null) {
       setInitLoading(false);
-      const queries = following.map(user => Query.notEqual("userId", [user]));
-      setQuery([...queries, Query.notEqual("userId", [userData.$id])]);
+      const queries = new Query().$nin("userId",[userData._id,...following])
+      setQuery(queries)
     }
   }, [following]);
 
@@ -102,8 +100,7 @@ function SideBarDash({ contRef }) {
                 <FollowSuggestionsCard
                   key={user.profileId}
                   navigate={navigate}
-                  userId={userData.$id}
-                  userProfileId={userProfileId}
+                  userId={userData._id}
                   suggestedUser={user}
                   setFollowing={(type) => { dispatch(updateFollowing({type,val:user.userId})) }}
                   openAlert={()=>{

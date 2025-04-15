@@ -8,9 +8,8 @@ import { useNavigate } from 'react-router-dom';
 import { login, logout, setFetching } from '../../store/authSlice';
 import {startAuthentication} from '../../utils';
 import { authErrHandler } from '../../utils';
-import getUserProfile from '../../utils/getUserProfile';
-import { clearProfile, setProfile } from '../../store/userProfileSlice';
 import { useSecureLoginModal } from '../../hooks';
+import conf from '../../conf/conf';
 
 
 
@@ -35,42 +34,23 @@ export default function Login() {
   React.useEffect(()=>{
     const startLoginSequence = async()=>{
        if(isValidated){
-           setLoading(true);
-           dispatch(setIsValidate(false)); //setting the validation false to avoid back to back requests with same credentials
+           try {
+            setLoading(true);
+           dispatch(setIsValidate(false)); 
            const sessionInitRes = await  authServices.login(email,password)
-           const didErrOccured = authErrHandler({
-            res:sessionInitRes,
-            dispatch:dispatch,
-            navigate:navigate,
-            setEmail:setEmail,
-            setPass:setPassword,
-            setErr:setFormErr
-           })
-
-           if(didErrOccured){
-            console.log("An error occured") 
+           const sessionErr = authErrHandler({res:sessionInitRes})
+           if(sessionErr.occured){
+              throw sessionErr.errMsg
            }
-           else if(sessionInitRes.$id){
-             const authRes = await startAuthentication({//calling the strtauthentication util to verify the session and retreive the user details
-               dispatch:dispatch,
-               login:login,
-               logout:logout,
-               setFetching:setFetching,
-               setEmail:setEmail,
-               setPass:setPassword,
-               navigate
-             })
-             
-             if(authRes.message){
-               setFormErr(authRes.message)
-             }
-             if(authRes.$id){
-              await getUserProfile({userId:authRes.$id,dispatch,setProfile,clearProfile})
-             }
-
+           const authRes = await startAuthentication({ dispatch,setEmail, setPass:setPassword, navigate })
+           if(authRes.code!==200){
+             throw authRes.message
            }
-
-           setLoading(false)
+           } catch (error) {
+             setFormErr(error)
+           } finally{
+            setLoading(false)
+           }
        }
     }
     startLoginSequence()
@@ -104,6 +84,10 @@ export default function Login() {
           }>
             Login
           </Button >
+          <Button outline  wide className='w-70p mt-4p overflow-hidden transition-all' onClick={()=>location.href=conf.AUTH_API_OAUTH_GOOGLE_ENDPOINT}>
+          <img className='w-1.6vw pr-2' src="/icons/google-icon.webp" />
+          Login with google
+          </Button>
           <Error  className="transition-all justify-center mt-4p" >{formErr}</Error>
           <NavLink className='mt-16p w-100p text-0.8vw text-gray-600 dark:text-footer_text ' >
             Forgot password ?

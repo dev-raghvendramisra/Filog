@@ -72,7 +72,7 @@ const  FormValidation=React.forwardRef(({ className='', type = "login"},formRef)
     const userNameValid = type === "signup" ? userNameValidation() : true;
 
     if (isFormValid && nameValid && emailValid && passValid && userNameValid) {
-      console.log("Submitting started");
+      ;
       dispatchChange(setIsValidate(true))
     }
 
@@ -146,7 +146,7 @@ const  FormValidation=React.forwardRef(({ className='', type = "login"},formRef)
 
         {type === "signup" ? (
           <Input
-            type={"username"}
+            type={"userName"}
             value={userName}
             ref={refs[1]}
             errMsg={userNameErr}

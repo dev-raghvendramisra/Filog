@@ -11,7 +11,6 @@ function BlogCardInteractionContainer({
   blogCardType, 
   userData, 
   authorUserName,
-  userProfileId, 
   likeCount, 
   commentCount, 
   blogTitle, 
@@ -123,7 +122,6 @@ function BlogCardInteractionContainer({
 
       <BlogInteraction
         userData={userData}
-        userProfileId={userProfileId}
         blogId={blogId}
         openAlertModal={openAlertModal}
         openCommentModal={openCommentModal}

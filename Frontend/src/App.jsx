@@ -6,12 +6,9 @@ import '@fortawesome/fontawesome-free/css/all.min.css';
 
 import {  Outlet, useLocation } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
-import { login, logout, setFetching } from './store/authSlice';
 import { useNavigate } from 'react-router-dom';
 import { startAuthentication } from './utils';
 import toast,{Toaster} from 'react-hot-toast'
-import { clearProfile, setProfile } from './store/userProfileSlice';
-import getUserProfile from './utils/getUserProfile';
 import usePlatformContext from './context/platformContext';
 import TemporaryProhib from './pages/TemporaryProhib';
 
@@ -25,11 +22,7 @@ function App() {
   
   React.useEffect(() => {
     const startLoginSequence = async () => {
-      console.log("Authenticating user...");
-      const res = await startAuthentication({ dispatch, login, logout, setFetching ,navigate});     
-     if(res.$id){
-       await getUserProfile({dispatch,setProfile,clearProfile,userId:res.$id})
-     } 
+      await startAuthentication({ dispatch,navigate});    
     };
 
     if (!isUserLoggedIn) {
@@ -40,7 +33,7 @@ function App() {
         navigate("/dashboard",{replace:true});
       }
       else navigate(`${pathname}${search && search}`)
-      pathname=="/verify-email" || toast.custom(<GenToast type="greet">Welcome, {userData.name}</GenToast>);
+      pathname=="/verify-email" || toast.custom(<GenToast type="greet">Welcome, {userData.fullName}</GenToast>);
     } 
     else {
       if(pathname=="/dashboard" || pathname=="/dashboard/featured" || pathname=="/dashboard/following" || pathname=="/write" || pathname=="/" || pathname=="/profile"){
@@ -53,10 +46,10 @@ function App() {
   const setPlatform = ()=>{
     if(window.innerWidth<576){
       setPlatformAsMobile()
-      console.log("platform-mobile")
+      
     }
     else setPlatformAsDesktop()
-    console.log("platform-pc");
+    ;
   }
    
   React.useEffect(()=>{

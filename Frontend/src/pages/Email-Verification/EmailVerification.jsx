@@ -1,152 +1,107 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useNavigate, useSearchParams } from 'react-router-dom';
-import { authErrHandler, getNewVerificationEmail, startAuthentication } from '../../utils';
 import { authServices } from '../../services';
 import useTheme from '../../context/themeContext';
 import { Button, FeedbackMessage, GenToast } from '../../components';
 import toast from 'react-hot-toast';
-import { ID } from 'appwrite';
+;
 import { useDispatch, useSelector } from 'react-redux';
-import { login, logout } from '../../store/authSlice';
 
 function EmailVerification() {
   // State hooks for handling error, success message, and various other states
   const [searchParams] = useSearchParams();
   const [err, setErr] = React.useState(null);
   const [successMsg, setSuccessMsg] = React.useState(null);
-  const [disabled, setDisabled] = React.useState(true);
-  const [resCode, setResCode] = React.useState(null);
-  const [timer, setTimer] = React.useState(0);
-  const [initLoading, setInitLoading] = React.useState(true);
-  const [btnText, setBtnText] = React.useState("Get new");  
+  const [disabled, setDisabled] = React.useState(true); 
   const [btnLoading, setBtnLoading] = React.useState(false);
   
   // Redux and other hooks
   const { isUserLoggedIn, userData, fetching } = useSelector((state) => state.auth);
   const navigate = useNavigate();
   const { isDark } = useTheme();
-  const dispatch = useDispatch();
-  const id = ID.unique();
+  const id = nanoid(24);
   
   // Error messages
-  const errMsg = ["Invalid verification link", "Email already verified"];
-  
-  // Function to check if the verification link has expired
-  const isVerificationExpired = React.useCallback((expire) => {
-    const crrDate = new Date().getTime();
-    return crrDate >= expire;
-  }, []);
-  
-  // Function to handle the "Get new" button click
-  const handleClick = React.useCallback(async () => {
-    setDisabled(true);
-    setBtnLoading(true);
-    setBtnText("Sending...");
-    setErr(null);
+  const errMsg = {401:"Invalid verification link", 410:"Verification link expired",500:"Internal server error"}
+  async function startSequence(){
     
-    if (!isUserLoggedIn || resCode == 401 && !isUserLoggedIn) {
-      const timer = setTimeout(() => navigate("/login"), 7000);
-      setTimer(timer);
-      setBtnLoading(false);
-      setBtnText("Get new");
-      return setErr("You need to login first");
+    const isValid = validation()
+    setBtnLoading(true)
+    if(!isValid){
+      return ;
     }
-    
-    const res = await getNewVerificationEmail({
-      isUserLoggedIn,
-      userData,
-      setErr,
-      errMsg,
-      navigate,
-      timer,
-      setTimer
-    });
-    
-    if (res) {
-      toast.custom(<GenToast type="successMsg">Verification email sent successfully</GenToast>);
-      setSuccessMsg("Verification email sent, click on the link to verify");
-      setErr(null);
+    const res = await authServices.verifyEmailVerifcation(isValid.token)
+    if(res.code==200){
+      setSuccessMsg("Email verified successfully")
     }
-    setBtnLoading(false);
-    setBtnText("Get new");
-  }, [resCode, isUserLoggedIn, userData]);
-  
-  // Function to verify the email using userId and secret
-  const verification = React.useCallback(async (userId, secret) => {
-    const res = await authServices.verifyEmail(userId, secret);
+    else{
+      if(res.code!==500) {
+        setDisabled(false)
+      }
+      else setTimeout(()=>navigate("/"),1200)
+      setErr(errMsg[res.code])
+    }
+    setBtnLoading(false)
+  }
+ 
+  function validation(){
+   const expiry = searchParams.get("expire")
+   const token = searchParams.get("secret")
 
-    const didErrOccured = authErrHandler({
-      res,
-      setErr,
-      navigate,
-      errMsg,
-      setResCode,
-      verification: true,
-      setTimer
-    });
-    
-    if (!didErrOccured) {
-      toast.custom(<GenToast type="success">Email verified successfully</GenToast>);
-      setSuccessMsg("Email verified successfully");
-      setErr(null);
-      clearTimeout(timer);
-      const newTimer = setTimeout(() => navigate("/"), 5000);
-      startAuthentication({ dispatch, login, logout, navigate });
-      setBtnLoading(false);
-      setBtnText("Get new");
-      return setTimer(newTimer);
-    } setDisabled(false)
-      setBtnLoading(false);
-      setBtnText("Get new");
-  }, []);
+   if(expiry && token){
+      if(userData.emailVerification){
+       setErr("Email already verified")
+       setTimeout(()=>navigate("/"),1200)
+       return false
+     }
+      else if(Date.now()>=Number(expiry)){
+        setErr("Token expired")
+        setDisabled(false)
+        return false
+      }
+      return {expiry , token}
+   }
+  }
   
-  // Effect to handle the email verification process on component mount
-  React.useEffect(() => {
-    if(initLoading) return;
-    setDisabled(true);
-    setBtnLoading(true);
-    setBtnText("Verifying...");
-    const userId = searchParams.get('userId');
-    const secret = searchParams.get('secret');
-    const expire = searchParams.get('expire');
-    if(userData?.emailVerification){
-      setBtnLoading(false);
-      setBtnText("Get new");
-      return setErr("Email already verified");
+  async function handleClick() {
+    setBtnLoading(true)
+    setDisabled(true)
+    const res  = await authServices.createEmailVerification()
+    if(res.code!==200){
+      setErr(res.message)
+      setTimeout(()=>navigate("/"),1200)
     }
-    
-    if (userId && secret && !isVerificationExpired(expire)) {
-      verification(userId, secret);
-    } else if (userId && secret) {
-      setErr("Verification link expired");
-      setDisabled(false);
-      setBtnLoading(false);
-      setBtnText("Get new");
-    } else {
-      setErr("Verification link broken");
-      setDisabled(false);
-      setBtnLoading(false);
-      setBtnText("Get new");
+    else {
+      setSuccessMsg(res.message)
     }
-  }, [searchParams,initLoading]);
-  
-  // Effect to handle error messages and cleanup timer
-  React.useEffect(() => {
-    if (err) {
-      setSuccessMsg(null);
-      toast.custom(<GenToast type="err">{err}</GenToast>); 
+    setBtnLoading(false)
+  }
+  useEffect(()=>{
+    if(fetching){
+      return;
     }
-    return () => clearTimeout(timer);
-  }, [err]);
-  
-  // Effect to handle disabling of button based on fetching state
-  React.useEffect(() => {
-    if(userData?.emailVerification) return setDisabled(true);
-  }, [initLoading]);
+    if(!isUserLoggedIn){
+      return setErr("You need to be logged in to verify")
+    }
+    startSequence()
 
-  React.useEffect(() => {
-   setInitLoading(fetching);
-  }, [fetching]);
+  },[isUserLoggedIn,fetching])
+
+  
+  useEffect(()=>{
+    if(successMsg){
+      setErr(null)
+      toast.custom(<GenToast type="success">{successMsg}</GenToast>)
+      setTimeout(()=>navigate("/"),1200)
+    }
+  },[successMsg])
+
+  useEffect(()=>{
+    if(err){
+      setSuccessMsg(null)
+      toast.custom(<GenToast type="err">{err}</GenToast>)
+    }
+  },[err])
   
   return (
     <div className='h-100vh w-full flex items-center justify-center' id={id + "email-verification-wrapper"}>
@@ -166,7 +121,7 @@ function EmailVerification() {
             Do it later
           </Button>
           <Button primary={!disabled} disabled={disabled} loading={btnLoading} onClick={handleClick} className='text-1.2vw'>
-            {btnText}
+            Get new
           </Button>
         </div>
       </div>
@@ -175,3 +130,5 @@ function EmailVerification() {
 }
 
 export default EmailVerification;
+
+

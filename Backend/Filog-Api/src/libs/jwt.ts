@@ -1,21 +1,30 @@
 import conf from 'config/conf';
 import jwt, {JwtPayload} from 'jsonwebtoken'
 import { envLogger as logger } from './winstonLogger';
-export const createJwt = function (payload : JwtPayload , expiry : number){
-    return jwt.sign(payload, conf.JWT_SECRET,{expiresIn:expiry});
+export const createJwt = function (variant:"SESSION"|"API",payload : JwtPayload , expiry = 30*24*60*60){
+    switch(variant){
+        case "SESSION":
+            return jwt.sign(payload, conf.JWT_SESSION_SECRET,{expiresIn:expiry});
+        default:
+            return jwt.sign(payload,conf.JWT_API_SECRET,{expiresIn:expiry})
+    }
 }
 
-export const verifyJwt = function (token : string) {
-    return jwt.verify(token, conf.JWT_SECRET);
+export const verifyJwt = function (variant:"SESSION"|"API",token : string) {
+    switch(variant){
+        case "SESSION":
+            return jwt.verify(token,conf.JWT_SESSION_SECRET);
+        default:
+            return jwt.verify(token,conf.JWT_API_SECRET);
+    }
 }
 
 export const handleJwtError = function (err : string) {
-    logger.error(`${err}`);
     switch (err) {
         case 'TokenExpiredError':
-            return ({ ok: false, res: "Token expired", code: 401 });
+            return ({ code: 410, message: "Token expired", res:null });
         case 'JsonWebTokenError':
-            return ({ ok: false, res: "Invalid token", code: 401 });
+            return ({ code: 401, message: "Invalid token", res:null });
         default:
             return false;
     }

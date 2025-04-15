@@ -1,8 +1,7 @@
 import React from 'react'
-import { getUserProfile, startAuthentication } from '../../utils'
+import {  startAuthentication } from '../../utils'
 import { useDispatch, useSelector } from 'react-redux'
 import { login, logout, setFetching } from '../../store/authSlice'
-import { setProfile, clearProfile } from '../../store/userProfileSlice'
 import { useNavigate, useSearchParams } from 'react-router-dom'
 import useTheme from '../../context/themeContext'
 import { FeedbackMessage, GenToast } from '../../components'
@@ -18,65 +17,60 @@ function MagicUrlVerification() {
   const dispatch = useDispatch()
   const navigate = useNavigate()
 
-  const errMsg = ["Invalid verification link", "Verification link expired"]
+  const errMsg = {401:"Invalid verification link", 410:"Verification link expired",500:"Internal server error"}
   
   const {isDark} = useTheme()
-  const {userData, isFetching} = useSelector(state=>state.auth)
+  const {userData, fetching} = useSelector(state=>state.auth)
   const [searchParams] = useSearchParams()
   const openModal = useResetPassModal()
 
   React.useEffect(()=>{
      if(!verified){ 
-     if(!isFetching){
+     if(!fetching){
        if(userData){
-         setErr("You are already loggedIn");
+         return setErr("You are already loggedIn");
        }
-       else {const {isValid, userId, secret} = checkLinkIntegrity()
-       if(isValid) startSequence(userId, secret);}
+       else {
+        const {isValid, secret} = checkLinkIntegrity()
+        if(isValid) startSequence(secret);
+      }
      }}
-  },[isFetching,userData])
+  },[fetching,userData])
 
 
   function checkLinkIntegrity(){
-    const userId = searchParams.get('userId');
     const secret = searchParams.get('secret');
     const expiry = searchParams.get('expire')
-    if(userId && secret && expiry){
+    if(secret && expiry){
       const isValid = new Date().getTime()<expiry
-      if(!isValid) setErr(errMsg[1])
-      return {isValid, userId, secret};
+      if(!isValid) {setErr(errMsg[410])}
+      return {isValid, secret};
     }
     else setErr("Link is broken");
-    return {isValid :false, userId, secret};
+    return {isValid :false,  secret};
   }
 
-  async function verifySecret(userId, secret){
-    const res = await authServices.verifyMagicUrl(userId,secret)
-    if(res.ok){
-      return res.res.jwt
+  async function verifySecret( secret){
+    const res = await authServices.verifyMagicUrl(secret)
+    if(res.code==200){
+      return res
     }
-    if(res.code==400){
-       setErr(errMsg[0])
-       return false;
-    }
-    if(res.code==401){
-       setErr(errMsg[1])
-       return false;
+    else {
+      setErr(errMsg[res.code])
+      return false
     }
   }
 
-  async function startSequence(userId,secret){
+  async function startSequence(secret){
     setVerifying(true)
-    const session_key = await verifySecret(userId, secret)
-    if(session_key)  authServices.loginWithMagicUrl(session_key);
-    else{
+    const isVerified = await verifySecret( secret)
+    if(!isVerified) {
       return setVerifying(false)
     } 
     setSuccessMsg("Link verified successfully")
     setVerifying(false)
     setVerified(true)
     await startAuthentication({dispatch,login,logout,setFetching,navigate,read_writeAuthObj:false})
-    await getUserProfile({userId,setProfile,clearProfile,dispatch})
     setTimeout(() => {
       openModal(true)
     }, 100);

@@ -6,7 +6,6 @@ const initialState =[ {
     userName:"",
     fullName:"",
     userAvatar:"",
-    userAvatarId:"",
     blogs:[],
     isFilogVerified:null,
 }]
@@ -21,10 +20,9 @@ const usersSlice = createSlice({
                const newUser = {}
                newUser.userId = user.userId;
                newUser.userName = user.userName;
-                newUser.fullName = user.fullName;
+               newUser.fullName = user.fullName;
                newUser.userAvatar = user.userAvatar;
-               newUser.profileId = user.$id;
-               newUser.userAvatar = user.userAvatar;
+               newUser.profileId = user._id;
                newUser.isFilogVerified = user.isFilogVerified;
                state.push(newUser)
            });
