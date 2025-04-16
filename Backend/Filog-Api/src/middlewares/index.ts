@@ -3,5 +3,5 @@ import requestValidator from "./requestValidator";
 import queryParser from "./queryParser";
 import authenticateUser from "./authenticateUser";
 import { blogOwnershipValidator } from "./ownershipValidator";
-import verifyRequestSignature from "./verifyRequestSignature";
-export{logger,requestValidator,queryParser, authenticateUser, blogOwnershipValidator, verifyRequestSignature}
+import verifyCSRF from "./verifyCSRF"
+export{logger,requestValidator,queryParser, authenticateUser, blogOwnershipValidator, verifyCSRF}

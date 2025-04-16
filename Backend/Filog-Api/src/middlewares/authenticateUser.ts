@@ -1,6 +1,7 @@
-import { envLogger as logger, verifyJwt } from "@lib";
+import { createJwt, envLogger as logger, verifyJwt } from "@lib";
 import { UserDataInCookie, AuthenticatedRequest } from "@type/request/body";
 import { NextFunction, Response } from "express";
+import { Types } from "mongoose";
 
 /**
  * Middleware to authenticate users by verifying their session JWT.
@@ -11,6 +12,8 @@ import { NextFunction, Response } from "express";
  */
 export default async function authenticateUser(req:AuthenticatedRequest,res:Response,next:NextFunction){
     try {
+       const token = createJwt("API",new Types.ObjectId().toString("base64"),60*30)
+       res.setHeader("X-CSRF-Token",token)
        const {auth_token} = req.cookies
        const data = verifyJwt("SESSION",auth_token) as UserDataInCookie
        req.userData = data;

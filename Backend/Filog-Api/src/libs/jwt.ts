@@ -1,7 +1,8 @@
 import conf from 'config/conf';
 import jwt, {JwtPayload} from 'jsonwebtoken'
-import { envLogger as logger } from './winstonLogger';
-export const createJwt = function (variant:"SESSION"|"API",payload : JwtPayload , expiry = 30*24*60*60){
+
+
+export const createJwt = function (variant:"SESSION"|"API",payload : string | Buffer | object , expiry = 30*24*60*60){
     switch(variant){
         case "SESSION":
             return jwt.sign(payload, conf.JWT_SESSION_SECRET,{expiresIn:expiry});

@@ -11,7 +11,6 @@ import { envLogger as logger } from "@lib";
  */
 export async function sendSessionCookie(res:Response,data:object){
    const age = 1000*60*60*24*15
-   console.log(data)
    const token = createJwt("SESSION",data,age)
    return res.cookie('auth_token',token,{
     httpOnly:true,

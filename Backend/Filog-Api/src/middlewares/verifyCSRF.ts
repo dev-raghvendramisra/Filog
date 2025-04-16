@@ -8,10 +8,16 @@ import { NextFunction, Request, Response } from 'express';
  * @param res - The Express response object.
  * @param next - The next middleware function.
  */
-export default function verifyRequestSignature(req: Request, res: Response,next:NextFunction) {
+export default function verifyCSRF(req: Request, res: Response,next:NextFunction) {
   try {
-    // const signature = req.headers.authorization?.split("Bearer")[1].trim() as string
-    // verifyJwt("API",signature)
+    const restrictedMethods = ["POST","PATCH","DELETE","POST","PUT"]
+   if(restrictedMethods.includes(req.method)){
+      const token = req.headers["X-CSRF-Token"]
+      if(!token){
+        throw 401
+      }
+      verifyJwt("API",token as string)
+    }
     next()
   } catch (error) {
     res.status(401).send({code:401,message:"You are not authorized to access the service",res:null})

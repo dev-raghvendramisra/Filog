@@ -2,7 +2,7 @@ import { Router } from "express";
 const router = Router();
 import { requestValidator } from "@middleware";
 import { generateEmailVerification, verifyEmailVerification } from "@controller/auth/emailVerification";
-import { signup, login, getUserDetails, logout, resetPassword, launchOauth, googleOAuth } from "@controller/auth/session";
+import { signup, login, logout, resetPassword, launchOauth, googleOAuth } from "@controller/auth/session";
 import { generateMagicUrl, verifyMagicUrl } from "@controller/auth/magicUrl";
 import authenticateUser from "middlewares/authenticateUser";
 
@@ -10,7 +10,6 @@ import authenticateUser from "middlewares/authenticateUser";
 router.put("/register", requestValidator, signup);
 router.post("/login", requestValidator, login);
 router.delete("/logout", authenticateUser, logout);
-router.get("/users/me", authenticateUser, getUserDetails);
 
 // OAuth routes
 router.get("/oauth/init/:provider", launchOauth);

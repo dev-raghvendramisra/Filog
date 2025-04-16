@@ -1,3 +1,4 @@
+import { dbServices } from "..";
 import conf from "../../conf/conf";
 import axios from "axios";
 
@@ -64,6 +65,15 @@ export class Auth {
     async getLoggedInUser() {
         try {
             const res = await this.auth.get(conf.AUTH_API_GET_USER_DATA);
+            const token = res.headers["X-CSRF-Token"]
+            this.auth.interceptors.request.use((config)=>{
+                config.headers["X-CSRF-Token"] = token;
+                return config;
+            })
+            dbServices.database.interceptors.request.use((config)=>{
+                config.headers["X-CSRF-Token"] = token;
+                return config;
+            })
             return res.data;
         } catch (error) {
             console.log("AUTH_SERVICE_ERROR :: FAILED_TO_GET_USER_DATA");

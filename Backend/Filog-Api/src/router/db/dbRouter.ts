@@ -1,3 +1,4 @@
+import { getUserDetails } from "@controller/auth/session";
 import { uploadAvatar,uploadBlogImage } from "@controller/bucket/createFiles";
 import { createBlog } from "@controller/db/createDocuments";
 import { getBlogs, getUsers } from "@controller/db/fetchDocuments";
@@ -28,6 +29,8 @@ router.patch("/profile", authenticateUser, requestValidator, updateProfile);
 router.put("/profile/avatar", authenticateUser, uploadFiles.single("avatar"), uploadAvatar);
 router.patch("/users/followers/:_userId", authenticateUser, followUser);
 router.delete("/users/followers/:_userId", authenticateUser, unfollowUser);
+router.get("/users/me", authenticateUser, getUserDetails);
+
 
 // Blogs
 router.get("/blogs", queryParser, getBlogs);
