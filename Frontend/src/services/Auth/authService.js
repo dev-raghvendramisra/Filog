@@ -65,18 +65,11 @@ export class Auth {
     async getLoggedInUser() {
         try {
             const res = await this.auth.get(conf.AUTH_API_GET_USER_DATA);
-            const token = res.headers["X-CSRF-Token"]
-            this.auth.interceptors.request.use((config)=>{
-                config.headers["X-CSRF-Token"] = token;
-                return config;
-            })
-            dbServices.database.interceptors.request.use((config)=>{
-                config.headers["X-CSRF-Token"] = token;
-                return config;
-            })
+            this.setCSRF(res)
             return res.data;
         } catch (error) {
             console.log("AUTH_SERVICE_ERROR :: FAILED_TO_GET_USER_DATA");
+            this.setCSRF(error.response)
             return error.response.data;
         }
     }
@@ -110,7 +103,7 @@ export class Auth {
             });
             return res.data;
         } catch (error) {
-            console.log("AUTH_SERVICE_ERROR :: FAILED_TO_CREATE_MAGIC_URL");
+            console.log("AUTH_SERVICE_ERROR :: FAILED_TO_CREATE_MAGIC_URL",error);
             return error.response.data;
         }
     }
@@ -126,7 +119,30 @@ export class Auth {
             return error.response.data;
         }
     }
+
+
+    setCSRF(res) {
+        const token = res.headers["x-csrf-token"]; 
+        
+        if (!token) {
+            console.error("CSRF token not found in response headers.");
+            return;
+        }
+    
+      
+        this.auth.interceptors.request.use((config) => {
+            config.headers["X-CSRF-Token"] = token;
+            return config;
+        });
+    
+        dbServices.database.interceptors.request.use((config) => {
+            config.headers["X-CSRF-Token"] = token;
+            return config;
+        });
+    }
 }
 
 const authServices = new Auth();
 export default authServices;
+
+

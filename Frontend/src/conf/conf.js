@@ -16,7 +16,7 @@ const conf = Object.freeze({
    AUTH_API_REGISTER_ENDPOINT: String(import.meta.env.VITE_API_ENDPOINT)+"/auth/register",
    AUTH_API_LOGIN_ENDPOINT: String(import.meta.env.VITE_API_ENDPOINT)+"/auth/login",
    AUTH_API_LOGOUT_ENDPOINT: String(import.meta.env.VITE_API_ENDPOINT)+"/auth/logout",
-   AUTH_API_GET_USER_DATA: String(import.meta.env.VITE_API_ENDPOINT)+"/auth/users/me",
+   AUTH_API_GET_USER_DATA: String(import.meta.env.VITE_API_ENDPOINT)+"/db/users/me",
    AUTH_API_RESET_PASSWORD_ENDPOINT: String(import.meta.env.VITE_API_ENDPOINT)+"/auth/reset-password",
    AUTH_API_MAGIC_URL_ENDPOINT: String(import.meta.env.VITE_API_ENDPOINT)+"/auth/magic-url",
    AUTH_API_EMAIL_VERIFICATION_ENDPOINT: String(import.meta.env.VITE_API_ENDPOINT)+"/auth/email-verification",
