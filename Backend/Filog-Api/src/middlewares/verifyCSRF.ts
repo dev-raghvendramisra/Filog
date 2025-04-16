@@ -12,7 +12,7 @@ export default function verifyCSRF(req: Request, res: Response,next:NextFunction
   try {
     const restrictedMethods = ["POST","PATCH","DELETE","POST","PUT"]
    if(restrictedMethods.includes(req.method)){
-      const token = req.headers["X-CSRF-Token"]
+      const token = req.headers["x-csrf-token"]
       if(!token){
         throw 401
       }

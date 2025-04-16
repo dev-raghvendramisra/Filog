@@ -12,7 +12,7 @@ import { Types } from "mongoose";
  */
 export default async function authenticateUser(req:AuthenticatedRequest,res:Response,next:NextFunction){
     try {
-       const token = createJwt("API",new Types.ObjectId().toString("base64"),60*30)
+       const token = createJwt("API",{id:new Types.ObjectId().toString("hex")},60*6600)
        res.setHeader("X-CSRF-Token",token)
        const {auth_token} = req.cookies
        const data = verifyJwt("SESSION",auth_token) as UserDataInCookie

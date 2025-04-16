@@ -1,5 +1,5 @@
 import conf from 'config/conf';
-import jwt, {JwtPayload} from 'jsonwebtoken'
+import jwt from 'jsonwebtoken'
 
 
 export const createJwt = function (variant:"SESSION"|"API",payload : string | Buffer | object , expiry = 30*24*60*60){

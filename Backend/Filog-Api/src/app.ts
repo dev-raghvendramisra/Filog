@@ -13,7 +13,8 @@ const publicDir = path.join(__dirname, 'public');
 const corsOptions = {
     origin: conf.FRONTEND_ENDPOINT,
     methods: 'GET,POST,OPTIONS,PATCH,PUT,DELETE',
-    allowedHeaders: ['Content-Type', 'Authorization', 'cookie'], 
+    allowedHeaders: ['Content-Type', 'Authorization', 'cookie', 'X-CSRF-Token'], 
+    exposedHeaders:["X-CSRF-Token"],
     credentials: true, 
 };
 
