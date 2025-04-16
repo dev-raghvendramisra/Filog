@@ -14,8 +14,8 @@ export async function sendSessionCookie(res:Response,data:object){
    const token = createJwt("SESSION",data,age)
    return res.cookie('auth_token',token,{
     httpOnly:true,
-    secure:false,
-    sameSite:"lax",
+    secure:conf.ENV=="production",
+    sameSite:"strict",
     maxAge:age,
    })
 }

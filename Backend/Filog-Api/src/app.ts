@@ -2,7 +2,7 @@ import express from 'express'
 import conf from 'config/conf';
 import cors from 'cors'
 import path from 'path'
-import { logger as accessLogger,verifyCSRF } from '@middleware';
+import { logger as accessLogger } from '@middleware';
 import authRouter from '@router/auth/authRouter';
 import dbRouter from "@router/db/dbRouter"
 import cookieParser from 'cookie-parser';
@@ -25,7 +25,6 @@ app.use(cookieParser())
 app.use(accessLogger)
 app.use(express.static(publicDir))
 app.use(express.json())
-app.use(verifyCSRF)
 app.use('/api/v1/auth',authRouter)
 app.use('/api/v1/db',dbRouter)
 app.use((_, res) => {
