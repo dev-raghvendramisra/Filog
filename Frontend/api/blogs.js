@@ -5,8 +5,8 @@ import getDefaultHtml from "./utils/getDefaultMetaTags.js";
 
 export default async function handler(req,res) {
     try {
-         const slug = req.query.blogId;
-         const blog = await dbService.getBlog(slug);
+        const slug = req.query.blogId;
+        const blog = await dbService.getBlog(slug);
          if(blog){
             const tagsData = {
               imgUrl: blog['coverImageURI'],

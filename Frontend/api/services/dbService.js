@@ -1,4 +1,5 @@
 import conf from '../config/conf.js';
+import axios from 'axios';
 
 class DBService {
 
@@ -12,12 +13,10 @@ class DBService {
               }
             }
           })));
-          console.log(blog)
-
-         if(blog.code==200){
-             return blog.res[0];
-         }
-         throw false
+          if(blog.data.code==200){
+            return blog.data.res[0];
+          }
+          throw false
         } catch (error) {
            return null;
         }
@@ -26,13 +25,13 @@ class DBService {
       try {
         const user = await axios.get(conf.DB_API_ENDPOINT+"/users?query="+encodeURIComponent(JSON.stringify({
           filters:{
-            slug:{
+            userName:{
               $eq:userName
             }
           }
         })));
-       if(user.code==200){
-           return user.res[0];
+       if(user.data.code==200){
+           return user.data.res[0];
        }
        throw false
       } catch (error) {

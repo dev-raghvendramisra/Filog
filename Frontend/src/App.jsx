@@ -3,7 +3,6 @@ import { Footer, InfinitePogressbar, Navbar, GenToast, AlertModalContainer, Form
 import './App.css';
 import '@fortawesome/fontawesome-free/css/all.min.css';
 
-
 import {  Outlet, useLocation } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
@@ -11,6 +10,7 @@ import { startAuthentication } from './utils';
 import toast,{Toaster} from 'react-hot-toast'
 import usePlatformContext from './context/platformContext';
 import TemporaryProhib from './pages/TemporaryProhib';
+
 
 function App() {
   const navigate = useNavigate();
@@ -25,6 +25,7 @@ function App() {
       await startAuthentication({ dispatch,navigate});    
     };
 
+    
     if (!isUserLoggedIn) {
       startLoginSequence();
     }

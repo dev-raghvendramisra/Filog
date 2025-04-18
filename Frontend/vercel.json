@@ -7,10 +7,6 @@
     {
       "source":"/user/:userId",
       "destination":"/api/users"
-    },
-    {
-      "source": "/(.*)",
-      "destination": "/index.html"
     }
   ]
 }
