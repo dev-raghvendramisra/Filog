@@ -80,7 +80,7 @@ Filog’s project structure is organized into cohesive modules:
 - **Services**: Organized into classes and modularized for reusability, such as authentication and interaction services.
 
 ## Tech used 
-![auto](https://skillicons.dev/icons?i=react,redux,tailwind,appwrite,docker,express,nodejs)
+![auto](https://skillicons.dev/icons?i=react,redux,tailwind,mongodb,docker,express,nodejs)
 
 ## Documentation (for Contribution)
 
