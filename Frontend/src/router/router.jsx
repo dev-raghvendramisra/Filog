@@ -4,6 +4,7 @@ import {Write,About, SearchResult, Dashboard, Login, SignUp, UserProfile,MagicUr
 import PlaygroundProtection from "../pages/PlaygroundProtection";
 import AdminProt from "../pages/Admin/AdminProt";
 import PrivacyPolicy from "../pages/Privacy-Policy/PrivacyPolicy";
+import TermsOfService from "../pages/Privacy-Policy/TermsOfService";
 
 const router = createBrowserRouter(createRoutesFromElements(
     <Route path="/" element={<App />}>
@@ -26,6 +27,7 @@ const router = createBrowserRouter(createRoutesFromElements(
     <Route path="/admin" element={<AdminProt />}></Route>
     <Route path="/playground" element={<PlaygroundProtection />}></Route>{/* This is a test route */}
     <Route path="/privacy-policy" element={<PrivacyPolicy />}></Route>
+    <Route path="/terms-of-service" element={<TermsOfService />}></Route>
     <Route path="*" element={<UnknownRoute />}></Route>
   </Route>
 ))
