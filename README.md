@@ -6,6 +6,7 @@
 
 **Filog** is a dynamic blogging platform, thoughtfully designed to provide a streamlined, secure, and immersive experience for bloggers and readers. Developed with **ReactJS** on the frontend and **Appwrite** as a backend-as-a-service (BaaS), Filog enables users to create, share, and interact with blog content through an intuitive and visually pleasing interface. Filog emphasizes robust security, user-controlled access, and a scalable structure suitable for both single users and extensive communities.
 
+
 ## Table of Contents
 
 - [Features](#features)
