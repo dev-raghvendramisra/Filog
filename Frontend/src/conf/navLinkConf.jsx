@@ -27,8 +27,8 @@ const linkConfig = [
         selfNavigate: false
     },
     {
-        name: "About",
-        path: '/about',
+        name: "Privacy Policy",
+        path: '/privacy-policy',
         status:true,
         activeStyling: true,
         hoverAnim: true,

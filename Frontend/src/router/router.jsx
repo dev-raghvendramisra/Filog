@@ -3,6 +3,7 @@ import App from "../App";
 import {Write,About, SearchResult, Dashboard, Login, SignUp, UserProfile,MagicUrlVerification, Profile, Home, Blog, FeaturedPosts, FollowingPosts, UnknownRoute, EmailVerification}  from "../components";
 import PlaygroundProtection from "../pages/PlaygroundProtection";
 import AdminProt from "../pages/Admin/AdminProt";
+import PrivacyPolicy from "../pages/Privacy-Policy/PrivacyPolicy";
 
 const router = createBrowserRouter(createRoutesFromElements(
     <Route path="/" element={<App />}>
@@ -24,6 +25,7 @@ const router = createBrowserRouter(createRoutesFromElements(
     <Route path="/reset-password" element={<MagicUrlVerification />}></Route>
     <Route path="/admin" element={<AdminProt />}></Route>
     <Route path="/playground" element={<PlaygroundProtection />}></Route>{/* This is a test route */}
+    <Route path="/privacy-policy" element={<PrivacyPolicy />}></Route>
     <Route path="*" element={<UnknownRoute />}></Route>
   </Route>
 ))
